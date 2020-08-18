@@ -1,25 +1,26 @@
-# **React-Sequelize with Passport Authentication**
-
-## A full-stack application template complete with passport local strategy authentication
-### **Stack:**
-* node and express 
-* sequelize ORM
-* passport js authentication
-* create-react-app
-
-### **How to Use This Template**
-* click "use template" next to the clone button, this will create a new repository on *your* github account
-* clone the repository down to your machine
-* create a mySql database named as you like
-* run &nbsp; `npm install`
-* run &nbsp; `touch .env` &nbsp;in the root of your repository
-* open the .env file
-* add the four environmental variables that will be used to connect to the database:
-    <br/>       `DB_PASSWORD=yourpassword`
-    <br/>       `DB_HOST=127.0.0.1`
-    <br/>       `DB_USER=root`
-    <br/>       `DB_NAME=yourDBname`
-
-* In development, the server and client are started separately.
-* run &nbsp; `npm start` in the root of the project to start the server
-* run &nbsp; `npm start` in the root of the client folder to start the client
+# GETTING STARTED, the quick & dirty way
+ 1. install dependencies for server
+  ``` cd ~/PC/User/You/otherstuff/i-spy-refi/ ```
+  ``` npm install ```
+ 2. install dependencies for client
+  ``` cd ~/PC/User/You/otherstuff/i-spy-refi/client ```
+  ``` npm install ```
+ 3. create .env file
+  * navigate back to root
+    ``` cd ~/PC/User/You/otherstuff/i-spy-refi/ ```
+  * create file with the following: 
+    > DB_PASSWORD='{yourpassowrdhere}'
+    > DB_NAME='refi_db'
+    > DB_HOST='localhost'
+    > DB_USER='root'
+    > DB_PORT='3306'
+ 4. create DB
+  * from terminal run:
+    ``` mysql -u root -p ```
+    ``` source /PC/User/You/otherstuff/i-spy-refi/config/refi_db.sql ```
+ 5. run server
+  ``` cd ~/PC/User/You/otherstuff/i-spy-refi/ ```
+  ``` node server ```
+ 6. run client
+  ``` cd ~/PC/User/You/otherstuff/i-spy-refi/client ```
+  ``` npm start ```
