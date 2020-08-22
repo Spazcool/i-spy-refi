@@ -1,7 +1,47 @@
-# GETTING STARTED, the quick & dirty way
- 1. install dependencies for server
+<!-- https://firebase.google.com/docs/hosting/full-config -->
+
+# GETTING STARTED w/ FIREBASE, the quick & dirty way
+
+## Clone the Repo/Branch
+1. Clone repo
+  ```
+  git clone ...
+  ```
+2. Checkout non-master branch 
+  ```
+  git checkout --track origin/firebase
+  ```
+
+---
+
+## Initial Firebase Setup
+1. Install firebase:
+  ```
+  npm install -g firebase-tools
+
+2. Log in to firebase:
+  ```
+  firebase login
+  ```
+3. Configure & install app (POSSIBLY OPTIONAL AS YOU SHOULD ALREADY HAVE THE .firebaserc & firebase.json files):
+  * ``` firebase init ```
+  * App type options:
+    * Hosting
+  * Existing project:
+    * ispy...
+  * Specify starting location:
+    * client/build
+  * Some other opiton:
+    * Yes
+  * Overwrite index.html?
+    * No, but not a biggy if you do
+
+---
+
+## Get it all running:
+ 1. install dependencies for server/functions
   ``` 
-  cd ~/PC/User/You/otherstuff/i-spy-refi/ 
+  cd ~/PC/User/You/otherstuff/i-spy-refi/functions
   ```
   ``` 
   npm install 
@@ -13,40 +53,21 @@
   ``` 
   npm install 
   ```
- 3. create .env file
-  * navigate back to root
-    ``` 
-    cd ~/PC/User/You/otherstuff/i-spy-refi/ 
-    ```
-  * create file with the following: 
-    > DB_PASSWORD='{yourpassowrdhere}'
-    >
-    > DB_NAME='refi_db'
-    >
-    > DB_HOST='localhost'
-    >
-    > DB_USER='root'
-    >
-    > DB_PORT='3306'
- 4. create DB
-  * from terminal run:
-    ``` 
-    mysql -u root -p 
-    ```
-    ``` 
-    source /PC/User/You/otherstuff/i-spy-refi/config/refi_db.sql 
-    ```
- 5. run server
-  ``` 
-  cd ~/PC/User/You/otherstuff/i-spy-refi/ 
-  ```
-  ``` 
-  node server 
-  ```
- 6. run client
+ 3. create a build directory for React/Client:
   ``` 
   cd ~/PC/User/You/otherstuff/i-spy-refi/client 
   ```
   ``` 
-  npm start 
+  npm run build 
   ```
+ 4. run all the things
+  ``` 
+  cd ~/PC/User/You/otherstuff/i-spy-refi/ 
+  ```
+  ``` 
+  firebase serve
+  ```
+  * if you get an error about ports...
+    ```
+    firebase serve --port=5001
+    ```
