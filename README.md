@@ -18,7 +18,7 @@
 1. Install firebase:
   ```
   npm install -g firebase-tools
-
+  ```
 2. Log in to firebase:
   ```
   firebase login
