@@ -1,0 +1,32 @@
+{
+  "hosting": {
+    "public": "client/build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/secrets",
+        "function": "widgets"
+      },
+      {
+        "source": "/get",
+        "function": "widgets"
+      },
+      {
+        "source": "**",
+       "destination": "/index.html",
+
+        "function":"widgets"
+      }
+      
+    ]
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ]
+  }
+}
