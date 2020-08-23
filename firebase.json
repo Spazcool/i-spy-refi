@@ -8,18 +8,9 @@
     ],
     "rewrites": [
       {
-        "source": "/api/secrets",
-        "function": "widgets"
-      },
-      {
-        "source": "/get",
-        "function": "widgets"
-      },
-      {
         "source": "**",
-        "function":"widgets"
-      }
-      
+        "function":"app"
+      } 
     ]
   },
   "functions": {
