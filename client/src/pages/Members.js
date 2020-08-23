@@ -16,6 +16,7 @@ const Members = props => {
   // consider refactor
   const getSecret = async () => {
     const secretResponse = await Axios.get("/api/secrets");
+    console.log(secretResponse)
     setSecret(secretResponse.data);
   };
 
