@@ -12,10 +12,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build
+    - name: Build Client
       run: |
+        cd client
         npm install
         npm run build
+    - name: Build Functions
+      run: |
+        cd ../functions
+        npm install
     - name: Firebase Deploy
       run: |
         sudo npm install -g firebase-tools
