@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom'
 import '../App.css';
-import { AuthContext } from '../AuthContext'
+import { AuthContext } from "../providers/AuthProvider";
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import LoginForm from '../components/LoginForm'
+import LoginGoogle from '../components/LoginGoogle';
 
 function Login(props) {
 
@@ -19,6 +21,7 @@ function Login(props) {
         <Container className="signup">
           <Row>
             <Col md={{ span: 8, offset: 2 }}>
+              <LoginGoogle/>
               <LoginForm {...props}/>
             </Col>
           </Row>

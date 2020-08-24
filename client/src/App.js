@@ -1,14 +1,10 @@
 import React, { useContext } from "react";
 import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-dom";
-import { AuthProvider, AuthContext } from "./AuthContext";
+import { AuthProvider, AuthContext } from "./providers/AuthProvider";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Members from "./pages/Members";
-
-// Even though this is the App.js file, in the end we are not exactly exporting
-// the App component.  We actually set up the app component to implement our react
-// router, but in the end we export App wrapped in the context provider
 
 function App() {
   // Here we subscribe the authentication context using the useContext hook
@@ -46,6 +42,10 @@ function App() {
     </Router>
   );
 }
+
+// Even though this is the App.js file, in the end we are not exactly exporting
+// the App component.  We actually set up the app component to implement our react
+// router, but in the end we export App wrapped in the context provider
 
 // Here we export the final product of our app/context configuration, and
 // even though it is unnamed here, it will be imported as App in index.js

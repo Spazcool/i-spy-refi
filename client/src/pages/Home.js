@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../providers/AuthProvider";
+import { auth } from "../firebase";
+
 import "../App.css";
 import { Container, Row, Button, Col } from "react-bootstrap";
 import Axios from "axios";

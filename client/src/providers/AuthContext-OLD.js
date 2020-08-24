@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     const checkAuth = async () => {
+
         Axios.get('api/auth/user_data')
             .then(response => {
                 if (response.data.email) {
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = async () => {
+
         Axios.get("/api/auth/logout")
           .then(() => {
             setIsAuth(false);
