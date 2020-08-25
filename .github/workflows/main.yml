@@ -19,7 +19,7 @@ jobs:
         npm run build
     - name: Build Functions
       run: |
-        cd ../functions
+        cd functions
         npm install
     - name: Firebase Deploy
       run: |
