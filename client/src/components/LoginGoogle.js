@@ -1,5 +1,4 @@
 import React from 'react';
-// import { AuthContext } from '../providers/AuthProvider';
 import Button from 'react-bootstrap/Button'
 import { signInWithGoogle } from "../firebase";
 

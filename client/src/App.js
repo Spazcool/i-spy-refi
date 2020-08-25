@@ -4,13 +4,13 @@ import { AuthProvider, AuthContext } from "./providers/AuthProvider";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Members from "./pages/Members";
+import Houses from "./pages/Houses";
 
 function App() {
   // Here we subscribe the authentication context using the useContext hook
   // we use isAuth to determine whether the user is logged in, and setIsAuth
   // to change their status on logout.
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
   console.log("App auth: ", isAuth);
 
   // here we are ceating a private route wrapper to prevent front end routing to 
@@ -37,7 +37,7 @@ function App() {
         />
         <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/signup" render={props => <Signup {...props} />} />
-        <PrivateRoute exact path="/members" component={Members} />
+        <PrivateRoute exact path="/houses" component={Houses} />
       </Switch>
     </Router>
   );
