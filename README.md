@@ -38,6 +38,42 @@
 
 ---
 
+## Create local cofing files:
+1. create config file for server/functions
+  ``` 
+  cd ~/PC/User/You/otherstuff/i-spy-refi/functions
+  ```
+  * Navigate to [firebase console](https://console.firebase.google.com/project/ispyrefi/settings/serviceaccounts/adminsdk)
+  * click 'Generate new private key'
+  * drag downloaded file to root directory
+  * rename file to `key.json`
+2. create config file for client:
+  ```
+  cd ~/PC/User/You/otherstuff/i-spy-refi/client/src
+  ```
+  * Add a file by the name of `firebase-config.json` in src directory
+  * Navigate to: [firebase console](https://console.firebase.google.com/project/ispyrefi/settings/general/)
+  * under 'Your Apps'
+    * Click 'Config'
+    * Copy config obj
+  * Paste config obj into `firebase-config.json`
+    * should look like the following: 
+    ```
+    {
+      "apiKey": "REALLY-LONG-STRING-OF-TEXT",
+      "authDomain": "ispyrefi.firebaseapp.com",
+      "databaseURL": "https://ispyrefi.firebaseio.com",
+      "projectId": "ispyrefi",
+      "storageBucket": "ispyrefi.appspot.com",
+      "messagingSenderId": "REALLY-LONG-STRING-OF-TEXT",
+      "appId": "REALLY-LONG-STRING-OF-TEXT",
+      "measurementId": "REALLY-LONG-STRING-OF-TEXT"
+    }
+    ```
+  * Save
+  
+---
+
 ## Get it all running:
  1. install dependencies for server/functions
   ``` 
