@@ -1,22 +1,12 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../AuthContext";
+import React, { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+// import { auth } from "../firebase";
 import "../App.css";
 import { Container, Row, Button, Col } from "react-bootstrap";
-import Axios from "axios";
 
 function Home(props) {
   
   const { isAuth, logout } = useContext(AuthContext);
-
-  const [secret, setSecret] = useState("");
-
-  // this function is duplicated in the Members page component
-  // consider refactor 
-  const getSecret = async () => {
-    const secretResponse = await Axios.get("/api/secrets");
-    console.log(secretResponse.data);
-    setSecret(secretResponse.data);
-  };
 
   return (
     <Container className="signup">
@@ -29,7 +19,6 @@ function Home(props) {
                 className="m-1"
                 onClick={e => {
                   e.preventDefault();
-                  setSecret('');
                   logout();
                 }}
               >
@@ -39,10 +28,10 @@ function Home(props) {
                 className="m-1"
                 onClick={e => {
                   e.preventDefault();
-                  props.history.push("/members");
+                  props.history.push("/houses");
                 }}
               >
-                Members
+                Houses
               </Button>
             </>
           ) : (
@@ -67,20 +56,6 @@ function Home(props) {
               </Button>
             </>
           )}
-          <Button
-            className="m-1"
-            onClick={e => {
-              e.preventDefault();
-              getSecret();
-            }}
-          >
-            Show Secrets
-          </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <h1>{secret}</h1>
         </Col>
       </Row>
     </Container>

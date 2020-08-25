@@ -16,3 +16,6 @@
       },
 
       ispyrefi-firebase-adminsdk-h65bj-21d25f5aa0.json
+
+
+      https://blog.logrocket.com/user-authentication-firebase-react-apps/

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
-import Axios from 'axios';
+import { auth, signUpWithEmail } from "../firebase";
 
 const Signup = props => {
 
@@ -23,10 +23,6 @@ const Signup = props => {
 
     const handleFormSubmit = event => {
         event.preventDefault()
-
-        // TODO: investigate handleFormSubmit refactor
-        // Is it necessary to set a static object here just to post the user?
-        // can the formData state be validated and posted directly?
         let newUser = {
             firstName: formData.firstNameInput,
             lastName: formData.lastNameInput,
@@ -34,15 +30,13 @@ const Signup = props => {
             password: formData.passwordInput
         }
         if (validateUserInput(newUser)) {
-            postNewUser(newUser)
+            createUser(newUser)
             setFormData(emptyUser)
         } else {
             setCredsAreInvalid(errorMessage)
         }
     }
 
-    // validateUserInput checks the formData for any missing values and 
-    // then highlights the fields that are invalid
     const validateUserInput = ({ firstName, lastName, email, password }) => {
         let isValid = true;
 
@@ -77,13 +71,17 @@ const Signup = props => {
         return isValid;
     }
 
-    const postNewUser = newUser => {
-        Axios.post('/api/auth/signup', newUser)
-            .then(() => {
-                props.history.push('/login')
-            })
-            .catch(err => console.log(err))
-    }
+    const createUser = async (userData) => {
+      try{
+        const {user} = await auth.createUserWithEmailAndPassword(userData.email, userData.password);
+        signUpWithEmail(user, userData);
+      }
+      catch(error){
+        // todo need a toast here: copy the one in the login page
+        console.log(error)
+      }
+
+    };
 
     return (
         <Form onSubmit={handleFormSubmit}>
