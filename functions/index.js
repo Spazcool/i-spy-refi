@@ -75,5 +75,6 @@ app.get('/timestamp-cached', (req, res) => {
 exports.thing = functions.https.onRequest(app);
 
 // ------------------------ EXAMPLE URL of deployed cloud function ------------------------
-// FYI this there is a rule in firebase.json file to redirect this URL to our home URL of https://ispyrefi.com:
+// FYI this there is a rule in firebase.json file to redirect this URL to our home URL of https://ispyrefi.com
+// without the redirect, it would look like:
 // https://us-central1-ispyrefi.cloudfunctions.net/app

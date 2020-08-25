@@ -77,9 +77,10 @@ const Signup = props => {
         signUpWithEmail(user, userData);
       }
       catch(error){
-        // todo need a toast here
+        // todo need a toast here: copy the one in the login page
         console.log(error)
       }
+
     };
 
     return (

@@ -29,11 +29,14 @@ function App() {
       }
     />
   );
-
+//todo displayname, if desirable, we'll need to make a call to the db to grab the user names for users that signed up with email
   return (
     <Router>
       <>
-      <div>Sexy header to go here: {isAuth ? user.user.displayName : ''}</div>
+      <div>Sexy header to go here: {isAuth ? 
+      user.user.displayName ?
+      user.user.displayName : user.user.email
+      : ''}</div>
       <Switch>
         <Route
           exact
