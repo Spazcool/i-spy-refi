@@ -6,7 +6,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
-import LoginForm from '../components/LoginForm'
+import LoginEmail from '../components/LoginEmail'
 import LoginGoogle from '../components/LoginGoogle';
 
 function Login(props) {
@@ -22,7 +22,7 @@ function Login(props) {
           <Row>
             <Col md={{ span: 8, offset: 2 }}>
               <LoginGoogle/>
-              <LoginForm {...props}/>
+              <LoginEmail {...props}/>
             </Col>
           </Row>
         </Container>

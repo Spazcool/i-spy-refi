@@ -10,8 +10,11 @@ function App() {
   // Here we subscribe the authentication context using the useContext hook
   // we use isAuth to determine whether the user is logged in, and setIsAuth
   // to change their status on logout.
-  const { isAuth } = useContext(AuthContext);
+  const { isAuth, user } = useContext(AuthContext);
   console.log("App auth: ", isAuth);
+  if(isAuth){
+    console.log(user)
+  }
 
   // here we are ceating a private route wrapper to prevent front end routing to 
   // restricted pages.  The ({ component: Component, ...rest })  argument that is
@@ -29,6 +32,8 @@ function App() {
 
   return (
     <Router>
+      <>
+      <div>Sexy header to go here: {isAuth ? user.user.displayName : ''}</div>
       <Switch>
         <Route
           exact
@@ -39,6 +44,7 @@ function App() {
         <Route exact path="/signup" render={props => <Signup {...props} />} />
         <PrivateRoute exact path="/houses" component={Houses} />
       </Switch>
+      </>
     </Router>
   );
 }

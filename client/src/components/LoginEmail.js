@@ -1,13 +1,11 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from "../providers/AuthProvider";
-
+import React, { useState } from 'react';
+// import { AuthContext } from "../providers/AuthProvider";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
-import Axios from 'axios';
+import { auth } from "../firebase";
 
-const LoginForm = props => {
-
-    const { setIsAuth } = useContext(AuthContext)
+const LoginEmail = props => {
+    // const { setIsAuth } = useContext(AuthContext) //todo likely need to set this in the login funciton below
     const emptyCreds = { emailInput: '', passwordInput: '' }
     const errorMessage = 'invalid credentials'
     const [formData, setFormData] = useState(emptyCreds)
@@ -29,18 +27,13 @@ const LoginForm = props => {
         setFormData(emptyCreds)
     }
 
-    const login = loginCreds => {
-        Axios.post('/api/auth/login', loginCreds)
-            .then(user => {
-                console.log("login response ", user)
-                setIsAuth(true)
-            })
-            .catch(err => {
-                setCredsAreInvalid(errorMessage)
-                console.log(err)
-            })
-    }
-
+    const login = (creds) => {
+      auth.signInWithEmailAndPassword(creds.email, creds.password)
+        .catch(error => {
+          setCredsAreInvalid(errorMessage)
+          console.error("Error signing in with password and email", error);
+        });
+    };
     return (
         <Form onSubmit={handleFormSubmit}>
             <Form.Group controlId="emailInput">
@@ -71,4 +64,4 @@ const LoginForm = props => {
     )
 }
 
-export default LoginForm;
+export default LoginEmail;
