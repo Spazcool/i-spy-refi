@@ -1,28 +1,23 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { firestore } from "../firebase";
+// import { firestore } from "../firebase";
+import { DB } from "../api/firestore.js";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import "../App.css";
 
 const Houses = props => {
   // Destructure the logout function from AuthContext
-  const { logout } = useContext(AuthContext);
+  const { logout, user} = useContext(AuthContext);
   const [houses, setHouses] = useState([]);
 
   const getHouses = async () => {
-    // const myHouse = firestore.collection('houses').doc('qrSHMjWUlWMKKSrcrTUJ');
-    // const query = housesList.where('value', '>', 100000);
-    const housesList = firestore.collection('houses');
-    const query = housesList.orderBy('value', 'desc');
-    query.get()
-      .then((houses) => {
-        //FYI houses IS AN OBJ, SO YOU CAN'T MAP OVER IT
-        let properties = [];
-        houses.forEach(house => {
-          properties.push(house.data())
-        })
-        setHouses(properties)
-      })
+    let houses = await DB.getHouses();
+    setHouses(houses)
+    let users = await DB.getUsers();
+    // firebase.firestore().collection('users').doc(authUser.uid)
+    let userDB = await DB.getUser(user.user.uid) // todo have to get this from calling users, might be a way to grab it from the authenticated user
+    console.log(userDB)
+    console.log(user.user.uid)
   }
 
   return (
