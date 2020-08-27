@@ -11,10 +11,10 @@ function App() {
   // we use isAuth to determine whether the user is logged in, and setIsAuth
   // to change their status on logout.
   const { isAuth, user } = useContext(AuthContext);
-  console.log("App auth: ", isAuth);
-  if(isAuth){
-    console.log(user)
-  }
+  // console.log("App auth: ", isAuth);
+  // if(isAuth){
+  //   console.log(user)
+  // }
 
   // here we are ceating a private route wrapper to prevent front end routing to 
   // restricted pages.  The ({ component: Component, ...rest })  argument that is
