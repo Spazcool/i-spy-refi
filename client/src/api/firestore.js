@@ -2,7 +2,48 @@ import {firestore as db} from '../firebase.js';
 
 export const DB = {
 
-  // ------------------------ GET ------------------------
+  // ------------------------ CREATE ------------------------
+  async createUser(user, additionalData){
+    console.log(user)
+    const userRef = db.doc(`users/${user.uid}`);
+    const snapshot = await userRef.get();
+
+    if (!snapshot.exists) {
+      let data;
+      if(!additionalData){
+        data = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          firstName: '',
+          lastName: '',
+          zpid: '',
+          admin: false,
+        }
+      } else {
+        const { email, firstName, lastName } = additionalData;
+        data = {
+          uid: user.uid,
+          email: email,
+          displayName: '',
+          firstName: firstName,
+          lastName: lastName,
+          zpid: '',
+          admin: false,
+        }
+      }
+
+      try {
+        await userRef.set(data, {merge: true});
+      } catch (error) {
+        console.error("Error creating user document", error);
+      }
+    }
+  },
+
+  async createHouse(id){},
+
+  // ------------------------ READ ------------------------
   async getUser(id){
     let returnedUser;
     const user = db.collection('users').doc(id);
@@ -90,9 +131,14 @@ export const DB = {
   },
 
   // ------------------------ UPDATE ------------------------
+  async updateUser(id){},
+  async updateHouse(id){}, 
 
+  // ------------------------ DELETE ------------------------
+  async deleteUser(id){},
+  async deleteHouse(id){}, 
 
-// ------------------------ EXAMPLES ------------------------
+  // ------------------------ EXAMPLES ------------------------
 
   // const housesList = db.collection('houses');
   // const query = housesList.where('value', '>', 100000);
@@ -107,15 +153,5 @@ export const DB = {
 
   // NORMAL UPDATE
   // myHouse.update({value: event.target.value})
-
-// ------------------------ EXAMPLE MODIFYING DB from FUNCTIONS ------------------------
-// exports.sendMessage = functions.firestore
-//   .document('houses/{houseID}')
-//   .onCreate((snap, context) => {
-//     const original = snap.data().original;
-//     const value = snap.data().original.value;
-//     functions.logger.log('sending message', context.params.houseID, context);
-//     return snap.ref.update({message: `Yolo! called from cloud function`}, {merge: true});
-//   })
 
 };

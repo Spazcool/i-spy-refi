@@ -13,11 +13,12 @@ const Houses = props => {
   const getHouses = async () => {
     let houses = await DB.getHouses();
     setHouses(houses)
-    let users = await DB.getUsers();
-    // firebase.firestore().collection('users').doc(authUser.uid)
-    let userDB = await DB.getUser(user.user.uid) // todo have to get this from calling users, might be a way to grab it from the authenticated user
-    console.log(userDB)
-    console.log(user.user.uid)
+    // examples of hitting the other endpoints
+    // let users = await DB.getUsers();
+    // let house = await DB.getHouse(zpid); // todo not sure when in the process the zpid will be comeing from, maybe from the user
+    // let userDB = await DB.getUser(user.user.uid) // todo have to get this from calling users, might be a way to grab it from the authenticated user
+    // console.log(userDB)
+    // console.log(user.user.uid)
   }
 
   return (
