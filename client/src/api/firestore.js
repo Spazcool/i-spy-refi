@@ -71,7 +71,7 @@ export const DB = {
       returnedUser = await user.get();
     }
     catch(err) {
-      console.log(err)
+      console.error(err)
     }
     const userObj = await returnedUser;
     const data = {
@@ -174,51 +174,55 @@ export const DB = {
       } catch (error) {
         console.error("Error updating user document", error);
       }
+      return `${user} updated successfully.`;
     }
   },
 
   async updateHouse(updateHouseData){
-    const housesRef = db().collection('houses');
-    const query = housesRef.where('zpid', '==', updateHouseData.zpid)
-
-    const snapshot = await query.get();
-    console.log(snapshot)
-    console.log(updateHouseData.zpid)
-    if (!snapshot.exists) {
-      console.log('no snapshot')
-      return;
-    }else{
-      const {comps} = updateHouseData;
-      const data = {
-        comps
-      }
-
-      try {
-        await query.update(data)
-      } catch (error) {
-        console.error("Error updating house document", error);
-      }
-    }
+    const {comps} = updateHouseData;
+    const data = {comps, lastUpdated: db.FieldValue.serverTimestamp()}
+    db().collection('houses').where('zpid', '==', updateHouseData.zpid)
+      .get()
+      .then((houses) => {  
+        const house = houses.docs[0];
+        house.ref.update(data);
+        return house;
+      })
+      .then((house)=> `${house} updated successfully.`)
+      .catch((err)=> console.error("Error updating house document", err));
   }, 
 
   // ------------------------ DELETE ------------------------
-  async deleteUser(id){},
-  async deleteHouse(id){}, 
+  async deleteUser(user){
+    const userRef = db().doc(`users/${user}`);
+    const snapshot = await userRef.get();
 
-  // ------------------------ EXAMPLES ------------------------
+    if (!snapshot.exists) {
+      return;
+    }else{
+      try {
+        await userRef.delete()
+      } catch (error) {
+        console.error("Error deleting user document", error);
+      }
+    }
+    console.log(`${user} deleted successfully`);
+    //todo delete associated documents
+    this.getHouses()
+      .then(houses => {
+        console.log(houses)
+      })
+    // look up houses by owner, delete them
+  },
 
-  // const housesList = db().collection('houses');
-  // const query = housesList.where('value', '>', 100000);
-  // const query = housesList.orderBy('value', 'desc');
-  // query.get().then(houses => {...})
-
-  // const myHouse = db().collection('houses').doc('JWb8oyGegTY1HCi9XcaX');
-  // myHouse.get().then(doc => {...})
-
-  // AUTO UPDATE references to the DB on the frontend, SO A CHANGE IN DB AUTO CHANGES THE FRONT
-  // myHouse.onSnapshot(doc => { ... })
-
-  // NORMAL UPDATE
-  // myHouse.update({value: event.target.value})
-
+  async deleteHouse(house){
+    db().collection('houses').doc(house)
+      .get()
+      .then((house) => {  
+        house.ref.delete();
+        return house;
+      })
+      .then((house) => console.log(`${house} deleted successfully.`))
+      .catch((err) => console.error("Error deleting house document", err));
+  }
 };
