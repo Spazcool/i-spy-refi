@@ -143,6 +143,7 @@ export const DB = {
       // todo does this enforcing of data model belong here?
       const data = {
         id: house.id,
+        owner: house.data().owner,
         value: house.data().value,
         zpid: house.data().zpid
       }
@@ -207,12 +208,10 @@ export const DB = {
       }
     }
     console.log(`${user} deleted successfully`);
-    //todo delete associated documents
-    this.getHouses()
-      .then(houses => {
-        console.log(houses)
-      })
-    // look up houses by owner, delete them
+    const usersHouses = await this.getHouses(); // might be costly, make another endpoint to find the house by user id
+    const [house] = usersHouses.filter(house => house.owner == user)
+    this.deleteHouse(house.id)
+    console.log(`${house.id} deleted successfully`);
   },
 
   async deleteHouse(house){
