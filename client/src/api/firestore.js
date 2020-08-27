@@ -208,7 +208,7 @@ export const DB = {
       }
     }
     console.log(`${user} deleted successfully`);
-    const usersHouses = await this.getHouses(); // might be costly, make another endpoint to find the house by user id
+    const usersHouses = await this.getHouses(); // todo might be costly, make another endpoint to find the house by user id
     const [house] = usersHouses.filter(house => house.owner == user)
     this.deleteHouse(house.id)
     console.log(`${house.id} deleted successfully`);

@@ -53,8 +53,8 @@ const Houses = props => {
 
     // ------------- DELETE: USER, HOUSE -------------
     // FYI you can grab id from context if user is deleting self (ie. user.user.uid), otherwise you'll need to run DB.getUsers and filter the data to find the user you want to delete, same thing for deleting a house
-    let deleteUser = async () => await DB.deleteUser('Aq448iAgi9UeWs7Sv7Iv') 
-    deleteUser();
+    // let deleteUser = async () => await DB.deleteUser('Aq448iAgi9UeWs7Sv7Iv') 
+    // deleteUser(); //todo there's an innefficient lookup here, in might need to write another endpoint 
 
     // let deleteHouse = async () => await DB.deleteHouse('iN89T5GcCeCJcx1oPrdV') // 
     // deleteHouse();
