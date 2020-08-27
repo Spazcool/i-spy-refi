@@ -108,7 +108,7 @@ export const DB = {
     return usersArr;
   },
 
-  async getHouse(id){
+  async getHouseByID(id){
     let returnedHouse;
     const house = db().collection('houses').doc(id);
     try {
@@ -125,6 +125,13 @@ export const DB = {
       zpid: houseObj.data().zpid,
     }
     return data;
+  },
+
+  async getHouseByOwner(user){
+    return db().collection('houses').where('owner', '==', user)
+      .get()
+      .then((house) => house)
+      .catch((err) => console.error("Error getting house document", err));
   },
 
   async getHouses(){
@@ -201,17 +208,21 @@ export const DB = {
     if (!snapshot.exists) {
       return;
     }else{
-      try {
-        await userRef.delete()
-      } catch (error) {
-        console.error("Error deleting user document", error);
-      }
+      const usersHouse = await this.getHouseByOwner(user);
+      console.log(usersHouse)
+      // const [house] = usersHouses.filter(house => house.owner == user)
+      // this.deleteHouse(house.id)
+      // console.log(`${house.id} deleted successfully`);
+
+
+      // try {
+      //   await userRef.delete()
+      // } catch (error) {
+      //   console.error("Error deleting user document", error);
+      // }
     }
     console.log(`${user} deleted successfully`);
-    const usersHouses = await this.getHouses(); // todo might be costly, make another endpoint to find the house by user id
-    const [house] = usersHouses.filter(house => house.owner == user)
-    this.deleteHouse(house.id)
-    console.log(`${house.id} deleted successfully`);
+    
   },
 
   async deleteHouse(house){

@@ -13,13 +13,14 @@ const Houses = props => {
   const getHouses = async () => {
     // ------------- DESIRED DB CALL -------------
     // TO TEST OUT THE EXAMPLES BELOW, COMMENT OUT THE NEXT 2 LINES & UNCOMMENT THE APPROPRIATE EXAMPLE + THE CONSOLE LOG
-    // let houses = await DB.getHouses();
-    // setHouses(houses)
+    let houses = await DB.getHouses();
+    setHouses(houses)
 
     // ------------- EXAMPLES -------------
     // ------------- GET: USER, USERS, HOUSE -------------
     // let users = await DB.getUsers();
-    // let house = await DB.getHouse(id); // DB colleciton id NOT the zpid
+    // let house = await DB.getHouseByOwner(user.user.uid)
+    // let house = await DB.getHouseByID(id); // DB colleciton id NOT the zpid
     // let userDB = await DB.getUser(user.user.uid); //returns current logged in user, for a list of users ids you'll need to call DB.getUsers() first
 
     // ------------- CREATE: HOUSE -------------
@@ -53,8 +54,8 @@ const Houses = props => {
 
     // ------------- DELETE: USER, HOUSE -------------
     // FYI you can grab id from context if user is deleting self (ie. user.user.uid), otherwise you'll need to run DB.getUsers and filter the data to find the user you want to delete, same thing for deleting a house
-    // let deleteUser = async () => await DB.deleteUser('Aq448iAgi9UeWs7Sv7Iv') 
-    // deleteUser(); //todo there's an innefficient lookup here, in might need to write another endpoint 
+    // let deleteUser = async () => await DB.deleteUser('SZJUYZKs1oPBZTAoxJy2zXb8gwA3') 
+    // deleteUser(); 
 
     // let deleteHouse = async () => await DB.deleteHouse('iN89T5GcCeCJcx1oPrdV') // 
     // deleteHouse();
