@@ -1,16 +1,15 @@
-import {firestore as db} from '../firebase.js';
+import {firestore as db, flame} from '../firebase.js';
 
 export const DB = {
 
   // ------------------------ CREATE ------------------------
   async createUser(user, additionalData){
-    console.log(user)
     const userRef = db.doc(`users/${user.uid}`);
     const snapshot = await userRef.get();
 
     if (!snapshot.exists) {
       let data;
-      if(!additionalData){
+      if(!additionalData){ // if google signin
         data = {
           uid: user.uid,
           email: user.email,
@@ -34,14 +33,32 @@ export const DB = {
       }
 
       try {
-        await userRef.set(data, {merge: true});
+        await userRef.set(data, {merge: true})
+        return 'created user'
       } catch (error) {
         console.error("Error creating user document", error);
       }
     }
   },
 
-  async createHouse(id){},
+  async createHouse(user, houseData){
+    const data = {
+      owner: user,
+      zpid: houseData.zpid,
+      location: new flame.GeoPoint(houseData.location[0], houseData.location[1]),
+      comps: houseData.comps
+    }
+    let returnedHouse;
+
+    try{
+      returnedHouse = await db.collection('houses').add(data)
+    }
+    catch(err){
+      console.log(err)
+    }
+    const houseObj = await returnedHouse;
+    return houseObj;
+  },
 
   // ------------------------ READ ------------------------
   async getUser(id){
@@ -98,6 +115,7 @@ export const DB = {
       console.log(err)
     }
     const houseObj = await returnedHouse;
+    // todo is there a way to abstract this out of here? I guess the concep tof a model
     const data = {
       id: houseObj.id,
       value: houseObj.data().value,

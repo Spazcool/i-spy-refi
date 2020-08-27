@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
         setIsAuth(false)
       }    
     });
-    console.log('stuff')  
   }
 
   const logout = async () => {

@@ -13,14 +13,22 @@ const Houses = props => {
   const getHouses = async () => {
     let houses = await DB.getHouses();
     setHouses(houses)
-    // examples of hitting the other endpoints
+
+    // ------------- EXAMPLES -------------
+    // ------------- GET -------------
     // let users = await DB.getUsers();
     // let house = await DB.getHouse(zpid); // todo not sure when in the process the zpid will be comeing from, maybe from the user
-    // let userDB = await DB.getUser(user.user.uid) // todo have to get this from calling users, might be a way to grab it from the authenticated user
-    // console.log(userDB)
-    // console.log(user.user.uid)
-  }
+    // let userDB = await DB.getUser(user.user.uid);
 
+    // ------------- CREATE -------------
+    // const houseData = {
+    //   zpid: 456789,
+    //   location: [50, 42],
+    //   comps: []
+    // }
+    // let house = await DB.createHouse(user.user.uid, houseData)
+    // console.log(house.id)
+  }
   return (
     <Container className="signup">
       <Row>
