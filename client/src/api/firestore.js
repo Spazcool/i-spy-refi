@@ -31,13 +31,16 @@ export const DB = {
           admin: false,
         }
       }
+      let returnedUser;
 
       try {
-        await userRef.set(data, {merge: true})
-        return 'created user'
+        returnedUser = await userRef.set(data, {merge: true})
       } catch (error) {
         console.error("Error creating user document", error);
       }
+
+      const userObj = await returnedUser;
+      return userObj;
     }
   },
 
@@ -149,8 +152,54 @@ export const DB = {
   },
 
   // ------------------------ UPDATE ------------------------
-  async updateUser(id){},
-  async updateHouse(id){}, 
+  async updateUser(user, updateUserData){
+    const userRef = db().doc(`users/${user}`);
+    const snapshot = await userRef.get();
+
+    if (!snapshot.exists) {
+      return;
+    }else{
+      const {email, displayName, firstName, lastName, zpid, admin} = updateUserData;
+      const data = {
+        email,
+        displayName,
+        firstName,
+        lastName,
+        zpid,
+        admin,
+      }
+
+      try {
+        await userRef.update(data)
+      } catch (error) {
+        console.error("Error updating user document", error);
+      }
+    }
+  },
+
+  async updateHouse(updateHouseData){
+    const housesRef = db().collection('houses');
+    const query = housesRef.where('zpid', '==', updateHouseData.zpid)
+
+    const snapshot = await query.get();
+    console.log(snapshot)
+    console.log(updateHouseData.zpid)
+    if (!snapshot.exists) {
+      console.log('no snapshot')
+      return;
+    }else{
+      const {comps} = updateHouseData;
+      const data = {
+        comps
+      }
+
+      try {
+        await query.update(data)
+      } catch (error) {
+        console.error("Error updating house document", error);
+      }
+    }
+  }, 
 
   // ------------------------ DELETE ------------------------
   async deleteUser(id){},
