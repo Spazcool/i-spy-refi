@@ -24,6 +24,5 @@ export const signUpWithEmail = async (user, additionalData) => {
 // ---------------- USE FIREBASE AUTH FOR THE APP ----------------
 export const auth = firebase.auth();
 
-// ---------------- USER FIRESTORE AS OUR DB OF CHOICE ----------------
-export const firestore = firebase.firestore();
-export const flame = firebase.firestore; //todo figure out why these two aren't playing nice
+// ---------------- USE FIRESTORE AS OUR DB OF CHOICE ----------------
+export const firestore = firebase.firestore;

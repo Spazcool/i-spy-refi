@@ -1,10 +1,10 @@
-import {firestore as db, flame} from '../firebase.js';
+import {firestore as db} from '../firebase.js';
 
 export const DB = {
 
   // ------------------------ CREATE ------------------------
   async createUser(user, additionalData){
-    const userRef = db.doc(`users/${user.uid}`);
+    const userRef = db().doc(`users/${user.uid}`);
     const snapshot = await userRef.get();
 
     if (!snapshot.exists) {
@@ -45,13 +45,13 @@ export const DB = {
     const data = {
       owner: user,
       zpid: houseData.zpid,
-      location: new flame.GeoPoint(houseData.location[0], houseData.location[1]),
+      location: new db.GeoPoint(houseData.location[0], houseData.location[1]),
       comps: houseData.comps
     }
     let returnedHouse;
 
     try{
-      returnedHouse = await db.collection('houses').add(data)
+      returnedHouse = await db().collection('houses').add(data)
     }
     catch(err){
       console.log(err)
@@ -63,7 +63,7 @@ export const DB = {
   // ------------------------ READ ------------------------
   async getUser(id){
     let returnedUser;
-    const user = db.collection('users').doc(id);
+    const user = db().collection('users').doc(id);
     try {
       returnedUser = await user.get();
     }
@@ -82,7 +82,7 @@ export const DB = {
 
   async getUsers(){
     let returnedUsers;
-    const usersList = db.collection('users');
+    const usersList = db().collection('users');
     try {
       returnedUsers = await usersList.get();
     }
@@ -107,7 +107,7 @@ export const DB = {
 
   async getHouse(id){
     let returnedHouse;
-    const house = db.collection('houses').doc(id);
+    const house = db().collection('houses').doc(id);
     try {
       returnedHouse = await house.get();
     }
@@ -126,7 +126,7 @@ export const DB = {
 
   async getHouses(){
     let returnedHouses;
-    const housesList = db.collection('houses');
+    const housesList = db().collection('houses');
     try {
       returnedHouses = await housesList.get();
     }
@@ -158,12 +158,12 @@ export const DB = {
 
   // ------------------------ EXAMPLES ------------------------
 
-  // const housesList = db.collection('houses');
+  // const housesList = db().collection('houses');
   // const query = housesList.where('value', '>', 100000);
   // const query = housesList.orderBy('value', 'desc');
   // query.get().then(houses => {...})
 
-  // const myHouse = db.collection('houses').doc('JWb8oyGegTY1HCi9XcaX');
+  // const myHouse = db().collection('houses').doc('JWb8oyGegTY1HCi9XcaX');
   // myHouse.get().then(doc => {...})
 
   // AUTO UPDATE references to the DB on the frontend, SO A CHANGE IN DB AUTO CHANGES THE FRONT
