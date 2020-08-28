@@ -1,23 +1,22 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import React, { useContext } from 'react';
+import { AuthContext } from '../providers/AuthProvider';
 // import { auth } from "../firebase";
-import "../App.css";
-import { Container, Row, Button, Col } from "react-bootstrap";
+import '../App.css';
+import { Container, Row, Button, Col } from 'react-bootstrap';
 
 function Home(props) {
-  
   const { isAuth, logout } = useContext(AuthContext);
 
   return (
-    <Container className="signup">
+    <Container className='signup'>
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
           <h1>Home Page</h1>
           {isAuth ? (
             <>
               <Button
-                className="m-1"
-                onClick={e => {
+                className='m-1'
+                onClick={(e) => {
                   e.preventDefault();
                   logout();
                 }}
@@ -25,31 +24,40 @@ function Home(props) {
                 Logout
               </Button>
               <Button
-                className="m-1"
-                onClick={e => {
+                className='m-1'
+                onClick={(e) => {
                   e.preventDefault();
-                  props.history.push("/houses");
+                  props.history.push('/houses');
                 }}
               >
                 Houses
+              </Button>
+              <Button
+                className='m-1'
+                onClick={(e) => {
+                  e.preventDefault();
+                  props.history.push('/HouseAdditions');
+                }}
+              >
+                Get your Estimate
               </Button>
             </>
           ) : (
             <>
               <Button
-                className="m-1"
-                onClick={e => {
+                className='m-1'
+                onClick={(e) => {
                   e.preventDefault();
-                  props.history.push("/login");
+                  props.history.push('/login');
                 }}
               >
                 Login
               </Button>
               <Button
-                className="m-1"
-                onClick={e => {
+                className='m-1'
+                onClick={(e) => {
                   e.preventDefault();
-                  props.history.push("/signup");
+                  props.history.push('/signup');
                 }}
               >
                 Signup
