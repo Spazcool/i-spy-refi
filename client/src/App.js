@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Houses from './pages/Houses';
 import Navbar from './components/Navbar';
 import HouseDisplay from './components/HouseDisplay';
+import SimilarProperties from './components/SimilarProperties';
 
 function App() {
   // Here we subscribe the authentication context using the useContext hook
@@ -73,10 +74,11 @@ function App() {
 // even though it is unnamed here, it will be imported as App in index.js
 export default () => {
   return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    // <AuthProvider>
+    //   <App />
+    // </AuthProvider>
 
     // <HouseDisplay />
+    <SimilarProperties />
   );
 };
