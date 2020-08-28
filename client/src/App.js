@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useContext } from 'react';
 import {
   Route,
@@ -6,10 +7,12 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
-import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Houses from './pages/Houses';
+import Navbar from './components/Navbar';
+import HouseDisplay from './components/HouseDisplay';
 
 function App() {
   // Here we subscribe the authentication context using the useContext hook
@@ -38,6 +41,7 @@ function App() {
   return (
     <Router>
       <>
+        <Navbar />
         <div>
           Sexy header to go here:{' '}
           {isAuth
@@ -47,7 +51,7 @@ function App() {
             : ''}
         </div>
         <Switch>
-          <Route exact path='/' render={(props) => <Home {...props} />} />
+          <Route exact path='/' render={(props) => <Dashboard {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />
           <Route
             exact
@@ -72,5 +76,7 @@ export default () => {
     <AuthProvider>
       <App />
     </AuthProvider>
+
+    // <HouseDisplay />
   );
 };
