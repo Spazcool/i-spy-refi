@@ -1,96 +1,112 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+
 import { AuthContext } from "../providers/AuthProvider";
-// import { auth } from "../firebase";
-import "../App.css";
-import { Container, Row, Button, Col } from "react-bootstrap";
+import { DB } from "../api/firestore.js";
+
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
+import Button from '@material-ui/core/Button';
+import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   paper: {
-    height: 140,
-    width: 100,
+    // height: 140,
+    // width: 100,
   },
   control: {
     padding: theme.spacing(2),
   },
 }));
 
-function Home(props) {
-  
-  const { isAuth, logout } = useContext(AuthContext);
-
+const Dashboard = props => {
+  const { user } = useContext(AuthContext);
+  const [houses, setHouses] = useState([]);
   const [spacing, setSpacing] = React.useState(2);
-  const classes = useStyles();
 
-  const handleChange = (event) => {
-    setSpacing(Number(event.target.value));
-  };
 
+  const getHouses = async () => {
+    // ------------- DESIRED DB CALL -------------
+    // TO TEST OUT THE EXAMPLES BELOW, COMMENT OUT THE NEXT 2 LINES & UNCOMMENT THE APPROPRIATE EXAMPLE + THE CONSOLE LOG
+    let houses = await DB.getHouses();
+    setHouses(houses)
+
+    // ------------- EXAMPLES -------------
+    // ------------- GET: USER, USERS, HOUSE -------------
+    // let users = await DB.getUsers();
+    // let house = await DB.getHouseByOwner(user.user.uid)
+    // let house = await DB.getHouseByID(id); // DB colleciton id NOT the zpid
+    // let userDB = await DB.getUser(user.user.uid); //returns current logged in user, for a list of users ids you'll need to call DB.getUsers() first
+
+    // ------------- CREATE: HOUSE -------------
+    // FYI: USER CREATION HAPPENS AT SIGNUP/LOGIN IF YOU WANT TO SEE IT IN ACTION
+    // const houseData = {
+    //   zpid: 456789,
+    //   location: [50, 42]
+    //   comps: []
+    // }
+    // let house = await DB.createHouse(user.user.uid, houseData)
+
+    // ------------- UPDATE: USER, HOUSE -------------
+    // FYI .update ON FIREBASE RETURNS NOTHING, THIS IS WORKING BUT TO SEE THE UPDATED VALUE, YOU'LL NEED TO CALL A .get OR CHECKOUT THE DB VIA THE FIREBASE CONSOLE: https://console.firebase.google.com/project/ispyrefi/firestore/
+    // const userData = {
+    //   email: 'giggolojo@joe.joe',
+    //   displayName: 'barry',
+    //   firstName: 'joe',
+    //   lastName: 'giglowski',
+    //   zpid: 3456789,
+    //   admin: true,
+    // }
+    // let updatedUser = async () => await DB.updateUser(user.user.uid, userData)
+    // updatedUser();
+
+    // const houseData = {
+    //   zpid: 456780,
+    //   comps: [{something: 'else'}],
+    // }
+    // let updateHouse = async () => await DB.updateHouse(houseData)
+    // updateHouse();
+
+    // ------------- DELETE: USER, HOUSE -------------
+    // FYI you can grab id from context if user is deleting self (ie. user.user.uid), otherwise you'll need to run DB.getUsers and filter the data to find the user you want to delete, same thing for deleting a house
+    // let deleteUser = async () => await DB.deleteUser('SZJUYZKs1oPBZTAoxJy2zXb8gwA3') 
+    // deleteUser(); 
+
+    // let deleteHouse = async () => await DB.deleteHouse('iN89T5GcCeCJcx1oPrdV') // 
+    // deleteHouse();
+  }
   return (
     <Container className="signup">
       <Grid container justify="center" spacing={spacing}>
-          {[0, 1, 2].map((value) => (
-            <Grid key={value} item>
-              <Paper className={classes.paper} />
-            </Grid>
-          ))}
+        <Grid md={12} item>
+          <h1>Dashboard Page</h1>
+          <Button onClick={getHouses}>
+            Show Houses
+          </Button>
         </Grid>
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <h1>Home Page</h1>
-          {isAuth ? (
-            <>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  logout();
-                }}
-              >
-                Logout
-              </Button>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/houses");
-                }}
-              >
-                Houses
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/login");
-                }}
-              >
-                Login
-              </Button>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/signup");
-                }}
-              >
-                Signup
-              </Button>
-            </>
-          )}
-        </Col>
-      </Row>
+        <Grid md={12} item>
+          <Paper >
+            <ul>{houses.map((house, i) => {
+              return (<li key={`house-${i}`}>
+                <ul>
+                  <li>comps: {house.comps}</li>
+                  <li>location: {house.location}</li>
+                  <li>owner: {house.owner}</li>
+                  <li>zpid: {house.zpid}</li>
+                  <li>lastUpdated: {house.lastUpdated}</li>
+                </ul>
+              </li>)
+            })}
+            </ul>
+          </Paper>
+        </Grid>
+      </Grid>
     </Container>
   );
-}
+};
 
-export default Home;
+export default Dashboard;
