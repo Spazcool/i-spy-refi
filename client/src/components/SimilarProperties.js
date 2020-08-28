@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 export default function SimilarProperties() {
@@ -8,6 +8,7 @@ export default function SimilarProperties() {
   let i;
   let avgPerSqFt = 0;
   let totalHouseValue = 0;
+  const [avgSqFt, setavgSqFt] = useState('');
 
   axios({
     method: 'GET',
@@ -38,8 +39,8 @@ export default function SimilarProperties() {
           response.data.comparables[i].lastSoldPrice.value /
           response.data.comparables[i].finishedSqFt;
       }
-
-      console.log('result:' + result);
+      setavgSqFt(result);
+      console.log('result:' + avgSqFt);
 
       avgPerSqFt = result / i;
       console.log('avgsqft:', avgPerSqFt);
