@@ -3,6 +3,7 @@ import { AuthContext } from "../providers/AuthProvider";
 // import { auth } from "../firebase";
 import "../App.css";
 import { Container, Row, Button, Col } from "react-bootstrap";
+import Grid from '@material-ui/core/Grid';
 
 function Home(props) {
   
@@ -10,6 +11,12 @@ function Home(props) {
 
   return (
     <Container className="signup">
+      <Grid container spacing={10} style={{ padding: 24 }}>
+                <Grid item xs={12} sm={6} lg={4} xl={3}>
+                  House
+                </Grid>
+              
+            </Grid>
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
           <h1>Home Page</h1>
