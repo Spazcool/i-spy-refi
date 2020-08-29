@@ -1,28 +1,34 @@
 import React, { useContext, useState } from "react";
+
 import { AuthContext } from "../providers/AuthProvider";
-// import { firestore } from "../firebase";
 import { DB } from "../api/firestore.js";
-import { Button, Col, Container, Row } from "react-bootstrap";
+
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import "../App.css";
 
-const Houses = props => {
-  // Destructure the logout function from AuthContext
-  const { logout, user} = useContext(AuthContext);
+const Dashboard = props => {
+  const { user } = useContext(AuthContext);
   const [houses, setHouses] = useState([]);
+  const [spacing] = React.useState(2);
+
 
   const getHouses = async () => {
     // ------------- DESIRED DB CALL -------------
     // TO TEST OUT THE EXAMPLES BELOW, COMMENT OUT THE NEXT 2 LINES & UNCOMMENT THE APPROPRIATE EXAMPLE + THE CONSOLE LOG
     let houses = await DB.getHouses();
+    console.log(houses)
     setHouses(houses)
 
     // ------------- EXAMPLES -------------
     // ------------- GET: USER, USERS, HOUSE -------------
     // let users = await DB.getUsers();
     // let house = await DB.getHouseByOwner(user.user.uid)
-    // let house = await DB.getHouseByID(id); // DB colleciton id NOT the zpid
+    // let house = await DB.getHouseByID('MznGptrV4Zd5dzwtgo46'); // DB colleciton id NOT the zpid
     // let userDB = await DB.getUser(user.user.uid); //returns current logged in user, for a list of users ids you'll need to call DB.getUsers() first
-
+    // console.log(house)
     // ------------- CREATE: HOUSE -------------
     // FYI: USER CREATION HAPPENS AT SIGNUP/LOGIN IF YOU WANT TO SEE IT IN ACTION
     // const houseData = {
@@ -62,38 +68,32 @@ const Houses = props => {
   }
   return (
     <Container className="signup">
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <h1>HOUSES Page</h1>
-          <Button
-            className="m-1"
-            onClick={() => {
-              logout();
-              setHouses([]);
-            }}
-          >
-            Logout
-          </Button>
-          <Button
-            className="m-1"
-            onClick={() => {
-              props.history.push("/");
-            }}
-          >
-            Home
-          </Button>
-          <Button className="m-1" onClick={getHouses}>
+      <Grid container justify="center" spacing={spacing}>
+        <Grid md={12} item>
+          <h1>Dashboard Page</h1>
+          <Button onClick={getHouses}>
             Show Houses
           </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <ul>{houses.map((house, i) => <li key={`house-${i}`}>value: {house.value}</li>)}</ul>
-        </Col>
-      </Row>
+        </Grid>
+        <Grid md={12} item>
+          <Paper >
+            <ul>{houses.map((house, i) => {
+              return (<li key={`house-${i}`}>
+                <ul>
+                  <li>comps: {house.comps}</li>
+                  <li>location: {house.location}</li>
+                  <li>owner: {house.owner}</li>
+                  <li>zpid: {house.zpid}</li>
+                  <li>lastUpdated: {house.lastUpdated}</li>
+                </ul>
+              </li>)
+            })}
+            </ul>
+          </Paper>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
 
-export default Houses;
+export default Dashboard;
