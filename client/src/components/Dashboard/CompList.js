@@ -22,10 +22,10 @@ export default function CompList() {
     <Paper elevation={4} className={classes.root}>
       <div className={classes.list}>
         <CompListItem />
+        {/* <CompListItem />
         <CompListItem />
         <CompListItem />
-        <CompListItem />
-        <CompListItem />
+        <CompListItem /> */}
       </div>
     </Paper>
   );

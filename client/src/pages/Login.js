@@ -3,29 +3,27 @@ import { Redirect } from 'react-router-dom'
 import '../App.css';
 import { AuthContext } from "../providers/AuthProvider";
 
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col';
-import LoginEmail from '../components/LoginEmail'
-import LoginGoogle from '../components/LoginGoogle';
+import LoginOptions from '../components/Login.js'
+
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 function Login(props) {
-
   const { isAuth } = useContext(AuthContext)
-
-  console.log("login auth: ", isAuth)
+  const [spacing] = React.useState(2);
 
   return (
-      isAuth ? <Redirect to='/' />
-        :
-        <Container className="signup">
-          <Row>
-            <Col md={{ span: 8, offset: 2 }}>
-              <LoginGoogle/>
-              <LoginEmail {...props}/>
-            </Col>
-          </Row>
-        </Container>
+    isAuth ? 
+      <Redirect to='/' />
+      :
+      <Container className="signup">
+          <h1>Login Page</h1>
+        <Grid container justify="center" spacing={spacing}>
+          <Grid item xs={12} md={6}>
+            <LoginOptions {...props}/>
+          </Grid>
+        </Grid>
+      </Container>
   );
 }
 
