@@ -5,8 +5,24 @@ import LoginGoogle from '../components/LoginGoogle';
 
 import Form from 'react-bootstrap/Form';
 import Button from '@material-ui/core/Button';
+import {GoSignIn} from 'react-icons/go';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    // height: 140,
+    // width: 100,
+  },
+  control: {
+    'padding-left': theme.spacing(1),
+  },
+}));
 
 const Signup = props => {
+    const classes = useStyles();
 
     const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' }
     const errorMessage = 'invalid credentials'
@@ -113,7 +129,8 @@ const Signup = props => {
             </Form.Text>
         </Form.Group>
         <Button className='m-1' variant="contained" type="submit">
-            Submit
+        <span className="flip"><GoSignIn/></span>
+        <span className={classes.control}>Sign-Up</span>
         </Button>
         <LoginGoogle/>
       </Form>
