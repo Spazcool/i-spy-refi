@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { setState, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import Radio from '@material-ui/core/Radio';
@@ -10,6 +10,10 @@ import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Button } from '@material-ui/core';
+import { Form } from 'react-bootstrap';
+const Zillow = require('node-zillow');
+// import { AuthContext } from '../providers/HouseProvider';
+// import { Redirect } from 'react-router-dom';
 
 // const handleSubmit = (event) => {
 //   event.preventDefault();
@@ -18,24 +22,6 @@ import { Button } from '@material-ui/core';
 //     `https://zillow-com.p/rapidapi.com/search/address?address=${event.target}`
 //   );
 // };
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,23 +105,23 @@ export default function HouseAdditions() {
     zip: '',
     state: '',
   };
-  const [currency, setCurrency] = useState('USD');
+
   const [userHouse, setUserHouse] = useState(houseCreds);
 
   const handleInputChange = (event) =>
     setUserHouse({
       // event.preventDefault();
       ...userHouse,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value.trim(),
     });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const inputHouseCreds = {
-      city: encodeURIComponent(userHouse.city.trim()),
-      street: encodeURIComponent(userHouse.street.trim()),
-      zip: encodeURIComponent(userHouse.zip.trim()),
-      state: encodeURIComponent(userHouse.state.trim()),
+      city: encodeURIComponent(userHouse.city),
+      street: encodeURIComponent(userHouse.street),
+      zip: encodeURIComponent(userHouse.zip),
+      state: encodeURIComponent(userHouse.state),
     };
     console.log(inputHouseCreds);
     setUserHouse(inputHouseCreds);
@@ -143,10 +129,37 @@ export default function HouseAdditions() {
   };
 
   const afterSubmit = () => {
-    fetch(
-      `https://zillow-com.p/rapidapi.com/search/address?address=${userHouse.street}%20&citystatezip=${userHouse.city}%20${userHouse.zip}%20${userHouse.state}`
-    ).then((res) => console.log(res));
+    const zillow = new Zillow(
+      '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
+    );
+
+    const params = {
+      address: encodeURIComponent(userHouse.street),
+      citystatezip: encodeURIComponent(
+        userHouse.city,
+        userHouse.state,
+        userHouse.zip
+      ),
+      rentzestimate: false,
+    };
+
+    zillow.get('GetSearchResults', params).then((results) => {
+      console.log(results);
+    });
+    // fetch(
+    //   `https://zillow-com.p/rapidapi.com/search/address?address=${userHouse.street}%20Street&citystatezip=${userHouse.city}%20${userHouse.state}%20${userHouse.zip}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+    //       'x-rapidapi-key':
+    //         '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+    //     },
+    //   }
+    // ).then((res) => console.log(res));
   };
+
+  // const { isInput } = useContext(AuthContext);
 
   //   const city = event.target.city,
 
@@ -158,12 +171,17 @@ export default function HouseAdditions() {
   //
   //   };
 
-  useEffect(() => {
-    // event.preventDefault();
-  }, []);
+  // useEffect(() => {
+  //   // event.preventDefault();
+  // }, []);
+
   return (
-    <form className={classes.root} noValidate autoComplete='on'>
-      <FormGroup>
+    <form
+      className={(classes.root, classes.group)}
+      noValidate
+      autoComplete='on'
+    >
+      <FormGroup id='initInput'>
         <FormLabel>
           <TextField
             required
@@ -225,6 +243,7 @@ export default function HouseAdditions() {
         <FormGroup />
 
         <br />
+
         <FormGroup>
           <FormControl component='fieldset'>
             <FormLabel component='legend'>Kitchen Renovations:</FormLabel>
@@ -257,34 +276,14 @@ export default function HouseAdditions() {
               name='customized-radios'
             >
               <FormControlLabel
-                value='Counter Tops'
+                value='Minor Kitchen Remodel'
                 control={<StyledRadio />}
-                label='Counter Tops'
+                label='Minor Kitchen Remodel'
               />
               <FormControlLabel
-                value='Oven'
+                value='Major Kitchen Remodel'
                 control={<StyledRadio />}
-                label='Oven'
-              />
-              <FormControlLabel
-                value='Counter Tops'
-                control={<StyledRadio />}
-                label='Counter Tops'
-              />
-              <FormControlLabel
-                value='Dishwasher'
-                control={<StyledRadio />}
-                label='Dishwasher'
-              />
-              <FormControlLabel
-                value='Cabinets'
-                control={<StyledRadio />}
-                label='Cabinets'
-              />
-              <FormControlLabel
-                value='Wall Repairs'
-                control={<StyledRadio />}
-                label='Wall Repairs'
+                label='Major Kitchen Remodel'
               />
             </RadioGroup>
           </FormControl>
@@ -332,6 +331,76 @@ export default function HouseAdditions() {
             </RadioGroup>
           </FormControl>
         </FormGroup>
+        <br />
+        <FormControl component='fieldset'>
+          <FormLabel component='legend'>Bathroom Remodel:</FormLabel>
+          <br />
+          <RadioGroup
+            className={classes.group}
+            defaultValue='no'
+            aria-label='renovations'
+            name='customized-radios'
+          >
+            <FormControlLabel
+              value='Yes'
+              control={<StyledRadio />}
+              label='Yes'
+            />
+            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
+          </RadioGroup>
+        </FormControl>
+        <br />
+        <FormControl component='fieldset'>
+          <FormLabel component='legend'>Landscaping:</FormLabel>
+          <br />
+          <RadioGroup
+            className={classes.group}
+            defaultValue='no'
+            aria-label='renovations'
+            name='customized-radios'
+          >
+            <FormControlLabel
+              value='Yes'
+              control={<StyledRadio />}
+              label='Yes'
+            />
+            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
+          </RadioGroup>
+        </FormControl>
+        <FormControl component='fieldset'>
+          <FormLabel component='legend'>Entry Door Replacement:</FormLabel>
+          <br />
+          <RadioGroup
+            className={classes.group}
+            defaultValue='no'
+            aria-label='renovations'
+            name='customized-radios'
+          >
+            <FormControlLabel
+              value='Yes'
+              control={<StyledRadio />}
+              label='Yes'
+            />
+            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
+          </RadioGroup>
+        </FormControl>
+        <FormControl component='fieldset'>
+          <FormLabel component='legend'>Deck/Patio/Porch Addition :</FormLabel>
+          <br />
+          <RadioGroup
+            className={classes.group}
+            defaultValue='no'
+            aria-label='renovations'
+            name='customized-radios'
+          >
+            <FormControlLabel
+              value='Yes'
+              control={<StyledRadio />}
+              label='Yes'
+            />
+            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
+          </RadioGroup>
+        </FormControl>
       </FormGroup>
     </form>
   );

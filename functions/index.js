@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const Zillow = require('node-zillow');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin'); //a hack that allows us to bypass some auth stuff, todo lookup how to avoid using it
 // const serviceAccount = require("../key.json"); //used for interacting with DB during local dev
@@ -18,11 +19,11 @@ admin.initializeApp();
 //   const ref = firebaseApp.firestore().collection('houses').orderBy('value', 'desc');
 //   return ref.get();
 // console.log(ref)
-  // return ref.once('value').then(snap => snap.val())
- 
-  // const housesList = db.collection('houses');
-  // const myHouse = db.collection('houses').doc('JWb8oyGegTY1HCi9XcaX');
-  // const query = housesList.where('value', '>', 100000);
+// return ref.once('value').then(snap => snap.val())
+
+// const housesList = db.collection('houses');
+// const myHouse = db.collection('houses').doc('JWb8oyGegTY1HCi9XcaX');
+// const query = housesList.where('value', '>', 100000);
 // }
 
 // ------------------------ EXAMPLE MODIFYING DB ------------------------
@@ -61,9 +62,14 @@ app.get('/timestamp-cached', (req, res) => {
   //     return;
   //   })
   //   .catch(console.log)
-
 });
 
+app.get('/GetSearchResults', (req, res) => {
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  console.log(req);
+  const { params } = req.body;
+  res.json(params);
+});
 // ------------------------ EXAMPLE CRUD interfaces ------------------------
 
 // app.post('/', (req, res) => res.send(Widgets.create()));
