@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Route,
   Switch,
@@ -7,6 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
+import { CustomThemeProvider, CustomThemeContext } from './providers/ThemeProvider';
 
 import Dashboard from './pages/Dashboard';
 import Signup from './pages/Signup';
@@ -17,29 +18,25 @@ import Splash from './pages/Splash';
 import Navbar from './components/Navbar';
 import HouseDisplay from './components/HouseDisplay';
 
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-const useStyles = makeStyles({
-  container: {
-    'margin-top': '6em',
-    'margin-bottom': '5em',
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
   },
-});
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'light',
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
-});
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 function App() {
+  const classes = useStyles();
+  const { theme } = useContext(CustomThemeContext);
   const { isAuth, user } = useContext(AuthContext);
-
-  // here we are ceating a private route wrapper to prevent front end routing to
-  // restricted pages.  The ({ component: Component, ...rest })  argument that is
-  // passed to this functional component is essentially the same as just passing
-  // props, but using object destucturing.  the ...rest is literally the rest of
-  // the props that were not destructured.
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
@@ -48,37 +45,32 @@ function App() {
       }
     />
   );
-  //todo displayname, if desirable, we'll need to make a call to the db to grab the user names for users that signed up with email
+
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <>
-          <Navbar />
-          <Switch>
-            <Route exact path='/' render={(props) => <Splash {...props} />} />
-            <Route exact path='/login' render={(props) => <Login {...props} />} />
-            <Route exact path='/signup' render={(props) => <Signup {...props} />} />
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
-            <PrivateRoute exact path='/user' component={User} />
-          </Switch>
-        </>
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <>
+        <Navbar />
+        <Switch>
+          <Route exact path='/' render={(props) => <Splash {...props} />} />
+          <Route exact path='/login' render={(props) => <Login {...props} />} />
+          <Route exact path='/signup' render={(props) => <Signup {...props} />} />
+          <PrivateRoute exact path='/dashboard' component={Dashboard} />
+          <PrivateRoute exact path='/user' component={User} />
+        </Switch>
+      </>
+    </Router>
   );
 }
 
-// Even though this is the App.js file, in the end we are not exactly exporting
-// the App component.  We actually set up the app component to implement our react
-// router, but in the end we export App wrapped in the context provider
-
-// Here we export the final product of our app/context configuration, and
-// even though it is unnamed here, it will be imported as App in index.js
 export default () => {
+
   return (
     <AuthProvider>
-      <App />
-    </AuthProvider>
+      <CustomThemeProvider>
+      <CssBaseline/>
 
-    // <HouseDisplay />
+        <App />
+      </CustomThemeProvider>
+    </AuthProvider>
   );
 };

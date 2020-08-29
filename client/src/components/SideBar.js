@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom'
-import { AuthProvider, AuthContext } from '../providers/AuthProvider';
+import { AuthContext } from '../providers/AuthProvider';
+import { CustomThemeContext } from '../providers/ThemeProvider';
+// import ThemeToggle from './ThemeToggle';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,6 +37,7 @@ const useStyles = makeStyles({
 export default withRouter(
 
   function TemporaryDrawer(props) {
+    const { theme, toggleTheme } = useContext(CustomThemeContext);
     const { isAuth, logout, user } = useContext(AuthContext);
     const classes = useStyles();
     const [state, setState] = React.useState({
@@ -48,10 +51,6 @@ export default withRouter(
 
       setState({ ...state, [anchor]: open });
     };
-
-    const toggleDarkMode = () => {
-
-    }
 
     return (
       <>
@@ -110,15 +109,18 @@ export default withRouter(
 
               <ListItem
                 className={classes.link}
-                key='logout'
+                key='theme'
                 onClick={e => {
                   e.preventDefault();
-
+                  toggleTheme()
                 }}
                 button
               >
                 <ListItemIcon><LightIcon /></ListItemIcon>
-                <ListItemText primary='Dark Mode' />
+                <ListItemText>
+                  {theme? 'light':'dark'}
+                  {/* <ThemeToggle/> */}
+                  </ListItemText>
               </ListItem>
 
               <ListItem

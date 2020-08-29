@@ -19,7 +19,7 @@
     ```
     * you may get errors here if you have:
         * worked on the project locally previously and not pushed your work up to GitHub
-        * not setup the GitHub version as your master repository
+        * not setup a local stream (i.e. connection) between your local master & the public master on Github
 7. create and navigate to your local branch:
     * swap out {NAME OF YOUR BRANCH} with something short and descriptive, no spaces, examples below:
     ```bash
@@ -80,4 +80,4 @@
 
 ### Communication, again:
 19. go to Trello board
-19. move card from "In Progress" to "Done"
+20. move card from "In Progress" to "Done"
