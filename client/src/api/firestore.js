@@ -111,19 +111,33 @@ export const DB = {
   async getHouseByID(id){
     let returnedHouse;
     const house = db().collection('houses').doc(id);
+
     try {
       returnedHouse = await house.get();
     }
     catch(err) {
       console.log(err)
     }
+
     const houseObj = await returnedHouse;
+    let returnedFormData;
+
+    try {
+      returnedFormData = await this.getFormByID(id);
+    }
+    catch(err) {
+      console.log(err)
+    }
+    const formObj = await returnedFormData;
+    
     // todo is there a way to abstract this out of here? I guess the concep tof a model
     const data = {
       id: houseObj.id,
       value: houseObj.data().value,
       zpid: houseObj.data().zpid,
+      formData: formObj
     }
+ 
     return data;
   },
 
@@ -146,17 +160,53 @@ export const DB = {
     const houses = await returnedHouses;
     //todo break this off into a reusable func seeing as this shit is gonna happen a bunch
     const housesArr = [];
-    houses.forEach(house => {
+    houses.forEach(async house => {
+      let returnedFormData;
+
+      try {
+        returnedFormData = await this.getFormByID(house.id);
+      }
+      catch(err) {
+        console.log(err)
+      }
+      const formObj = await returnedFormData;
+      
       // todo does this enforcing of data model belong here?
       const data = {
         id: house.id,
         owner: house.data().owner,
         value: house.data().value,
-        zpid: house.data().zpid
+        zpid: house.data().zpid,
+        formData: formObj
       }
       housesArr.push(data) 
     })
     return housesArr;
+  },
+
+  async getFormByID(houseID){
+    let returnedFormData;
+    const formData = db().collection('houses').doc(houseID).collection('formData');
+
+    try {
+      returnedFormData = await formData.get();
+    }
+    catch(err) {
+      console.log(err)
+    }
+    const formObj = await returnedFormData;
+    let data;
+
+    // todo only returns one form's data
+    // todo will need to beef up the returned fields
+    formObj.forEach(form => {
+      data = {
+        id: form.id,
+        bathroom: form.data().bathroom
+      }
+    })
+
+    return data;
   },
 
   // ------------------------ UPDATE ------------------------
