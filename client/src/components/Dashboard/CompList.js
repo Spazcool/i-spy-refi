@@ -8,14 +8,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: 275,
-    // '& > *': {
-    //   margin: theme.spacing(1),
-    //   width: theme.spacing(24),
-    //   height: theme.spacing(24),
-    // },
     height: '100vh',
-    'overflow-y': 'scroll',
+
   },
+  list: {
+    'overflow-y': 'scroll',
+  }
 }));
 
 export default function CompList() {
@@ -24,11 +22,14 @@ export default function CompList() {
   return (
     <div className={classes.root}>
       <Paper elevation={4}>
+        <div className={classes.list}>
         <CompListItem />
         <CompListItem />
         <CompListItem />
         <CompListItem />
         <CompListItem />
+        </div>
+        
       </Paper>
     </div>
   );
