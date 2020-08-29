@@ -11,28 +11,28 @@ import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
 //   root: {
-//     maxWidth: 345,
+//     maxWidth: 445,
 //   },
   media: {
     height: 140,
   },
 });
 
-export default function CompDetails() {
+export default function MyHouse() {
   const classes = useStyles();
 
   return (
-    <Paper elevation={4}>
-    <Card className={classes.root}>
-
+    <Paper elevation={4} className="my-house">
+    <Card className="my-house">
+   
         <CardMedia
           className={classes.media}
         //   image="/static/images/cards/contemplative-reptile.jpg"
-        image="https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg"
-          title="Contemplative Reptile"
+        image="https://honka.com/wp-json/image/resize?w=900&h=600&src=uploads%2Fupload_35c14afec13dd0964987d96f8ee44a7e.jpg"
+          title="My House"
         />
         <CardContent>
-        <Typography variant='h4' component='h2'>
+        <Typography variant='h5' component='h2'>
             34 Bromfield rd, apt.1
           </Typography>
           <Typography variant='h5' component='h2'>
@@ -42,15 +42,6 @@ export default function CompDetails() {
             Description/Details
           </Typography>
         </CardContent>
-
-      <CardActions>
-        <Button size="small" color="primary">
-          Button
-        </Button>
-        <Button size="small" color="primary">
-          Button
-        </Button>
-      </CardActions>
     </Card>
     </Paper>
   );
