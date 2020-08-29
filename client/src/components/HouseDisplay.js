@@ -4,10 +4,10 @@ import axios from 'axios';
 export default function HouseDisplay() {
   const state = 'NH';
   const city = 'Portsmouth';
-  const street = 'Sudbury St';
+  const street = ' 31 Sudbury St';
   const zip = '03801';
   let zillowpropid = '';
-  const streetNumber = '31';
+  // const streetNumber = '31';
 
   const [imageData, setImage] = useState([]);
 
@@ -22,7 +22,7 @@ export default function HouseDisplay() {
         useQueryString: true,
       },
       params: {
-        address: `${streetNumber} ${street}`,
+        address: `${street}`,
         citystatezip: `${city} ${state} ${zip}`,
       },
     })

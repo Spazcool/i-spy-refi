@@ -39,7 +39,11 @@ function App() {
         <Switch>
           <Route exact path='/' render={(props) => <Splash {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />
-          <Route exact path='/signup' render={(props) => <Signup {...props} />} />
+          <Route
+            exact
+            path='/signup'
+            render={(props) => <Signup {...props} />}
+          />
           <PrivateRoute exact path='/dashboard' component={Dashboard} />
           <PrivateRoute exact path='/user' component={User} />
         </Switch>
@@ -49,22 +53,14 @@ function App() {
 }
 
 export default () => {
-
   return (
-<<<<<<< HEAD
-    // <AuthProvider>
-    //   <App />
-    // </AuthProvider>
-
-    // <HouseDisplay />
-    <SimilarProperties />
-=======
     <AuthProvider>
       <CustomThemeProvider>
       <CssBaseline/>
         <App />
       </CustomThemeProvider>
     </AuthProvider>
->>>>>>> 1e42693bbd6422b5458148c565f0c28af439d47d
+
+   // <SimilarProperties />
   );
 };
