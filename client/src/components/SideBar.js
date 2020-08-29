@@ -77,7 +77,7 @@ export default withRouter(
                 <ListItemIcon><HomeIcon /></ListItemIcon>
                 <ListItemText primary='Home' />
               </ListItem>
-
+              {isAuth? 
               <ListItem 
                 button
                 className={classes.link}
@@ -88,11 +88,13 @@ export default withRouter(
                 }}
               >
                 <ListItemIcon><UserIcon /></ListItemIcon>
-                <ListItemText primary={isAuth? (user.user.displayName ? user.user.displayName : user.user.email): ''} />
+                <ListItemText primary={user.user.displayName ? user.user.displayName : user.user.email} />
               </ListItem>
+              : <></>}
             </List>
             <Divider />
             <List>
+            {isAuth? 
               <ListItem
                 className={classes.link}
                 key='dashboard'
@@ -105,7 +107,7 @@ export default withRouter(
                 <ListItemIcon><ChartIcon /></ListItemIcon>
                 <ListItemText primary='Dashboard' />
               </ListItem>
-
+              : <></>}
               <ListItem
                 className={classes.link}
                 key='theme'

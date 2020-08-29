@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { auth } from "../firebase";
-import { CustomThemeContext } from '../providers/ThemeProvider';
 import LoginGoogle from '../components/LoginGoogle';
 
 import Form from 'react-bootstrap/Form';
@@ -15,17 +14,13 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  themed: {
-    backgroundColor: theme.primary,
-  },
   control: {
     'padding-left': theme.spacing(1),
   },
 }));
 
 const LoginOptions = props => {
-    const { theme } = useContext(CustomThemeContext);
-    const classes = useStyles(theme);
+    const classes = useStyles();
     const emptyCreds = { emailInput: '', passwordInput: '' }
     const errorMessage = 'invalid credentials'
     const [formData, setFormData] = useState(emptyCreds)
