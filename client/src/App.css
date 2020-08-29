@@ -5,3 +5,12 @@
 /* * {
   border: 1px solid black;
 } */
+
+.flip{
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip:hover{
+  transform: rotateY(180deg);
+}

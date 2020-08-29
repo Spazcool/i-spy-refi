@@ -65,7 +65,7 @@ const LoginOptions = props => {
             </Form.Text>
         </Form.Group>
         <Button className='m-1' type="submit" variant="contained" >
-          <EmailIcon/>
+          <span className="flip"><EmailIcon /></span>
           <span className={classes.control}>Sign-In</span>
         </Button>
         <LoginGoogle/>

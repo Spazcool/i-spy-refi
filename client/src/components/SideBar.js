@@ -19,6 +19,7 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import LightIcon from '@material-ui/icons/WbSunnyOutlined';
 import DarkIcon from '@material-ui/icons/WbSunnyRounded';
+import '../App.css';
 
 const useStyles = makeStyles({
   list: {
@@ -74,7 +75,7 @@ export default withRouter(
                   }}
                 button
               >
-                <ListItemIcon><HomeIcon /></ListItemIcon>
+                <ListItemIcon><span className="flip"><HomeIcon/></span></ListItemIcon>
                 <ListItemText primary='Home' />
               </ListItem>
               {isAuth? 
@@ -87,7 +88,7 @@ export default withRouter(
                   props.history.push("/user");
                 }}
               >
-                <ListItemIcon><UserIcon /></ListItemIcon>
+                <ListItemIcon><span className="flip"><UserIcon /></span></ListItemIcon>
                 <ListItemText primary={user.user.displayName ? user.user.displayName : user.user.email} />
               </ListItem>
               : <></>}
@@ -104,7 +105,7 @@ export default withRouter(
                 }}
                 button
               >
-                <ListItemIcon><ChartIcon /></ListItemIcon>
+                <ListItemIcon><span className="flip"><ChartIcon /></span></ListItemIcon>
                 <ListItemText primary='Dashboard' />
               </ListItem>
               : <></>}
@@ -117,7 +118,7 @@ export default withRouter(
                 }}
                 button
               >
-                <ListItemIcon>{theme ? <LightIcon /> : <DarkIcon/>}</ListItemIcon>
+                <ListItemIcon><span className="flip">{theme ? <LightIcon /> : <DarkIcon/>}</span></ListItemIcon>
                 <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
               </ListItem>
               
@@ -132,7 +133,7 @@ export default withRouter(
                     }}
                     button
                   >
-                    <ListItemIcon><LogoutIcon /></ListItemIcon>
+                    <ListItemIcon><span className="flip"><LogoutIcon /></span></ListItemIcon>
                     <ListItemText primary='Logout' />
                   </ListItem>
                 :

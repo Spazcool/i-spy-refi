@@ -22,7 +22,7 @@ const LoginGoogle = () => {
   const classes = useStyles();
   return(
     <Button onClick={() => signInWithGoogle()} variant="contained">
-      <FaGoogle />
+      <span className="flip"><FaGoogle /></span>
       <span className={classes.control}>Sign-In</span>
     </Button>
   )
