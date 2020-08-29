@@ -1,7 +1,31 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button'
 import { signInWithGoogle } from "../firebase";
 
-const LoginGoogle = () => <Button onClick={() => signInWithGoogle()}>Googs Sign in</Button>;
+import {FaGoogle} from 'react-icons/fa'
+import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    // height: 140,
+    // width: 100,
+  },
+  control: {
+    'padding-left': theme.spacing(1),
+  },
+}));
+
+const LoginGoogle = () => {
+  const classes = useStyles();
+  return(
+    <Button onClick={() => signInWithGoogle()} variant="contained">
+      <span className="flip"><FaGoogle /></span>
+      <span className={classes.control}>Sign-In</span>
+    </Button>
+  )
+};
 
 export default LoginGoogle;
