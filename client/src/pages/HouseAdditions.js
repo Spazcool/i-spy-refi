@@ -219,7 +219,7 @@ export default function HouseAdditions() {
             name='zip'
             value={userHouse.zip}
             onChange={handleInputChange}
-          />{' '}
+          />
           <TextField
             required
             id='outlined-required'

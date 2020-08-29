@@ -44,7 +44,7 @@ function App() {
             path='/signup'
             render={(props) => <Signup {...props} />}
           />
-          <PrivateRoute exact path='/houses' component={Houses} />
+          {/* <PrivateRoute exact path='/houses' component={Houses} /> */}
           <PrivateRoute
             exact
             path='/houseadditions'

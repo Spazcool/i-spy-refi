@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CompList from '../components/Dashboard/CompList';
 import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';
+import HouseAdditions from '../pages/HouseAdditions';
 
 function Home(props) {
   const { isAuth, logout } = useContext(AuthContext);
@@ -34,6 +35,12 @@ function Home(props) {
             More
           </Typography>
           <CompList />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={2} xl={3}>
+          <Typography variant='h4' component='h2'>
+            <Button> Get Estimates</Button>
+          </Typography>
+          <HouseAdditions />
         </Grid>
       </Grid>
     </Container>
