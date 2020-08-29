@@ -4,14 +4,8 @@ import axios from 'axios';
 export default function SimilarProperties() {
   const zillowpropid = '95354572';
   const finishedSqFt = '2466';
-  // let result = 0;
   let avgSqFt = 0;
   let avgPerSqFt = 0;
-  // let totalHouseValue = 0;
-  // const [avgSqFt, setavgSqFt] = useState('');
-
-  // const [avgPerSqFt, setavgPerSqFt] = useState('');
-
   const [totalHouseValue, settotalHouseValue] = useState('');
 
   useEffect(() => {
@@ -37,12 +31,7 @@ export default function SimilarProperties() {
       .then((response) => {
         let comlength = response.data.comparables.length;
         //console.log('complength' + comlength);
-        // let lastsoldPrice = response.data.comparables[0].lastSoldPrice.value;
-        //let finishedSqFt = response.data.comparables[0].finishedSqFt;
-
-        //   // trying to work the code here
-        // console.log('lastsoldprice', lastsoldPrice);
-        // console.log('finishedsq', finishedSqFt);
+    
 
         // calculating the Average SqFt
         let index = 0;
@@ -51,7 +40,7 @@ export default function SimilarProperties() {
           avgSqFt +=
             response.data.comparables[i].lastSoldPrice.value /
             response.data.comparables[i].finishedSqFt;
-          index = i+1;
+          index = i + 1;
         }
         console.log(avgSqFt);
         avgPerSqFt = avgSqFt / index;
