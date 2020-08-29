@@ -130,7 +130,6 @@ export const DB = {
     }
     const formObj = await returnedFormData;
     
-
     // todo is there a way to abstract this out of here? I guess the concep tof a model
     const data = {
       id: houseObj.id,
@@ -161,13 +160,24 @@ export const DB = {
     const houses = await returnedHouses;
     //todo break this off into a reusable func seeing as this shit is gonna happen a bunch
     const housesArr = [];
-    houses.forEach(house => {
+    houses.forEach(async house => {
+      let returnedFormData;
+
+      try {
+        returnedFormData = await this.getFormByID(house.id);
+      }
+      catch(err) {
+        console.log(err)
+      }
+      const formObj = await returnedFormData;
+      
       // todo does this enforcing of data model belong here?
       const data = {
         id: house.id,
         owner: house.data().owner,
         value: house.data().value,
-        zpid: house.data().zpid
+        zpid: house.data().zpid,
+        formData: formObj
       }
       housesArr.push(data) 
     })
