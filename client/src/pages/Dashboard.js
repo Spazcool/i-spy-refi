@@ -1,28 +1,29 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import React, { useContext } from 'react';
+import { AuthContext } from '../providers/AuthProvider';
 // import { auth } from "../firebase";
-import "../App.css";
-import { Container, Row, Button, Col } from "react-bootstrap";
+import '../App.css';
+import { Container } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-
+import CompList from '../components/Dashboard/CompList';
+import CompDetails from '../components/Dashboard/CompDetails';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    height: 140,
-    width: 100,
+  // control: {
+  //   padding: theme.spacing(2),
+  // },
+  title: {
+    fontSize: 14,
   },
-  control: {
-    padding: theme.spacing(2),
+  pos: {
+    marginBottom: 12,
   },
 }));
 
 function Home(props) {
-  
   const { isAuth, logout } = useContext(AuthContext);
 
   const [spacing, setSpacing] = React.useState(2);
@@ -33,62 +34,18 @@ function Home(props) {
   };
 
   return (
-    <Container className="signup">
-      <Grid container justify="center" spacing={spacing}>
-          {[0, 1, 2].map((value) => (
-            <Grid key={value} item>
-              <Paper className={classes.paper} />
-            </Grid>
-          ))}
+    <Container className='signup'>
+      <Grid container spacing={2} style={{ padding: 24 }}>
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
+      Hello
         </Grid>
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <h1>Home Page</h1>
-          {isAuth ? (
-            <>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  logout();
-                }}
-              >
-                Logout
-              </Button>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/houses");
-                }}
-              >
-                Houses
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/login");
-                }}
-              >
-                Login
-              </Button>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/signup");
-                }}
-              >
-                Signup
-              </Button>
-            </>
-          )}
-        </Col>
-      </Row>
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
+        <CompDetails />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
+          <CompList />
+        </Grid>
+      </Grid>
     </Container>
   );
 }
