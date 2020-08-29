@@ -9,49 +9,37 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 345,
-//   },
-  media: {
-    height: 140,
-  },
-});
-
 export default function CompDetails() {
-  const classes = useStyles();
-
   return (
     <Paper elevation={4}>
-    <Card className={classes.root}>
-
+      <Card>
         <CardMedia
-          className={classes.media}
-        //   image="/static/images/cards/contemplative-reptile.jpg"
-        image="https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg"
-          title="Contemplative Reptile"
+          className='media'
+          //   image="/static/images/cards/contemplative-reptile.jpg"
+          image='https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg'
+          title='Contemplative Reptile'
         />
         <CardContent>
-        <Typography variant='h4' component='h2'>
+          <Typography variant='h4' component='h2'>
             34 Bromfield rd, apt.1
           </Typography>
           <Typography variant='h5' component='h2'>
             $360,000
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant='body2' color='textSecondary' component='p'>
             Description/Details
           </Typography>
         </CardContent>
 
-      <CardActions>
-        <Button size="small" color="primary">
-          Button
-        </Button>
-        <Button size="small" color="primary">
-          Button
-        </Button>
-      </CardActions>
-    </Card>
+        <CardActions>
+          <Button size='small' color='primary'>
+            Button
+          </Button>
+          <Button size='small' color='primary'>
+            Button
+          </Button>
+        </CardActions>
+      </Card>
     </Paper>
   );
 }
