@@ -1,24 +1,25 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../providers/AuthProvider';
 // import { firestore } from "../firebase";
-import { DB } from "../api/firestore.js";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import "../App.css";
+import { DB } from '../api/firestore.js';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import '../App.css';
 
-const Houses = props => {
+const Houses = (props) => {
   // Destructure the logout function from AuthContext
-  const { logout, user} = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const [houses, setHouses] = useState([]);
 
   const getHouses = async () => {
     // ------------- DESIRED DB CALL -------------
     // TO TEST OUT THE EXAMPLES BELOW, COMMENT OUT THE NEXT 2 LINES & UNCOMMENT THE APPROPRIATE EXAMPLE + THE CONSOLE LOG
     let houses = await DB.getHouses();
-    setHouses(houses)
+    setHouses(houses);
 
     // ------------- EXAMPLES -------------
     // ------------- GET: USER, USERS, HOUSE -------------
-    // let users = await DB.getUsers();
+    let users = await DB.getUsers();
+    console.log(users);
     // let house = await DB.getHouseByOwner(user.user.uid)
     // let house = await DB.getHouseByID(id); // DB colleciton id NOT the zpid
     // let userDB = await DB.getUser(user.user.uid); //returns current logged in user, for a list of users ids you'll need to call DB.getUsers() first
@@ -54,19 +55,19 @@ const Houses = props => {
 
     // ------------- DELETE: USER, HOUSE -------------
     // FYI you can grab id from context if user is deleting self (ie. user.user.uid), otherwise you'll need to run DB.getUsers and filter the data to find the user you want to delete, same thing for deleting a house
-    // let deleteUser = async () => await DB.deleteUser('SZJUYZKs1oPBZTAoxJy2zXb8gwA3') 
-    // deleteUser(); 
+    // let deleteUser = async () => await DB.deleteUser('SZJUYZKs1oPBZTAoxJy2zXb8gwA3')
+    // deleteUser();
 
-    // let deleteHouse = async () => await DB.deleteHouse('iN89T5GcCeCJcx1oPrdV') // 
+    // let deleteHouse = async () => await DB.deleteHouse('iN89T5GcCeCJcx1oPrdV') //
     // deleteHouse();
-  }
+  };
   return (
-    <Container className="signup">
+    <Container className='signup'>
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
           <h1>HOUSES Page</h1>
           <Button
-            className="m-1"
+            className='m-1'
             onClick={() => {
               logout();
               setHouses([]);
@@ -75,21 +76,25 @@ const Houses = props => {
             Logout
           </Button>
           <Button
-            className="m-1"
+            className='m-1'
             onClick={() => {
-              props.history.push("/");
+              props.history.push('/');
             }}
           >
             Home
           </Button>
-          <Button className="m-1" onClick={getHouses}>
+          <Button className='m-1' onClick={getHouses}>
             Show Houses
           </Button>
         </Col>
       </Row>
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
-          <ul>{houses.map((house, i) => <li key={`house-${i}`}>value: {house.value}</li>)}</ul>
+          <ul>
+            {houses.map((house, i) => (
+              <li key={`house-${i}`}>value: {house.value}</li>
+            ))}
+          </ul>
         </Col>
       </Row>
     </Container>
