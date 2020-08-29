@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
-// import { AuthContext } from "../providers/AuthProvider";
+import React, { useState, useContext } from 'react';
+import { auth } from "../firebase";
+import { CustomThemeContext } from '../providers/ThemeProvider';
 import LoginGoogle from '../components/LoginGoogle';
 
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button'
-import { auth } from "../firebase";
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import EmailIcon from '@material-ui/icons/Email';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  themed: {
+    backgroundColor: theme.primary,
+  },
+  control: {
+    'padding-left': theme.spacing(1),
+  },
+}));
 
 const LoginOptions = props => {
-    // const { setIsAuth } = useContext(AuthContext) //todo likely need to set this in the login funciton below
+    const { theme } = useContext(CustomThemeContext);
+    const classes = useStyles(theme);
     const emptyCreds = { emailInput: '', passwordInput: '' }
     const errorMessage = 'invalid credentials'
     const [formData, setFormData] = useState(emptyCreds)
@@ -38,23 +56,24 @@ const LoginOptions = props => {
     };
     return (
       <Form onSubmit={handleFormSubmit}>
-          <Form.Group controlId="emailInput">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange} />
-          </Form.Group>
-          <Form.Group controlId="inputPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange} />
-          </Form.Group>
-          <Form.Group>
-              <Form.Text className="text-danger">
-                  {credsAreInvalid}
-              </Form.Text>
-          </Form.Group>
-          <Button className='m-1' variant="primary" type="submit">
-              Login w/ Email
-          </Button>
-          <LoginGoogle/>
+        <Form.Group controlId="emailInput">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group controlId="inputPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group>
+            <Form.Text className="text-danger">
+                {credsAreInvalid}
+            </Form.Text>
+        </Form.Group>
+        <Button className='m-1' type="submit" variant="contained" >
+          <EmailIcon/>
+          <span className={classes.control}>Sign-In</span>
+        </Button>
+        <LoginGoogle/>
       </Form>
     )
 }

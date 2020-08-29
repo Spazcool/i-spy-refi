@@ -3,22 +3,24 @@ import { AuthContext } from "../providers/AuthProvider";
 import { Redirect } from 'react-router-dom'
 import "../App.css";
 import SignupForm from "../components/SignupForm";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 function Signup(props) {
+  const [spacing] = React.useState(2);
   const { isAuth } = useContext(AuthContext)
 
   return (
     isAuth ? <Redirect to='/' />
     :
     <Container className="signup">
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <SignupForm {...props} />
-        </Col>
-      </Row>
+      <h1>SignUp Page</h1>
+      <Grid container justify="center" spacing={spacing}>
+        <Grid item xs={12} md={6}>
+          <SignupForm {...props}/>
+        </Grid>
+      </Grid>
     </Container>
   );
 }

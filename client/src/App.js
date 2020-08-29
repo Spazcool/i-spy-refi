@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Route,
   Switch,
@@ -7,7 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
-import { CustomThemeProvider, CustomThemeContext } from './providers/ThemeProvider';
+import { CustomThemeProvider } from './providers/ThemeProvider';
 
 import Dashboard from './pages/Dashboard';
 import Signup from './pages/Signup';
@@ -18,25 +18,10 @@ import Splash from './pages/Splash';
 import Navbar from './components/Navbar';
 import HouseDisplay from './components/HouseDisplay';
 
-import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
 function App() {
-  const classes = useStyles();
-  const { theme } = useContext(CustomThemeContext);
-  const { isAuth, user } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
@@ -68,7 +53,6 @@ export default () => {
     <AuthProvider>
       <CustomThemeProvider>
       <CssBaseline/>
-
         <App />
       </CustomThemeProvider>
     </AuthProvider>

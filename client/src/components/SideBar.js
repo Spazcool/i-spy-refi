@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom'
 import { AuthContext } from '../providers/AuthProvider';
 import { CustomThemeContext } from '../providers/ThemeProvider';
-// import ThemeToggle from './ThemeToggle';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,8 +14,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import HomeIcon from '@material-ui/icons/Home';
 import UserIcon from '@material-ui/icons/Person';
-import CodeIcon from '@material-ui/icons/Code';
-import MoneyIcon from '@material-ui/icons/Money';
+import ChartIcon from '@material-ui/icons/BarChart';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import LightIcon from '@material-ui/icons/WbSunnyOutlined';
 import DarkIcon from '@material-ui/icons/WbSunnyRounded';
@@ -103,7 +102,7 @@ export default withRouter(
                 }}
                 button
               >
-                <ListItemIcon><CodeIcon /></ListItemIcon>
+                <ListItemIcon><ChartIcon /></ListItemIcon>
                 <ListItemText primary='Dashboard' />
               </ListItem>
 
@@ -116,25 +115,27 @@ export default withRouter(
                 }}
                 button
               >
-                <ListItemIcon><LightIcon /></ListItemIcon>
-                <ListItemText>
-                  {theme? 'light':'dark'}
-                  {/* <ThemeToggle/> */}
-                  </ListItemText>
+                <ListItemIcon>{theme ? <LightIcon /> : <DarkIcon/>}</ListItemIcon>
+                <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
               </ListItem>
-
-              <ListItem
-                className={classes.link}
-                key='logout'
-                onClick={e => {
-                  e.preventDefault();
-                  logout();
-                }}
-                button
-              >
-                <ListItemIcon><MoneyIcon /></ListItemIcon>
-                <ListItemText primary='Logout' />
-              </ListItem>
+              
+              { isAuth 
+                ? 
+                  <ListItem
+                    className={classes.link}
+                    key='logout'
+                    onClick={e => {
+                      e.preventDefault();
+                      logout();
+                    }}
+                    button
+                  >
+                    <ListItemIcon><LogoutIcon /></ListItemIcon>
+                    <ListItemText primary='Logout' />
+                  </ListItem>
+                :
+                  <></>
+              }
             </List>
           </div>
         </Drawer>

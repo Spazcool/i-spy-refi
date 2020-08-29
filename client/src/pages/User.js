@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function User(props) {
 
   const { isAuth, user } = useContext(AuthContext)
-  const [spacing, setSpacing] = React.useState(2);
+  const [spacing] = React.useState(2);
   const classes = useStyles();
 
   return (

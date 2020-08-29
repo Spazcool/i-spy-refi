@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button'
 import { auth, signUpWithEmail } from "../firebase";
+
+import LoginGoogle from '../components/LoginGoogle';
+
+import Form from 'react-bootstrap/Form';
+import Button from '@material-ui/core/Button';
 
 const Signup = props => {
 
@@ -84,39 +87,36 @@ const Signup = props => {
     };
 
     return (
-        <Form onSubmit={handleFormSubmit}>
-            <Form.Group controlId="inputFirstName">
-                <Form.Label className={firstNameColor}>FirstName</Form.Label>
-                <Form.Control name="firstNameInput" type="text" placeholder="" value={formData.firstNameInput} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group controlId="inputLastName">
-                <Form.Label className={lastNameColor}>LastName</Form.Label>
-                <Form.Control name="lastNameInput" type="text" placeholder="" value={formData.lastNameInput} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group controlId="emailInput">
-                <Form.Label className={emailColor}>Email address</Form.Label>
-                <Form.Control name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange} />
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
-            <Form.Group controlId="inputPassword">
-                <Form.Label className={passwordColor}>Password</Form.Label>
-                <Form.Control name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group>
-                <Form.Text className="text-danger">
-                    {credsAreInvalid}
-                </Form.Text>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-            <Button className='m-1' onClick={e => {
-                e.preventDefault();
-                props.history.push('/')
-            }}>Home</Button>
-        </Form>
+      <Form onSubmit={handleFormSubmit}>
+        <Form.Group controlId="inputFirstName">
+            <Form.Label className={firstNameColor}>First Name</Form.Label>
+            <Form.Control name="firstNameInput" type="text" placeholder="" value={formData.firstNameInput} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group controlId="inputLastName">
+            <Form.Label className={lastNameColor}>Last Name</Form.Label>
+            <Form.Control name="lastNameInput" type="text" placeholder="" value={formData.lastNameInput} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group controlId="emailInput">
+            <Form.Label className={emailColor}>Email address</Form.Label>
+            <Form.Control name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange} />
+            <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+            </Form.Text>
+        </Form.Group>
+        <Form.Group controlId="inputPassword">
+            <Form.Label className={passwordColor}>Password</Form.Label>
+            <Form.Control name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group>
+            <Form.Text className="text-danger">
+                {credsAreInvalid}
+            </Form.Text>
+        </Form.Group>
+        <Button className='m-1' variant="contained" type="submit">
+            Submit
+        </Button>
+        <LoginGoogle/>
+      </Form>
     )
 }
 

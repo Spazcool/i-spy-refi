@@ -1,5 +1,4 @@
-import React, {useContext} from "react";
-import { CustomThemeContext } from '../providers/ThemeProvider';
+import React from "react";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -21,12 +20,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Splash(props) {
-  const { theme } = useContext(CustomThemeContext);
-  const [spacing, setSpacing] = React.useState(2);
+  const [spacing] = React.useState(2);
   const classes = useStyles();
 
   return (
-    <Container theme={theme}>
+    <Container>
        <h1>Home Page</h1>
       <Grid container justify="center" spacing={spacing}>
         <Grid item>

@@ -3,30 +3,16 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { DB } from "../api/firestore.js";
 
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import "../App.css";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    // height: 140,
-    // width: 100,
-  },
-  control: {
-    padding: theme.spacing(2),
-  },
-}));
-
 const Dashboard = props => {
   const { user } = useContext(AuthContext);
   const [houses, setHouses] = useState([]);
-  const [spacing, setSpacing] = React.useState(2);
+  const [spacing] = React.useState(2);
 
 
   const getHouses = async () => {
