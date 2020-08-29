@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     //   width: theme.spacing(24),
     //   height: theme.spacing(24),
     // },
+    height: '100vh',
+    'overflow-y': 'scroll',
   },
 }));
 
