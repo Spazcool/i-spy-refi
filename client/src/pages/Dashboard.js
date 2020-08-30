@@ -21,7 +21,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse />
+          {/* <MyHouse /> */}
         </Grid>
         <Grid item xs={12} sm={7} lg={6} xl={4}>
           <Typography variant='h4' component='h2'>
