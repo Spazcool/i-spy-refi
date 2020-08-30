@@ -23,6 +23,14 @@ export default function MyHouse(props) {
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
 
+  // House EVAL
+
+  const zillowpropid = '95354572';
+  const finishedSqFt = '2466';
+  let avgSqFt = 0;
+  let avgPerSqFt = 0;
+  const [totalHouseValue, settotalHouseValue] = useState('');
+
   useEffect(() => {
     fetchaddress();
   }, []);
@@ -30,7 +38,7 @@ export default function MyHouse(props) {
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
 
-    console.log('userid: ', user.user.uid);
+    //1. console.log('userid: ', user.user.uid);
     const [{ street, state, city, zip }] = await houseinfoDB();
 
     const data = {
@@ -59,7 +67,7 @@ export default function MyHouse(props) {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
         useQueryString: true,
       },
       params: {
@@ -68,51 +76,96 @@ export default function MyHouse(props) {
       },
     })
       .then((response) => {
-        console.log(
-          'streetcitystatezip:',
-          streetdb,
-          '||',
-          citydb,
-          statedb,
-          zipdb
-        );
+        // 2 console.log(
+        //   'streetcitystatezip:',
+        //   streetdb,
+        //   '||',
+        //   citydb,
+        //   statedb,
+        //   zipdb
+        // );
 
-        console.log('res', response.data);
+        // 3 console.log('res', response.data);
 
         let id = response.data[0].zpid;
-        setTimeout(
-          () =>
-            axios({
-              method: 'GET',
-              url: `https://zillow-com.p.rapidapi.com/property/${id}/media`,
-              headers: {
-                'content-type': 'application/octet-stream',
-                'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-                'x-rapidapi-key':
-                  '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
-                useQueryString: true,
-              },
-            })
-              .then((response) => {
-                console.log(
-                  'RES IMG',
-                  response.data.imageResults.images[0].highResUrl
-                );
-                setImage(response.data.imageResults.images[0].highResUrl);
-              })
-              .catch((error) => {
-                console.log(error);
-              }),
-          2000
-        );
+
+        axios({
+          method: 'GET',
+          url: `https://zillow-com.p.rapidapi.com/property/${id}/media`,
+          headers: {
+            'content-type': 'application/octet-stream',
+            'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+            'x-rapidapi-key':
+              '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+            useQueryString: true,
+          },
+        })
+          .then((response) => {
+            // 4 console.log(
+            //   'RES IMG',
+            //   response.data.imageResults.images[0].highResUrl
+            // );
+            setImage(response.data.imageResults.images[0].highResUrl);
+
+            // TO GET THE HOUSE EVALUTION BASED ON THE AVG SQ FT ////
+            setTimeout(
+              () =>
+                axios({
+                  method: 'GET',
+                  url: `https://zillow-com.p.rapidapi.com/property/${id}/compset`,
+                  headers: {
+                    'content-type': 'application/octet-stream',
+                    'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+                    'x-rapidapi-key':
+                      '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+                    useQueryString: true,
+                  },
+                  params: {
+                    limit: '10',
+                  },
+                })
+                  .then((response) => {
+                    let comlength = response.data.comparables.length;
+                    //console.log('complength' + comlength);
+
+                    // calculating the Average SqFt
+                    let index = 0;
+
+                    for (let i = 0; i < comlength; i++) {
+                      avgSqFt +=
+                        response.data.comparables[i].lastSoldPrice.value /
+                        response.data.comparables[i].finishedSqFt;
+                      index = i + 1;
+                    }
+                    console.log('avgsqft: ', avgSqFt);
+                    avgPerSqFt = avgSqFt / index;
+
+                    console.log('avgpersqft:', avgPerSqFt);
+
+                    // Calculating The House Value
+
+                    settotalHouseValue(finishedSqFt * avgPerSqFt);
+
+                    console.log('housevalue:' + totalHouseValue);
+
+                    // setavgSqFt(result);
+                    // console.log('result:' + avgSqFt);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  }),
+              2000
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
       });
-    // }, 5000);
   };
 
-  console.log('Image :', imageData);
   return (
     <Paper elevation={4} className='my-house'>
       <Card className='my-house'>
