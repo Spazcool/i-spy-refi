@@ -6,7 +6,7 @@ import { AuthContext } from '../providers/AuthProvider';
 export default function HouseDisplay() {
   const { user } = useContext(AuthContext);
   const [imageData, setImage] = useState([]);
-  let zillowpropid = '';
+  const houseImage = '';
 
   useEffect(() => {
     fetchaddress();
@@ -100,6 +100,8 @@ export default function HouseDisplay() {
     <div className='houseinfo'>
       {/* <h1>hello {zillowpropid}</h1>
       <img src={imageData} alt='new' /> */}
+
+      {houseImage = imageData[0]}
     </div>
   );
 }

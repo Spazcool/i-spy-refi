@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+import  houseImage  from '../../components/HouseDisplay';
+
 export default function MyHouse() {
   return (
     <Paper elevation={4} className='my-house'>
@@ -16,7 +18,8 @@ export default function MyHouse() {
         <CardMedia
           className='media'
           //   image="/static/images/cards/contemplative-reptile.jpg"
-          image='https://honka.com/wp-json/image/resize?w=900&h=600&src=uploads%2Fupload_35c14afec13dd0964987d96f8ee44a7e.jpg'
+          // image='https://honka.com/wp-json/image/resize?w=900&h=600&src=uploads%2Fupload_35c14afec13dd0964987d96f8ee44a7e.jpg'
+          image={houseImage}
           title='My House'
         />
         <CardContent>
