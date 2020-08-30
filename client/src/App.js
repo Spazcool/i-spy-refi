@@ -61,6 +61,7 @@ export default () => {
     //   </CustomThemeProvider>
     // </AuthProvider>
 
-    <SimilarProperties />
+    // <SimilarProperties />
+    <HouseDisplay/>
   );
 };

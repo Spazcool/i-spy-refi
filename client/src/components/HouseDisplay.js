@@ -4,7 +4,7 @@ import { DB } from '../api/firestore';
 
 export default function HouseDisplay() {
   const [imageData, setImage] = useState([]);
-  const [info, setInfo] = useState();
+  const [HouseInfo, setHousenfo] = useState('');
 
   useEffect(() => {
     fetchaddress();
@@ -12,7 +12,7 @@ export default function HouseDisplay() {
 
   const fetchaddress = async () => {
     const userDB = async () =>
-      await DB.getHouseByID('yEprEh3ljyYrR6bt9eR7UmJB0lg2');
+      await DB.getHouseByID('MznGptrV4Zd5dzwtgo46');
     const { street, city, state, zip } = await userDB();
     const data = {
       street,
@@ -20,22 +20,18 @@ export default function HouseDisplay() {
       state,
       zip,
     };
-    setInfo(data);
+    setHousenfo(data);
   };
+
+  console.log('houseinfo:', HouseInfo);
   // HardCoded DATA
 
+  const state = 'NH';
+  const city = 'Portsmouth';
+  const street = ' 31 Sudbury St';
+  const zip = '03801';
+  let zillowpropid = '';
 
-  // const state = 'NH';
-  // const city = 'Portsmouth';
-  // const street = ' 31 Sudbury St';
-  // const zip = '03801';
-  // let zillowpropid = '';
-  // const streetNumber = '31';
-
-
-
-
-  
   // useEffect(() => {
   //   axios({
   //     method: 'GET',
