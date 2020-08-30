@@ -3,6 +3,12 @@ const app = express();
 const cors = require('cors');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin'); //a hack that allows us to bypass some auth stuff, todo lookup how to avoid using it
+// firebase.initializeApp(process.env.NODE_ENV);
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('yolo')
+  functions().useFunctionsEmulator('http://localhost:6001');
+}
 // const serviceAccount = require("../key.json"); //used for interacting with DB during local dev
 
 // ------------------------ 3 WAYS TO INITIALIZE APP ------------------------
@@ -10,7 +16,7 @@ const admin = require('firebase-admin'); //a hack that allows us to bypass some 
 //   credential: admin.credential.cert(serviceAccount),
 //   databaseURL: "https://ispyrefi.firebaseio.com"
 // });
-admin.initializeApp();
+admin.initializeApp(process.env.NODE_ENV);
 // const firebaseApp = admin.initializeApp(functions.config().firebase);
 
 // ------------------------ EXAMPLE INTERACTION WITH DB ------------------------
@@ -49,7 +55,12 @@ app.get('/api/secrets', (req, res) => {
 // ------------------------ EXAMPLE OF USING A NORMAL VS CACHED RESPONSE ------------------------
 // TO TEST OPEN TIMESTAMP IN URL, NOTICE THE TIME COLUMN UNDER NETWORK TAB
 // OPEN TIMESTAMP-CACHED, REFRESH PAGE, NOTICE THAT SEXY DROP IN LOAD TIME
-app.get('/timestamp', (req, res) => res.send(`${Date.now()}`));
+app.get('/timestamp', (req, res) => {
+  // `${functions.config().zillow.key}`
+  // `${Date.now()}
+  res.send(functions.config().zillow.key)
+});
+
 app.get('/timestamp-cached', (req, res) => {
   res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
   res.send(`${Date.now()}`);

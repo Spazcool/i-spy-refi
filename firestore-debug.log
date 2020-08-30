@@ -1,0 +1,7 @@
+API endpoint: http://0.0.0.0:6002
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=0.0.0.0:6002
+
+Dev App Server is now running.
+

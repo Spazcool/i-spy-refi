@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/functions";
 import "firebase/performance";
 import "firebase/analytics";
 import { DB } from "./api/firestore.js";
@@ -8,6 +9,15 @@ import config from './firebase-config.json';
 const firebaseConfig = config; // used to run Google server operations when hosting locally
 
 firebase.initializeApp(firebaseConfig);
+
+// if (window.location.hostname === 'localhost') {
+//   console.log("testing locally -- hitting local functions and firestore emulators");
+//   firebase.functions().useFunctionsEmulator('http://localhost:6001');
+//   firebase.firestore.settings({
+//     host: 'localhost:6002',
+//     ssl: false
+//   });
+// }
 
 // ---------------- SIGN UP/IN WITH GOOGLE ----------------
 const provider = new firebase.auth.GoogleAuthProvider();
