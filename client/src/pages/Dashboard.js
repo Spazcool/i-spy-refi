@@ -6,6 +6,8 @@ import { Container } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { Button } from '@material-ui/core';
+
 import CompList from '../components/Dashboard/CompList';
 import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';

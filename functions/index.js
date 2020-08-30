@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+const logger = require('morgan');
 const cors = require('cors');
 const Zillow = require('node-zillow');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin'); //a hack that allows us to bypass some auth stuff, todo lookup how to avoid using it
+
 // const serviceAccount = require("../key.json"); //used for interacting with DB during local dev
 
 // ------------------------ 3 WAYS TO INITIALIZE APP ------------------------
@@ -39,7 +41,10 @@ admin.initializeApp();
 // ------------------------ EXAMPLE SERVER ROUTING STUFF ------------------------
 // TODO IS THIS REQUIRED?
 // Automatically allow cross-origin requests
-app.use(cors({ origin: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(logger('dev'));
 
 // TODO Add middleware to authenticate requests
 // app.use(myMiddleware);
@@ -66,9 +71,19 @@ app.get('/timestamp-cached', (req, res) => {
 
 app.get('/GetSearchResults', (req, res) => {
   res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-  console.log(req);
+  console.log('do thing');
   const { params } = req.body;
-  res.json(params);
+  const zillow = new Zillow(
+    '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
+  );
+
+  zillow
+    .get('GetSearchResults', params)
+    .then((results) => {
+      console.log(results);
+      return results.json({ error: null, data: params });
+    })
+    .catch(console.log(error));
 });
 // ------------------------ EXAMPLE CRUD interfaces ------------------------
 

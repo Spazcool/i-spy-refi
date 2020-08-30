@@ -11,7 +11,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Button } from '@material-ui/core';
 import { Form } from 'react-bootstrap';
-const Zillow = require('node-zillow');
+import { Zillow } from '../api/zillow.js';
 // import { AuthContext } from '../providers/HouseProvider';
 // import { Redirect } from 'react-router-dom';
 
@@ -94,10 +94,6 @@ function StyledRadio(props) {
   );
 }
 export default function HouseAdditions() {
-  //   state = {
-  //     kitchen: '',
-  //     roof: '',
-  //   };
   const classes = useStyles();
   const houseCreds = {
     street: '',
@@ -110,7 +106,6 @@ export default function HouseAdditions() {
 
   const handleInputChange = (event) =>
     setUserHouse({
-      // event.preventDefault();
       ...userHouse,
       [event.target.name]: event.target.value.trim(),
     });
@@ -129,10 +124,7 @@ export default function HouseAdditions() {
   };
 
   const afterSubmit = () => {
-    const zillow = new Zillow(
-      '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
-    );
-
+    const url = 'http:localhost:5000/GetSearchResults';
     const params = {
       address: encodeURIComponent(userHouse.street),
       citystatezip: encodeURIComponent(
@@ -142,10 +134,7 @@ export default function HouseAdditions() {
       ),
       rentzestimate: false,
     };
-
-    zillow.get('GetSearchResults', params).then((results) => {
-      console.log(results);
-    });
+    Zillow.getZillow(url, params);
     // fetch(
     //   `https://zillow-com.p/rapidapi.com/search/address?address=${userHouse.street}%20Street&citystatezip=${userHouse.city}%20${userHouse.state}%20${userHouse.zip}`,
     //   {
@@ -176,10 +165,16 @@ export default function HouseAdditions() {
   // }, []);
 
   return (
-    <form
+    <div
       className={(classes.root, classes.group)}
       noValidate
       autoComplete='on'
+      style={{
+        minWidth: 500,
+        maxHeight: 500,
+        overflow: 'auto',
+        flexWrap: 'wrap',
+      }}
     >
       <FormGroup id='initInput'>
         <FormLabel>
@@ -202,14 +197,7 @@ export default function HouseAdditions() {
             name='city'
             value={userHouse.city}
             onChange={handleInputChange}
-          />{' '}
-          {/* <TextField
-            required
-            id='outlined-required'
-            label='House Number'
-            placeholder='House Number'
-            variant='outlined'
-          /> */}
+          />
           <TextField
             required
             id='outlined-required'
@@ -402,6 +390,6 @@ export default function HouseAdditions() {
           </RadioGroup>
         </FormControl>
       </FormGroup>
-    </form>
+    </div>
   );
 }

@@ -1,44 +1,51 @@
-const Zillow = {
-  async getZillow() {
+import userHouse from '../pages/HouseAdditions';
+import axios from 'axios';
+export const Zillow = {
+  async getZillow(res) {
     //   const res = await fetch("/api/workouts/" + id, {
     //     method: "PUT",
     //     headers: { "Content-Type": "application/json" },
     //     body: JSON.stringify(data)
     //   });
-    res = await fetch('GetSearchResults', {
+    res = await fetch('http://localhost:5000/GetSearchResults', {
       method: 'GET',
       headers: {
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
         'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
       },
-      body: {params = {
-        address: encodeURIComponent(userHouse.street),
-        citystatezip: encodeURIComponent(
-          userHouse.city,
-          userHouse.state,
-          userHouse.zip
-        ),
-        rentzestimate: false,
-      }},
-    }).then((res) => console.log(res));
+      req: {
+        body: {
+          address: encodeURIComponent(userHouse.street),
+          citystatezip: encodeURIComponent(
+            userHouse.city,
+            userHouse.state,
+            userHouse.zip
+          ),
+          rentzestimate: false,
+        },
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
 
-    const zillow = new Zillow(
-      '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
-    );
+    // const zillow = Zillow.getZillow(
+    //   '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
+    // );
 
-    const params = {
-      address: encodeURIComponent(userHouse.street),
-      citystatezip: encodeURIComponent(
-        userHouse.city,
-        userHouse.state,
-        userHouse.zip
-      ),
-      rentzestimate: false,
-    };
+    // const params = {
+    //   address: encodeURIComponent(userHouse.street),
+    //   citystatezip: encodeURIComponent(
+    //     userHouse.city,
+    //     userHouse.state,
+    //     userHouse.zip
+    //   ),
+    //   rentzestimate: false,
+    // };
 
-    zillow.get('GetSearchResults', params).then((results) => {
-      console.log(results);
-    });
+    // zillow.get('/GetSearchResults', userHouse).then((results) => {
+    //   console.log(results);
+    // });
+    // });
     //   let res;
     //   try {
     //     res = await fetch("/api/workouts");
