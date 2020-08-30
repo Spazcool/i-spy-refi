@@ -11,7 +11,7 @@ import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';
 
 function Home(props) {
-  const { isAuth, logout } = useContext(AuthContext);
+  const { isAuth, logout, user } = useContext(AuthContext);
   const [spacing, setSpacing] = React.useState(2);
 
   return (
@@ -33,7 +33,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             More
           </Typography>
-          <CompList />
+          <CompList user={user} />
         </Grid>
       </Grid>
     </Container>
