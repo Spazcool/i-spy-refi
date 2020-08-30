@@ -24,17 +24,13 @@ export default function HouseDisplay() {
       state,
       zip,
     };
-    //setHousenfo(data);
+
+
+     // HardCoded DATA
     const statedb = await data.state;
     const citydb = await data.city;
     const streetdb = await data.street;
     const zipdb = await data.zip;
-
-    // HardCoded DATA
-    // const statedb = await HouseInfo.state;
-    // const citydb = await HouseInfo.city;
-    // const streetdb = await HouseInfo.street;
-    // const zipdb = await HouseInfo.zip;
 
     // const state = 'NH';
     // const city = 'portsmouth';
