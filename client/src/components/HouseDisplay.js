@@ -1,107 +1,107 @@
-// import React, { useState, useEffect, useContext } from 'react';
-// import axios from 'axios';
-// import { DB } from '../api/firestore';
-// import { AuthContext } from '../providers/AuthProvider';
-// //import MyHouse from '../components/Dashboard/MyHouse';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { DB } from '../api/firestore';
+import { AuthContext } from '../providers/AuthProvider';
+import MyHouse from '../components/Dashboard/MyHouse';
 
-// export default function HouseDisplay() {
-//   const { user } = useContext(AuthContext);
-//   const [imageData, setImage] = useState([]);
-//   // const houseImage = '';
-//   useEffect(() => {
-//     fetchaddress();
-//   }, []);
+export default function HouseDisplay() {
+  const { user } = useContext(AuthContext);
+  const [imageData, setImage] = useState([]);
 
-//   const fetchaddress = async () => {
-//     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
+  useEffect(() => {
+    fetchaddress();
+  }, []);
 
-//     console.log('userid: ', user.user.uid);
-//     const [{ street, state, city, zip }] = await houseinfoDB();
+  const fetchaddress = async () => {
+    const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
 
-//     const data = {
-//       street,
-//       city,
-//       state,
-//       zip,
-//     };
+    console.log('userid: ', user.user.uid);
+    const [{ street, state, city, zip }] = await houseinfoDB();
 
-//     // HardCoded DATA
-//     const statedb = await data.state;
-//     const citydb = await data.city;
-//     const streetdb = await data.street;
-//     const zipdb = await data.zip;
+    const data = {
+      street,
+      city,
+      state,
+      zip,
+    };
 
-//     // const state = 'NH';
-//     // const city = 'portsmouth';
-//     // const street = '31 Sudbury St';
-//     // const zip = '03801';
-//     // setTimeout(() => {
-//     await axios({
-//       method: 'GET',
-//       url: 'https://zillow-com.p.rapidapi.com/search/address',
-//       headers: {
-//         'content-type': 'application/octet-stream',
-//         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-//         'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
-//         useQueryString: true,
-//       },
-//       params: {
-//         address: `${streetdb}`,
-//         citystatezip: `${citydb} ${statedb} ${zipdb}`,
-//       },
-//     })
-//       .then((response) => {
-//         console.log(
-//           'streetcitystatezip:',
-//           streetdb,
-//           '||',
-//           citydb,
-//           statedb,
-//           zipdb
-//         );
+    // HardCoded DATA
+    const statedb = await data.state;
+    const citydb = await data.city;
+    const streetdb = await data.street;
+    const zipdb = await data.zip;
 
-//         console.log('res', response.data[0].zpid);
+    // const state = 'NH';
+    // const city = 'portsmouth';
+    // const street = '31 Sudbury St';
+    // const zip = '03801';
+    // setTimeout(() => {
+    await axios({
+      method: 'GET',
+      url: 'https://zillow-com.p.rapidapi.com/search/address',
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        useQueryString: true,
+      },
+      params: {
+        address: `${streetdb}`,
+        citystatezip: `${citydb} ${statedb} ${zipdb}`,
+      },
+    })
+      .then((response) => {
+        console.log(
+          'streetcitystatezip:',
+          streetdb,
+          '||',
+          citydb,
+          statedb,
+          zipdb
+        );
 
-//         let id = response.data[0].zpid;
-//         setTimeout(
-//           () =>
-//             axios({
-//               method: 'GET',
-//               url: `https://zillow-com.p.rapidapi.com/property/${id}/media`,
-//               headers: {
-//                 'content-type': 'application/octet-stream',
-//                 'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-//                 'x-rapidapi-key':
-//                   '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
-//                 useQueryString: true,
-//               },
-//             })
-//               .then((response) => {
-//                 console.log(
-//                   'RES IMG',
-//                   response.data.imageResults.images[0].highResUrl
-//                 );
-//                 setImage(response.data.imageResults.images[0].highResUrl);
-//               })
-//               .catch((error) => {
-//                 console.log(error);
-//               }),
-//           2000
-//         );
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//     // }, 5000);
-//   };
+        console.log('res', response.data[0].zpid);
 
-//   console.log('Image :', imageData[0]);
-//   return (
-//     <div className='houseinfo'>
-//       {/* <h1>hello {zillowpropid}</h1>
-//       <img src={imageData} alt='new' /> */}
+        let id = response.data[0].zpid;
+        setTimeout(
+          () =>
+            axios({
+              method: 'GET',
+              url: `https://zillow-com.p.rapidapi.com/property/${id}/media`,
+              headers: {
+                'content-type': 'application/octet-stream',
+                'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+                'x-rapidapi-key':
+                  '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+                useQueryString: true,
+              },
+            })
+              .then((response) => {
+                console.log(
+                  'RES IMG',
+                  response.data.imageResults.images[0].highResUrl
+                );
+                setImage(response.data.imageResults.images[0].highResUrl);
+              })
+              .catch((error) => {
+                console.log(error);
+              }),
+          2000
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // }, 5000);
+  };
 
-//       <MyHouse {...(houseImage = imageData[0])} />
-//     </div>
-//   );
-// }
+  console.log('Image :', imageData);
+  return (
+    <div className='houseinfo'>
+      {/* <h1>hello {zillowpropid}</h1>
+      <img src={imageData} alt='new' /> */}
+
+      <MyHouse {...(houseImage = { imageData })} />
+    </div>
+  );
+}
