@@ -157,6 +157,7 @@ export const DB = {
         street: house.data().street,
         city: house.data().city,
         state: house.data().state,
+        zip: house.data().zip,
         zpid: house.data().zpid,
       };
 
