@@ -49,7 +49,9 @@ app.get('/api/secrets', (req, res) => {
 // ------------------------ EXAMPLE OF USING A NORMAL VS CACHED RESPONSE ------------------------
 // TO TEST OPEN TIMESTAMP IN URL, NOTICE THE TIME COLUMN UNDER NETWORK TAB
 // OPEN TIMESTAMP-CACHED, REFRESH PAGE, NOTICE THAT SEXY DROP IN LOAD TIME
-app.get('/timestamp', (req, res) => res.send(`${Date.now()}`));
+app.get('/timestamp', (req, res) => {
+  res.send(`${Date.now()}`)
+});
 app.get('/timestamp-cached', (req, res) => {
   res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
   res.send(`${Date.now()}`);
