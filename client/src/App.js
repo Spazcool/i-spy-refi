@@ -16,7 +16,7 @@ import User from './pages/User';
 import Splash from './pages/Splash';
 
 import Navbar from './components/Navbar';
-import HouseDisplay from './components/HouseDisplay';
+
 import SimilarProperties from './components/SimilarProperties';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -54,14 +54,14 @@ function App() {
 
 export default () => {
   return (
-    // <AuthProvider>
-    //   <CustomThemeProvider>
-    //   <CssBaseline/>
-    //     <App />
-    //   </CustomThemeProvider>
-    // </AuthProvider>
+    <AuthProvider>
+      <CustomThemeProvider>
+      <CssBaseline/>
+        <App />
+      </CustomThemeProvider>
+    </AuthProvider>
 
     // <SimilarProperties />
-    <HouseDisplay/>
+  
   );
 };

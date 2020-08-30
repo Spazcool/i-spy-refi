@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CompList from '../components/Dashboard/CompList';
 import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';
+import HouseDisplay from '../components/HouseDisplay';
 
 function Home(props) {
   const { isAuth, logout } = useContext(AuthContext);
@@ -35,6 +36,8 @@ function Home(props) {
           </Typography>
           <CompList />
         </Grid>
+
+        <HouseDisplay />
       </Grid>
     </Container>
   );
