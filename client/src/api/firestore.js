@@ -1,6 +1,6 @@
 import {firestore as db} from '../firebase.js';
 
-export const DB = {
+export  const DB = {
 
   // ------------------------ CREATE ------------------------
   async createUser(user, additionalData){

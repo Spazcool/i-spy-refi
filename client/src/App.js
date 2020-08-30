@@ -54,13 +54,13 @@ function App() {
 
 export default () => {
   return (
-    <AuthProvider>
-      <CustomThemeProvider>
-      <CssBaseline/>
-        <App />
-      </CustomThemeProvider>
-    </AuthProvider>
+    // <AuthProvider>
+    //   <CustomThemeProvider>
+    //   <CssBaseline/>
+    //     <App />
+    //   </CustomThemeProvider>
+    // </AuthProvider>
 
-   // <SimilarProperties />
+    <SimilarProperties />
   );
 };
