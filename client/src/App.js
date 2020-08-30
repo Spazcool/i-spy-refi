@@ -60,8 +60,6 @@ export default () => {
         <App />
       </CustomThemeProvider>
     </AuthProvider>
-
-    // <SimilarProperties />
   
   );
 };
