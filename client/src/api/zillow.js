@@ -71,7 +71,7 @@ export const zillow = {
   },
 
   async gethouseval(zillowidhval) {
-    let result;
+    let houseresponse;
 
     const Houseval = `https://zillow-com.p.rapidapi.com/property/${zillowidhval}/compset`;
     await axios({
@@ -89,19 +89,22 @@ export const zillow = {
     })
       .then(async (response) => {
         console.log('housevalres:', response);
-        let comlength = await response.data.comparables.length;
-        console.log('complength' + comlength);
-        let lastsoldPrice = await response.data.comparables[0].lastSoldPrice
-          .value;
-        let finishedSqFt = await response.data.comparables[0].finishedSqFt;
 
-        //// trying to work the code here
-        console.log('lastsoldprice', lastsoldPrice);
-        console.log('finishedsq', finishedSqFt);
+        houseresponse = await response;
+        // let comlength = await response.data.comparables.length;
+        // console.log('complength' + comlength);
+        // let lastsoldPrice = await response.data.comparables[0].lastSoldPrice
+        //   .value;
+        // let finishedSqFt = await response.data.comparables[0].finishedSqFt;
+
+        // //// trying to work the code here
+        // console.log('lastsoldprice', lastsoldPrice);
+        // console.log('finishedsq', finishedSqFt);
       })
       .catch((error) => {
         console.log(error);
       });
-    return 1;
+
+    return houseresponse;
   },
 };

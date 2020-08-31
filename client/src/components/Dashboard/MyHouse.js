@@ -73,7 +73,7 @@ export default function MyHouse(props) {
     setTimeout(async () => {
       const houseval = await zillow.gethouseval(zillowzpid);
       console.log('gethouseval:', houseval);
-    }, 5000);
+    }, 2000);
   };
 
   return (
