@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
-
+import moment from 'moment';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -16,8 +16,8 @@ import '../App.css';
 
 function Home(props) {
   const { isAuth, logout } = useContext(AuthContext);
-  // const [spacing, setSpacing] = React.useState(2);
   
+  // TODO THIS DATA WILL BE COMING FROMTHE DB
   const formData = [
     { country: 'Russia', area: 12 },
     { country: 'Canada', area: 7 },
@@ -29,11 +29,14 @@ function Home(props) {
     { country: 'Others', area: 55 },
   ];
 
-  const trendingData = {
-    x: 2,
-    y: 25,
-    z: 1,
-  };
+  // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
+console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a"))
+  const trendingData = [
+    {date: moment().subtract(30,'days').format("DD-MM-YY"), value: 87654},
+    {date: moment().subtract(20,'days').format("DD-MM-YY"), value: 45678},
+    {date: moment().subtract(10,'days').format("DD-MM-YY"), value: 1234567},
+    {date: moment().format("DD-MM-YY"), value: 1098765},
+  ];
 
   return (
     <Container className='signup'>
