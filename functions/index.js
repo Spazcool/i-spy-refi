@@ -5,7 +5,7 @@ const cors = require('cors');
 const axios = require('axios');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin'); //a hack that allows us to bypass some auth stuff, todo lookup how to avoid using it
-
+const apiKey = functions.config().zillow.key;
 // ------------------------ ATTEMPTS AT LOCAL CONFIG OVERRIDES ------------------------
 
 // firebase.initializeApp(process.env.NODE_ENV);
@@ -118,15 +118,15 @@ app.get('/api/GetSearchResults', (req, res) => {
   let query = {
     // address: req.query.address,
     // citystatezip: req.query.citystatezip,
-    address: '23%20pages%20lan',
-    citystatezip: 'hampton%20falls%20NH%2003844',
+    address: req.query.street,
+    citystatezip: req.query.citystatezip,
   };
   axios({
     method: 'GET',
     headers: {
       'content-type': 'application/octet-stream',
       'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-      'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+      'x-rapidapi-key': apiKey,
       // useQueryString: true,
     },
     url: 'https://zillow-com.p.rapidapi.com/search/address',

@@ -11,7 +11,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Button } from '@material-ui/core';
 import { Form } from 'react-bootstrap';
-import { Zillow } from '../api/zillow.js';
+import { zillow } from '../api/zillow.js';
 // import { AuthContext } from '../providers/HouseProvider';
 // import { Redirect } from 'react-router-dom';
 
@@ -104,17 +104,18 @@ export default function HouseAdditions() {
 
   const [userHouse, setUserHouse] = useState(houseCreds);
 
-  const handleInputChange = (event) =>
-    setUserHouse({
-      ...userHouse,
-      [event.target.name]: event.target.value.trim(),
-    });
+  const handleInputChange = (event) => {
+    event.preventDefault();
+  setUserHouse({
+    ...userHouse,
+    [event.target.name]: event.target.value.trim()},
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const inputHouseCreds = {
       city: userHouse.city,
-      address: userHouse.address,
+      street: userHouse.street,
       zip: userHouse.zip,
       state: userHouse.state,
     };
@@ -126,17 +127,17 @@ export default function HouseAdditions() {
   const afterSubmit = () => {
     // const url = 'http:localhost:5000/GetSearchResults';
     const params = {
-      address: encodeURIComponent(userHouse.address),
-      city: encodeURIComponent(userHouse.city),
-      state: encodeURIComponent(userHouse.state),
-      zip: encodeURIComponent(userHouse.zip),
+      street: userHouse.street.toLowerCase(),
+      city: userHouse.city.toLowerCase(),
+      state: userHouse.state.toLowerCase(),
+      zip: userHouse.zip.toLowerCase(),
       // citystatezip: encodeURIComponent(
       //   userHouse.city,
       //   userHouse.state,
       //   userHouse.zip
       // ),
     };
-    Zillow.getZillow(params);
+    zillow.getaddress(params);
   };
   return (
     <div
@@ -155,11 +156,11 @@ export default function HouseAdditions() {
           <TextField
             required
             id='outlined-required'
-            label='address'
-            placeholder='address'
+            label='street'
+            placeholder='street'
             variant='outlined'
-            name='address'
-            value={userHouse.address}
+            name='street'
+            value={userHouse.street}
             onChange={handleInputChange}
           />
           <TextField
