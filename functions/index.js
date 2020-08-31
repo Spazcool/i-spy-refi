@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const logger = require('morgan');
 const cors = require('cors');
-const Zillow = require('node-zillow');
+const axios = require('axios');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin'); //a hack that allows us to bypass some auth stuff, todo lookup how to avoid using it
 
@@ -41,9 +41,18 @@ admin.initializeApp();
 // ------------------------ EXAMPLE SERVER ROUTING STUFF ------------------------
 // TODO IS THIS REQUIRED?
 // Automatically allow cross-origin requests
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3000',
+//     credentials: true,
+//   })
+// );
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 // TODO Add middleware to authenticate requests
@@ -69,21 +78,32 @@ app.get('/timestamp-cached', (req, res) => {
   //   .catch(console.log)
 });
 
-app.get('/GetSearchResults', (req, res) => {
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-  console.log('do thing');
-  const { params } = req.body;
-  const zillow = new Zillow(
-    '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
-  );
+app.get('/api/GetSearchResults', (req, res) => {
+  // res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  console.log(req.query);
+  // const zillow = new Zillow(
+  //   '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
 
-  zillow
-    .get('GetSearchResults', params)
-    .then((results) => {
-      console.log(results);
-      return results.json({ error: null, data: params });
-    })
-    .catch(console.log(error));
+  // );
+  let query = {
+    // address: req.query.address,
+    // citystatezip: req.query.citystatezip,
+    address: '23%20pages%20lan',
+    citystatezip: 'hampton%20falls%20NH%2003844',
+  };
+  axios({
+    method: 'GET',
+    headers: {
+      'content-type': 'application/octet-stream',
+      'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+      'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+      // useQueryString: true,
+    },
+    url: 'https://zillow-com.p.rapidapi.com/search/address',
+    params: query,
+  })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
 });
 // ------------------------ EXAMPLE CRUD interfaces ------------------------
 

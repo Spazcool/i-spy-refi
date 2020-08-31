@@ -96,7 +96,7 @@ function StyledRadio(props) {
 export default function HouseAdditions() {
   const classes = useStyles();
   const houseCreds = {
-    street: '',
+    address: '',
     city: '',
     zip: '',
     state: '',
@@ -113,10 +113,10 @@ export default function HouseAdditions() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const inputHouseCreds = {
-      city: encodeURIComponent(userHouse.city),
-      street: encodeURIComponent(userHouse.street),
-      zip: encodeURIComponent(userHouse.zip),
-      state: encodeURIComponent(userHouse.state),
+      city: userHouse.city,
+      address: userHouse.address,
+      zip: userHouse.zip,
+      state: userHouse.state,
     };
     console.log(inputHouseCreds);
     setUserHouse(inputHouseCreds);
@@ -124,46 +124,20 @@ export default function HouseAdditions() {
   };
 
   const afterSubmit = () => {
-    const url = 'http:localhost:5000/GetSearchResults';
+    // const url = 'http:localhost:5000/GetSearchResults';
     const params = {
-      address: encodeURIComponent(userHouse.street),
-      citystatezip: encodeURIComponent(
-        userHouse.city,
-        userHouse.state,
-        userHouse.zip
-      ),
-      rentzestimate: false,
+      address: encodeURIComponent(userHouse.address),
+      city: encodeURIComponent(userHouse.city),
+      state: encodeURIComponent(userHouse.state),
+      zip: encodeURIComponent(userHouse.zip),
+      // citystatezip: encodeURIComponent(
+      //   userHouse.city,
+      //   userHouse.state,
+      //   userHouse.zip
+      // ),
     };
-    Zillow.getZillow(url, params);
-    // fetch(
-    //   `https://zillow-com.p/rapidapi.com/search/address?address=${userHouse.street}%20Street&citystatezip=${userHouse.city}%20${userHouse.state}%20${userHouse.zip}`,
-    //   {
-    //     method: 'GET',
-    //     headers: {
-    //       'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-    //       'x-rapidapi-key':
-    //         '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
-    //     },
-    //   }
-    // ).then((res) => console.log(res));
+    Zillow.getZillow(params);
   };
-
-  // const { isInput } = useContext(AuthContext);
-
-  //   const city = event.target.city,
-
-  //   const handleChange = (event) => {
-  //     setCurrency(event.target.value);
-  //   };
-
-  //   const handleSetHouse = (event) => {
-  //
-  //   };
-
-  // useEffect(() => {
-  //   // event.preventDefault();
-  // }, []);
-
   return (
     <div
       className={(classes.root, classes.group)}
@@ -181,11 +155,11 @@ export default function HouseAdditions() {
           <TextField
             required
             id='outlined-required'
-            label='Street'
-            placeholder='Street'
+            label='address'
+            placeholder='address'
             variant='outlined'
-            name='street'
-            value={userHouse.street}
+            name='address'
+            value={userHouse.address}
             onChange={handleInputChange}
           />
           <TextField
