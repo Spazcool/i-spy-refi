@@ -17,16 +17,16 @@ import { AuthContext } from '../../providers/AuthProvider';
 import { zillow } from '../../api/zillow';
 export default function MyHouse(props) {
   // House Display Info Logic
-
   const { user } = useContext(AuthContext);
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
-
-  // House EVAL
+// House EVAL
+  let result = 0;
   const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
+  const [index, setIndex] = useState(0);
   const [totalHouseValue, settotalHouseValue] = useState('');
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function MyHouse(props) {
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
 
-    //1. console.log('userid: ', user.user.uid);
+   // User id is passed once the user login is completed
     const [{ street, state, city, zip }] = await houseinfoDB();
 
     const data = {
@@ -73,6 +73,34 @@ export default function MyHouse(props) {
     setTimeout(async () => {
       const houseval = await zillow.gethouseval(zillowzpid);
       console.log('gethouseval:', houseval);
+
+      let comlength = houseval.data.comparables.length;
+      //console.log('complength' + comlength);
+
+      // calculating the Average SqFt
+      let index = 0;
+
+      for (let i = 0; i < comlength; i++) {
+        avgSqFt +=
+          houseval.data.comparables[i].lastSoldPrice.value /
+          houseval.data.comparables[i].finishedSqFt;
+        index = i + 1;
+      }
+      console.log(avgSqFt);
+      avgPerSqFt = avgSqFt / index;
+
+      console.log(avgPerSqFt);
+
+      // Calculating The House Value
+
+      settotalHouseValue(finishedSqFt * avgPerSqFt);
+
+      console.log('housevalue:' + totalHouseValue);
+
+      // setavgSqFt(result);
+      // console.log('result:' + avgSqFt);
+
+      console.log('avgsqft:', avgPerSqFt);
     }, 3000);
   };
 
