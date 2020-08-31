@@ -64,12 +64,16 @@ export default function MyHouse(props) {
     // const zip = '03801';
     // setTimeout(() => {
     //////////////////////// SECOND CALL ///////////////////
+    setTimeout(async () => {
+      const getimageurl = await zillow.getzillowpropid(zillowzpid);
+      setImage(getimageurl);
+      console.log('getimageurl:', getimageurl);
+    }, 1000);
 
-    const getimageurl = await zillow.getzillowpropid(zillowzpid);
-    setImage(getimageurl);
-    console.log('getimageurl:', getimageurl);
-
-    const houseval = await zillow.gethouseval(zillowzpid);
+    setTimeout(async () => {
+      const houseval = await zillow.gethouseval(zillowzpid);
+      console.log('gethouseval:', houseval);
+    }, 5000);
   };
 
   return (

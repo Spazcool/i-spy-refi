@@ -43,56 +43,65 @@ export const zillow = {
 
   async getzillowpropid(zillowid) {
     let imageUrl;
-    await setTimeout(() => {
-      const Imageurl = `https://zillow-com.p.rapidapi.com/property/${zillowid}/media`;
-      console.log('object1:', Imageurl);
-      axios({
-        method: 'GET',
-        url: Imageurl,
-        headers: {
-          'content-type': 'application/octet-stream',
-          'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-          'x-rapidapi-key':
-            '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31`',
-          useQueryString: true,
-        },
+    //await setTimeout(() => {
+    const Imageurl = `https://zillow-com.p.rapidapi.com/property/${zillowid}/media`;
+    console.log('object1:', Imageurl);
+    await axios({
+      method: 'GET',
+      url: Imageurl,
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        useQueryString: true,
+      },
+    })
+      .then(async (response) => {
+        console.log('RES IMG', response.data.imageResults.images[0].highResUrl);
+        imageUrl = await response.data.imageResults.images[0].highResUrl;
+        // setImage(response.data.imageResults.images[0].highResUrl);
+        console.log('end return');
       })
-        .then((response) => {
-          console.log(
-            'RES IMG',
-            response.data.imageResults.images[0].highResUrl
-          );
-          imageUrl = response.data.imageResults.images[0].highResUrl;
-          // setImage(response.data.imageResults.images[0].highResUrl);
-          console.log('end return');
-          return imageUrl;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, 2000);
+      .catch((error) => {
+        console.log(error);
+      });
+    // }, 2000);
+
+    return imageUrl;
   },
 
   async gethouseval(zillowidhval) {
+    let result;
+
     const Houseval = `https://zillow-com.p.rapidapi.com/property/${zillowidhval}/compset`;
-    axios({
+    await axios({
       method: 'GET',
       url: Houseval,
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
         useQueryString: true,
       },
       params: {
         limit: '10',
       },
     })
-      .then((response) => {
-        console.log('housevalres:');
+      .then(async (response) => {
+        console.log('housevalres:', response);
+        let comlength = await response.data.comparables.length;
+        console.log('complength' + comlength);
+        let lastsoldPrice = await response.data.comparables[0].lastSoldPrice
+          .value;
+        let finishedSqFt = await response.data.comparables[0].finishedSqFt;
+
+        //// trying to work the code here
+        console.log('lastsoldprice', lastsoldPrice);
+        console.log('finishedsq', finishedSqFt);
       })
       .catch((error) => {
         console.log(error);
       });
+    return 1;
   },
 };
