@@ -91,13 +91,13 @@ export default function MyHouse(props) {
       console.log(avgSqFt);
       avgPerSqFt = avgSqFt / index;
 
-      console.log(avgPerSqFt);
+      console.log('avgpersqft:', avgPerSqFt);
 
       // Calculating The House Value
 
-      settotalHouseValue(finishedSqFt * avgPerSqFt);
-
-      console.log('housevalue:' + totalHouseValue);
+      const tot = Math.round(finishedSqFt * avgPerSqFt);
+      settotalHouseValue(tot);
+      console.log('housevalue:', tot);
 
       // setavgSqFt(result);
       // console.log('result:' + avgSqFt);
@@ -115,7 +115,7 @@ export default function MyHouse(props) {
             {streetdisplay},{citydisplay},{statedisplay}
           </Typography>
           <Typography variant='h5' component='h2'>
-            $360,000
+            {'$'}{totalHouseValue}
           </Typography>
           <Typography variant='body2' component='p'>
             Description/Details
