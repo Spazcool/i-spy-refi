@@ -57,8 +57,8 @@ export default function MyHouse(props) {
     const streetzillow = displayaddress[0].address.street;
     setstreetdisplay(streetzillow);
     const zillowzpid = displayaddress[0].zpid;
-    
-      // const state = 'NH';
+
+    // const state = 'NH';
     // const city = 'portsmouth';
     // const street = '31 Sudbury St';
     // const zip = '03801';
@@ -66,7 +66,10 @@ export default function MyHouse(props) {
     //////////////////////// SECOND CALL ///////////////////
 
     const getimageurl = await zillow.getzillowpropid(zillowzpid);
-  
+    setImage(getimageurl);
+    console.log('getimageurl:', getimageurl);
+
+    const houseval = await zillow.gethouseval(zillowzpid);
   };
 
   return (
