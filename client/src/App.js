@@ -16,8 +16,9 @@ import User from './pages/User';
 import Splash from './pages/Splash';
 
 import Navbar from './components/Navbar';
-import HouseDisplay from './components/HouseDisplay';
 import HouseAdditions from './pages/HouseAdditions';
+
+import SimilarProperties from './components/SimilarProperties';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
