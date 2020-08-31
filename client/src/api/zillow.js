@@ -8,12 +8,12 @@ export const Zillow = {
     //     body: JSON.stringify(data)
     //   });
     const { address, city, zip, state } = req;
-    fetch(
+    await fetch(
       `https://zillow-com.p.rapidapi.com/search/address?=${address}&citystatezip=${city}%20${state}%20${zip}`,
       {
         method: 'GET',
         headers: {
-          // 'content-type': 'application/octet-stream',
+          'content-type': 'application/octet-stream',
           'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
           'x-rapidapi-key':
             '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
@@ -22,12 +22,13 @@ export const Zillow = {
       }
     )
       .then((res) => {
-        console.log(res);
+        // console.log(res.json());
+        return res.json();
       })
+      .then((res) => console.log(res))
       .catch((err) => {
         console.log(err);
       });
-
     //   axios({
     //     method: 'GET',
     //     url: 'http://localhost:5000/api/GetSearchResults',

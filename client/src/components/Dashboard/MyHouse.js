@@ -79,32 +79,32 @@ export default function MyHouse(props) {
 
         console.log('res', response.data);
 
-        let id = response.data[0].zpid;
-        setTimeout(
-          () =>
-            axios({
-              method: 'GET',
-              url: `https://zillow-com.p.rapidapi.com/property/${id}/media`,
-              headers: {
-                'content-type': 'application/octet-stream',
-                'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-                'x-rapidapi-key':
-                  '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
-                useQueryString: true,
-              },
-            })
-              .then((response) => {
-                console.log(
-                  'RES IMG',
-                  response.data.imageResults.images[0].highResUrl
-                );
-                setImage(response.data.imageResults.images[0].highResUrl);
-              })
-              .catch((error) => {
-                console.log(error);
-              }),
-          2000
-        );
+        // let id = response.data[0].zpid;
+        // setTimeout(
+        //   () =>
+        //     axios({
+        //       method: 'GET',
+        //       url: `https://zillow-com.p.rapidapi.com/property/${id}/media`,
+        //       headers: {
+        //         'content-type': 'application/octet-stream',
+        //         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+        //         'x-rapidapi-key':
+        //           '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        //         useQueryString: true,
+        //       },
+        //     })
+        //       .then((response) => {
+        //         console.log(
+        //           'RES IMG',
+        //           response.data.imageResults.images[0].highResUrl
+        //         );
+        //         setImage(response.data.imageResults.images[0].highResUrl);
+        //       })
+        //       .catch((error) => {
+        //         console.log(error);
+        //       }),
+        //   2000
+        // );
       })
       .catch((error) => {
         console.log(error);
