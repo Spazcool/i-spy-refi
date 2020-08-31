@@ -101,15 +101,79 @@ export default function HouseAdditions() {
     zip: '',
     state: '',
   };
-
+  let nationalAverages = [
+    {
+      id: 0,
+      name: 'Minor Kitchen Remodel',
+      value: 14600,
+    },
+    {
+      id: 1,
+      name: 'Major Kitchen Remodel',
+      value: 39900,
+    },
+    {
+      id: 2,
+      name: 'Asphalt Shingles',
+      value: 12777,
+    },
+    {
+      id: 3,
+      name: 'Metal Roof',
+      value: 21731,
+    },
+    {
+      id: 4,
+      name: 'Minor Bathroom Remodel',
+      value: 10700,
+    },
+    {
+      id: 5,
+      name: 'Major Bathroom Remodel',
+      value: 24300,
+    },
+    {
+      id: 6,
+      name: 'Attic Bedroom Conversion',
+      value: 36700,
+    },
+    {
+      id: 7,
+      name: 'Landscaping',
+      value: 4900,
+    },
+    {
+      id: 8,
+      name: 'Entry Door Replacement',
+      value: 1280,
+    },
+    {
+      id: 9,
+      name: 'Deck/Patio/Porch',
+      value: 10000,
+    },
+  ];
   const [userHouse, setUserHouse] = useState(houseCreds);
+  const [value, setValue] = useState(nationalAverages);
+
+  const handleOnClick = (event) => {
+    setValue({
+      ...value,
+      [event.target.name]: event.target.value,
+    });
+    // let ROI = nationalAverages.map((nationalAverages[0].value) => {
+    //   return nationalAverage[0].value == 'value';
+    // });
+    // console.log(ROI);
+  };
 
   const handleInputChange = (event) => {
     event.preventDefault();
-  setUserHouse({
-    ...userHouse,
-    [event.target.name]: event.target.value.trim()},
-  });
+    setUserHouse({
+      ...userHouse,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -143,7 +207,7 @@ export default function HouseAdditions() {
     <div
       className={(classes.root, classes.group)}
       noValidate
-      autoComplete='on'
+      autoComplete='off'
       style={{
         minWidth: 500,
         maxHeight: 500,
@@ -213,7 +277,6 @@ export default function HouseAdditions() {
             <br />
             <RadioGroup
               className={classes.group}
-              defaultValue='no'
               aria-label='renovations'
               name='customized-radios'
             >
@@ -239,9 +302,11 @@ export default function HouseAdditions() {
               name='customized-radios'
             >
               <FormControlLabel
+                onClick={handleOnClick}
                 value='Minor Kitchen Remodel'
                 control={<StyledRadio />}
-                label='Minor Kitchen Remodel'
+                label={nationalAverages[0].name}
+                defaultValue={nationalAverages[0].value}
               />
               <FormControlLabel
                 value='Major Kitchen Remodel'
@@ -297,6 +362,28 @@ export default function HouseAdditions() {
         <br />
         <FormControl component='fieldset'>
           <FormLabel component='legend'>Bathroom Remodel:</FormLabel>
+          <br />
+          <RadioGroup
+            className={classes.group}
+            defaultValue='no'
+            aria-label='renovations'
+            name='customized-radios'
+          >
+            <FormControlLabel
+              value='Minor Bathroom Remodel'
+              control={<StyledRadio />}
+              label='Minor Bathroom Remodel'
+            />
+            <FormControlLabel
+              value='Major Bathroom Remodel'
+              control={<StyledRadio />}
+              label='Major Bathroom Remodel'
+            />
+          </RadioGroup>
+        </FormControl>
+        <br />
+        <FormControl component='fieldset'>
+          <FormLabel component='legend'>Attic Bedroom Conversion:</FormLabel>
           <br />
           <RadioGroup
             className={classes.group}
