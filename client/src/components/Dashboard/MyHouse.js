@@ -73,7 +73,7 @@ export default function MyHouse(props) {
     setTimeout(async () => {
       const houseval = await zillow.gethouseval(zillowzpid);
       console.log('gethouseval:', houseval);
-    }, 2000);
+    }, 3000);
   };
 
   return (
@@ -82,8 +82,7 @@ export default function MyHouse(props) {
         <CardMedia className='media' image={imageData} title='My House' />
         <CardContent>
           <Typography variant='h5' component='h2'>
-            {streetdisplay}
-            {citydisplay}
+            {streetdisplay},{citydisplay}
           </Typography>
           <Typography variant='h5' component='h2'>
             $360,000
