@@ -16,7 +16,8 @@ import User from './pages/User';
 import Splash from './pages/Splash';
 
 import Navbar from './components/Navbar';
-import HouseDisplay from './components/HouseDisplay';
+
+import SimilarProperties from './components/SimilarProperties';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -38,7 +39,11 @@ function App() {
         <Switch>
           <Route exact path='/' render={(props) => <Splash {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />
-          <Route exact path='/signup' render={(props) => <Signup {...props} />} />
+          <Route
+            exact
+            path='/signup'
+            render={(props) => <Signup {...props} />}
+          />
           <PrivateRoute exact path='/dashboard' component={Dashboard} />
           <PrivateRoute exact path='/user' component={User} />
         </Switch>
@@ -48,7 +53,6 @@ function App() {
 }
 
 export default () => {
-
   return (
     <AuthProvider>
       <CustomThemeProvider>
@@ -56,5 +60,6 @@ export default () => {
         <App />
       </CustomThemeProvider>
     </AuthProvider>
+  
   );
 };
