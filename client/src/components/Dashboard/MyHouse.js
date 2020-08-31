@@ -21,7 +21,8 @@ export default function MyHouse(props) {
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
-// House EVAL
+  const [statedisplay, setstatedisplay] = useState('');
+  // House EVAL
   let result = 0;
   const finishedSqFt = '2466';
   let avgSqFt = 0;
@@ -36,7 +37,7 @@ export default function MyHouse(props) {
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
 
-   // User id is passed once the user login is completed
+    // User id is passed once the user login is completed
     const [{ street, state, city, zip }] = await houseinfoDB();
 
     const data = {
@@ -52,6 +53,7 @@ export default function MyHouse(props) {
     console.log('houseinfo from zillow :', displayaddress[0].zpid);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
+    setstatedisplay(statezillow);
     const cityzillow = displayaddress[0].address.city;
     setcitydisplay(cityzillow);
     const streetzillow = displayaddress[0].address.street;
@@ -110,7 +112,7 @@ export default function MyHouse(props) {
         <CardMedia className='media' image={imageData} title='My House' />
         <CardContent>
           <Typography variant='h5' component='h2'>
-            {streetdisplay},{citydisplay}
+            {streetdisplay},{citydisplay},{statedisplay}
           </Typography>
           <Typography variant='h5' component='h2'>
             $360,000
