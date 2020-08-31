@@ -99,9 +99,6 @@ export default function MyHouse(props) {
       settotalHouseValue(tot);
       console.log('housevalue:', tot);
 
-      // setavgSqFt(result);
-      // console.log('result:' + avgSqFt);
-
       console.log('avgsqft:', avgPerSqFt);
     }, 3000);
   };
@@ -115,7 +112,8 @@ export default function MyHouse(props) {
             {streetdisplay},{citydisplay},{statedisplay}
           </Typography>
           <Typography variant='h5' component='h2'>
-            {'$'}{totalHouseValue}
+            {'$'}
+            {totalHouseValue}
           </Typography>
           <Typography variant='body2' component='p'>
             Description/Details
