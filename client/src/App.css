@@ -15,11 +15,8 @@
   transform: rotateY(180deg);
 }
 .my-house {
-  background-color: rgb(82, 79, 79) !important;
-  color: rgb(219, 211, 211) !important;
-}
-
-.comp-item {
+  /* background-color: rgb(82, 79, 79) !important; */
+  /* color: rgb(219, 211, 211) !important; */
 }
 
 .media {

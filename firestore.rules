@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+	// ATTEMPT AT LOCKING DOWN READ WRITE ACCESS TO USERS WITH admin rights
+	// match /users {
+	// match /{document=**} {
+	// function getRole(role){
+  //	return get(/databases/{database}/documents/users/$(request.auth.uid)).data[role] == true;
+  // }
+	// allow read, write: if
+	// get(/databases/{database}/documents/users/$(request.auth.uid)).data.admin == true;
+	// }
+	// }
+  // ALL DOCS OPEN TO EVERYONE
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if
+          request.time < timestamp.date(2020, 9, 20);
+    }
+  }
+}

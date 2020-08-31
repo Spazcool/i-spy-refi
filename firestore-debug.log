@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+API endpoint: http://localhost:8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:8080
+
+Dev App Server is now running.
+
+=======
 API endpoint: http://0.0.0.0:6002
 If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
 
@@ -9,5 +18,6 @@ Aug 29, 2020 9:18:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channe
 INFO: Detected non-HTTP/2 connection.
 Aug 29, 2020 9:18:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected HTTP/2 connection.
+>>>>>>> ae596aaff7e74749dcd3af85bff81055134eef15
 *** shutting down gRPC server since JVM is shutting down
 *** server shut down
