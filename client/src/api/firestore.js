@@ -288,15 +288,18 @@ export const DB = {
       .get()
       .then((houses) => {
         const house = houses.docs[0];
-        house.ref.update(data);
+        house.ref.update(data.getHouseData());
         return house;
       })
-      .then((house) => `${house} updated successfully.`)
-      .catch((err) => console.error('Error updating house document', err));
+      .then((house) => {
+        return {message: `${house} updated successfully.`}
+      })
+      .catch((err) => {
+        return {message: `Error updating house document: ${err}`}
+      });
   },
 
   // ------------------------ DELETE ------------------------
-  // TODO UNTESTED!!!
   async deleteUser(userID) {
     let message = [];
     const userRef = db().doc(`users/${userID}`);
@@ -306,34 +309,40 @@ export const DB = {
       return {message: `User ${userID} does not exist in DB.`};
     } else {
       const usersHouses = await this.getHouseByOwner(userID);
-      console.log(usersHouses);
-      const [house] = usersHouses.filter(house => house.owner == userID)//todo presumes one house per owner
-      const deletedHouse = await this.deleteHouse(house.id);
-      message.push(deletedHouse)
 
+      if(usersHouses.length > 0){
+        usersHouses.forEach(async (house) => {
+          const deletedHouse = await this.deleteHouse(house.hid.toString());
+          message.push(deletedHouse.message)
+        })
+      }
+      
       try {
         await userRef.delete();
         message.push(`User ${userID} deleted successfully.`);
+        return message;
       } catch (error) {
         message.push(`Error deleting User ${userID}: ${error}`);
+        return message;
       }
+
 
       // TODO DELETES THE AUTH CREDS FOR THE CURRENTLY SIGNED IN USER
       // NOT SURE IF WE CAN FIND THE CREDS FOR ANY USER & DELETE THEM...BECUASE
       // SECURITY IS A THING
-      const authedUser = auth().currentUser;
+      // const authedUser = auth().currentUser;
 
-      authedUser.delete().then(function() {
-        message.push(`User ${userID} deleted successfully, from Auth User list.`);
-      }).catch(function(error) {
-        message.push(`Error deleting User ${userID}, from Auth List: ${error}`);
-      });
+      // authedUser.delete().then(function() {
+      //   message.push(`User ${userID} deleted successfully, from Auth User list.`);
+      // }).catch(function(error) {
+      //   message.push(`Error deleting User ${userID}, from Auth List: ${error}`);
+      // });
     }
   },
 
   async deleteHouse(houseID) {
     // TODO WORKS, BUT NOT SENDING A PROMISE BACK TO THE FRONTEND, SO THE MESSAGES NEVER MAKE IT
-    db()
+    return db()
       .collection('houses')
       .doc(houseID)
       .get()
@@ -348,7 +357,7 @@ export const DB = {
         return {message: `House ${houseID} deleted successfully.`}
       })
       .catch((err) => {
-        console.log('here')
+        console.log('there')
 
         return {message: `Error deleting house ${houseID}: ${err}.`}
       });

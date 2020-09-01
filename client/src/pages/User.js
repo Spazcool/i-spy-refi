@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom'
 import { DB } from "../api/firestore.js";
-
 import { AuthContext } from "../providers/AuthProvider";
+
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 import Form from 'react-bootstrap/Form';
 
@@ -22,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
   },
   control: {
     padding: theme.spacing(2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -44,12 +56,17 @@ function User(props) {
   const [lastNameColor, setLastNameColor] = useState('')
   const [emailColor, setEmailColor] = useState('')
   const [passwordColor, setPasswordColor] = useState('')
+  const [toBeDeleted, setToBeDeleted] = useState('');
+  const [toBeDeletedUser, setUserToBeDeleted] = useState('');
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+
 
   useEffect(() => {
-    fetchUser();
+    // fetchUser();
     //example code below
     fetchUsers(); 
-    fetchHouse();
+    // fetchHouse();
     fetchHouses();
   },[]);
 
@@ -76,15 +93,13 @@ function User(props) {
 
   const fetchHouse = async(hid) => {
     let house;
-    console.log(fakeHouse)
     if(hid){
       house = async () => await DB.getHouseByID(hid);
       const userHouse = await house();
-      console.log(userHouse)
       setFakeHouse(userHouse);
     }else{
       house = async () => await DB.getHouseByOwner(user.user.uid);
-      const userHouse = await house();
+      const [userHouse] = await house();
       setHouse(userHouse);
     }
   }
@@ -98,9 +113,10 @@ function User(props) {
 
   const createFakeHouse = async() => {
     const data = {
-      hid: 12345678903,
-      zpid: 56358237,
-      location: [89, 23],
+      hid: 12345678905, //todo will require a uuid library here
+      zpid: 56358239,
+      latitude: 89,
+      longitude: 23,
       zip: '02451',
       state: 'MA',
       city: 'Waltham',
@@ -125,8 +141,8 @@ function User(props) {
 
   const createFakeUser = async() => {
     const data = {
-      uid: '1234567890poiuytrew',
-      email: 'dug@dug.dug',
+      uid: 'RWBgwgo3mCSac6d9yM15HuTUjLR2',
+      email: 'spazcool@hotmail.com',
       zpid: 45678,
       displayName: 'duggles',
       firstName: 'dug',
@@ -143,16 +159,19 @@ function User(props) {
   }
 
   const deleteFakeHouse = async() => {
-    const house = async () => await DB.deleteHouse('1234567890');
+    const house = async () => await DB.deleteHouse(toBeDeleted);
     const deletedHouse = await house();
     console.log(deletedHouse)
     setFakeHouse(''); //todo theres a bug in the api file here, mentioned on trello
+  //to make house list go away, will need to recall fetchHouses
   }
-
   const deleteFakeUser = async() => {
-    const userthing = async () => await DB.deleteUser();
+    console.log(toBeDeletedUser)
+    const userthing = async () => await DB.deleteUser(toBeDeletedUser);
     const deletedUser = await userthing();
-    setFakeUser(deletedUser);
+    console.log(deletedUser)
+    setFakeUser(''); //todo theres a bug in the api file here, mentioned on trello
+  //to make house list go away, will need to recall fetchHouses
   }
 
   const updateFakeHouse = async() => {
@@ -161,6 +180,7 @@ function User(props) {
     console.log(updatedHouse)
     // setFakeHouse(''); 
   }
+
   const updateFakeUser = async() => {
     const userthing = async () => await DB.updateUser('1234567890');
     const updatedUser = await userthing();
@@ -209,6 +229,10 @@ function User(props) {
     return arr;
   }
 
+  const listHouses = () => {
+    return (houses.map((house) => <MenuItem key={house.hid} value={house.hid}>{house.hid}</MenuItem>));
+  }
+
   const validateUserInput = ({ firstName, lastName, email, password }) => {
     let isValid = true;
 
@@ -243,6 +267,31 @@ function User(props) {
     return isValid;
   }
 
+  const handleDeleteSelection = (event) => {
+    setToBeDeleted(event.target.value);
+  }
+
+  const handleDeleteUserSelection =  (event) => {
+    console.log(event.target.value)
+    setUserToBeDeleted(event.target.value);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  const handleOpen2 = () => {
+    setOpen2(true);
+  };
+
   return (
     !isAuth ? 
       <Redirect to='/' />
@@ -262,6 +311,7 @@ function User(props) {
               </Button>
             </Form>
           </Grid>
+
           <Grid item xs={12}><h1>Testing Bullshit</h1></Grid>
           {/* TESTING BULLSHIT BELOW */}
           <Grid item xs={3}>
@@ -273,12 +323,12 @@ function User(props) {
             <ul>{users.map((user,i) => <li key={'user'+i}>{user.email}</li>)}</ul>
           </Grid>
           <Grid item xs={3}>
-            <h3>house</h3>
-            <span>{house.user}</span>
+            <h3>house HID</h3>
+            <span>{house.hid}</span>
           </Grid>
           <Grid item xs={3}>
-            <h3>houses</h3>
-            <ul>{houses.map((house,i) => <li key={'house'+i}>{house.user}</li>)}</ul>
+            <h3>houses HID</h3>
+            <ul>{houses.map((house,i) => <li key={'house'+i}>{house.hid}</li>)}</ul>
           </Grid>
 
           <Grid item xs={6}>
@@ -295,12 +345,42 @@ function User(props) {
           </Grid>
 
           <Grid item xs={6}>
-              <Button className='m-1' variant="contained" type="button" onClick={deleteFakeHouse}>
-                Delete Fake House
-              </Button>
-              <div>{fakeHouse.message ? fakeHouse.message : ''}</div>
+            <h3>Delete a House</h3>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">Houses</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={toBeDeleted}
+                onChange={handleDeleteSelection}
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+              >
+                {listHouses()}               
+              </Select>
+            </FormControl>
+            <Button className='m-1' variant="contained" type="button" onClick={deleteFakeHouse}>
+              Delete Fake House
+            </Button>
+            <div>{fakeHouse.message ? fakeHouse.message : ''}</div>
           </Grid>
           <Grid item xs={6}>
+          <h3>Delete a User</h3>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">Users</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={toBeDeletedUser}
+                onChange={handleDeleteUserSelection}
+                open={open2}
+                onClose={handleClose2}
+                onOpen={handleOpen2}
+              >
+                {users.map((user) => <MenuItem key={user.uid} value={user.uid}>{user.uid}</MenuItem>)}               
+              </Select>
+            </FormControl>
               <Button className='m-1' variant="contained" type="button" onClick={deleteFakeUser}>
                 Delete Fake User
               </Button>
