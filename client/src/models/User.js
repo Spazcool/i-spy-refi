@@ -10,7 +10,7 @@ class User {
     this.lastUpdated = lastUpdated;
   }
 
-  getUser(){
+  getUserData(){
     return {
       uid: this.uid,
       displayName: this.displayName,

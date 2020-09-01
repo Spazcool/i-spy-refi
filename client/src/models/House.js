@@ -12,7 +12,7 @@ class House {
     this.lastUpdated = lastUpdated;
   }
 
-  getHouse(){
+  getHouseData(){
     return {
       zpid: this.zpid,
       user: this.user,

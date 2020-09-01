@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 function User(props) {
   
   const { isAuth, user } = useContext(AuthContext)
-  const  [info, setInfo] = useState()
+  const [info, setInfo] = useState()
   const [spacing] = React.useState(2);
   const classes = useStyles();
   const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' }
@@ -39,14 +39,20 @@ function User(props) {
   const [emailColor, setEmailColor] = useState('')
   const [passwordColor, setPasswordColor] = useState('')
 
-
   useEffect(() => {
     fetchUser()
   },[]);
 
   const fetchUser = async() => {
-    const userDB = async () => await DB.getUser(user.user.uid)
-    const { firstName, lastName, email } = await userDB();
+    const userDB = async () => await DB.getUser(user.user.uid);
+    const usersDB = async () => await DB.getUsers();
+    const thing = await usersDB()
+    console.log(thing)
+
+    const totalUser = await userDB();
+    console.log(totalUser)
+
+    const { firstName, lastName, email } = totalUser;
     const data = {
       firstName,
       lastName,
@@ -65,7 +71,7 @@ function User(props) {
     // data needs to look something like this
     // const {email, displayName, firstName, lastName, zpid, admin} = updateUserData;
 
-    // DB.updateUser(user.user.uid, updateUserData)
+    // DB.updateUser(user, updateUserData)
     //then return a okay, updated successfully toast
     // event.preventDefault()
     // let newUser = {

@@ -1,44 +1,28 @@
-import { firestore as db } from '../firebase.js';
+import { auth, firestore as db } from '../firebase.js';
 import User from '../models/User';
 
 export const DB = {
   // ------------------------ CREATE ------------------------
+  // expected fields:
+  // user(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated)
   async createUser(user, additionalData) {
     const userRef = db().doc(`users/${user.uid}`);
     const snapshot = await userRef.get();
 
-    let doug = new User(user.uid, user.displayName, user.email, '', '', '', false, '')
-    console.log(doug.getUser())
-    
     if (!snapshot.exists) {
       let data;
       if (!additionalData) {
         // if google signin
-        data = {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          firstName: '',
-          lastName: '',
-          zpid: '',
-          admin: false,
-        };
+        data = new User(user.uid, user.displayName, user.email, '', '', '', false, '');
       } else {
         const { email, firstName, lastName } = additionalData;
-        data = {
-          uid: user.uid,
-          email: email,
-          displayName: '',
-          firstName: firstName,
-          lastName: lastName,
-          zpid: '',
-          admin: false,
-        };
+
+        data = new User(user.uid, `${firstName} ${lastName}`, email, firstName, lastName, '', false, '');
       }
       let returnedUser;
 
       try {
-        returnedUser = await userRef.set(data, { merge: true });
+        returnedUser = await userRef.set(data.getUserData(), { merge: true });
       } catch (error) {
         console.error('Error creating user document', error);
       }
@@ -76,15 +60,20 @@ export const DB = {
       console.error(err);
     }
     const userObj = await returnedUser;
-    const data = {
-      id: userObj.id,
-      email: userObj.data().email ? userObj.data().email : undefined,
-      firstName: userObj.data().firstName
-        ? userObj.data().firstName
-        : undefined,
-      lastName: userObj.data().lastName ? userObj.data().lastName : undefined,
-    };
-    return data;
+    const {displayName, email, firstName, lastName, zpid, admin, lastUpdated} = userObj.data();
+
+    const data = new User(
+      userObj.id,
+      displayName,
+      email,
+      firstName,
+      lastName,
+      zpid,
+      admin,
+      lastUpdated,
+    );
+
+    return data.getUserData();
   },
 
   async getUsers() {
@@ -96,17 +85,20 @@ export const DB = {
       console.log(err);
     }
     const users = await returnedUsers;
-    //todo break this off into a reusable func seeing as this shit is gonna happen a bunch
     const usersArr = [];
     users.forEach((user) => {
-      // todo does this enforcing of data model belong here?
-      const data = {
-        id: user.id,
-        email: user.data().email,
-        firstName: user.data().firstName,
-        lastName: user.data().lastName,
-      };
-      usersArr.push(data);
+      const { uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated } = user.data();
+      const data = new User(
+        uid,
+        displayName,
+        email,
+        firstName,
+        lastName,
+        zpid,
+        admin,
+        lastUpdated,
+      );
+      usersArr.push(data.getUserData());
     });
     return usersArr;
   },
@@ -235,6 +227,7 @@ export const DB = {
   },
 
   // ------------------------ UPDATE ------------------------
+  // TODO UNTESTED
   async updateUser(user, updateUserData) {
     const userRef = db().doc(`users/${user}`);
     const snapshot = await userRef.get();
@@ -249,18 +242,22 @@ export const DB = {
         lastName,
         zpid,
         admin,
+        lastUpdated,
       } = updateUserData;
-      const data = {
-        email,
+
+      const data = new User(
+        user.user.uid,
         displayName,
+        email,
         firstName,
         lastName,
         zpid,
         admin,
-      };
+        lastUpdated
+      );
 
       try {
-        await userRef.update(data);
+        await userRef.update(data.getUserData());
       } catch (error) {
         console.error('Error updating user document', error);
       }
@@ -285,6 +282,7 @@ export const DB = {
   },
 
   // ------------------------ DELETE ------------------------
+  // TODO UNTESTED!!!
   async deleteUser(user) {
     const userRef = db().doc(`users/${user}`);
     const snapshot = await userRef.get();
@@ -292,19 +290,28 @@ export const DB = {
     if (!snapshot.exists) {
       return;
     } else {
-      const usersHouse = await this.getHouseByOwner(user);
-      console.log(usersHouse);
-      // const [house] = usersHouses.filter(house => house.owner == user)
-      // this.deleteHouse(house.id)
-      // console.log(`${house.id} deleted successfully`);
+      const usersHouses = await this.getHouseByOwner(user);
+      console.log(usersHouses);
+      const [house] = usersHouses.filter(house => house.owner == user)//todo presumes one house per owner
+      this.deleteHouse(house.id)
+      console.log(`User's house[${house.id}] deleted successfully from DB`);
 
-      // try {
-      //   await userRef.delete()
-      // } catch (error) {
-      //   console.error("Error deleting user document", error);
-      // }
+      try {
+        await userRef.delete()
+      } catch (error) {
+        console.error("Error deleting user document", error);
+      }
+
+      const authedUser = auth().currentUser;
+
+      authedUser.delete().then(function() {
+        console.log(`User deleted successfully from authenticated user list`);
+      }).catch(function(error) {
+        console.log(`auth list error`);
+      });
     }
-    console.log(`${user} deleted successfully`);
+    
+    console.log(`User[${user}] deleted successfullyfrom DB`);
   },
 
   async deleteHouse(house) {
