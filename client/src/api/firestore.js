@@ -124,9 +124,9 @@ export const DB = {
     return usersArr;
   },
 
-  async getHouseByID(id) {
+  async getHouseByID(docID) {
     let returnedHouse;
-    const house = db().collection('houses').doc(id);
+    const house = db().collection('houses').doc(docID);
 
     try {
       returnedHouse = await house.get();
@@ -135,24 +135,23 @@ export const DB = {
     }
 
     const houseObj = await returnedHouse;
-    let returnedFormData;
 
-    try {
-      returnedFormData = await this.getFormByID(id);
-    } catch (err) {
-      console.log(err);
-    }
-    // const formObj = await returnedFormData;
+    const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = houseObj.data();
+    const data = new House(
+      hid,
+      zpid,
+      user,
+      location,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      lastUpdated,
+    );
     
-    // todo is there a way to abstract this out of here? I guess the concep tof a model
-    const data = {
-      id: houseObj.id,
-      value: houseObj.data().value,
-      zpid: houseObj.data().zpid,
-      formData: houseObj.data().formData
-    }
- 
-    return data;
+    return data.getHouseData();
   },
 
   async getHouseByOwner(userId) {

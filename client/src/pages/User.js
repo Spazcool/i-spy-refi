@@ -35,7 +35,6 @@ function User(props) {
   const [fakeHouse, setFakeHouse] = useState('');
   const [fakeUser, setFakeUser] = useState('');
 
-
   const [spacing] = React.useState(2);
   const classes = useStyles();
   const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' }
@@ -75,11 +74,19 @@ function User(props) {
     setUsers(totalUsers);
   }
 
-  const fetchHouse = async() => {
-    const house = async () => await DB.getHouseByOwner(user.user.uid);
-    const userHouse = await house();
-
-    setHouse(userHouse);
+  const fetchHouse = async(hid) => {
+    let house;
+    console.log(fakeHouse)
+    if(hid){
+      house = async () => await DB.getHouseByID(hid);
+      const userHouse = await house();
+      console.log(userHouse)
+      setFakeHouse(userHouse);
+    }else{
+      house = async () => await DB.getHouseByOwner(user.user.uid);
+      const userHouse = await house();
+      setHouse(userHouse);
+    }
   }
 
   const fetchHouses = async() => {
@@ -311,6 +318,12 @@ function User(props) {
                 Update Fake User
               </Button>
               <div>{fakeUser.message ? fakeUser.message : ''}</div>
+          </Grid>
+          <Grid item xs={6}>
+              <Button className='m-1' variant="contained" type="button" onClick={()=> fetchHouse('1234567890')}>
+                Get Fake House by HID
+              </Button>
+              <div>{fakeHouse.message ? fakeHouse.message : ''}</div>
           </Grid>
         </Grid>
       </Container>
