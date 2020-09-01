@@ -10,19 +10,25 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+// House Display Info
+
+
 export default function MyHouse(props) {
-  //image={imageData}
-  //{streetdisplay},{citydisplay},{statedisplay}
-  //{totalHouseValue}
+
+//image={imageData}
+//,{citydisplay},{statedisplay}
 
   return (
     <Paper elevation={4} className='my-house'>
       <Card className='my-house'>
-        <CardMedia className='media' title='My House' />
+        <CardMedia className='media'  title='My House' />
         <CardContent>
-          <Typography variant='h5' component='h2'></Typography>
+          <Typography variant='h5' component='h2'>
+            {props.street}
+          </Typography>
           <Typography variant='h5' component='h2'>
             {'$'}
+            {totalHouseValue}
           </Typography>
           <Typography variant='body2' component='p'>
             Description/Details

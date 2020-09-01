@@ -139,7 +139,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse />
+          <MyHouse street={streetdisplay} />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
