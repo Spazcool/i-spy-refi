@@ -10,13 +10,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-// House Display Info
-
-import { DB } from '../../api/firestore';
-import { AuthContext } from '../../providers/AuthProvider';
-import { zillow } from '../../api/zillow';
 export default function MyHouse(props) {
-
+  //image={imageData}
+  //{streetdisplay},{citydisplay},{statedisplay}
+  //{totalHouseValue}
 
   return (
     <Paper elevation={4} className='my-house'>

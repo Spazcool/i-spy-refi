@@ -60,7 +60,6 @@ function Home(props) {
   const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
-  const [index, setIndex] = useState(0);
   const [totalHouseValue, settotalHouseValue] = useState('');
 
   const fetchaddress = async () => {
