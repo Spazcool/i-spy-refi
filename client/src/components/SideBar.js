@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 import { CustomThemeContext } from '../providers/ThemeProvider';
 
@@ -32,118 +32,179 @@ const useStyles = makeStyles({
   link: {
     textDecoration: 'none',
     color: 'inherit',
-  }
+  },
 });
 
-export default withRouter(
+export default withRouter(function TemporaryDrawer(props) {
+  const { theme, toggleTheme } = useContext(CustomThemeContext);
+  const { isAuth, logout, user } = useContext(AuthContext);
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    left: false,
+  });
 
-  function TemporaryDrawer(props) {
-    const { theme, toggleTheme } = useContext(CustomThemeContext);
-    const { isAuth, logout, user } = useContext(AuthContext);
-    const classes = useStyles();
-    const [state, setState] = React.useState({
-      left: false,
-    });
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
 
-    const toggleDrawer = (anchor, open) => (event) => {
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-        return;
-      }
+    setState({ ...state, [anchor]: open });
+  };
 
-      setState({ ...state, [anchor]: open });
-    };
-
-    return (
-      <>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}><MenuIcon /></IconButton>
-        <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
-          <div
-            className={clsx(classes.list, {
-              [classes.fullList]: 'left' === 'top' || 'left' === 'bottom',
-            })}
-            role="presentation"
-            onClick={toggleDrawer('left', false)}
-            onKeyDown={toggleDrawer('left', false)}
-          >
-
-            <List>
+  return (
+    <>
+      <IconButton
+        edge='start'
+        className={classes.menuButton}
+        color='inherit'
+        aria-label='menu'
+        onClick={toggleDrawer('left', true)}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer
+        anchor={'left'}
+        open={state['left']}
+        onClose={toggleDrawer('left', false)}
+      >
+        <div
+          className={clsx(classes.list, {
+            [classes.fullList]: 'left' === 'top' || 'left' === 'bottom',
+          })}
+          role='presentation'
+          onClick={toggleDrawer('left', false)}
+          onKeyDown={toggleDrawer('left', false)}
+        >
+          <List>
+            <ListItem
+              className={classes.link}
+              key='home'
+              onClick={(e) => {
+                e.preventDefault();
+                props.history.push('/');
+              }}
+              button
+            >
+              <ListItemIcon>
+                <span className='flip'>
+                  <HomeIcon />
+                </span>
+              </ListItemIcon>
+              <ListItemText primary='Home' />
+            </ListItem>
+            {isAuth ? (
               <ListItem
-                  className={classes.link}
-                  key='home'
-                  onClick={e => {
-                    e.preventDefault();
-                    props.history.push("/");
-                  }}
-                button
-              >
-                <ListItemIcon><span className="flip"><HomeIcon/></span></ListItemIcon>
-                <ListItemText primary='Home' />
-              </ListItem>
-              {isAuth? 
-              <ListItem 
                 button
                 className={classes.link}
                 key='me'
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault();
-                  props.history.push("/user");
+                  props.history.push('/user');
                 }}
               >
-                <ListItemIcon><span className="flip"><UserIcon /></span></ListItemIcon>
-                <ListItemText primary={user.user.displayName ? user.user.displayName : user.user.email} />
+                <ListItemIcon>
+                  <span className='flip'>
+                    <UserIcon />
+                  </span>
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    user.user.displayName
+                      ? user.user.displayName
+                      : user.user.email
+                  }
+                />
               </ListItem>
-              : <></>}
-            </List>
-            <Divider />
-            <List>
-            {isAuth? 
+            ) : (
+              <></>
+            )}
+          </List>
+          <Divider />
+          <List>
+            {isAuth ? (
               <ListItem
                 className={classes.link}
                 key='dashboard'
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault();
-                  props.history.push("/dashboard");
+                  props.history.push('/dashboard');
                 }}
                 button
               >
-                <ListItemIcon><span className="flip"><ChartIcon /></span></ListItemIcon>
+                <ListItemIcon>
+                  <span className='flip'>
+                    <ChartIcon />
+                  </span>
+                </ListItemIcon>
                 <ListItemText primary='Dashboard' />
               </ListItem>
-              : <></>}
+            ) : (
+              <></>
+            )}
+            {isAuth ? (
               <ListItem
                 className={classes.link}
-                key='theme'
-                onClick={e => {
+                key='House Additions'
+                onClick={(e) => {
                   e.preventDefault();
-                  toggleTheme()
+                  props.history.push('/HouseAdditions');
                 }}
                 button
               >
-                <ListItemIcon><span className="flip">{theme ? <LightIcon /> : <DarkIcon/>}</span></ListItemIcon>
-                <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
+                <ListItemIcon>
+                  <span className='flip'>
+                    <HomeIcon />
+                  </span>
+                </ListItemIcon>
+                <ListItemText primary='House Additions' />
               </ListItem>
-              
-              { isAuth 
-                ? 
-                  <ListItem
-                    className={classes.link}
-                    key='logout'
-                    onClick={e => {
-                      e.preventDefault();
-                      logout();
-                    }}
-                    button
-                  >
-                    <ListItemIcon><span className="flip"><LogoutIcon /></span></ListItemIcon>
-                    <ListItemText primary='Logout' />
-                  </ListItem>
-                :
-                  <></>
-              }
-            </List>
-          </div>
-        </Drawer>
-      </>
-    );
-  }
-)
+            ) : (
+              <></>
+            )}
+
+            <ListItem
+              className={classes.link}
+              key='theme'
+              onClick={(e) => {
+                e.preventDefault();
+                toggleTheme();
+              }}
+              button
+            >
+              <ListItemIcon>
+                <span className='flip'>
+                  {theme ? <LightIcon /> : <DarkIcon />}
+                </span>
+              </ListItemIcon>
+              <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
+            </ListItem>
+
+            {isAuth ? (
+              <ListItem
+                className={classes.link}
+                key='logout'
+                onClick={(e) => {
+                  e.preventDefault();
+                  logout();
+                }}
+                button
+              >
+                <ListItemIcon>
+                  <span className='flip'>
+                    <LogoutIcon />
+                  </span>
+                </ListItemIcon>
+                <ListItemText primary='Logout' />
+              </ListItem>
+            ) : (
+              <></>
+            )}
+          </List>
+        </div>
+      </Drawer>
+    </>
+  );
+});

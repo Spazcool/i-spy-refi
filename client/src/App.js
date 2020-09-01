@@ -16,6 +16,7 @@ import User from './pages/User';
 import Splash from './pages/Splash';
 
 import Navbar from './components/Navbar';
+import HouseAdditions from './pages/HouseAdditions';
 
 import SimilarProperties from './components/SimilarProperties';
 
@@ -44,6 +45,13 @@ function App() {
             path='/signup'
             render={(props) => <Signup {...props} />}
           />
+          {/* <PrivateRoute exact path='/houses' component={Houses} /> */}
+          <PrivateRoute
+            exact
+            path='/houseadditions'
+            component={HouseAdditions}
+          />
+          {/* <Route exact path='/signup' render={(props) => <Signup {...props} />} /> */}
           <PrivateRoute exact path='/dashboard' component={Dashboard} />
           <PrivateRoute exact path='/user' component={User} />
         </Switch>
@@ -56,10 +64,9 @@ export default () => {
   return (
     <AuthProvider>
       <CustomThemeProvider>
-      <CssBaseline/>
+        <CssBaseline />
         <App />
       </CustomThemeProvider>
     </AuthProvider>
-  
   );
 };

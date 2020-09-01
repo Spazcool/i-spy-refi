@@ -18,7 +18,7 @@ import { zillow } from '../../api/zillow';
 export default function MyHouse(props) {
   // House Display Info Logic
   const { user } = useContext(AuthContext);
-  const [imageData, setImage] = useState([]);
+  const [imageData, setImage] = useState('');
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
@@ -49,8 +49,8 @@ export default function MyHouse(props) {
     /////////////////// FIRST API CALL /////////////////
 
     const displayaddress = await zillow.getaddress(data);
-
-    console.log('houseinfo from zillow :', displayaddress[0].zpid);
+    console.log(displayaddress);
+    // console.log('houseinfo from zillow :', displayaddress[0].zpid);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
     setstatedisplay(statezillow);
@@ -68,6 +68,7 @@ export default function MyHouse(props) {
     //////////////////////// SECOND CALL ///////////////////
     setTimeout(async () => {
       const getimageurl = await zillow.getzillowpropid(zillowzpid);
+      console.log(getimageurl)
       setImage(getimageurl);
       console.log('getimageurl:', getimageurl);
     }, 1000);
@@ -106,7 +107,7 @@ export default function MyHouse(props) {
   return (
     <Paper elevation={4} className='my-house'>
       <Card className='my-house'>
-        <CardMedia className='media' image={imageData} title='My House' />
+        <CardMedia className='media' image={imageData} component='img' title='My House' />
         <CardContent>
           <Typography variant='h5' component='h2'>
             {streetdisplay},{citydisplay},{statedisplay}
