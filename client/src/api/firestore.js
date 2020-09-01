@@ -45,10 +45,14 @@ export const DB = {
   },
 
   async createHouse(user, houseData) {
+    console.log(houseData);
     const data = {
       owner: user,
       zpid: houseData.zpid,
-      location: new db.GeoPoint(houseData.location[0], houseData.location[1]),
+      location: new db.GeoPoint(
+        parseFloat(houseData.address.latitude),
+        parseFloat(houseData.address.longitude)
+      ),
       comps: houseData.comps,
     };
     let returnedHouse;
@@ -141,7 +145,7 @@ export const DB = {
   async getHouseByOwner(user) {
     let returnedHouse;
 
-    const house = db().collection('houses').where('owner', '==', user);
+    const house = db().collection('houses').where('user', '==', user);
 
     try {
       returnedHouse = await house.get();

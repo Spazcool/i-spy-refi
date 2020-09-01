@@ -49,8 +49,8 @@ export default function MyHouse(props) {
     /////////////////// FIRST API CALL /////////////////
 
     const displayaddress = await zillow.getaddress(data);
-
-    console.log('houseinfo from zillow :', displayaddress[0].zpid);
+    console.log(displayaddress);
+    // console.log('houseinfo from zillow :', displayaddress[0].zpid);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
     setstatedisplay(statezillow);

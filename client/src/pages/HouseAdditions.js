@@ -1,4 +1,4 @@
-import React, { setState, useState, useEffect } from 'react';
+import React, { setState, useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import Radio from '@material-ui/core/Radio';
@@ -14,6 +14,7 @@ import { Form } from 'react-bootstrap';
 import { zillow } from '../api/zillow.js';
 import { firestore as db } from '../firebase.js';
 import { DB } from '../api/firestore';
+import { AuthContext } from '../providers/AuthProvider';
 // import { AuthContext } from '../providers/HouseProvider';
 // import { Redirect } from 'react-router-dom';
 
@@ -96,6 +97,7 @@ function StyledRadio(props) {
   );
 }
 export default function HouseAdditions() {
+  const { user } = useContext(AuthContext);
   const classes = useStyles();
   const houseCreds = {
     address: '',
@@ -216,11 +218,11 @@ export default function HouseAdditions() {
       let address = response[0].address;
       let zpid = response[0].zpid;
 
-      let houseData = [address, zpid];
+      let houseData = { address, zpid };
       // console.log(houseData[0].address);
       // console.log(houseData[1].zpid);
       console.log(houseData);
-      DB.createHouse(houseData);
+      DB.createHouse(user.user.uid, houseData);
     });
   };
   return (

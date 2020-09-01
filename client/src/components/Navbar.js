@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
 import SideBar from './SideBar.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,14 +39,7 @@ export default withRouter(function Navbar(props) {
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='menu'
-          >
-            <SideBar props={props} />
-          </IconButton>
+          <SideBar props={props} />
           <Typography variant='h6' className={classes.title}>
             I Spy Refi
           </Typography>

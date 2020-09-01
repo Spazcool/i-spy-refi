@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom'
-import { DB } from "../api/firestore.js";
+import { Redirect } from 'react-router-dom';
+import { DB } from '../api/firestore.js';
 
-import { AuthContext } from "../providers/AuthProvider";
+import { AuthContext } from '../providers/AuthProvider';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import HouseAdditions from '../pages/HouseAdditions';
 
 import Form from 'react-bootstrap/Form';
 
@@ -26,45 +27,47 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function User(props) {
-  
-  const { isAuth, user } = useContext(AuthContext)
-  const  [info, setInfo] = useState()
+  const { isAuth, user } = useContext(AuthContext);
+  const [info, setInfo] = useState();
   const [spacing] = React.useState(2);
   const classes = useStyles();
-  const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' }
-  const [formData, setFormData] = useState(emptyUser)
-  const [credsAreInvalid, setCredsAreInvalid] = useState('')
-  const [firstNameColor, setFirstNameColor] = useState('')
-  const [lastNameColor, setLastNameColor] = useState('')
-  const [emailColor, setEmailColor] = useState('')
-  const [passwordColor, setPasswordColor] = useState('')
-
+  const emptyUser = {
+    firstNameInput: '',
+    lastNameInput: '',
+    emailInput: '',
+    passwordInput: '',
+  };
+  const [formData, setFormData] = useState(emptyUser);
+  const [credsAreInvalid, setCredsAreInvalid] = useState('');
+  const [firstNameColor, setFirstNameColor] = useState('');
+  const [lastNameColor, setLastNameColor] = useState('');
+  const [emailColor, setEmailColor] = useState('');
+  const [passwordColor, setPasswordColor] = useState('');
 
   useEffect(() => {
-    fetchUser()
-  },[]);
+    fetchUser();
+  }, []);
 
-  const fetchUser = async() => {
-    const userDB = async () => await DB.getUser(user.user.uid)
+  const fetchUser = async () => {
+    const userDB = async () => await DB.getUser(user.user.uid);
     const { firstName, lastName, email } = await userDB();
     const data = {
       firstName,
       lastName,
-      email
-    }
+      email,
+    };
     setInfo(data);
-  }
+  };
 
   const handleInputChange = (event) => {
-    event.preventDefault()
-    const { name, value } = event.target
+    event.preventDefault();
+    const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-  }
-  
+  };
+
   const handleFormSubmit = (event) => {
     // data needs to look something like this
     // const {email, displayName, firstName, lastName, zpid, admin} = updateUserData;
-
     // DB.updateUser(user.user.uid, updateUserData)
     //then return a okay, updated successfully toast
     // event.preventDefault()
@@ -80,7 +83,7 @@ function User(props) {
     // } else {
     //     setCredsAreInvalid(errorMessage)
     // }
-  }
+  };
 
   const list = (obj) => {
     let arr = [];
@@ -88,69 +91,74 @@ function User(props) {
       arr.push(
         <Form.Group controlId={`input${property}`} key={property}>
           <Form.Label className={`${property}Color`}>{property}</Form.Label>
-          <Form.Control name={`${property}Input`} type="text" placeholder={obj[property]} value={formData[`${property}Input`]} onChange={handleInputChange} />
-          
+          <Form.Control
+            name={`${property}Input`}
+            type='text'
+            placeholder={obj[property]}
+            value={formData[`${property}Input`]}
+            onChange={handleInputChange}
+          />
         </Form.Group>
-      )
+      );
     }
     return arr;
-  }
+  };
 
   const validateUserInput = ({ firstName, lastName, email, password }) => {
     let isValid = true;
 
     if (!firstName) {
-        setFirstNameColor('text-danger')
-        isValid = false;
+      setFirstNameColor('text-danger');
+      isValid = false;
     } else {
-        setFirstNameColor('')
+      setFirstNameColor('');
     }
 
     if (!lastName) {
-        setLastNameColor('text-danger')
-        isValid = false;
+      setLastNameColor('text-danger');
+      isValid = false;
     } else {
-        setLastNameColor('')
+      setLastNameColor('');
     }
 
     if (!email) {
-        setEmailColor('text-danger')
-        isValid = false;
+      setEmailColor('text-danger');
+      isValid = false;
     } else {
-        setEmailColor('')
+      setEmailColor('');
     }
 
     if (!password) {
-        setPasswordColor('text-danger')
-        isValid = false;
+      setPasswordColor('text-danger');
+      isValid = false;
     } else {
-        setPasswordColor('')
+      setPasswordColor('');
     }
 
     return isValid;
-  }
+  };
 
-  return (
-    !isAuth ? 
-      <Redirect to='/' />
-      :
-      <Container className="signup">
-          <h1>User Page</h1>
-        <Grid container justify="center" spacing={spacing}>
-          <Grid item xs={12} md={6}>
-            <Form onSubmit={handleFormSubmit}>
-              {info ? 
-                list(info)
-              :
-              <></>  
-              }
-              <Button className='m-1' variant="contained" type="submit">
-                Update
-              </Button>
-            </Form>
-          </Grid>
+  return !isAuth ? (
+    <Redirect to='/' />
+  ) : (
+    <Container className='signup'>
+      <h1>User Page</h1>
+      <Grid container justify='center' spacing={spacing}>
+        <Grid item xs={12} md={6}>
+          <Form onSubmit={handleFormSubmit}>
+            {info ? list(info) : <></>}
+            <Button className='m-1' variant='contained' type='submit'>
+              Update
+            </Button>
+          </Form>
         </Grid>
-      </Container>
+      </Grid>
+      <Grid container justify='center' spacing={spacing}>
+        <Grid item xs={12} md={6}>
+          <HouseAdditions />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
