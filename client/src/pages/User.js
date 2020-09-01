@@ -98,13 +98,13 @@ function User(props) {
 
   const createFakeHouse = async() => {
     const data = {
-      hid: 12345678902,
-      zpid: 45678,
+      hid: 12345678903,
+      zpid: 56358237,
       location: [89, 23],
-      zip: 99987,
+      zip: '02451',
       state: 'MA',
-      city: 'shitsNgiggles',
-      street: '12134 fake street',
+      city: 'Waltham',
+      street: '128 Seminole Avenue',
       comps: [
         {date: '10-30-20', value: 87654},
         {date: '90-30-20', value: 87354}
@@ -262,7 +262,7 @@ function User(props) {
               </Button>
             </Form>
           </Grid>
-
+          <Grid item xs={12}><h1>Testing Bullshit</h1></Grid>
           {/* TESTING BULLSHIT BELOW */}
           <Grid item xs={3}>
             <h3>user</h3>

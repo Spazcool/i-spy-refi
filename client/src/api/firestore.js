@@ -44,12 +44,12 @@ export const DB = {
     const snapshot = await houseRef.get();
 
     if (!snapshot.exists) {
-      const { hid, zpid, location, zip, state, city, street, comps, formData, lastUpdated } = houseData;
+      const { hid, zpid, latitude, longitude, zip, state, city, street, comps, formData, lastUpdated } = houseData;
       const data = new House(
         hid,
         zpid,
         userID,
-        new db.GeoPoint(location[0], location[1]),
+        new db.GeoPoint(parseFloat(latitude), parseFloat(longitude)),
         zip,
         state,
         city,
@@ -150,7 +150,7 @@ export const DB = {
       formData,
       lastUpdated,
     );
-    
+
     return data.getHouseData();
   },
 
@@ -162,27 +162,35 @@ export const DB = {
     try {
       returnedHouse = await house.get();
     } catch (err) {
-      console.log(err);
+      returnedHouse = {message: `Error loading house: ${err}.`};
     }
-    let houseinfoobj = [];
+
+    let houseArr = [];
     const houseObj = await returnedHouse;
 
     houseObj.forEach((house) => {
-      const data = {
-        id: house.id,
-        street: house.data().street,
-        city: house.data().city,
-        state: house.data().state,
-        zip: house.data().zip,
-        zpid: house.data().zpid,
-      };
+      if(house.message){
+        houseArr.push(house);
+      }
+      const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = house.data();
+      const data = new House(
+        hid,
+        zpid,
+        user,
+        location,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      );
 
-      houseinfoobj.push(data);
+      houseArr.push(data.getHouseData());
     });
 
-    // console.log('houseobj:', houseinfoobj);
-
-    return houseinfoobj;
+    return houseArr;
   },
 
   async getHouses() {
@@ -191,59 +199,31 @@ export const DB = {
     try {
       returnedHouses = await housesList.get();
     } catch (err) {
-      console.log(err);
+      returnedHouses = {message: `Error loading houses: ${err}.`};
     }
-    const houses = await returnedHouses;
-    //todo break this off into a reusable func seeing as this shit is gonna happen a bunch
+
     const housesArr = [];
+    const houses = await returnedHouses;
+
     houses.forEach(async (house) => {
-      let returnedFormData;
+      const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = house.data();
+      const data = new House(
+        hid,
+        zpid,
+        user,
+        location,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      );
 
-      try {
-        returnedFormData = await this.getFormByID(house.id);
-      } catch (err) {
-        console.log(err);
-      }
-      const formObj = await returnedFormData;
-
-      // todo does this enforcing of data model belong here?
-      const data = {
-        id: house.id,
-        owner: house.data().owner,
-        value: house.data().value,
-        zpid: house.data().zpid,
-        formData: formObj,
-      };
-      housesArr.push(data);
+      housesArr.push(data.getHouseData());
     });
     return housesArr;
-  },
-
-  async getFormByID(houseID) {
-    let returnedFormData;
-    const formData = db()
-      .collection('houses')
-      .doc(houseID)
-      .collection('formData');
-
-    try {
-      returnedFormData = await formData.get();
-    } catch (err) {
-      console.log(err);
-    }
-    const formObj = await returnedFormData;
-    let data;
-
-    // todo only returns one form's data
-    // todo will need to beef up the returned fields
-    formObj.forEach((form) => {
-      data = {
-        id: form.id,
-        bathroom: form.data().bathroom,
-      };
-    });
-
-    return data;
   },
 
   // ------------------------ UPDATE ------------------------
@@ -286,11 +266,25 @@ export const DB = {
   },
 
   async updateHouse(updateHouseData) {
-    const { comps } = updateHouseData;
-    const data = { comps, lastUpdated: db.FieldValue.serverTimestamp() };
+    const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = updateHouseData;
+    const data = new House(
+      hid,
+      zpid,
+      user,
+      location,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      db.FieldValue.serverTimestamp(),
+    );
+    // const { comps } = updateHouseData;
+    // const data = { comps, lastUpdated: db.FieldValue.serverTimestamp() };
     db()
       .collection('houses')
-      .where('zpid', '==', updateHouseData.zpid)
+      .where('zpid', '==', data.getHouseData().zpid) //
       .get()
       .then((houses) => {
         const house = houses.docs[0];
