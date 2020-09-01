@@ -15,6 +15,7 @@ import { zillow } from '../api/zillow.js';
 import { firestore as db } from '../firebase.js';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
+import { v4 as uuidv4 } from 'uuid';
 // import { AuthContext } from '../providers/HouseProvider';
 // import { Redirect } from 'react-router-dom';
 
@@ -213,12 +214,24 @@ export default function HouseAdditions() {
     };
     zillow.getaddress(params).then((response) => {
       console.log(response);
-      console.log(response[0].address);
-      console.log(response[0].zpid);
-      let address = response[0].address;
-      let zpid = response[0].zpid;
+      // console.log(response[0].address);
+      // console.log(response[0].zpid);
+      // let address = response[0].address;
+      // let zpid = response[0].zpid;
 
-      let houseData = { address, zpid };
+      let houseData = {
+        hid: uuidv4(),
+        zpid: response[0].zpid,
+        latitude: response[0].address.latitude,
+        longitude: response[0].address.longitude,
+        zip: response[0].address.zipcode,
+        state: response[0].address.state,
+        city: response[0].address.city,
+        street: response[0].address.street,
+        comps: '',
+        formData: '',
+        lastUpdated: '',
+      };
       // console.log(houseData[0].address);
       // console.log(houseData[1].zpid);
       console.log(houseData);
