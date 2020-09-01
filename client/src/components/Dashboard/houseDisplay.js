@@ -86,7 +86,7 @@ export default function HouseDisplay(props) {
               .catch((error) => {
                 console.log(error);
               }),
-          2000
+          1100
         );
       })
       .catch((error) => {

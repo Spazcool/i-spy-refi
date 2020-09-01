@@ -74,7 +74,6 @@ function SimilarProperties() {
     // returns all data
   }
   return <></>;
-  // <div className='SimilarProperties'></div>;
 }
 
 export default SimilarProperties;

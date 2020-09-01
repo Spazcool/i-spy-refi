@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -16,6 +15,7 @@ import { DB } from '../../api/firestore';
 import { AuthContext } from '../../providers/AuthProvider';
 import { zillow } from '../../api/zillow';
 export default function MyHouse(props) {
+  console.log(props);
   // House Display Info Logic
   const { user } = useContext(AuthContext);
   const [imageData, setImage] = useState([]);
@@ -78,7 +78,9 @@ export default function MyHouse(props) {
     setTimeout(async () => {
       const houseval = await zillow.gethouseval(zillowzpid);
       console.log('gethouseval:', houseval);
-
+      let housevalArray = [];
+      // console.log(houseval.data.comparables);
+      housevalArray = houseval.data.comparables;
       let comlength = houseval.data.comparables.length;
       //console.log('complength' + comlength);
 
