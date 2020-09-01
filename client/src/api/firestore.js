@@ -1,4 +1,5 @@
 import { firestore as db } from '../firebase.js';
+import User from '../models/User';
 
 export const DB = {
   // ------------------------ CREATE ------------------------
@@ -6,6 +7,9 @@ export const DB = {
     const userRef = db().doc(`users/${user.uid}`);
     const snapshot = await userRef.get();
 
+    let doug = new User(user.uid, user.displayName, user.email, '', '', '', false, '')
+    console.log(doug.getUser())
+    
     if (!snapshot.exists) {
       let data;
       if (!additionalData) {
