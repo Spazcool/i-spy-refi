@@ -126,15 +126,15 @@ export const DB = {
       console.log(err);
     }
     // const formObj = await returnedFormData;
-    
+
     // todo is there a way to abstract this out of here? I guess the concep tof a model
     const data = {
       id: houseObj.id,
       value: houseObj.data().value,
       zpid: houseObj.data().zpid,
-      formData: houseObj.data().formData
-    }
- 
+      formData: houseObj.data().formData,
+    };
+
     return data;
   },
 

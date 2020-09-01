@@ -12,6 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Button } from '@material-ui/core';
 import { Form } from 'react-bootstrap';
 import { zillow } from '../api/zillow.js';
+import { firestore as db } from '../firebase.js';
+import { DB } from '../api/firestore';
 // import { AuthContext } from '../providers/HouseProvider';
 // import { Redirect } from 'react-router-dom';
 
@@ -161,6 +163,12 @@ export default function HouseAdditions() {
       ...value,
       [event.target.name]: event.target.value,
     });
+
+    // let obj = arr.find(o => o.name === 'string 1');
+
+    let ROI = value.filter((value) => value.value === value.value++);
+
+    console.log(ROI);
     // let ROI = nationalAverages.map((nationalAverages[0].value) => {
     //   return nationalAverage[0].value == 'value';
     // });
@@ -201,7 +209,19 @@ export default function HouseAdditions() {
       //   userHouse.zip
       // ),
     };
-    zillow.getaddress(params);
+    zillow.getaddress(params).then((response) => {
+      console.log(response);
+      console.log(response[0].address);
+      console.log(response[0].zpid);
+      let address = response[0].address;
+      let zpid = response[0].zpid;
+
+      let houseData = [address, zpid];
+      // console.log(houseData[0].address);
+      // console.log(houseData[1].zpid);
+      console.log(houseData);
+      DB.createHouse(houseData);
+    });
   };
   return (
     <div
@@ -309,6 +329,7 @@ export default function HouseAdditions() {
                 defaultValue={nationalAverages[0].value}
               />
               <FormControlLabel
+                onClick={handleOnClick}
                 value='Major Kitchen Remodel'
                 control={<StyledRadio />}
                 label='Major Kitchen Remodel'
