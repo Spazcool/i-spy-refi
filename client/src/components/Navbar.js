@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { withRouter } from 'react-router-dom'
+import React, { useContext, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
 import SideBar from './SideBar.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,49 +21,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default withRouter(
-  function Navbar(props) {
-    const { isAuth } = useContext(AuthContext);
-    const classes = useStyles();
+export default withRouter(function Navbar(props) {
+  const { isAuth } = useContext(AuthContext);
+  const classes = useStyles();
+  // const [open, setOpen] = useState(false);
 
-    return (
-      <div className={classes.root}>
-        <AppBar position="static" >
-          <Toolbar>
-            <SideBar props={props} />
-            <Typography variant="h6" className={classes.title}>
-              I Spy Refi
-            </Typography>
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
 
-            {isAuth ?
-              <></>
-              : <>
-                <Button
-                  className="m-1"
-                  onClick={e => {
-                    // handleOpen()
-                    e.preventDefault();
-                    props.history.push("/login");
-                  }}
-                >
-                  {/* <SignInUpModal open={open} setOpen={setOpen}/> */}
-                  Login
-                </Button>
+  // // const handleClose = () => {
+  // //   console.log('close')
+  // //   setOpen(false);
+  // // };
+  // console.log(open)
+  return (
+    <div className={classes.root}>
+      <AppBar position='static'>
+        <Toolbar>
+          <SideBar props={props} />
+          <Typography variant='h6' className={classes.title}>
+            I Spy Refi
+          </Typography>
 
-                <Button
-                  className="m-1"
-                  onClick={e => {
-                    e.preventDefault();
-                    props.history.push("/signup");
-                  }}
-                >
-                  Signup
-                </Button>
-              </>
-            }
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
-)
+          {isAuth ? (
+            <></>
+          ) : (
+            <>
+              <Button
+                className='m-1'
+                onClick={(e) => {
+                  // handleOpen()
+                  e.preventDefault();
+                  props.history.push('/login');
+                }}
+              >
+                {/* <SignInUpModal open={open} setOpen={setOpen}/> */}
+                Login
+              </Button>
+
+              <Button
+                className='m-1'
+                onClick={(e) => {
+                  e.preventDefault();
+                  props.history.push('/signup');
+                }}
+              >
+                Signup
+              </Button>
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+});

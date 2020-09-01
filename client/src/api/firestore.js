@@ -1,7 +1,11 @@
-import { firestore as db } from '../firebase.js';
+import { auth, firestore as db } from '../firebase.js';
+import User from '../models/User';
+import House from '../models/House';
 
 export const DB = {
   // ------------------------ CREATE ------------------------
+  // expected fields:
+  // user(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated)
   async createUser(user, additionalData) {
     const userRef = db().doc(`users/${user.uid}`);
     const snapshot = await userRef.get();
@@ -10,56 +14,90 @@ export const DB = {
       let data;
       if (!additionalData) {
         // if google signin
-        data = {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          firstName: '',
-          lastName: '',
-          zpid: '',
-          admin: false,
-        };
+        data = new User(
+          user.uid,
+          user.displayName,
+          user.email,
+          '',
+          '',
+          '',
+          false,
+          ''
+        );
       } else {
         const { email, firstName, lastName } = additionalData;
-        data = {
-          uid: user.uid,
-          email: email,
-          displayName: '',
-          firstName: firstName,
-          lastName: lastName,
-          zpid: '',
-          admin: false,
-        };
+
+        data = new User(
+          user.uid,
+          `${firstName} ${lastName}`,
+          email,
+          firstName,
+          lastName,
+          '',
+          false,
+          ''
+        );
       }
-      let returnedUser;
+
+      let message;
 
       try {
-        returnedUser = await userRef.set(data, { merge: true });
+        userRef.set(data.getUserData(), { merge: true });
+        message = 'success';
       } catch (error) {
+        message = error;
         console.error('Error creating user document', error);
       }
 
-      const userObj = await returnedUser;
-      return userObj;
+      return { message };
     }
+    return { message: 'user already exists' };
   },
 
-  async createHouse(user, houseData) {
-    const data = {
-      owner: user,
-      zpid: houseData.zpid,
-      location: new db.GeoPoint(houseData.location[0], houseData.location[1]),
-      comps: houseData.comps,
-    };
-    let returnedHouse;
+  async createHouse(userID, houseData) {
+    let message = { message: 'house already exists' };
 
-    try {
-      returnedHouse = await db().collection('houses').add(data);
-    } catch (err) {
-      console.log(err);
+    const houseRef = db().doc(`houses/${houseData.hid}`);
+    const snapshot = await houseRef.get();
+
+    if (!snapshot.exists) {
+      const {
+        hid,
+        zpid,
+        latitude,
+        longitude,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      } = houseData;
+      const data = new House(
+        hid,
+        zpid,
+        userID,
+        new db.GeoPoint(parseFloat(latitude), parseFloat(longitude)),
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated
+      );
+
+      try {
+        houseRef.set(data.getHouseData(), { merge: true });
+        message = { message: 'success' };
+      } catch (error) {
+        message = { message: error };
+        console.error('Error creating house document', error);
+      }
     }
-    const houseObj = await returnedHouse;
-    return houseObj;
+
+    return message;
   },
 
   // ------------------------ READ ------------------------
@@ -72,15 +110,28 @@ export const DB = {
       console.error(err);
     }
     const userObj = await returnedUser;
-    const data = {
-      id: userObj.id,
-      email: userObj.data().email ? userObj.data().email : undefined,
-      firstName: userObj.data().firstName
-        ? userObj.data().firstName
-        : undefined,
-      lastName: userObj.data().lastName ? userObj.data().lastName : undefined,
-    };
-    return data;
+    const {
+      displayName,
+      email,
+      firstName,
+      lastName,
+      zpid,
+      admin,
+      lastUpdated,
+    } = userObj.data();
+
+    const data = new User(
+      userObj.id,
+      displayName,
+      email,
+      firstName,
+      lastName,
+      zpid,
+      admin,
+      lastUpdated
+    );
+
+    return data.getUserData();
   },
 
   async getUsers() {
@@ -92,24 +143,36 @@ export const DB = {
       console.log(err);
     }
     const users = await returnedUsers;
-    //todo break this off into a reusable func seeing as this shit is gonna happen a bunch
     const usersArr = [];
     users.forEach((user) => {
-      // todo does this enforcing of data model belong here?
-      const data = {
-        id: user.id,
-        email: user.data().email,
-        firstName: user.data().firstName,
-        lastName: user.data().lastName,
-      };
-      usersArr.push(data);
+      const {
+        uid,
+        displayName,
+        email,
+        firstName,
+        lastName,
+        zpid,
+        admin,
+        lastUpdated,
+      } = user.data();
+      const data = new User(
+        uid,
+        displayName,
+        email,
+        firstName,
+        lastName,
+        zpid,
+        admin,
+        lastUpdated
+      );
+      usersArr.push(data.getUserData());
     });
     return usersArr;
   },
 
-  async getHouseByID(id) {
+  async getHouseByID(docID) {
     let returnedHouse;
-    const house = db().collection('houses').doc(id);
+    const house = db().collection('houses').doc(docID);
 
     try {
       returnedHouse = await house.get();
@@ -118,55 +181,86 @@ export const DB = {
     }
 
     const houseObj = await returnedHouse;
-    let returnedFormData;
 
-    try {
-      returnedFormData = await this.getFormByID(id);
-    } catch (err) {
-      console.log(err);
-    }
-    // const formObj = await returnedFormData;
-    
-    // todo is there a way to abstract this out of here? I guess the concep tof a model
-    const data = {
-      id: houseObj.id,
-      value: houseObj.data().value,
-      zpid: houseObj.data().zpid,
-      formData: houseObj.data().formData
-    }
- 
-    return data;
+    const {
+      hid,
+      zpid,
+      location,
+      user,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      lastUpdated,
+    } = houseObj.data();
+    const data = new House(
+      hid,
+      zpid,
+      user,
+      location,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      lastUpdated
+    );
+
+    return data.getHouseData();
   },
 
-  async getHouseByOwner(user) {
+  async getHouseByOwner(userId) {
     let returnedHouse;
 
-    const house = db().collection('houses').where('owner', '==', user);
+    const house = db().collection('houses').where('user', '==', userId);
 
     try {
       returnedHouse = await house.get();
     } catch (err) {
-      console.log(err);
+      returnedHouse = { message: `Error loading house: ${err}.` };
     }
-    let houseinfoobj = [];
+
+    let houseArr = [];
     const houseObj = await returnedHouse;
 
     houseObj.forEach((house) => {
-      const data = {
-        id: house.id,
-        street: house.data().street,
-        city: house.data().city,
-        state: house.data().state,
-        zip: house.data().zip,
-        zpid: house.data().zpid,
-      };
+      if (house.message) {
+        houseArr.push(house);
+      }
+      const {
+        hid,
+        zpid,
+        location,
+        user,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      } = house.data();
+      const data = new House(
+        hid,
+        zpid,
+        user,
+        location,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated
+      );
 
-      houseinfoobj.push(data);
+      houseArr.push(data.getHouseData());
     });
 
-    console.log('houseobj:', houseinfoobj);
-
-    return houseinfoobj;
+    return houseArr;
   },
 
   async getHouses() {
@@ -175,62 +269,47 @@ export const DB = {
     try {
       returnedHouses = await housesList.get();
     } catch (err) {
-      console.log(err);
+      returnedHouses = { message: `Error loading houses: ${err}.` };
     }
-    const houses = await returnedHouses;
-    //todo break this off into a reusable func seeing as this shit is gonna happen a bunch
+
     const housesArr = [];
+    const houses = await returnedHouses;
+
     houses.forEach(async (house) => {
-      let returnedFormData;
+      const {
+        hid,
+        zpid,
+        location,
+        user,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      } = house.data();
+      const data = new House(
+        hid,
+        zpid,
+        user,
+        location,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated
+      );
 
-      try {
-        returnedFormData = await this.getFormByID(house.id);
-      } catch (err) {
-        console.log(err);
-      }
-      const formObj = await returnedFormData;
-
-      // todo does this enforcing of data model belong here?
-      const data = {
-        id: house.id,
-        owner: house.data().owner,
-        value: house.data().value,
-        zpid: house.data().zpid,
-        formData: formObj,
-      };
-      housesArr.push(data);
+      housesArr.push(data.getHouseData());
     });
     return housesArr;
   },
 
-  async getFormByID(houseID) {
-    let returnedFormData;
-    const formData = db()
-      .collection('houses')
-      .doc(houseID)
-      .collection('formData');
-
-    try {
-      returnedFormData = await formData.get();
-    } catch (err) {
-      console.log(err);
-    }
-    const formObj = await returnedFormData;
-    let data;
-
-    // todo only returns one form's data
-    // todo will need to beef up the returned fields
-    formObj.forEach((form) => {
-      data = {
-        id: form.id,
-        bathroom: form.data().bathroom,
-      };
-    });
-
-    return data;
-  },
-
   // ------------------------ UPDATE ------------------------
+  // TODO UNTESTED
   async updateUser(user, updateUserData) {
     const userRef = db().doc(`users/${user}`);
     const snapshot = await userRef.get();
@@ -245,18 +324,22 @@ export const DB = {
         lastName,
         zpid,
         admin,
+        lastUpdated,
       } = updateUserData;
-      const data = {
-        email,
+
+      const data = new User(
+        user.user.uid,
         displayName,
+        email,
         firstName,
         lastName,
         zpid,
         admin,
-      };
+        lastUpdated
+      );
 
       try {
-        await userRef.update(data);
+        await userRef.update(data.getUserData());
       } catch (error) {
         console.error('Error updating user document', error);
       }
@@ -265,11 +348,37 @@ export const DB = {
   },
 
   async updateHouse(updateHouseData) {
-    const { comps } = updateHouseData;
-    const data = { comps, lastUpdated: db.FieldValue.serverTimestamp() };
+    const {
+      hid,
+      zpid,
+      location,
+      user,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      lastUpdated,
+    } = updateHouseData;
+    const data = new House(
+      hid,
+      zpid,
+      user,
+      location,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      db.FieldValue.serverTimestamp()
+    );
+    // const { comps } = updateHouseData;
+    // const data = { comps, lastUpdated: db.FieldValue.serverTimestamp() };
     db()
       .collection('houses')
-      .where('zpid', '==', updateHouseData.zpid)
+      .where('zpid', '==', data.getHouseData().zpid) //
       .get()
       .then((houses) => {
         const house = houses.docs[0];
@@ -281,38 +390,68 @@ export const DB = {
   },
 
   // ------------------------ DELETE ------------------------
-  async deleteUser(user) {
-    const userRef = db().doc(`users/${user}`);
+  // TODO UNTESTED!!!
+  async deleteUser(userID) {
+    let message = [];
+    const userRef = db().doc(`users/${userID}`);
     const snapshot = await userRef.get();
 
     if (!snapshot.exists) {
-      return;
+      return { message: `User ${userID} does not exist in DB.` };
     } else {
-      const usersHouse = await this.getHouseByOwner(user);
-      console.log(usersHouse);
-      // const [house] = usersHouses.filter(house => house.owner == user)
-      // this.deleteHouse(house.id)
-      // console.log(`${house.id} deleted successfully`);
+      const usersHouses = await this.getHouseByOwner(userID);
+      console.log(usersHouses);
+      const [house] = usersHouses.filter((house) => house.owner == userID); //todo presumes one house per owner
+      const deletedHouse = await this.deleteHouse(house.id);
+      message.push(deletedHouse);
 
-      // try {
-      //   await userRef.delete()
-      // } catch (error) {
-      //   console.error("Error deleting user document", error);
-      // }
+      try {
+        await userRef.delete();
+        message.push(`User ${userID} deleted successfully.`);
+      } catch (error) {
+        message.push(`Error deleting User ${userID}: ${error}`);
+      }
+
+      // TODO DELETES THE AUTH CREDS FOR THE CURRENTLY SIGNED IN USER
+      // NOT SURE IF WE CAN FIND THE CREDS FOR ANY USER & DELETE THEM...BECUASE
+      // SECURITY IS A THING
+      const authedUser = auth().currentUser;
+
+      authedUser
+        .delete()
+        .then(function () {
+          message.push(
+            `User ${userID} deleted successfully, from Auth User list.`
+          );
+        })
+        .catch(function (error) {
+          message.push(
+            `Error deleting User ${userID}, from Auth List: ${error}`
+          );
+        });
     }
-    console.log(`${user} deleted successfully`);
   },
 
-  async deleteHouse(house) {
+  async deleteHouse(houseID) {
+    // TODO WORKS, BUT NOT SENDING A PROMISE BACK TO THE FRONTEND, SO THE MESSAGES NEVER MAKE IT
     db()
       .collection('houses')
-      .doc(house)
+      .doc(houseID)
       .get()
       .then((house) => {
         house.ref.delete();
+        console.log('where');
+
         return house;
       })
-      .then((house) => console.log(`${house} deleted successfully.`))
-      .catch((err) => console.error('Error deleting house document', err));
+      .then((house) => {
+        console.log('here');
+        return { message: `House ${houseID} deleted successfully.` };
+      })
+      .catch((err) => {
+        console.log('here');
+
+        return { message: `Error deleting house ${houseID}: ${err}.` };
+      });
   },
 };
