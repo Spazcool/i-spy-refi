@@ -1,45 +1,110 @@
+import axios from 'axios';
 
+export const zillow = {
+  async getaddress(obj) {
+    //get address api
+    let addressdata;
+    console.log('object:', obj);
+    await axios({
+      method: 'GET',
+      url: 'https://zillow-com.p.rapidapi.com/search/address',
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        useQueryString: true,
+      },
+      params: {
+        address: `${obj.street}`,
+        citystatezip: `${obj.city} ${obj.state} ${obj.zip}`,
+      },
+    })
+      .then((response) => {
+        console.log(
+          'streetcitystatezip:',
+          obj.street,
+          '||',
+          obj.city,
+          obj.state,
+          obj.zip
+        );
 
-const Zillow = {
-  async getLastWorkout() {
-    let res;
-    try {
-      res = await fetch("/api/workouts");
-    } catch (err) {
-      console.log(err)
-    }
-    const json = await res.json();
+        console.log('res', response.data);
 
-    return json[json.length - 1];
+        addressdata = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // console.log('res1', addressdata);
+
+    return addressdata;
   },
-  
-  async addExercise(data) {
-    const id = location.search.split("=")[1];
-    const res = await fetch("/api/workouts/" + id, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
 
-    const json = await res.json();
+  async getzillowpropid(zillowid) {
+    let imageUrl;
+    //await setTimeout(() => {
+    const Imageurl = `https://zillow-com.p.rapidapi.com/property/${zillowid}/media`;
+    console.log('object1:', Imageurl);
+    await axios({
+      method: 'GET',
+      url: Imageurl,
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        useQueryString: true,
+      },
+    })
+      .then(async (response) => {
+        console.log('RES IMG', response.data.imageResults.images[0].highResUrl);
+        imageUrl = await response.data.imageResults.images[0].highResUrl;
+        // setImage(response.data.imageResults.images[0].highResUrl);
+        console.log('end return');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // }, 2000);
 
-    return json;
+    return imageUrl;
   },
-  async createWorkout(data = {}) {
-    const res = await fetch("/api/workouts", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
-    });
 
-    const json = await res.json();
-    
-    return json;
-  },
-  async getWorkoutsInRange() {
-    const res = await fetch(`/api/workouts/range`);
-    const json = await res.json();
+  async gethouseval(zillowidhval) {
+    let houseresponse;
 
-    return json;
+    const Houseval = `https://zillow-com.p.rapidapi.com/property/${zillowidhval}/compset`;
+    await axios({
+      method: 'GET',
+      url: Houseval,
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        useQueryString: true,
+      },
+      params: {
+        limit: '10',
+      },
+    })
+      .then(async (response) => {
+        console.log('housevalres:', response);
+
+        houseresponse = await response;
+        // let comlength = await response.data.comparables.length;
+        // console.log('complength' + comlength);
+        // let lastsoldPrice = await response.data.comparables[0].lastSoldPrice
+        //   .value;
+        // let finishedSqFt = await response.data.comparables[0].finishedSqFt;
+
+        // //// trying to work the code here
+        // console.log('lastsoldprice', lastsoldPrice);
+        // console.log('finishedsq', finishedSqFt);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return houseresponse;
   },
 };

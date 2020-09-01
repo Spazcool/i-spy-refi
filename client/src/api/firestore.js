@@ -119,33 +119,55 @@ export const DB = {
     }
 
     const houseObj = await returnedHouse;
-    let returnedFormData;
+    // let returnedFormData;
 
-    try {
-      returnedFormData = await this.getFormByID(id);
-    } catch (err) {
-      console.log(err);
-    }
-    const formObj = await returnedFormData;
+    // try {
+    //   returnedFormData = await this.getFormByID(id);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    // const formObj = await returnedFormData;
 
     // todo is there a way to abstract this out of here? I guess the concep tof a model
     const data = {
       id: houseObj.id,
       value: houseObj.data().value,
       zpid: houseObj.data().zpid,
-      formData: formObj,
+      formData: houseObj.data().formData,
     };
 
     return data;
   },
 
   async getHouseByOwner(user) {
-    return db()
-      .collection('houses')
-      .where('owner', '==', user)
-      .get()
-      .then((house) => house)
-      .catch((err) => console.error('Error getting house document', err));
+    let returnedHouse;
+
+    const house = db().collection('houses').where('user', '==', user);
+
+    try {
+      returnedHouse = await house.get();
+    } catch (err) {
+      console.log(err);
+    }
+    let houseinfoobj = [];
+    const houseObj = await returnedHouse;
+    console.log(houseObj);
+    houseObj.forEach((house) => {
+      const data = {
+        id: house.id,
+        street: house.data().street,
+        city: house.data().city,
+        state: house.data().state,
+        zip: house.data().zip,
+        zpid: house.data().zpid,
+      };
+
+      houseinfoobj.push(data);
+    });
+
+    console.log('houseobj:', houseinfoobj);
+
+    return houseinfoobj;
   },
 
   async getHouses() {
