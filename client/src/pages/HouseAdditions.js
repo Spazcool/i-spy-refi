@@ -166,7 +166,7 @@ export default function HouseAdditions() {
 
     // let obj = arr.find(o => o.name === 'string 1');
 
-    let ROI = value.filter((value) => value.value === value.value++);
+    let ROI = value.filter((value) => value.value === 14600);
 
     console.log(ROI);
     // let ROI = nationalAverages.map((nationalAverages[0].value) => {

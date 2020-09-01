@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
 
 import HomeIcon from '@material-ui/icons/Home';
 import UserIcon from '@material-ui/icons/Person';
@@ -54,7 +55,7 @@ export default withRouter(
 
     return (
       <>
-        <MenuIcon onClick={toggleDrawer('left', true)}/>
+        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}><MenuIcon /></IconButton>
         <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
           <div
             className={clsx(classes.list, {
