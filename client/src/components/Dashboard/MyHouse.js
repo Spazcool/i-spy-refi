@@ -15,18 +15,23 @@ import Paper from '@material-ui/core/Paper';
 export default function MyHouse(props) {
   //image={imageData}
   //,{citydisplay},{statedisplay}
-  //  {totalHouseValue}
+  // {totalHouseValue}
 
   return (
     <Paper elevation={4} className='my-house'>
       <Card className='my-house'>
-        <CardMedia className='media' component='img' title='My House' />
+        <CardMedia
+          className='media'
+          image={props.imagedata}
+          component='img'
+          title='My House'
+        />
         <CardContent>
           <Typography variant='h5' component='h2'>
-            {props.street}
+            {props.street}, {props.city}, {props.state}
           </Typography>
           <Typography variant='h5' component='h2'>
-            {'$'}
+            {'$'} {props.totalhouseValue}
           </Typography>
           <Typography variant='body2' component='p'>
             Description/Details

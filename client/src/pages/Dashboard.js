@@ -56,7 +56,7 @@ function Home(props) {
   const [statedisplay, setstatedisplay] = useState('');
   // House EVAL
 
-  const finishedSqFt = '2466';
+  // const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
   const [totalHouseValue, settotalHouseValue] = useState('');
@@ -78,6 +78,8 @@ function Home(props) {
     const displayaddress = await zillow.getaddress(data);
 
     console.log('houseinfo from zillow :', displayaddress);
+    const finishedsqftzillow = displayaddress[0].finishedSqFt;
+    console.log('fsq:', finishedsqftzillow);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
     setstatedisplay(statezillow);
@@ -122,7 +124,7 @@ function Home(props) {
 
       // Calculating The House Value
 
-      const tot = Math.round(finishedSqFt * avgPerSqFt);
+      const tot = Math.round(finishedsqftzillow * avgPerSqFt);
       settotalHouseValue(tot);
       console.log('housevalue:', tot);
 
@@ -138,7 +140,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse street={streetdisplay} />
+          <MyHouse
+            street={streetdisplay}
+            city={citydisplay}
+            state={statedisplay}
+            imagedata={imageData}
+            totalhouseValue={totalHouseValue}
+          />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
