@@ -1,5 +1,5 @@
 import React, { setState, useState, useEffect, useContext } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Container } from '@material-ui/core';
 import clsx from 'clsx';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -81,6 +81,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  button: {
+    justifyContent: 'center',
+    width: '50',
+  },
 }));
 
 function StyledRadio(props) {
@@ -110,22 +114,22 @@ export default function HouseAdditions() {
     {
       id: 0,
       name: 'Minor Kitchen Remodel',
-      value: 14600,
+      value: '14600',
     },
     {
       id: 1,
       name: 'Major Kitchen Remodel',
-      value: 39900,
+      value: '39900',
     },
     {
       id: 2,
       name: 'Asphalt Shingles',
-      value: 12777,
+      value: '12777',
     },
     {
       id: 3,
       name: 'Metal Roof',
-      value: 21731,
+      value: '21731',
     },
     {
       id: 4,
@@ -135,27 +139,27 @@ export default function HouseAdditions() {
     {
       id: 5,
       name: 'Major Bathroom Remodel',
-      value: 24300,
+      value: '24300',
     },
     {
       id: 6,
       name: 'Attic Bedroom Conversion',
-      value: 36700,
+      value: '36700',
     },
     {
       id: 7,
       name: 'Landscaping',
-      value: 4900,
+      value: '4900',
     },
     {
       id: 8,
       name: 'Entry Door Replacement',
-      value: 1280,
+      value: '1280',
     },
     {
       id: 9,
       name: 'Deck/Patio/Porch',
-      value: 10000,
+      value: '10000',
     },
   ];
   const [userHouse, setUserHouse] = useState(houseCreds);
@@ -166,16 +170,7 @@ export default function HouseAdditions() {
       ...value,
       [event.target.name]: event.target.value,
     });
-
-    // let obj = arr.find(o => o.name === 'string 1');
-
-    let ROI = value.filter((value) => value.value === 14600);
-
-    console.log(ROI);
-    // let ROI = nationalAverages.map((nationalAverages[0].value) => {
-    //   return nationalAverage[0].value == 'value';
-    // });
-    // console.log(ROI);
+    console.log(event.target.value);
   };
 
   const handleInputChange = (event) => {
@@ -250,110 +245,160 @@ export default function HouseAdditions() {
         flexWrap: 'wrap',
       }}
     >
-      <FormGroup id='initInput'>
-        <FormLabel>
-          <TextField
-            required
-            id='outlined-required'
-            label='street'
-            placeholder='street'
-            variant='outlined'
-            name='street'
-            value={userHouse.street}
-            onChange={handleInputChange}
-          />
-          <TextField
-            required
-            id='outlined-required'
-            label='City'
-            placeholder='City'
-            variant='outlined'
-            name='city'
-            value={userHouse.city}
-            onChange={handleInputChange}
-          />
-          <TextField
-            required
-            id='outlined-required'
-            label='Zip'
-            placeholder='Zip'
-            variant='outlined'
-            name='zip'
-            value={userHouse.zip}
-            onChange={handleInputChange}
-          />
-          <TextField
-            required
-            id='outlined-required'
-            label='State'
-            placeholder='State'
-            variant='outlined'
-            name='state'
-            value={userHouse.state}
-            onChange={handleInputChange}
-          />
-          <br />
+      <h1 style={{ marginTop: 10, flexWrap: 'nowrap' }}>
+        {' '}
+        Add Your House to Get Started
+      </h1>
+      <Container>
+        <FormGroup id='initInput'>
+          <FormLabel>
+            <TextField
+              required
+              id='outlined-required'
+              label='Street'
+              placeholder='Street'
+              variant='outlined'
+              name='Street'
+              value={userHouse.street}
+              onChange={handleInputChange}
+            />
+            <TextField
+              required
+              id='outlined-required'
+              label='City'
+              placeholder='City'
+              variant='outlined'
+              name='city'
+              value={userHouse.city}
+              onChange={handleInputChange}
+            />
+            <TextField
+              required
+              id='outlined-required'
+              label='Zip'
+              placeholder='Zip'
+              variant='outlined'
+              name='zip'
+              value={userHouse.zip}
+              onChange={handleInputChange}
+            />
+            <TextField
+              required
+              id='outlined-required'
+              label='State'
+              placeholder='State'
+              variant='outlined'
+              name='state'
+              value={userHouse.state}
+              onChange={handleInputChange}
+            />
+            <br />
+          </FormLabel>
+          <FormGroup />
           <Button
             type='submit'
             variant='contained'
             color='primary'
             onClick={handleSubmit}
+            className={classes.button}
           >
             Submit
           </Button>
-        </FormLabel>
-        <FormGroup />
+          <br />
 
-        <br />
-
-        <FormGroup>
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Kitchen Renovations:</FormLabel>
+          <FormGroup>
+            <FormControl component='fieldset'>
+              <FormLabel component='legend'>Kitchen Renovations:</FormLabel>
+              <br />
+              <RadioGroup
+                className={classes.group}
+                aria-label='renovations'
+                name='customized-radios'
+              >
+                <FormControlLabel
+                  value='Yes'
+                  control={<StyledRadio />}
+                  label='Yes'
+                />
+                <FormControlLabel
+                  value='No'
+                  control={<StyledRadio />}
+                  label='No'
+                />
+              </RadioGroup>
+            </FormControl>
             <br />
-            <RadioGroup
-              className={classes.group}
-              aria-label='renovations'
-              name='customized-radios'
-            >
-              <FormControlLabel
-                value='Yes'
-                control={<StyledRadio />}
-                label='Yes'
-              />
-              <FormControlLabel
-                value='No'
-                control={<StyledRadio />}
-                label='No'
-              />
-            </RadioGroup>
-          </FormControl>
+            <FormControl component='fieldset'>
+              <FormLabel component='legend'>What have you renovated?</FormLabel>
+              <br />
+              <RadioGroup
+                className={classes.group}
+                aria-label='renovations'
+                name='customized-radios'
+              >
+                <FormControlLabel
+                  onClick={handleOnClick}
+                  value={value[0].value}
+                  control={<StyledRadio />}
+                  label={value[0].name}
+                />
+                <FormControlLabel
+                  onClick={handleOnClick}
+                  value={value[1].value}
+                  control={<StyledRadio />}
+                  label={value[1].name}
+                />
+              </RadioGroup>
+            </FormControl>
+            <br />
+            <FormControl component='fieldset'>
+              <FormLabel component='legend'>Roof Renovations:</FormLabel>
+              <br />
+              <RadioGroup
+                className={classes.group}
+                defaultValue='no'
+                aria-label='renovations'
+                name='customized-radios'
+              >
+                <FormControlLabel
+                  value='Yes'
+                  control={<StyledRadio />}
+                  label='Yes'
+                />
+                <FormControlLabel
+                  value='No'
+                  control={<StyledRadio />}
+                  label='No'
+                />
+              </RadioGroup>
+            </FormControl>
+            <br />
+            <FormControl component='fieldset'>
+              <FormLabel component='legend'>Pick your Roof Style: </FormLabel>
+              <br />
+              <RadioGroup
+                className={classes.group}
+                aria-label='renovations'
+                name='customized-radios'
+              >
+                <FormControlLabel
+                  onClick={handleOnClick}
+                  value={value[2].value}
+                  control={<StyledRadio />}
+                  label={value[2].name}
+                />
+                <FormControlLabel
+                  onClick={handleOnClick}
+                  value={value[3].value}
+                  control={<StyledRadio />}
+                  label={value[3].name}
+                />
+              </RadioGroup>
+            </FormControl>
+          </FormGroup>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>What have you renovated?</FormLabel>
-            <br />
-            <RadioGroup
-              className={classes.group}
-              aria-label='renovations'
-              name='customized-radios'
-            >
-              <FormControlLabel
-                onClick={handleOnClick}
-                value='Minor Kitchen Remodel'
-                control={<StyledRadio />}
-                label={nationalAverages[0].name}
-                defaultValue={nationalAverages[0].value}
-              />
-              <FormControlLabel
-                onClick={handleOnClick}
-                value='Major Kitchen Remodel'
-                control={<StyledRadio />}
-                label='Major Kitchen Remodel'
-              />
-            </RadioGroup>
-          </FormControl>
-          <br />
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Roof Renovations:</FormLabel>
+            <FormLabel component='legend'>Bathroom Remodel:</FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -362,11 +407,37 @@ export default function HouseAdditions() {
               name='customized-radios'
             >
               <FormControlLabel
-                value='Yes'
+                onClick={handleOnClick}
+                value={value[4].value}
+                control={<StyledRadio />}
+                label={value[4].name}
+              />
+              <FormControlLabel
+                onClick={handleOnClick}
+                value={value[5].value}
+                control={<StyledRadio />}
+                label={value[5].name}
+              />
+            </RadioGroup>
+          </FormControl>
+          <br />
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>Attic Bedroom Conversion:</FormLabel>
+            <br />
+            <RadioGroup
+              className={classes.group}
+              defaultValue='no'
+              aria-label='renovations'
+              name='customized-radios'
+            >
+              <FormControlLabel
+                onClick={handleOnClick}
+                value={value[6].value}
                 control={<StyledRadio />}
                 label='Yes'
               />
               <FormControlLabel
+                onClick={handleOnClick}
                 value='No'
                 control={<StyledRadio />}
                 label='No'
@@ -375,119 +446,78 @@ export default function HouseAdditions() {
           </FormControl>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Pick your Roof Style: </FormLabel>
+            <FormLabel component='legend'>Landscaping:</FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
+              defaultValue='no'
               aria-label='renovations'
               name='customized-radios'
             >
               <FormControlLabel
-                value='Asphalt Shingles'
+                onClick={handleOnClick}
+                value={value[7].value}
                 control={<StyledRadio />}
-                label='Asphalt Shingles'
+                label='Yes'
               />
               <FormControlLabel
-                value='Metal'
+                onClick={handleOnClick}
+                value='No'
                 control={<StyledRadio />}
-                label='Metal'
+                label='No'
+              />
+            </RadioGroup>
+          </FormControl>
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>Entry Door Replacement:</FormLabel>
+            <br />
+            <RadioGroup
+              className={classes.group}
+              defaultValue='no'
+              aria-label='renovations'
+              name='customized-radios'
+            >
+              <FormControlLabel
+                onClick={handleOnClick}
+                value={value[8].value}
+                control={<StyledRadio />}
+                label='Yes'
+              />
+              <FormControlLabel
+                onClick={handleOnClick}
+                value='No'
+                control={<StyledRadio />}
+                label='No'
+              />
+            </RadioGroup>
+          </FormControl>
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>
+              Deck/Patio/Porch Addition :
+            </FormLabel>
+            <br />
+            <RadioGroup
+              className={classes.group}
+              defaultValue='no'
+              aria-label='renovations'
+              name='customized-radios'
+            >
+              <FormControlLabel
+                onClick={handleOnClick}
+                value={value[9].value}
+                control={<StyledRadio />}
+                label='Yes'
+              />
+              <FormControlLabel
+                onClick={handleOnClick}
+                value='No'
+                control={<StyledRadio />}
+                label='No'
               />
             </RadioGroup>
           </FormControl>
         </FormGroup>
-        <br />
-        <FormControl component='fieldset'>
-          <FormLabel component='legend'>Bathroom Remodel:</FormLabel>
-          <br />
-          <RadioGroup
-            className={classes.group}
-            defaultValue='no'
-            aria-label='renovations'
-            name='customized-radios'
-          >
-            <FormControlLabel
-              value='Minor Bathroom Remodel'
-              control={<StyledRadio />}
-              label='Minor Bathroom Remodel'
-            />
-            <FormControlLabel
-              value='Major Bathroom Remodel'
-              control={<StyledRadio />}
-              label='Major Bathroom Remodel'
-            />
-          </RadioGroup>
-        </FormControl>
-        <br />
-        <FormControl component='fieldset'>
-          <FormLabel component='legend'>Attic Bedroom Conversion:</FormLabel>
-          <br />
-          <RadioGroup
-            className={classes.group}
-            defaultValue='no'
-            aria-label='renovations'
-            name='customized-radios'
-          >
-            <FormControlLabel
-              value='Yes'
-              control={<StyledRadio />}
-              label='Yes'
-            />
-            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
-          </RadioGroup>
-        </FormControl>
-        <br />
-        <FormControl component='fieldset'>
-          <FormLabel component='legend'>Landscaping:</FormLabel>
-          <br />
-          <RadioGroup
-            className={classes.group}
-            defaultValue='no'
-            aria-label='renovations'
-            name='customized-radios'
-          >
-            <FormControlLabel
-              value='Yes'
-              control={<StyledRadio />}
-              label='Yes'
-            />
-            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
-          </RadioGroup>
-        </FormControl>
-        <FormControl component='fieldset'>
-          <FormLabel component='legend'>Entry Door Replacement:</FormLabel>
-          <br />
-          <RadioGroup
-            className={classes.group}
-            defaultValue='no'
-            aria-label='renovations'
-            name='customized-radios'
-          >
-            <FormControlLabel
-              value='Yes'
-              control={<StyledRadio />}
-              label='Yes'
-            />
-            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
-          </RadioGroup>
-        </FormControl>
-        <FormControl component='fieldset'>
-          <FormLabel component='legend'>Deck/Patio/Porch Addition :</FormLabel>
-          <br />
-          <RadioGroup
-            className={classes.group}
-            defaultValue='no'
-            aria-label='renovations'
-            name='customized-radios'
-          >
-            <FormControlLabel
-              value='Yes'
-              control={<StyledRadio />}
-              label='Yes'
-            />
-            <FormControlLabel value='No' control={<StyledRadio />} label='No' />
-          </RadioGroup>
-        </FormControl>
-      </FormGroup>
+      </Container>
     </div>
   );
 }

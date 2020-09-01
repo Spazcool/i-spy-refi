@@ -10,7 +10,7 @@ import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
 import TrendingChart from '../components/Dashboard/TrendingChart';
-import HouseAdditions from '../pages/HouseAdditions';
+
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
@@ -62,12 +62,6 @@ function Home(props) {
             More
           </Typography>
           <CompList />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={2} xl={3}>
-          <Typography variant='h4' component='h2'>
-            <Button> Get Estimates</Button>
-          </Typography>
-          <HouseAdditions />
         </Grid>
 
         {/* --------------- CHARTS --------------- */}

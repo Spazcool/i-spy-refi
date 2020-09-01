@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { handleSubmit } from '../pages/HouseAdditions';
+import { firestore as db } from '../firebase';
 
-const AuthContext = React.createContext();
+const HouseContext = React.createContext();
 
 export const HouseProvider = ({ children }) => {
   const [isInput, setIsInput] = useState(false);

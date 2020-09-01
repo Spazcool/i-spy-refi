@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import HouseAdditions from '../pages/HouseAdditions';
 
 import Form from 'react-bootstrap/Form';
 
@@ -270,9 +269,6 @@ function User(props) {
         </Grid>
         {/* TESTING BULLSHIT BELOW */}
         <Grid container justify='center' spacing={spacing}>
-          <Grid item xs={12} md={6}>
-            <HouseAdditions />
-          </Grid>
           <Grid item xs={3}>
             <h3>user</h3>
             <span>{userfromdb.email}</span>
