@@ -393,7 +393,7 @@ export const DB = {
         mergeObj[property] = Obj[property]
       }
     }
-
+    
     return db()
       .collection('houses')
       .where('zpid', '==', mergeObj.zpid)

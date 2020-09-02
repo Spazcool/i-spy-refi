@@ -73,11 +73,12 @@ function Home(props) {
       state,
       zip,
     };
+    console.log(data)
     /////////////////// FIRST API CALL /////////////////
 
     const displayaddress = await zillow.getaddress(data);
 
-    console.log('houseinfo from zillow :', displayaddress);
+    console.log('houseinfo from zillow :', displayaddress.error);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
     setstatedisplay(statezillow);
