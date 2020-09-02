@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -16,6 +15,8 @@ export default function MyHouse(props) {
   //image={imageData}
   //,{citydisplay},{statedisplay}
   //  {totalHouseValue}
+  console.log(props.street);
+  console.log(props);
 
   return (
     <Paper elevation={4} className='my-house'>
