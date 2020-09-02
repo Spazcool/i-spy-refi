@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 API endpoint: http://localhost:8080
 If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
 
@@ -5,6 +7,7 @@ If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment
 
 Dev App Server is now running.
 
+>>>>>>> 5a151c74417c0671802501ad0859c80a4b4ad44d
 API endpoint: http://0.0.0.0:6002
 If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
 

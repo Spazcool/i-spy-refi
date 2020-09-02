@@ -68,10 +68,10 @@ function User(props) {
   useEffect(() => {
     fetchUser();
     //example code below
-    fetchUsers(); 
+    fetchUsers();
     fetchHouse();
     fetchHouses();
-  },[]);
+  }, []);
 
   // -------------------- GET THE THINGS --------------------
   const fetchUser = async() => {
@@ -84,7 +84,7 @@ function User(props) {
       lastName,
       email,
       uid,
-    }
+    };
     setUser(data);
   }
   const fetchUsers = async() => {
@@ -99,7 +99,7 @@ function User(props) {
       house = async () => await DB.getHouseByID(hid);
       const userHouse = await house();
       setFakeHouse(userHouse);
-    }else{
+    } else {
       house = async () => await DB.getHouseByOwner(user.user.uid);
       const [userHouse] = await house();
       setHouse(userHouse);
@@ -110,7 +110,7 @@ function User(props) {
     const allHouses = await houses();
 
     setHouses(allHouses);
-  }
+  };
 
   // -------------------- CREATE THE THINGS --------------------
   const createFakeHouse = async() => {
@@ -124,16 +124,15 @@ function User(props) {
       city: 'Waltham',
       street: '128 Seminole Avenue',
       comps: [
-        {date: '10-30-20', value: 87654},
-        {date: '90-30-20', value: 87354}
-
+        { date: '10-30-20', value: 87654 },
+        { date: '90-30-20', value: 87354 },
       ],
       formData: {
         bathoom: 567,
         kitchen: 456,
-        bedroom: 5678
+        bedroom: 5678,
       },
-      lastUpdated: '10-30-20'
+      lastUpdated: '10-30-20',
     };
 
     const house = async () => await DB.createHouse(user.user.uid, data);
@@ -154,16 +153,16 @@ function User(props) {
 
     const fakedUser = async () => await DB.createUser(data, data);
     const returnedUser = await fakedUser();
-    console.log(returnedUser)
+    console.log(returnedUser);
 
-    setFakeUser(returnedUser)
-  }
+    setFakeUser(returnedUser);
+  };
 
   // -------------------- DELETE THE THINGS --------------------
   const deleteFakeHouse = async() => {
     const house = async () => await DB.deleteHouse(toBeDeleted);
     const deletedHouse = await house();
-    console.log(deletedHouse)
+    console.log(deletedHouse);
     setFakeHouse(''); //todo theres a bug in the api file here, mentioned on trello
   //to make house list go away, will need to recall fetchHouses
   }
@@ -224,14 +223,13 @@ function User(props) {
   }
   // -------------------- UPDATE USER VALUES (THE REAL ONE) --------------------
   const handleInputChange = (event) => {
-    event.preventDefault()
-    const { name, value } = event.target
+    event.preventDefault();
+    const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
   const handleFormSubmit = (event) => {
     // data needs to look something like this
     // const {email, displayName, firstName, lastName, zpid, admin} = updateUserData;
-
     // DB.updateUser(user, updateUserData)
     //then return a okay, updated successfully toast
     // event.preventDefault()
@@ -256,7 +254,7 @@ function User(props) {
           <Form.Label className={`${property}Color`}>{property}</Form.Label>
           <Form.Control name={`${property}Input`} type="text" placeholder={obj[property]} value={formData[`${property}Input`]} onChange={handleInputChange} />    
         </Form.Group>
-      )
+      );
     }
     return arr;
   }
@@ -264,31 +262,31 @@ function User(props) {
     let isValid = true;
 
     if (!firstName) {
-        setFirstNameColor('text-danger')
-        isValid = false;
+      setFirstNameColor('text-danger');
+      isValid = false;
     } else {
-        setFirstNameColor('')
+      setFirstNameColor('');
     }
 
     if (!lastName) {
-        setLastNameColor('text-danger')
-        isValid = false;
+      setLastNameColor('text-danger');
+      isValid = false;
     } else {
-        setLastNameColor('')
+      setLastNameColor('');
     }
 
     if (!email) {
-        setEmailColor('text-danger')
-        isValid = false;
+      setEmailColor('text-danger');
+      isValid = false;
     } else {
-        setEmailColor('')
+      setEmailColor('');
     }
 
     if (!password) {
-        setPasswordColor('text-danger')
-        isValid = false;
+      setPasswordColor('text-danger');
+      isValid = false;
     } else {
-        setPasswordColor('')
+      setPasswordColor('');
     }
 
     return isValid;
@@ -351,7 +349,11 @@ function User(props) {
           </Grid>
           <Grid item xs={3} className={classes.border}>
             <h3>users</h3>
-            <ul>{users.map((user,i) => <li key={'user'+i}>{user.email}</li>)}</ul>
+            <ul>
+              {users.map((user, i) => (
+                <li key={'user' + i}>{user.email}</li>
+              ))}
+            </ul>
           </Grid>
           <Grid item xs={3} className={classes.border}>
             <h3>house HID</h3>

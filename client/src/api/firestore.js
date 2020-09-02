@@ -17,37 +17,66 @@ export const DB = {
       let data;
       if (!additionalData) {
         // if google signin
-        data = new User(user.uid, user.displayName, user.email, '', '', '', false, '');
+        data = new User(
+          user.uid,
+          user.displayName,
+          user.email,
+          '',
+          '',
+          '',
+          false,
+          ''
+        );
       } else {
         const { email, firstName, lastName } = additionalData;
 
-        data = new User(user.uid, `${firstName} ${lastName}`, email, firstName, lastName, '', false, '');
+        data = new User(
+          user.uid,
+          `${firstName} ${lastName}`,
+          email,
+          firstName,
+          lastName,
+          '',
+          false,
+          ''
+        );
       }
 
       let message;
 
       try {
         userRef.set(data.getUserData(), { merge: true });
-        message = 'success'
+        message = 'success';
       } catch (error) {
         message = error;
         console.error('Error creating user document', error);
       }
 
-      return {message};
+      return { message };
     }
-    return {message: 'user already exists'};
-
+    return { message: 'user already exists' };
   },
 
   async createHouse(userID, houseData) {
-    let message = {message: 'house already exists'};
+    let message = { message: 'house already exists' };
 
     const houseRef = db().doc(`houses/${houseData.hid}`);
     const snapshot = await houseRef.get();
 
     if (!snapshot.exists) {
-      const { hid, zpid, latitude, longitude, zip, state, city, street, comps, formData, lastUpdated } = houseData;
+      const {
+        hid,
+        zpid,
+        latitude,
+        longitude,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      } = houseData;
       const data = new House(
         hid,
         zpid,
@@ -59,18 +88,18 @@ export const DB = {
         street,
         comps,
         formData,
-        lastUpdated,
+        lastUpdated
       );
 
       try {
         houseRef.set(data.getHouseData(), { merge: true });
-        message = {message: 'success'}
+        message = { message: 'success' };
       } catch (error) {
-        message = {message: error};
+        message = { message: error };
         console.error('Error creating house document', error);
       }
     }
-    
+
     return message;
   },
 
@@ -84,7 +113,15 @@ export const DB = {
       console.error(err);
     }
     const userObj = await returnedUser;
-    const {displayName, email, firstName, lastName, zpid, admin, lastUpdated} = userObj.data();
+    const {
+      displayName,
+      email,
+      firstName,
+      lastName,
+      zpid,
+      admin,
+      lastUpdated,
+    } = userObj.data();
 
     const data = new User(
       userObj.id,
@@ -94,7 +131,7 @@ export const DB = {
       lastName,
       zpid,
       admin,
-      lastUpdated,
+      lastUpdated
     );
 
     return data.getUserData();
@@ -111,8 +148,7 @@ export const DB = {
     const users = await returnedUsers;
     const usersArr = [];
     users.forEach((user) => {
-      const { uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated } = user.data();
-      const data = new User(
+      const {
         uid,
         displayName,
         email,
@@ -121,6 +157,16 @@ export const DB = {
         zpid,
         admin,
         lastUpdated,
+      } = user.data();
+      const data = new User(
+        uid,
+        displayName,
+        email,
+        firstName,
+        lastName,
+        zpid,
+        admin,
+        lastUpdated
       );
       usersArr.push(data.getUserData());
     });
@@ -139,7 +185,19 @@ export const DB = {
 
     const houseObj = await returnedHouse;
 
-    const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = houseObj.data();
+    const {
+      hid,
+      zpid,
+      location,
+      user,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      lastUpdated,
+    } = houseObj.data();
     const data = new House(
       hid,
       zpid,
@@ -151,7 +209,7 @@ export const DB = {
       street,
       comps,
       formData,
-      lastUpdated,
+      lastUpdated
     );
 
     return data.getHouseData();
@@ -165,17 +223,29 @@ export const DB = {
     try {
       returnedHouse = await house.get();
     } catch (err) {
-      returnedHouse = {message: `Error loading house: ${err}.`};
+      returnedHouse = { message: `Error loading house: ${err}.` };
     }
 
     let houseArr = [];
     const houseObj = await returnedHouse;
 
     houseObj.forEach((house) => {
-      if(house.message){
+      if (house.message) {
         houseArr.push(house);
       }
-      const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = house.data();
+      const {
+        hid,
+        zpid,
+        location,
+        user,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      } = house.data();
       const data = new House(
         hid,
         zpid,
@@ -187,7 +257,7 @@ export const DB = {
         street,
         comps,
         formData,
-        lastUpdated,
+        lastUpdated
       );
 
       houseArr.push(data.getHouseData());
@@ -202,14 +272,26 @@ export const DB = {
     try {
       returnedHouses = await housesList.get();
     } catch (err) {
-      returnedHouses = {message: `Error loading houses: ${err}.`};
+      returnedHouses = { message: `Error loading houses: ${err}.` };
     }
 
     const housesArr = [];
     const houses = await returnedHouses;
 
     houses.forEach(async (house) => {
-      const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = house.data();
+      const {
+        hid,
+        zpid,
+        location,
+        user,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      } = house.data();
       const data = new House(
         hid,
         zpid,
@@ -221,7 +303,7 @@ export const DB = {
         street,
         comps,
         formData,
-        lastUpdated,
+        lastUpdated
       );
 
       housesArr.push(data.getHouseData());
@@ -277,7 +359,19 @@ export const DB = {
   },
 
   async updateHouse(updateHouseData) {
-    const { hid, zpid, location, user, zip, state, city, street, comps, formData, lastUpdated } = updateHouseData;
+    const {
+      hid,
+      zpid,
+      location,
+      user,
+      zip,
+      state,
+      city,
+      street,
+      comps,
+      formData,
+      lastUpdated,
+    } = updateHouseData;
     const data = new House(
       hid,
       zpid,
@@ -289,7 +383,7 @@ export const DB = {
       street,
       comps,
       formData,
-      db.FieldValue.serverTimestamp(),
+      db.FieldValue.serverTimestamp()
     );
     const mergeObj = {};
     const Obj = data.getHouseData();
@@ -324,7 +418,7 @@ export const DB = {
     const snapshot = await userRef.get();
 
     if (!snapshot.exists) {
-      return {message: `User ${userID} does not exist in DB.`};
+      return { message: `User ${userID} does not exist in DB.` };
     } else {
       const usersHouses = await this.getHouseByOwner(userID);
 
@@ -366,18 +460,13 @@ export const DB = {
       .get()
       .then((house) => {
         house.ref.delete();
-        console.log('where')
-
         return house;
       })
       .then((house) => {
-        console.log('here')
-        return {message: `House ${houseID} deleted successfully.`}
+        return { message: `House ${houseID} deleted successfully.` };
       })
       .catch((err) => {
-        console.log('there')
-
-        return {message: `Error deleting house ${houseID}: ${err}.`}
+        return { message: `Error deleting house ${houseID}: ${err}.` };
       });
   },
 };
