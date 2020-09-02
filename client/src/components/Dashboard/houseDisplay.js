@@ -3,7 +3,7 @@ import axios from 'axios';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import MyHouse from '../components/Dashboard/MyHouse';
-
+const apiKey = process.env.Zillow_API_Key;
 export default function HouseDisplay(props) {
   const { user } = useContext(AuthContext);
   const [imageData, setImage] = useState([]);
@@ -42,7 +42,7 @@ export default function HouseDisplay(props) {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        'x-rapidapi-key': apiKey,
         useQueryString: true,
       },
       params: {
@@ -71,8 +71,7 @@ export default function HouseDisplay(props) {
               headers: {
                 'content-type': 'application/octet-stream',
                 'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-                'x-rapidapi-key':
-                  '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+                'x-rapidapi-key': apiKey,
                 useQueryString: true,
               },
             })
