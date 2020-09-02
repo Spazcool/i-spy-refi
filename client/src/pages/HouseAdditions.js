@@ -134,7 +134,7 @@ export default function HouseAdditions() {
     {
       id: 4,
       name: 'Minor Bathroom Remodel',
-      value: 10700,
+      value: '10700',
     },
     {
       id: 5,
@@ -162,8 +162,11 @@ export default function HouseAdditions() {
       value: '10000',
     },
   ];
+
   const [userHouse, setUserHouse] = useState(houseCreds);
   const [value, setValue] = useState(nationalAverages);
+  const [newValue, setNewValue] = useState([]);
+  const [userZpid, setUserZpid] = useState('');
 
   const handleOnClick = (event) => {
     setValue({
@@ -171,6 +174,44 @@ export default function HouseAdditions() {
       [event.target.name]: event.target.value,
     });
     console.log(event.target.value);
+    newValue.push({
+      room: event.target.name,
+      value: parseFloat(event.target.value),
+    });
+    console.log(newValue);
+    setNewValue(newValue);
+  };
+  const handleSubmitCalc = async (event) => {
+    event.preventDefault();
+    console.log(event);
+    let theSum = 0;
+    for (let i = 0, numb = newValue.length; i < numb; i++) {
+      theSum += newValue[i].value;
+    }
+    newValue.push({ renovationValue: theSum });
+    console.log(theSum);
+    setNewValue(theSum);
+    // console.log(value);
+    console.log(newValue);
+    const data = {
+      // hid: toBeDeleted,
+      zpid: userZpid,
+      // state: houseData,
+      // latitude: null,
+      // longitude,
+      // zip,
+      // city,
+      // street,
+      // comps,
+      formData: newValue,
+      // lastUpdated
+    };
+    const house = async () => await DB.updateHouse(data);
+    const updatedHouse = await house().then((res) => {
+      console.log(res.updatedHouse);
+    });
+
+    // DB.updateHouse(updatedHouse);
   };
 
   const handleInputChange = (event) => {
@@ -231,6 +272,9 @@ export default function HouseAdditions() {
       // console.log(houseData[1].zpid);
       console.log(houseData);
       DB.createHouse(user.user.uid, houseData);
+      // handleSubmitCalc(houseData);
+      console.log(houseData.zpid);
+      setUserZpid(houseData.zpid);
     });
   };
   return (
@@ -258,7 +302,7 @@ export default function HouseAdditions() {
               label='Street'
               placeholder='Street'
               variant='outlined'
-              name='Street'
+              name='street'
               value={userHouse.street}
               onChange={handleInputChange}
             />
@@ -341,12 +385,14 @@ export default function HouseAdditions() {
                   value={value[0].value}
                   control={<StyledRadio />}
                   label={value[0].name}
+                  name={value[0].name}
                 />
                 <FormControlLabel
                   onClick={handleOnClick}
                   value={value[1].value}
                   control={<StyledRadio />}
                   label={value[1].name}
+                  name={value[1].name}
                 />
               </RadioGroup>
             </FormControl>
@@ -386,12 +432,14 @@ export default function HouseAdditions() {
                   value={value[2].value}
                   control={<StyledRadio />}
                   label={value[2].name}
+                  name={value[2].name}
                 />
                 <FormControlLabel
                   onClick={handleOnClick}
                   value={value[3].value}
                   control={<StyledRadio />}
                   label={value[3].name}
+                  name={value[3].name}
                 />
               </RadioGroup>
             </FormControl>
@@ -411,12 +459,14 @@ export default function HouseAdditions() {
                 value={value[4].value}
                 control={<StyledRadio />}
                 label={value[4].name}
+                name={value[4].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
                 value={value[5].value}
                 control={<StyledRadio />}
                 label={value[5].name}
+                name={value[5].name}
               />
             </RadioGroup>
           </FormControl>
@@ -435,6 +485,7 @@ export default function HouseAdditions() {
                 value={value[6].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[6].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
@@ -459,6 +510,7 @@ export default function HouseAdditions() {
                 value={value[7].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[7].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
@@ -482,6 +534,7 @@ export default function HouseAdditions() {
                 value={value[8].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[8].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
@@ -507,6 +560,7 @@ export default function HouseAdditions() {
                 value={value[9].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[9].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
@@ -516,6 +570,15 @@ export default function HouseAdditions() {
               />
             </RadioGroup>
           </FormControl>
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            onClick={handleSubmitCalc}
+            className={classes.button}
+          >
+            Calculate
+          </Button>
         </FormGroup>
       </Container>
     </div>
