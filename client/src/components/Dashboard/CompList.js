@@ -15,17 +15,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CompList() {
+export default function CompList(props) {
+  console.log(props);
   const classes = useStyles();
+  console.log(props.street);
 
   return (
     <Paper elevation={4} className={classes.root}>
       <div className={classes.list}>
-        <CompListItem />
-        {/* <CompListItem />
-        <CompListItem />
-        <CompListItem />
-        <CompListItem /> */}
+        {props.street.map((comp) => (
+          <CompListItem comp={comp} />
+        ))}
       </div>
     </Paper>
   );

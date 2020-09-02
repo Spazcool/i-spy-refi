@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< HEAD:client/src/pages/Houses.js.old
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
@@ -11,33 +12,40 @@ const Houses = (props) => {
   const { logout, user } = useContext(AuthContext);
 =======
 import React, { useContext, useState } from "react";
+=======
+import React, { useContext, useState } from 'react';
+>>>>>>> 74c257ab4684af7444f3d8de4851e3ce52ed85c8
 
-import { AuthContext } from "../providers/AuthProvider";
-import { DB } from "../api/firestore.js";
+import { AuthContext } from '../providers/AuthProvider';
+import { DB } from '../api/firestore.js';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import "../App.css";
+import '../App.css';
 
-const Dashboard = props => {
+const Dashboard = (props) => {
   const { user } = useContext(AuthContext);
 >>>>>>> 74e602f700dd268423a75613d22f4b1148d43c83:client/src/pages/Dashboard-OLD.js
   const [houses, setHouses] = useState([]);
   const [spacing] = React.useState(2);
 
-
   const getHouses = async () => {
     // ------------- DESIRED DB CALL -------------
     // TO TEST OUT THE EXAMPLES BELOW, COMMENT OUT THE NEXT 2 LINES & UNCOMMENT THE APPROPRIATE EXAMPLE + THE CONSOLE LOG
     let houses = await DB.getHouses();
+<<<<<<< HEAD
 <<<<<<< HEAD:client/src/pages/Houses.js.old
     setHouses(houses);
 =======
     console.log(houses)
     setHouses(houses)
 >>>>>>> 74e602f700dd268423a75613d22f4b1148d43c83:client/src/pages/Dashboard-OLD.js
+=======
+    console.log(houses);
+    setHouses(houses);
+>>>>>>> 74c257ab4684af7444f3d8de4851e3ce52ed85c8
 
     // ------------- EXAMPLES -------------
     // ------------- GET: USER, USERS, HOUSE -------------
@@ -85,6 +93,7 @@ const Dashboard = props => {
     // deleteHouse();
   };
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD:client/src/pages/Houses.js.old
     <Container className='signup'>
       <Row>
@@ -124,25 +133,30 @@ const Dashboard = props => {
 =======
     <Container className="signup">
       <Grid container justify="center" spacing={spacing}>
+=======
+    <Container className='signup'>
+      <Grid container justify='center' spacing={spacing}>
+>>>>>>> 74c257ab4684af7444f3d8de4851e3ce52ed85c8
         <Grid md={12} item>
           <h1>Dashboard Page</h1>
-          <Button onClick={getHouses}>
-            Show Houses
-          </Button>
+          <Button onClick={getHouses}>Show Houses</Button>
         </Grid>
         <Grid md={12} item>
-          <Paper >
-            <ul>{houses.map((house, i) => {
-              return (<li key={`house-${i}`}>
-                <ul>
-                  <li>comps: {house.comps}</li>
-                  <li>location: {house.location}</li>
-                  <li>owner: {house.owner}</li>
-                  <li>zpid: {house.zpid}</li>
-                  <li>lastUpdated: {house.lastUpdated}</li>
-                </ul>
-              </li>)
-            })}
+          <Paper>
+            <ul>
+              {houses.map((house, i) => {
+                return (
+                  <li key={`house-${i}`}>
+                    <ul>
+                      <li>comps: {house.comps}</li>
+                      <li>location: {house.location}</li>
+                      <li>owner: {house.owner}</li>
+                      <li>zpid: {house.zpid}</li>
+                      <li>lastUpdated: {house.lastUpdated}</li>
+                    </ul>
+                  </li>
+                );
+              })}
             </ul>
           </Paper>
         </Grid>
