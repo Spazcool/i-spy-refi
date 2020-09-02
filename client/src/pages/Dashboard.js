@@ -40,10 +40,10 @@ console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a")
 
   return (
     <Container className='signup'>
-      <Grid container spacing={4} style={{ padding: 24 }} className="grid">
+      <Grid container spacing={3} className="grid">
 
         {/* --------------- USERS HOUSE --------------- */}
-        <Grid item xs={12} sm={5} lg={4} xl={4}>
+        <Grid item xs={12} sm={5} lg={5} xl={5}>
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
@@ -51,13 +51,13 @@ console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a")
         </Grid>
 
         {/* --------------- COMPS --------------- */}
-        <Grid item xs={12} sm={7} lg={6} xl={4}>
+        {/* <Grid item xs={12} sm={7} lg={6} xl={4}>
           <Typography variant='h4' component='h2'>
             Comps near Me
           </Typography>
           <CompDetails className="card" />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={2} xl={3}>
+        </Grid> */}
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             More
           </Typography>

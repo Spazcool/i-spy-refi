@@ -1,5 +1,5 @@
 .signup {
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
@@ -15,11 +15,6 @@
 
 .flip:hover{
   transform: rotateY(180deg);
-}
-.card-radius {
-  /* background-color: rgb(82, 79, 79) !important; */
-  /* color: rgb(219, 211, 211) !important; */
-  border-radius: 30px !important;
 }
 
 .media {
@@ -80,4 +75,41 @@
 
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-auto-rows: 240px;
+}
+
+.list {
+  display: 'flex';
+  flex-wrap: 'wrap';
+  padding: 2rem 1rem 2rem 2rem !important;
+}
+
+.card-radius {
+  border-radius: 30px !important;
+}
+
+.button {
+  color: #5398BE !important;
+}
+
+.box-shadow {
+  box-shadow: 3px 3px 3px #5398BE !important;
+
+}
+
+.img-accord {
+  height: 50px;
+  width: 50px;
+  background-image: url("https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg");
+ /* width:33%; */
+
+}
+
+.img-list {
+  display: inline !important;
+}
+
+.details {
+  display: block;
+  width: 500;
+  height: 450;
 }

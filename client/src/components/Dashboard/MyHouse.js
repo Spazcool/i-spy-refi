@@ -104,10 +104,10 @@ export default function MyHouse(props) {
   };
 
   return (
-    <Paper elevation={6} className='card-radius'>
+    <Paper boxShadow={8} className='card-radius box-shadow'>
       <Card className='card-radius' borderRadius={16}>
         <CardMedia className='media' image={imageData} title='My House' />
-        <CardContent>
+        <CardContent className='list'>
           <Typography variant='h5' component='h2'>
             {streetdisplay},{citydisplay},{statedisplay}
           </Typography>
@@ -119,6 +119,11 @@ export default function MyHouse(props) {
             Description/Details
           </Typography>
         </CardContent>
+        <CardActions className='list'>
+          <Button size='small' className='button'>
+            View Stats
+          </Button>
+        </CardActions>
       </Card>
     </Paper>
   );

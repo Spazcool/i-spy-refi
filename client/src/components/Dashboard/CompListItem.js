@@ -27,7 +27,7 @@ export default function Comp() {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small'>Button</Button>
+        <Button size='small' className='button'>Button</Button>
       </CardActions>
     </Card>
   );
