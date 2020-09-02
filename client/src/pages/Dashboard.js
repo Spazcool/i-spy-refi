@@ -141,7 +141,7 @@ function Home(props) {
       console.log('housevalue:', tot);
 
       console.log('avgsqft:', avgPerSqFt);
-    }, 3000);
+    }, 2000);
   };
 
   return (
@@ -167,7 +167,6 @@ function Home(props) {
             More
           </Typography>
           <CompList street={compaddstreet} />
-          {/* <CompListItem street={compaddstreet} /> */}
         </Grid>
 
         {/* --------------- CHARTS --------------- */}

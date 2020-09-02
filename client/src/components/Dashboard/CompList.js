@@ -16,10 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompList(props) {
-  console.log(props);
   const classes = useStyles();
-  console.log(props.street);
-
   return (
     <Paper elevation={4} className={classes.root}>
       <div className={classes.list}>
