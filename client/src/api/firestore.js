@@ -1,11 +1,14 @@
 import { auth, firestore as db } from '../firebase.js';
 import User from '../models/User';
 import House from '../models/House';
+  
+// ------------------------ NOTES ------------------------
+// expected fields:
+// * user(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated)
+// * house(hid, zpid, latitude, longitude, zip, state, city, street, comps, formData, lastUpdated)
 
 export const DB = {
   // ------------------------ CREATE ------------------------
-  // expected fields:
-  // user(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated)
   async createUser(user, additionalData) {
     const userRef = db().doc(`users/${user.uid}`);
     const snapshot = await userRef.get();
@@ -309,8 +312,8 @@ export const DB = {
   },
 
   // ------------------------ UPDATE ------------------------
-  // TODO UNTESTED
   async updateUser(user, updateUserData) {
+    console.log(user)
     const userRef = db().doc(`users/${user}`);
     const snapshot = await userRef.get();
 
@@ -328,7 +331,7 @@ export const DB = {
       } = updateUserData;
 
       const data = new User(
-        user.user.uid,
+        user,
         displayName,
         email,
         firstName,
@@ -337,13 +340,21 @@ export const DB = {
         admin,
         lastUpdated
       );
+      const mergeObj = {};
+      const Obj = data.getUserData();
+  
+      for(const property in Obj){
+        if(Obj[property] !== undefined){
+          mergeObj[property] = Obj[property]
+        }
+      }
 
       try {
-        await userRef.update(data.getUserData());
+        await userRef.set(mergeObj, { merge: true });
       } catch (error) {
-        console.error('Error updating user document', error);
+        return {message: `Error updating User ${user}: ${error}`}
       }
-      return `${user} updated successfully.`;
+      return {message: `User ${user} updated successfully.`};
     }
   },
 
@@ -374,23 +385,33 @@ export const DB = {
       formData,
       db.FieldValue.serverTimestamp()
     );
-    // const { comps } = updateHouseData;
-    // const data = { comps, lastUpdated: db.FieldValue.serverTimestamp() };
-    db()
+    const mergeObj = {};
+    const Obj = data.getHouseData();
+
+    for(const property in Obj){
+      if(Obj[property] !== undefined){
+        mergeObj[property] = Obj[property]
+      }
+    }
+
+    return db()
       .collection('houses')
-      .where('zpid', '==', data.getHouseData().zpid) //
+      .where('zpid', '==', mergeObj.zpid)
       .get()
       .then((houses) => {
         const house = houses.docs[0];
-        house.ref.update(data);
+        house.ref.set(mergeObj, { merge: true });
         return house;
       })
-      .then((house) => `${house} updated successfully.`)
-      .catch((err) => console.error('Error updating house document', err));
+      .then((house) => {
+        return {message: `${house.id} updated successfully.`}
+      })
+      .catch((err) => {
+        return {message: `Error updating house document: ${err}`}
+      });
   },
 
   // ------------------------ DELETE ------------------------
-  // TODO UNTESTED!!!
   async deleteUser(userID) {
     let message = [];
     const userRef = db().doc(`users/${userID}`);
@@ -400,57 +421,51 @@ export const DB = {
       return { message: `User ${userID} does not exist in DB.` };
     } else {
       const usersHouses = await this.getHouseByOwner(userID);
-      console.log(usersHouses);
-      const [house] = usersHouses.filter((house) => house.owner == userID); //todo presumes one house per owner
-      const deletedHouse = await this.deleteHouse(house.id);
-      message.push(deletedHouse);
 
+      if(usersHouses.length > 0){
+        usersHouses.forEach(async (house) => {
+          const deletedHouse = await this.deleteHouse(house.hid.toString());
+          message.push(deletedHouse.message)
+        })
+      }
+      
       try {
         await userRef.delete();
         message.push(`User ${userID} deleted successfully.`);
+        return message;
       } catch (error) {
         message.push(`Error deleting User ${userID}: ${error}`);
+        return message;
       }
+
 
       // TODO DELETES THE AUTH CREDS FOR THE CURRENTLY SIGNED IN USER
       // NOT SURE IF WE CAN FIND THE CREDS FOR ANY USER & DELETE THEM...BECUASE
       // SECURITY IS A THING
-      const authedUser = auth().currentUser;
+      // const authedUser = auth().currentUser;
 
-      authedUser
-        .delete()
-        .then(function () {
-          message.push(
-            `User ${userID} deleted successfully, from Auth User list.`
-          );
-        })
-        .catch(function (error) {
-          message.push(
-            `Error deleting User ${userID}, from Auth List: ${error}`
-          );
-        });
+      // authedUser.delete().then(function() {
+      //   message.push(`User ${userID} deleted successfully, from Auth User list.`);
+      // }).catch(function(error) {
+      //   message.push(`Error deleting User ${userID}, from Auth List: ${error}`);
+      // });
     }
   },
 
   async deleteHouse(houseID) {
     // TODO WORKS, BUT NOT SENDING A PROMISE BACK TO THE FRONTEND, SO THE MESSAGES NEVER MAKE IT
-    db()
+    return db()
       .collection('houses')
       .doc(houseID)
       .get()
       .then((house) => {
         house.ref.delete();
-        console.log('where');
-
         return house;
       })
       .then((house) => {
-        console.log('here');
         return { message: `House ${houseID} deleted successfully.` };
       })
       .catch((err) => {
-        console.log('here');
-
         return { message: `Error deleting house ${houseID}: ${err}.` };
       });
   },
