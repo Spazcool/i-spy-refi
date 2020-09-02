@@ -34,14 +34,16 @@ function Home(props) {
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
+  const [FormData, setFormData] = useState([]);
+  const [TrendingData, setTrendingData] = useState([]);
   // House EVAL
 
   // const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
   const [totalHouseValue, settotalHouseValue] = useState('');
-  const formData = [];
-  const trendingData = [];
+  // let formData = [''];
+  let trendingData = [''];
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -63,7 +65,8 @@ function Home(props) {
 
     console.log('data : ', data);
     // TODO THIS DATA WILL BE COMING FROMTHE DB
-    formData = [
+
+    const formData = [
       { country: 'Russia', area: 12 },
       { country: 'Canada', area: 7 },
       { country: 'USA', area: 7 },
@@ -73,6 +76,8 @@ function Home(props) {
       { country: 'India', area: 2 },
       { country: 'Others', area: 55 },
     ];
+
+    setFormData(formData);
 
     // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
     // console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a"))
@@ -85,6 +90,7 @@ function Home(props) {
       },
       { date: moment().format('DD-MM-YY'), value: 1098765 },
     ];
+    setTrendingData(trendingData);
 
     /////////////////// FIRST API CALL /////////////////
 
@@ -181,13 +187,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={formData} />
+          <FormChart data={FormData} />
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={trendingData} />
+          <TrendingChart data={TrendingData} />
         </Grid>
       </Grid>
     </Container>
