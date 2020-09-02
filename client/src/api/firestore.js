@@ -230,8 +230,8 @@ export const DB = {
   },
 
   // ------------------------ UPDATE ------------------------
-  // TODO UNTESTED
   async updateUser(user, updateUserData) {
+    console.log(user)
     const userRef = db().doc(`users/${user}`);
     const snapshot = await userRef.get();
 
@@ -249,7 +249,7 @@ export const DB = {
       } = updateUserData;
 
       const data = new User(
-        user.user.uid,
+        user,
         displayName,
         email,
         firstName,
@@ -258,13 +258,21 @@ export const DB = {
         admin,
         lastUpdated
       );
+      const mergeObj = {};
+      const Obj = data.getUserData();
+  
+      for(const property in Obj){
+        if(Obj[property] !== undefined){
+          mergeObj[property] = Obj[property]
+        }
+      }
 
       try {
-        await userRef.update(data.getUserData());
+        await userRef.set(mergeObj, { merge: true });
       } catch (error) {
-        console.error('Error updating user document', error);
+        return {message: `Error updating User ${user}: ${error}`}
       }
-      return `${user} updated successfully.`;
+      return {message: `User ${user} updated successfully.`};
     }
   },
 
@@ -302,11 +310,9 @@ export const DB = {
         return house;
       })
       .then((house) => {
-        console.log(house)
         return {message: `${house.id} updated successfully.`}
       })
       .catch((err) => {
-        console.log(err)
         return {message: `Error updating house document: ${err}`}
       });
   },
