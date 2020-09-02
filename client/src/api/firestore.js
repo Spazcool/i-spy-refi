@@ -1,11 +1,14 @@
 import { auth, firestore as db } from '../firebase.js';
 import User from '../models/User';
 import House from '../models/House';
+  
+// ------------------------ NOTES ------------------------
+// expected fields:
+// * user(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated)
+// * house(hid, zpid, latitude, longitude, zip, state, city, street, comps, formData, lastUpdated)
 
 export const DB = {
   // ------------------------ CREATE ------------------------
-  // expected fields:
-  // user(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated)
   async createUser(user, additionalData) {
     const userRef = db().doc(`users/${user.uid}`);
     const snapshot = await userRef.get();
@@ -280,21 +283,30 @@ export const DB = {
       formData,
       db.FieldValue.serverTimestamp(),
     );
-    // const { comps } = updateHouseData;
-    // const data = { comps, lastUpdated: db.FieldValue.serverTimestamp() };
-    db()
+    const mergeObj = {};
+    const Obj = data.getHouseData();
+
+    for(const property in Obj){
+      if(Obj[property] !== undefined){
+        mergeObj[property] = Obj[property]
+      }
+    }
+
+    return db()
       .collection('houses')
-      .where('zpid', '==', data.getHouseData().zpid) //
+      .where('zpid', '==', mergeObj.zpid)
       .get()
       .then((houses) => {
         const house = houses.docs[0];
-        house.ref.update(data.getHouseData());
+        house.ref.set(mergeObj, { merge: true });
         return house;
       })
       .then((house) => {
-        return {message: `${house} updated successfully.`}
+        console.log(house)
+        return {message: `${house.id} updated successfully.`}
       })
       .catch((err) => {
+        console.log(err)
         return {message: `Error updating house document: ${err}`}
       });
   },

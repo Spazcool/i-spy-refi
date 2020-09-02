@@ -13,7 +13,7 @@ class House {
     this.lastUpdated = lastUpdated;
   }
 
-  getHouseData(){
+  getHouseData(){    
     return {
       hid: this.hid,
       zpid: this.zpid,
