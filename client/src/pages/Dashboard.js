@@ -141,7 +141,7 @@ function Home(props) {
       console.log('housevalue:', tot);
 
       console.log('avgsqft:', avgPerSqFt);
-    }, 2000);
+    }, 3000);
   };
 
   return (
@@ -156,13 +156,13 @@ function Home(props) {
         </Grid>
 
         {/* --------------- COMPS --------------- */}
-        <Grid item xs={12} sm={7} lg={6} xl={4}>
+        {/* <Grid item xs={12} sm={7} lg={6} xl={4}>
           <Typography variant='h4' component='h2'>
             Comps near Me
           </Typography>
           <CompDetails />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={2} xl={3}>
+        </Grid> */}
+        <Grid item xs={12} sm={6} lg={6} xl={3}>
           <Typography variant='h4' component='h2'>
             More
           </Typography>
