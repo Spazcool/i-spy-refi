@@ -26,26 +26,6 @@ function Home(props) {
   useEffect(() => {
     fetchaddress();
   }, []);
-  // TODO THIS DATA WILL BE COMING FROMTHE DB
-  const formData = [
-    { country: 'Russia', area: 12 },
-    { country: 'Canada', area: 7 },
-    { country: 'USA', area: 7 },
-    { country: 'China', area: 7 },
-    { country: 'Brazil', area: 6 },
-    { country: 'Australia', area: 5 },
-    { country: 'India', area: 2 },
-    { country: 'Others', area: 55 },
-  ];
-
-  // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
-  // console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a"))
-  const trendingData = [
-    { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
-    { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
-    { date: moment().subtract(10, 'days').format('DD-MM-YY'), value: 1234567 },
-    { date: moment().format('DD-MM-YY'), value: 1098765 },
-  ];
 
   // House Display Info Logic - STEFFI
 
@@ -60,6 +40,8 @@ function Home(props) {
   let avgSqFt = 0;
   let avgPerSqFt = 0;
   const [totalHouseValue, settotalHouseValue] = useState('');
+  const formData = [];
+  const trendingData = [];
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -81,7 +63,7 @@ function Home(props) {
 
     console.log('data : ', data);
     // TODO THIS DATA WILL BE COMING FROMTHE DB
-    const formData = [
+    formData = [
       { country: 'Russia', area: 12 },
       { country: 'Canada', area: 7 },
       { country: 'USA', area: 7 },
@@ -94,7 +76,7 @@ function Home(props) {
 
     // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
     // console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a"))
-    const trendingData = [
+    trendingData = [
       { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
       { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
       {
