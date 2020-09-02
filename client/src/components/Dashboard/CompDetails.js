@@ -11,8 +11,8 @@ import Paper from '@material-ui/core/Paper';
 
 export default function CompDetails() {
   return (
-    <Paper elevation={4}>
-      <Card>
+    <Paper elevation={4} className='card-radius'>
+      <Card className='card-radius'>
         <CardMedia
           className='media'
           //   image="/static/images/cards/contemplative-reptile.jpg"

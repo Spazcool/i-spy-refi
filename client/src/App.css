@@ -2,6 +2,8 @@
   padding-top: 100px;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
+
 /* * {
   border: 1px solid black;
 } */
@@ -14,11 +16,68 @@
 .flip:hover{
   transform: rotateY(180deg);
 }
-.my-house {
+.card-radius {
   /* background-color: rgb(82, 79, 79) !important; */
   /* color: rgb(219, 211, 211) !important; */
+  border-radius: 30px !important;
 }
 
 .media {
   height: 150px;
+}
+
+.navbar {
+  background-color: #5398BE !important;
+  display: flex;
+  align-items: flex-start;
+  font-family: 'Comfortaa', cursive !important;
+}
+
+.brand {
+  flex-grow: 1;
+  /* font-family: 'Comfortaa', cursive !important; */
+  margin-left: 20px !important;
+  font-size: 25px !important;
+  font-weight: 700 !important;
+}
+
+.logo {
+  margin-left: 20px !important;
+  height: 45px;
+}
+
+
+/* NEW TRICKS WITH CSS */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #353535;
+  font-size: 3rem;
+  color: #fff;
+  box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  transition: all 500ms;
+  overflow: hidden;
+  padding: 0px !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* .card:hover {
+  box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.1);
+} */
+
+.grid {
+  display: grid;
+  gap: 1rem;
+
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-auto-rows: 240px;
 }

@@ -104,8 +104,8 @@ export default function MyHouse(props) {
   };
 
   return (
-    <Paper elevation={4} className='my-house'>
-      <Card className='my-house'>
+    <Paper elevation={6} className='card-radius'>
+      <Card className='card-radius' borderRadius={16}>
         <CardMedia className='media' image={imageData} title='My House' />
         <CardContent>
           <Typography variant='h5' component='h2'>

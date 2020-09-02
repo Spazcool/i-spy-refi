@@ -40,14 +40,14 @@ console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a")
 
   return (
     <Container className='signup'>
-      <Grid container spacing={2} style={{ padding: 24 }}>
+      <Grid container spacing={4} style={{ padding: 24 }} className="grid">
 
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={4} xl={4}>
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse />
+          <MyHouse className="card" />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
@@ -55,13 +55,13 @@ console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a")
           <Typography variant='h4' component='h2'>
             Comps near Me
           </Typography>
-          <CompDetails />
+          <CompDetails className="card" />
         </Grid>
         <Grid item xs={12} sm={6} lg={2} xl={3}>
           <Typography variant='h4' component='h2'>
             More
           </Typography>
-          <CompList />
+          <CompList className="card" />
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
@@ -69,13 +69,13 @@ console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a")
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={formData}/>
+          <FormChart data={formData} className="card"/>
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={trendingData}/>
+          <TrendingChart data={trendingData} className="card"/>
         </Grid>
 
       </Grid>

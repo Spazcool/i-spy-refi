@@ -35,7 +35,7 @@ function App() {
   return (
     <Router>
       <>
-        <Navbar />
+        <Navbar className="navbar" />
         <Switch>
           <Route exact path='/' render={(props) => <Splash {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />
