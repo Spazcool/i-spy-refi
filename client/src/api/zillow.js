@@ -4,7 +4,7 @@ export const zillow = {
   async getaddress(obj) {
     //get address api
     let addressdata;
-    console.log('object:', obj);
+   // console.log('object:', obj);
     await axios({
       method: 'GET',
       url: 'https://zillow-com.p.rapidapi.com/search/address',
@@ -29,14 +29,14 @@ export const zillow = {
           obj.zip
         );
 
-        console.log('res', response.data);
+       // console.log('res', response.data);
 
         addressdata = response.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    console.log('res1', addressdata);
+    //console.log('res1', addressdata);
 
     return addressdata;
   },
@@ -57,10 +57,10 @@ export const zillow = {
       },
     })
       .then(async (response) => {
-        console.log('RES IMG', response.data.imageResults.images[0].highResUrl);
+        //console.log('RES IMG', response.data.imageResults.images[0].highResUrl);
         imageUrl = await response.data.imageResults.images[0].highResUrl;
         // setImage(response.data.imageResults.images[0].highResUrl);
-        console.log('end return');
+       // console.log('end return');
       })
       .catch((error) => {
         console.log(error);
@@ -88,7 +88,7 @@ export const zillow = {
       },
     })
       .then(async (response) => {
-        console.log('housevalres:', response);
+       // console.log('housevalres:', response);
 
         houseresponse = await response;
         // let comlength = await response.data.comparables.length;

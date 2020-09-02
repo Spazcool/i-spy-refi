@@ -65,21 +65,24 @@ function Home(props) {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
 
     // User id is passed once the user login is completed
-    const [{ street, state, city, zip }] = await houseinfoDB();
+    const [{ street, state, city, zip, hid, formData,comps }] = await houseinfoDB();
 
     const data = {
       street,
       city,
       state,
       zip,
+      hid,
+      formData,
+      comps
     };
     /////////////////// FIRST API CALL /////////////////
-
+    console.log('data : ', data);
     const displayaddress = await zillow.getaddress(data);
 
-    console.log('houseinfo from zillow :', displayaddress);
+    // console.log('houseinfo from zillow :', displayaddress);
     const finishedsqftzillow = displayaddress[0].finishedSqFt;
-    console.log('fsq:', finishedsqftzillow);
+    //console.log('fsq:', finishedsqftzillow);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
     setstatedisplay(statezillow);
