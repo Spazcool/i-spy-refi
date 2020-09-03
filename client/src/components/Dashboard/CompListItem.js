@@ -54,14 +54,10 @@ export default function CompListItem({ comp }) {
       <Card>
         <CardActionArea>
           <CardContent>
-            <Typography color='textSecondary' gutterBottom></Typography>
             <Typography variant='h5' component='h2'></Typography>
             <LinearProgress/>
+            <br/>
             <Typography variant='h5' component='h2'></Typography>
-            <LinearProgress color='secondary'/>
-            <Typography color='textSecondary'></Typography>
-            <LinearProgress />
-            <Typography variant='body2' component='p'></Typography>
             <LinearProgress color='secondary'/>
           </CardContent>
         </CardActionArea>

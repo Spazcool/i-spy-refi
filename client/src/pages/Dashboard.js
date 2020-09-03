@@ -22,14 +22,14 @@ function Home(props) {
 
   // TODO THIS DATA WILL BE COMING FROMTHE DB
   const formData = [
-    { country: 'Russia', area: 12 },
-    { country: 'Canada', area: 7 },
-    { country: 'USA', area: 7 },
-    { country: 'China', area: 7 },
-    { country: 'Brazil', area: 6 },
-    { country: 'Australia', area: 5 },
-    { country: 'India', area: 2 },
-    { country: 'Others', area: 55 },
+    { room: 'Bathroom', value: 12 },
+    { room: 'Bedroom', value: 7 },
+    { room: 'Kitchen', value: 7 },
+    { room: 'Garage', value: 7 },
+    { room: 'Roof', value: 6 },
+    { room: 'Porch', value: 5 },
+    { room: 'Windows', value: 2 },
+    { room: 'Electical', value: 55 },
   ];
 
   // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
@@ -176,7 +176,8 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={formData} />
+          <FormChart  /> 
+          {/* data={formData} */}
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
