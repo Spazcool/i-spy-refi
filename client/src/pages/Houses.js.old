@@ -1,20 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD:client/src/pages/Houses.js.old
 import React, { useContext, useState } from 'react';
-import { AuthContext } from '../providers/AuthProvider';
-// import { firestore } from "../firebase";
-import { DB } from '../api/firestore.js';
-import { Button, Col, Container, Row } from 'react-bootstrap';
-import '../App.css';
-
-const Houses = (props) => {
-  // Destructure the logout function from AuthContext
-  const { logout, user } = useContext(AuthContext);
-=======
-import React, { useContext, useState } from "react";
-=======
-import React, { useContext, useState } from 'react';
->>>>>>> 74c257ab4684af7444f3d8de4851e3ce52ed85c8
 
 import { AuthContext } from '../providers/AuthProvider';
 import { DB } from '../api/firestore.js';
@@ -27,7 +11,6 @@ import '../App.css';
 
 const Dashboard = (props) => {
   const { user } = useContext(AuthContext);
->>>>>>> 74e602f700dd268423a75613d22f4b1148d43c83:client/src/pages/Dashboard-OLD.js
   const [houses, setHouses] = useState([]);
   const [spacing] = React.useState(2);
 
@@ -35,17 +18,7 @@ const Dashboard = (props) => {
     // ------------- DESIRED DB CALL -------------
     // TO TEST OUT THE EXAMPLES BELOW, COMMENT OUT THE NEXT 2 LINES & UNCOMMENT THE APPROPRIATE EXAMPLE + THE CONSOLE LOG
     let houses = await DB.getHouses();
-<<<<<<< HEAD
-<<<<<<< HEAD:client/src/pages/Houses.js.old
     setHouses(houses);
-=======
-    console.log(houses)
-    setHouses(houses)
->>>>>>> 74e602f700dd268423a75613d22f4b1148d43c83:client/src/pages/Dashboard-OLD.js
-=======
-    console.log(houses);
-    setHouses(houses);
->>>>>>> 74c257ab4684af7444f3d8de4851e3ce52ed85c8
 
     // ------------- EXAMPLES -------------
     // ------------- GET: USER, USERS, HOUSE -------------
@@ -93,50 +66,8 @@ const Dashboard = (props) => {
     // deleteHouse();
   };
   return (
-<<<<<<< HEAD
-<<<<<<< HEAD:client/src/pages/Houses.js.old
-    <Container className='signup'>
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <h1>HOUSES Page</h1>
-          <Button
-            className='m-1'
-            onClick={() => {
-              logout();
-              setHouses([]);
-            }}
-          >
-            Logout
-          </Button>
-          <Button
-            className='m-1'
-            onClick={() => {
-              props.history.push('/');
-            }}
-          >
-            Home
-          </Button>
-          <Button className='m-1' onClick={getHouses}>
-            Show Houses
-          </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
-          <ul>
-            {houses.map((house, i) => (
-              <li key={`house-${i}`}>value: {house.value}</li>
-            ))}
-          </ul>
-        </Col>
-      </Row>
-=======
-    <Container className="signup">
-      <Grid container justify="center" spacing={spacing}>
-=======
     <Container className='signup'>
       <Grid container justify='center' spacing={spacing}>
->>>>>>> 74c257ab4684af7444f3d8de4851e3ce52ed85c8
         <Grid md={12} item>
           <h1>Dashboard Page</h1>
           <Button onClick={getHouses}>Show Houses</Button>
@@ -161,7 +92,6 @@ const Dashboard = (props) => {
           </Paper>
         </Grid>
       </Grid>
->>>>>>> 74e602f700dd268423a75613d22f4b1148d43c83:client/src/pages/Dashboard-OLD.js
     </Container>
   );
 };

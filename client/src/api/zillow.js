@@ -36,7 +36,7 @@ export const zillow = {
       .catch((error) => {
         console.log(error);
       });
-    // console.log('res1', addressdata);
+    console.log('res1', addressdata);
 
     return addressdata;
   },

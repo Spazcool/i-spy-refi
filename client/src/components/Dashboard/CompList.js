@@ -47,9 +47,8 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function CompList() {
+export default function CompList(props) {
   const classes = useStyles();
-
   return (
     <Paper elevation={4} className='list card-radius box-shadow'>
       <div className={classes.list}>
@@ -170,6 +169,9 @@ export default function CompList() {
             </div>
           </AccordionDetails>
         </Accordion>
+        {props.street.map((comp) => (
+          <CompListItem comp={comp} />
+        ))}
       </div>
     </Paper>
   );

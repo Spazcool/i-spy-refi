@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+const logger = require('morgan');
 const cors = require('cors');
+const axios = require('axios');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin'); //a hack that allows us to bypass some auth stuff, todo lookup how to avoid using it
-
+const apiKey = functions.config().zillow.key;
 // ------------------------ ATTEMPTS AT LOCAL CONFIG OVERRIDES ------------------------
 
 // firebase.initializeApp(process.env.NODE_ENV);
@@ -32,7 +34,19 @@ admin.initializeApp();
 // ------------------------ EXAMPLE SERVER ROUTING STUFF ------------------------
 // TODO IS THIS REQUIRED?
 // Automatically allow cross-origin requests
-app.use(cors({ origin: true }));
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3000',
+//     credentials: true,
+//   })
+// );
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+app.use(logger('dev'));
 
 // TODO Add middleware to authenticate requests
 // app.use(myMiddleware);
@@ -60,7 +74,7 @@ app.get('/api/secrets', (req, res) => {
 //       citystatezip: `${city} ${state} ${zip}`,
 //     },
 //   };
-    
+
 //   const getReq = http.request(options,function(res){
 //     res.on('data',function(data){
 //       console.log(data);
@@ -74,7 +88,7 @@ app.get('/api/secrets', (req, res) => {
 // TO TEST OPEN TIMESTAMP IN URL, NOTICE THE TIME COLUMN UNDER NETWORK TAB
 // OPEN TIMESTAMP-CACHED, REFRESH PAGE, NOTICE THAT SEXY DROP IN LOAD TIME
 app.get('/timestamp', (req, res) => {
-  res.send(`${Date.now()}`)
+  res.send(`${Date.now()}`);
 });
 
 app.get('/timestamp-cached', (req, res) => {
@@ -83,39 +97,45 @@ app.get('/timestamp-cached', (req, res) => {
 });
 
 // ------------------------ EXAMPLE DB QUERY/RESPONSE ------------------------
- // POSSIBLE WAY TO QUERY THE DATABASE IN THE BACKEND 
+// POSSIBLE WAY TO QUERY THE DATABASE IN THE BACKEND
 // app.get('/get/db/items', (req, res) => {
-  // getDBItems()
-  //   .then(items => {
-  //     res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-  //     res.send(items)
-  //     return;
-  //   })
-  //   .catch(console.log)
-// })
-
-// ------------------------ EXAMPLE INTERACTION WITH DB ------------------------
-// function getDBItems(){
-//   const ref = firebaseApp.firestore().collection('houses').orderBy('value', 'desc');
-//   return ref.get();
-// console.log(ref)
-  // return ref.once('value').then(snap => snap.val())
- 
-  // const housesList = db.collection('houses');
-  // const myHouse = db.collection('houses').doc('JWb8oyGegTY1HCi9XcaX');
-  // const query = housesList.where('value', '>', 100000);
-// }
-
-// ------------------------ EXAMPLE MODIFYING DB ------------------------
-// CALLED WHENEVER A HOUSE IS CREATED
-// exports.sendMessage = functions.firestore
-//   .document('houses/{houseID}')
-//   .onCreate((snap, context) => {
-//     const original = snap.data().original;
-//     const value = snap.data().original.value;
-//     functions.logger.log('sending message', context.params.houseID, context);
-//     return snap.ref.update({message: `Yolo! called from cloud function`}, {merge: true});
+// getDBItems()
+//   .then(items => {
+//     res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+//     res.send(items)
+//     return;
 //   })
+//   .catch(console.log)
+// });
+
+app.get('/api/GetSearchResults', (req, res) => {
+  // res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  console.log(req.query);
+  // const zillow = new Zillow(
+  //   '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3'
+
+  // );
+  let query = {
+    // address: req.query.address,
+    // citystatezip: req.query.citystatezip,
+    address: req.query.street,
+    citystatezip: req.query.citystatezip,
+  };
+  axios({
+    method: 'GET',
+    headers: {
+      'content-type': 'application/octet-stream',
+      'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
+      'x-rapidapi-key': apiKey,
+      // useQueryString: true,
+    },
+    url: 'https://zillow-com.p.rapidapi.com/search/address',
+    params: query,
+  })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+});
+// ------------------------ EXAMPLE CRUD interfaces ------------------------
 
 // ------------------------ EXAMPLE CRUD interfaces ------------------------
 // app.post('/', (req, res) => res.send(Widgets.create()));
