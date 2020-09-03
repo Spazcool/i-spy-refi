@@ -9,8 +9,9 @@ import {
   Title,
   Tooltip
 } from '@devexpress/dx-react-chart-material-ui';
-import { EventTracker, HoverState, Animation } from '@devexpress/dx-react-chart';
-
+import { EventTracker, HoverState, Animation, Palette } from '@devexpress/dx-react-chart';
+// TODO SPECIFY COLORS THAT MATCH OUR LOOK
+// https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
 export default function FormChart (props) {
   // const classes = useStyles();
   const [isActive, setIsActive] = useState(true);
