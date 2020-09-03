@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import moment from 'moment';
+import { DB } from '../api/firestore';
+import { AuthContext } from '../providers/AuthProvider';
+import { zillow } from '../api/zillow';
+import moment from 'moment'; //for fake data, can be removed or used elsewhere when the fake data is pulled out
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import CompList from '../components/Dashboard/CompList';
 import CompListItem from '../components/Dashboard/CompListItem';
@@ -11,19 +16,11 @@ import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
 import TrendingChart from '../components/Dashboard/TrendingChart';
 
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
-import { DB } from '../api/firestore';
-import { AuthContext } from '../providers/AuthProvider';
-import { zillow } from '../api/zillow';
 
 function Home(props) {
-  // const { isAuth, logout } = useContext(AuthContext);
-
-  useEffect(() => {
-    fetchaddress();
-  }, []);
+  
   // TODO THIS DATA WILL BE COMING FROMTHE DB
   const formData = [
     { country: 'Russia', area: 12 },
@@ -46,7 +43,6 @@ function Home(props) {
   ];
 
   // House Display Info Logic - STEFFI
-
   const { user } = useContext(AuthContext);
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
@@ -56,8 +52,10 @@ function Home(props) {
   const [compestatedisplay, setcompstatedisplay] = useState('');
   const [complastsoldprice, setcomplastsoldprice] = useState('');
   const [complastsolddate, setcomplastsolddate] = useState('');
+  const [value, setVale] = useState('');
+  const [description, setDescription] = useState('');
+  
   // House EVAL
-
   const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
@@ -144,6 +142,10 @@ function Home(props) {
     }, 3000);
   };
 
+  useEffect(() => {
+    fetchaddress();
+  }, []);
+
   return (
     <Container className='signup'>
       <Grid container spacing={2} style={{ padding: 24 }}>
@@ -152,7 +154,12 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse street={streetdisplay} />
+          <MyHouse 
+            street={streetdisplay}
+            imageData={imageData}
+            value={value}
+            description={description}
+            />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
