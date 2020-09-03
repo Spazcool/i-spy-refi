@@ -24,8 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 key.json
-<<<<<<< HEAD
 ui-debug.log
-=======
 .runtimeconfig.json
->>>>>>> d653f8dba9184f366cb53b607836e63027c6cc8f
+firebase-debug.log

@@ -30,4 +30,4 @@ class House {
   }
 }
 
-module.exports = House;
+export default House;
