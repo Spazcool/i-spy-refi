@@ -32,15 +32,16 @@ function Home(props) {
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
-<<<<<<< HEAD
+
+
+
+  
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
-=======
   const [compaddstreet, setcompaddstreet] = useState([]);
   const [compestatedisplay, setcompstatedisplay] = useState('');
   const [complastsoldprice, setcomplastsoldprice] = useState('');
   const [complastsolddate, setcomplastsolddate] = useState('');
->>>>>>> f57b4b6aacc448523251c6c146ee351a6aa157f6
   // House EVAL
 
   // const finishedSqFt = '2466';

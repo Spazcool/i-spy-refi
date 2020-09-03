@@ -11,7 +11,7 @@ export const zillow = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
         useQueryString: true,
       },
       params: {
@@ -52,7 +52,7 @@ export const zillow = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
         useQueryString: true,
       },
     })
@@ -80,7 +80,7 @@ export const zillow = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f31',
+        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
         useQueryString: true,
       },
       params: {
