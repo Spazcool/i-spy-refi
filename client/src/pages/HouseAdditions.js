@@ -174,16 +174,19 @@ export default function HouseAdditions() {
       [event.target.name]: event.target.value,
     });
     console.log(event.target.value);
+
     newValue.push({
       room: event.target.name,
       value: parseFloat(event.target.value),
     });
-    console.log(newValue);
+    Array.from(new Set(newValue));
     setNewValue(newValue);
+    console.log(newValue);
   };
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
     console.log(event);
+
     let theSum = 0;
     for (let i = 0, numb = newValue.length; i < numb; i++) {
       theSum += newValue[i].value;
@@ -191,20 +194,12 @@ export default function HouseAdditions() {
     newValue.push({ renovationValue: theSum });
     console.log(theSum);
     setNewValue(theSum);
+
     // console.log(value);
     console.log(newValue);
     const data = {
-      // hid: toBeDeleted,
       zpid: userZpid,
-      // state: houseData,
-      // latitude: null,
-      // longitude,
-      // zip,
-      // city,
-      // street,
-      // comps,
       formData: newValue,
-      // lastUpdated
     };
     const house = async () => await DB.updateHouse(data);
     const updatedHouse = await house().then((res) => {
