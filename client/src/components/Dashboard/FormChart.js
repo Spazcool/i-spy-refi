@@ -13,20 +13,17 @@ import { EventTracker, HoverState, Animation } from '@devexpress/dx-react-chart'
 
 export default function FormChart (props) {
   // const classes = useStyles();
-
-  const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
-
   const [loaded, setLoaded]= useState(false);
   const [loadingData, setLoadingData] = useState([
-    { room: 'Bathroom', value: 12 },
-    { room: 'Bedroom', value: 7 },
-    { room: 'Kitchen', value: 7 },
-    { room: 'Garage', value: 7 },
-    { room: 'Roof', value: 6 },
-    { room: 'Porch', value: 5 },
-    { room: 'Windows', value: 2 },
-    { room: 'Electical', value: 55 },
+    { room: 'Bathroom', value: 10 },
+    { room: 'Bedroom', value: 1 },
+    { room: 'Kitchen', value: 1 },
+    { room: 'Garage', value: 1 },
+    { room: 'Roof', value: 1 },
+    { room: 'Porch', value: 1 },
+    { room: 'Windows', value: 1 },
+    { room: 'Electical', value: 1 },
   ]);
 
   const checkLoaded = () => {
@@ -36,37 +33,24 @@ export default function FormChart (props) {
     }
   }
 
-  function toggle() {
-    setIsActive(!isActive);
-  }
-
-  function reset() {
-    setSeconds(0);
-    setIsActive(false);
-  }
-
   useEffect(() => {
-    // console.log(loadingData.forEach((datum)=))
     checkLoaded();
-
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        console.log('yo')
-        setSeconds(seconds => seconds + 1);
-        const newArr = [];
-        loadingData.forEach((datum, i) => {
-          datum.value = loadingData[(i+1)%loadingData.length].value
-          newArr.push(datum)
+        const newArr = loadingData.map((datum, i) => {
+          return {
+            room: [loadingData[i].room],
+            value: loadingData[(i+1) % loadingData.length].value
+          } 
         })
-        console.log(newArr)
         setLoadingData(newArr)
       }, 1000);
-    } else if (!isActive && seconds !== 0) {
+    } else if (!isActive) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, seconds]);
+  }, [isActive, loadingData]);
 
   return(
     loaded ? 
