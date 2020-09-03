@@ -1,4 +1,5 @@
 import axios from 'axios';
+require('dotenv').config();
 
 export const zillow = {
   async getaddress(obj) {
@@ -11,7 +12,7 @@ export const zillow = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         useQueryString: true,
       },
       params: {
@@ -34,6 +35,7 @@ export const zillow = {
         addressdata = response.data;
       })
       .catch((error) => {
+        console.log('here')
         console.log(error);
       });
     console.log('res1', addressdata);
@@ -52,7 +54,7 @@ export const zillow = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         useQueryString: true,
       },
     })
@@ -80,7 +82,7 @@ export const zillow = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         useQueryString: true,
       },
       params: {
