@@ -32,9 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TrendingChart(props) {
-  return (
-    <Paper>
+
+export default function TrendingChart (props) {
+  return(
+    <Paper className='card-radius'>
       <Chart data={props.data}>
         <ArgumentScale factory={scaleBand} />
         <ArgumentAxis />

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FormChart (props) {
   return(
-    <Paper>
+    <Paper className='card-radius'>
       <Chart data={props.data}>
         <PieSeries valueField="area" argumentField="country"/>
         <Animation/>

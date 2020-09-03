@@ -9,15 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SideBar from './SideBar.js';
 
+import logo from "../../src/logo-white-removebg-preview.png"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   menuButton: {
     marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
   },
 }));
 
@@ -30,19 +29,16 @@ export default withRouter(function Navbar(props) {
   //   setOpen(true);
   // };
 
-  // // const handleClose = () => {
-  // //   console.log('close')
-  // //   setOpen(false);
-  // // };
-  // console.log(open)
-  return (
-    <div className={classes.root}>
-      <AppBar position='static'>
-        <Toolbar>
-          <SideBar props={props} />
-          <Typography variant='h6' className={classes.title}>
-            I Spy Refi
-          </Typography>
+    return (
+      <div className={classes.root}>
+        <AppBar position="static" className="navbar" >
+          <Toolbar>
+            <SideBar props={props} />
+            <img src={logo} alt="logo" className="logo" />
+            <Typography variant="h6" className="brand" >
+              I Spy Refi
+            </Typography>
+            
 
           {isAuth ? (
             <></>

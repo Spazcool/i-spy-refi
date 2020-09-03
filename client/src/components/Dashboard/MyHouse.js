@@ -19,15 +19,10 @@ export default function MyHouse(props) {
   console.log(props);
 
   return (
-    <Paper elevation={4} className='my-house'>
-      <Card className='my-house'>
-        <CardMedia
-          className='media'
-          image={props.imagedata}
-          component='img'
-          title='My House'
-        />
-        <CardContent>
+    <Paper boxShadow={8} className='card-radius box-shadow'>
+      <Card className='card-radius' borderRadius={16}>
+        <CardMedia className='media' image={props.imageData} title='My House' />
+        <CardContent className='list'>
           <Typography variant='h5' component='h2'>
             {props.street}, {props.city}, {props.state}
           </Typography>
@@ -38,6 +33,11 @@ export default function MyHouse(props) {
             Description/Details
           </Typography>
         </CardContent>
+        <CardActions className='list'>
+          <Button size='small' className='button'>
+            View Stats
+          </Button>
+        </CardActions>
       </Card>
     </Paper>
   );
