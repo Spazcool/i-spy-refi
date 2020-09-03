@@ -12,15 +12,12 @@ import Paper from '@material-ui/core/Paper';
 // House Display Info
 
 export default function MyHouse(props) {
-<<<<<<< HEAD
-=======
   //image={imageData}
   //,{citydisplay},{statedisplay}
   //  {totalHouseValue}
   console.log(props.street);
   console.log(props);
 
->>>>>>> f57b4b6aacc448523251c6c146ee351a6aa157f6
   return (
     <Paper elevation={4} className='my-house'>
       <Card className='my-house'>
