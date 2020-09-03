@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const logger = require('morgan');
 const cors = require('cors');
 const axios = require('axios');
 const functions = require('firebase-functions');
@@ -46,7 +45,6 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
-app.use(logger('dev'));
 
 // TODO Add middleware to authenticate requests
 // app.use(myMiddleware);

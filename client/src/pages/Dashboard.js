@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import CompList from '../components/Dashboard/CompList';
+import CompListItem from '../components/Dashboard/CompListItem';
 import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
@@ -13,9 +14,6 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
-
-//STEFFI
-
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { zillow } from '../api/zillow';
@@ -54,6 +52,10 @@ function Home(props) {
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
+  const [compaddstreet, setcompaddstreet] = useState([]);
+  const [compestatedisplay, setcompstatedisplay] = useState('');
+  const [complastsoldprice, setcomplastsoldprice] = useState('');
+  const [complastsolddate, setcomplastsolddate] = useState('');
   // House EVAL
 
   const finishedSqFt = '2466';
@@ -73,11 +75,12 @@ function Home(props) {
       state,
       zip,
     };
+    console.log(data)
     /////////////////// FIRST API CALL /////////////////
 
     const displayaddress = await zillow.getaddress(data);
 
-    console.log('houseinfo from zillow :', displayaddress);
+    console.log('houseinfo from zillow :', displayaddress.error);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
     setstatedisplay(statezillow);
@@ -93,15 +96,27 @@ function Home(props) {
     // const zip = '03801';
     // setTimeout(() => {
     //////////////////////// SECOND CALL ///////////////////
+
     setTimeout(async () => {
       const getimageurl = await zillow.getzillowpropid(zillowzpid);
       setImage(getimageurl);
       console.log('getimageurl:', getimageurl);
     }, 1000);
 
+    // APi call to get house eval & 10 comparables
     setTimeout(async () => {
       const houseval = await zillow.gethouseval(zillowzpid);
-      console.log('gethouseval:', houseval);
+      console.log('gethouseval:', houseval.data);
+
+      // const statestreetcomp = houseval.data.comparables[0].address.street;
+      //  statestreetcomp = houseval.data;
+      // console.log(statestreetcomp);
+      setcompaddstreet(houseval.data.comparables);
+      // const cityzillow = displayaddress[0].address.city;
+      // setcitydisplay(cityzillow);
+      // const streetzillow = displayaddress[0].address.street;
+      // setstreetdisplay(streetzillow);
+      // const zillowzpid = displayaddress[0].zpid;
 
       let comlength = houseval.data.comparables.length;
       //console.log('complength' + comlength);
@@ -132,41 +147,44 @@ function Home(props) {
 
   return (
     <Container className='signup'>
-      <Grid container spacing={2} style={{ padding: 24 }}>
+      <Grid container spacing={3} className="grid">
+
         {/* --------------- USERS HOUSE --------------- */}
-        <Grid item xs={12} sm={5} lg={4} xl={4}>
+        <Grid item xs={12} sm={5} lg={5} xl={5}>
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse street={streetdisplay} />
+          <MyHouse className="card" />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
-        <Grid item xs={12} sm={7} lg={6} xl={4}>
+        {/* <Grid item xs={12} sm={7} lg={6} xl={4}>
           <Typography variant='h4' component='h2'>
             Comps near Me
           </Typography>
-          <CompDetails />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={2} xl={3}>
+          <CompDetails className="card" />
+        </Grid> */}
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             More
           </Typography>
-          <CompList />
+          <CompList className="card" street={compaddstreet}/>
+          <CompDetails />
         </Grid>
+
 
         {/* --------------- CHARTS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={formData} />
+          <FormChart data={formData} className="card"/>
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={trendingData} />
+          <TrendingChart data={trendingData} className="card"/>
         </Grid>
       </Grid>
     </Container>

@@ -228,7 +228,7 @@ export const DB = {
 
     let houseArr = [];
     const houseObj = await returnedHouse;
-
+    console.log(houseObj);
     houseObj.forEach((house) => {
       if (house.message) {
         houseArr.push(house);
@@ -393,7 +393,7 @@ export const DB = {
         mergeObj[property] = Obj[property];
       }
     }
-    console.log(mergeObj);
+
     return db()
       .collection('houses')
       .where('zpid', '==', mergeObj.zpid)

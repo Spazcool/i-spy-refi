@@ -3,7 +3,8 @@ import axios from 'axios';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import MyHouse from '../components/Dashboard/MyHouse';
-const apiKey = process.env.Zillow_API_Key;
+require('dotenv').config();
+
 export default function HouseDisplay(props) {
   const { user } = useContext(AuthContext);
   const [imageData, setImage] = useState([]);
@@ -42,7 +43,7 @@ export default function HouseDisplay(props) {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-        'x-rapidapi-key': apiKey,
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         useQueryString: true,
       },
       params: {
@@ -71,7 +72,7 @@ export default function HouseDisplay(props) {
               headers: {
                 'content-type': 'application/octet-stream',
                 'x-rapidapi-host': 'zillow-com.p.rapidapi.com',
-                'x-rapidapi-key': apiKey,
+                'x-rapidapi-key': process.env.REACT_APP_API_KEY,
                 useQueryString: true,
               },
             })
@@ -85,7 +86,7 @@ export default function HouseDisplay(props) {
               .catch((error) => {
                 console.log(error);
               }),
-          2000
+          1100
         );
       })
       .catch((error) => {

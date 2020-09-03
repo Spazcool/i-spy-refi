@@ -11,16 +11,16 @@ import Paper from '@material-ui/core/Paper';
 
 export default function CompDetails() {
   return (
-    <Paper elevation={4}>
-      <Card>
+    <Paper className='card-radius box-shadow'>
+      <Card className='card-radius'>
         <CardMedia
           className='media'
           //   image="/static/images/cards/contemplative-reptile.jpg"
           image='https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg'
           title='Contemplative Reptile'
         />
-        <CardContent>
-          <Typography variant='h4' component='h2'>
+        <CardContent className='list'>
+          <Typography variant='h5' component='h2'>
             34 Bromfield rd, apt.1
           </Typography>
           <Typography variant='h5' component='h2'>
@@ -31,12 +31,12 @@ export default function CompDetails() {
           </Typography>
         </CardContent>
 
-        <CardActions>
-          <Button size='small' color='primary'>
-            Button
+        <CardActions className='list'>
+          <Button size='small' className='button'>
+            More
           </Button>
-          <Button size='small' color='primary'>
-            Button
+          <Button size='small' className='button'>
+            Save
           </Button>
         </CardActions>
       </Card>
