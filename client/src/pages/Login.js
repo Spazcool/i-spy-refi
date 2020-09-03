@@ -14,7 +14,7 @@ function Login(props) {
 
   return (
     isAuth ? 
-      <Redirect to='/' />
+      <Redirect to='/dashboard' />
       :
       <Container className="signup">
           <h1>Login Page</h1>
