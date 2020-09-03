@@ -6,23 +6,23 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-export default function Comp() {
+export default function CompListItem({ comp }) {
   return (
     <Card>
       <CardActionArea>
         <CardContent>
-          <Typography color='textSecondary' gutterBottom>
-            1.5 miles
+          <Typography color='textSecondary' gutterBottom></Typography>
+          <Typography variant='h5' component='h2'>
+            {comp.address.street}
           </Typography>
           <Typography variant='h5' component='h2'>
-            34 Bromfield rd, apt.1
+            $ {comp.lastSoldPrice.value}
           </Typography>
-          <Typography variant='h5' component='h2'>
-            $360,000
+          <Typography color='textSecondary'>
+            {comp.address.city}, {comp.address.state},
           </Typography>
-          <Typography color='textSecondary'>Somerville, MA</Typography>
           <Typography variant='body2' component='p'>
-            Description/Details
+            Last Sold Date:{comp.lastSoldDate}
           </Typography>
         </CardContent>
       </CardActionArea>

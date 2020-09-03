@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import CompList from '../components/Dashboard/CompList';
+import CompListItem from '../components/Dashboard/CompListItem';
 import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
@@ -13,9 +14,6 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
-
-//STEFFI
-
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { zillow } from '../api/zillow';
@@ -34,8 +32,15 @@ function Home(props) {
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
+<<<<<<< HEAD
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
+=======
+  const [compaddstreet, setcompaddstreet] = useState([]);
+  const [compestatedisplay, setcompstatedisplay] = useState('');
+  const [complastsoldprice, setcomplastsoldprice] = useState('');
+  const [complastsolddate, setcomplastsolddate] = useState('');
+>>>>>>> f57b4b6aacc448523251c6c146ee351a6aa157f6
   // House EVAL
 
   // const finishedSqFt = '2466';
@@ -114,15 +119,27 @@ function Home(props) {
     // const zip = '03801';
     // setTimeout(() => {
     //////////////////////// SECOND CALL ///////////////////
+
     setTimeout(async () => {
       const getimageurl = await zillow.getzillowpropid(zillowzpid);
       setImage(getimageurl);
       console.log('getimageurl:', getimageurl);
     }, 1000);
 
+    // APi call to get house eval & 10 comparables
     setTimeout(async () => {
       const houseval = await zillow.gethouseval(zillowzpid);
-      console.log('gethouseval:', houseval);
+      console.log('gethouseval:', houseval.data);
+
+      // const statestreetcomp = houseval.data.comparables[0].address.street;
+      //  statestreetcomp = houseval.data;
+      // console.log(statestreetcomp);
+      setcompaddstreet(houseval.data.comparables);
+      // const cityzillow = displayaddress[0].address.city;
+      // setcitydisplay(cityzillow);
+      // const streetzillow = displayaddress[0].address.street;
+      // setstreetdisplay(streetzillow);
+      // const zillowzpid = displayaddress[0].zpid;
 
       let comlength = houseval.data.comparables.length;
       //console.log('complength' + comlength);
@@ -169,17 +186,17 @@ function Home(props) {
         </Grid>
 
         {/* --------------- COMPS --------------- */}
-        <Grid item xs={12} sm={7} lg={6} xl={4}>
+        {/* <Grid item xs={12} sm={7} lg={6} xl={4}>
           <Typography variant='h4' component='h2'>
             Comps near Me
           </Typography>
           <CompDetails />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={2} xl={3}>
+        </Grid> */}
+        <Grid item xs={12} sm={6} lg={6} xl={3}>
           <Typography variant='h4' component='h2'>
             More
           </Typography>
-          <CompList />
+          <CompList street={compaddstreet} />
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
