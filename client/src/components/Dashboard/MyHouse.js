@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"center",
     justifyContent:"center",
     display: 'flex',
-
   },
   block:{
     display: 'block',
@@ -41,7 +40,7 @@ export default function MyHouse(props) {
       setLoaded(true);
     }
   }
-  
+
   useEffect(() => {
     checkLoaded();
   })

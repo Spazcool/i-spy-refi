@@ -16,11 +16,10 @@ import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
 import TrendingChart from '../components/Dashboard/TrendingChart';
 
-import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
 
 function Home(props) {
-  
+
   // TODO THIS DATA WILL BE COMING FROMTHE DB
   const formData = [
     { country: 'Russia', area: 12 },
@@ -54,7 +53,7 @@ function Home(props) {
   const [complastsolddate, setcomplastsolddate] = useState('');
   const [value, setVale] = useState('');
   const [description, setDescription] = useState('');
-  
+
   // House EVAL
   const finishedSqFt = '2466';
   let avgSqFt = 0;
@@ -143,7 +142,7 @@ function Home(props) {
   };
 
   useEffect(() => {
-    fetchaddress();
+    // fetchaddress();
   }, []);
 
   return (
@@ -151,9 +150,7 @@ function Home(props) {
       <Grid container spacing={2} style={{ padding: 24 }}>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={4} xl={4}>
-          <Typography variant='h4' component='h2'>
-            My House
-          </Typography>
+          <Typography variant='h4' component='h2'>My House</Typography>
           <MyHouse 
             street={streetdisplay}
             imageData={imageData}
@@ -170,9 +167,7 @@ function Home(props) {
           <CompDetails />
         </Grid> */}
         <Grid item xs={12} sm={6} lg={6} xl={3}>
-          <Typography variant='h4' component='h2'>
-            More
-          </Typography>
+          <Typography variant='h4' component='h2'>Comps</Typography>
           <CompList street={compaddstreet} />
         </Grid>
 
