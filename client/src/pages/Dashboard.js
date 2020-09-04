@@ -143,7 +143,7 @@ function Home(props) {
   };
 
   useEffect(() => {
-    // fetchaddress();
+    fetchaddress();
   }, []);
 
   return (
@@ -177,14 +177,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart  /> 
-          {/* data={formData} */}
+          <FormChart data={formData}/> 
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={trendingData} />
+          <TrendingChart data={trendingData}/>
         </Grid>
       </Grid>
     </Container>

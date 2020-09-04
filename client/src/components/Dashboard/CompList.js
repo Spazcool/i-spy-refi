@@ -36,8 +36,8 @@ export default function CompList(props) {
     loaded ? 
       <Paper elevation={4} className={classes.root}>
         <div className={classes.list}>
-          {props.street.map((comp) => (
-            <CompListItem comp={comp} />
+          {props.street.map((comp,i) => (
+            <CompListItem comp={comp} key={'compItem'+i}/>
           ))}
         </div>
       </Paper>

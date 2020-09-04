@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-// import {  } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+
 import Paper from '@material-ui/core/Paper';
+
 import {
   Chart,
   PieSeries,
@@ -12,8 +12,8 @@ import {
 import { EventTracker, HoverState, Animation, Palette } from '@devexpress/dx-react-chart';
 // TODO SPECIFY COLORS THAT MATCH OUR LOOK
 // https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
+
 export default function FormChart (props) {
-  // const classes = useStyles();
   const [isActive, setIsActive] = useState(true);
   const [loaded, setLoaded]= useState(false);
   const [loadingData, setLoadingData] = useState([
