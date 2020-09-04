@@ -49,7 +49,7 @@ function Home(props) {
   let avgPerSqFt = 0;
   const [totalHouseValue, settotalHouseValue] = useState('');
   // let formData = [''];
-  let trendingData = [''];
+ // let trendingData = [''];
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -87,7 +87,7 @@ function Home(props) {
 
     // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
     // console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a"))
-    trendingData = [
+    const trendingData = [
       { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
       { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
       {
@@ -216,7 +216,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={trendingData} className="card"/>
+          <TrendingChart data={TrendingData} className="card"/>
         </Grid>
       </Grid>
     </Container>
