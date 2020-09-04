@@ -163,28 +163,28 @@ export default function HouseAdditions() {
       id: 6,
       name: 'Attic Bedroom Conversion',
       value: '36700',
-      atticUpdated: 'No',
+      notUpdated: 'Attic Bedroom Conversion: No',
       notUpdatedValue: '0',
     },
     {
       id: 7,
       name: 'Landscaping',
       value: '4900',
-      landscapingUpdated: 'No',
+      notUpdated: 'Landscaping: No',
       notUpdatedValue: '0',
     },
     {
       id: 8,
       name: 'Entry Door Replacement',
       value: '1280',
-      entryDoorUpdated: 'No',
+      notUpdated: 'Entry Door Replacement: No',
       notUpdatedValue: '0',
     },
     {
       id: 9,
       name: 'Deck/Patio/Porch',
       value: '10000',
-      deckUpdated: 'No',
+      notUpdated: 'Deck/Patio/Porch: No',
       notUpdatedValue: '0',
     },
   ];
@@ -212,7 +212,6 @@ export default function HouseAdditions() {
 
     newValue.push({
       hasUpdated: event.target.name,
-
       value: parseFloat(event.target.value),
     });
 
@@ -490,8 +489,8 @@ export default function HouseAdditions() {
               <FormControlLabel
                 onClick={handleOnClick}
                 control={<StyledRadio />}
-                label={value[6].atticUpdated}
-                name={(value[6].name, value[6].atticUpdated)}
+                label='No'
+                name={value[6].notUpdated}
                 value={value[6].notUpdatedValue}
               />
             </RadioGroup>
@@ -518,8 +517,8 @@ export default function HouseAdditions() {
               <FormControlLabel
                 onClick={handleOnClick}
                 control={<StyledRadio />}
-                label={value[7].landscapingUpdated}
-                name={(value[7].name, value[7].landscapingUpdated)}
+                label='No'
+                name={value[7].notUpdated}
                 value={value[7].notUpdatedValue}
               />
             </RadioGroup>
@@ -547,8 +546,8 @@ export default function HouseAdditions() {
                 onClick={handleOnClick}
                 value={value[8].notUpdatedValue}
                 control={<StyledRadio />}
-                label={value[8].entryDoorUpdated}
-                name={(value[8].name, value[8].entryDoorUpdated)}
+                label='No'
+                name={value[8].notUpdated}
               />
             </RadioGroup>
           </FormControl>
@@ -575,8 +574,8 @@ export default function HouseAdditions() {
                 onClick={handleOnClick}
                 value={value[9].notUpdatedValue}
                 control={<StyledRadio />}
-                label={value[9].deckUpdated}
-                name={(value[9].name, value[9].deckUpdated)}
+                label='No'
+                name={value[9].notUpdated}
               />
             </RadioGroup>
           </FormControl>
