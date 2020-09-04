@@ -15,13 +15,11 @@ export default function MyHouse(props) {
   //image={imageData}
   //,{citydisplay},{statedisplay}
   //  {totalHouseValue}
-  console.log(props.street);
-  console.log(props);
 
   return (
     <Paper boxShadow={8} className='card-radius box-shadow'>
       <Card className='card-radius' borderRadius={16}>
-        <CardMedia className='media' image={props.imageData} title='My House' />
+        <CardMedia className='media' image={props.imagedata} title='My House' />
         <CardContent className='list'>
           <Typography variant='h5' component='h2'>
             {props.street}, {props.city}, {props.state}
