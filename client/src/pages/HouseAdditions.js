@@ -161,12 +161,24 @@ export default function HouseAdditions() {
       name: 'Deck/Patio/Porch',
       value: '10000',
     },
+    {
+      id: 10,
+      name: 'Not Updated',
+      label: 'No',
+      value: '0',
+    },
   ];
 
   const [userHouse, setUserHouse] = useState(houseCreds);
   const [value, setValue] = useState(nationalAverages);
   const [newValue, setNewValue] = useState([]);
   const [userZpid, setUserZpid] = useState('');
+
+  useEffect(async () => {
+    const house = async () => await DB.getHouseByOwner(user.user.uid);
+    const [userHouse] = await house();
+    setUserZpid(userHouse.zpid);
+  }, []);
 
   const handleOnClick = (event) => {
     setValue({
@@ -176,13 +188,17 @@ export default function HouseAdditions() {
     console.log(event.target.value);
 
     newValue.push({
-      room: event.target.name,
+      hasUpdated: event.target.name,
       value: parseFloat(event.target.value),
     });
-    Array.from(new Set(newValue));
-    setNewValue(newValue);
-    console.log(newValue);
+
+    let filteredValue = [...new Set(newValue.map(JSON.stringify))].map(
+      JSON.parse
+    );
+    setNewValue(filteredValue);
+    console.log(filteredValue);
   };
+
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
     console.log(event);
@@ -197,13 +213,15 @@ export default function HouseAdditions() {
 
     // console.log(value);
     console.log(newValue);
+
     const data = {
       zpid: userZpid,
       formData: newValue,
     };
+
     const house = async () => await DB.updateHouse(data);
     const updatedHouse = await house().then((res) => {
-      console.log(res.updatedHouse);
+      console.log(res);
     });
 
     // DB.updateHouse(updatedHouse);
@@ -347,28 +365,7 @@ export default function HouseAdditions() {
 
           <FormGroup>
             <FormControl component='fieldset'>
-              <FormLabel component='legend'>Kitchen Renovations:</FormLabel>
-              <br />
-              <RadioGroup
-                className={classes.group}
-                aria-label='renovations'
-                name='customized-radios'
-              >
-                <FormControlLabel
-                  value='Yes'
-                  control={<StyledRadio />}
-                  label='Yes'
-                />
-                <FormControlLabel
-                  value='No'
-                  control={<StyledRadio />}
-                  label='No'
-                />
-              </RadioGroup>
-            </FormControl>
-            <br />
-            <FormControl component='fieldset'>
-              <FormLabel component='legend'>What have you renovated?</FormLabel>
+              <FormLabel component='legend'>Kitchen Renovations: </FormLabel>
               <br />
               <RadioGroup
                 className={classes.group}
@@ -392,30 +389,9 @@ export default function HouseAdditions() {
               </RadioGroup>
             </FormControl>
             <br />
+
             <FormControl component='fieldset'>
-              <FormLabel component='legend'>Roof Renovations:</FormLabel>
-              <br />
-              <RadioGroup
-                className={classes.group}
-                defaultValue='no'
-                aria-label='renovations'
-                name='customized-radios'
-              >
-                <FormControlLabel
-                  value='Yes'
-                  control={<StyledRadio />}
-                  label='Yes'
-                />
-                <FormControlLabel
-                  value='No'
-                  control={<StyledRadio />}
-                  label='No'
-                />
-              </RadioGroup>
-            </FormControl>
-            <br />
-            <FormControl component='fieldset'>
-              <FormLabel component='legend'>Pick your Roof Style: </FormLabel>
+              <FormLabel component='legend'>Roof Renovations: </FormLabel>
               <br />
               <RadioGroup
                 className={classes.group}
@@ -484,9 +460,10 @@ export default function HouseAdditions() {
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
                 control={<StyledRadio />}
-                label='No'
+                label={value[10].label}
+                name={value[10].name}
+                value={value[10].value}
               />
             </RadioGroup>
           </FormControl>
@@ -509,9 +486,10 @@ export default function HouseAdditions() {
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
                 control={<StyledRadio />}
-                label='No'
+                label={value[10].label}
+                name={value[10].name}
+                value={value[10].value}
               />
             </RadioGroup>
           </FormControl>
@@ -533,16 +511,15 @@ export default function HouseAdditions() {
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
+                value={value[10].value}
                 control={<StyledRadio />}
-                label='No'
+                label={value[10].label}
+                name={value[10].name}
               />
             </RadioGroup>
           </FormControl>
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>
-              Deck/Patio/Porch Addition :
-            </FormLabel>
+            <FormLabel component='legend'>Deck/Patio/Porch Addition:</FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -559,9 +536,10 @@ export default function HouseAdditions() {
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
+                value={value[10].value}
                 control={<StyledRadio />}
-                label='No'
+                label={value[10].label}
+                name={value[10].name}
               />
             </RadioGroup>
           </FormControl>
