@@ -138,7 +138,7 @@ function Home(props) {
   };
 
   useEffect(() => {
-    // fetchaddress();
+    fetchaddress();
   }, []);
 
   return (

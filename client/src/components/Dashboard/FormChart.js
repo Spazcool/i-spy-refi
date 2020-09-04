@@ -9,7 +9,8 @@ import {
   Title,
   Tooltip
 } from '@devexpress/dx-react-chart-material-ui';
-import { EventTracker, HoverState, Animation, Palette } from '@devexpress/dx-react-chart';
+import { EventTracker, HoverState, Animation } from '@devexpress/dx-react-chart';
+
 // TODO SPECIFY COLORS THAT MATCH OUR LOOK
 // https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
 
@@ -45,13 +46,13 @@ export default function FormChart (props) {
             value: loadingData[(i+1) % loadingData.length].value
           } 
         })
-        setLoadingData(newArr)
+        setLoadingData(newArr);
       }, 1000);
     } else if (!isActive) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, loadingData, props]);
+  }, [isActive, loadingData]);
 
   return(
     loaded ? 
