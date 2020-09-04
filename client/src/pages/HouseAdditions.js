@@ -145,27 +145,29 @@ export default function HouseAdditions() {
       id: 6,
       name: 'Attic Bedroom Conversion',
       value: '36700',
+      atticUpdated: 'No',
+      notUpdatedValue: '0',
     },
     {
       id: 7,
       name: 'Landscaping',
       value: '4900',
+      landscapingUpdated: 'No',
+      notUpdatedValue: '0',
     },
     {
       id: 8,
       name: 'Entry Door Replacement',
       value: '1280',
+      entryDoorUpdated: 'No',
+      notUpdatedValue: '0',
     },
     {
       id: 9,
       name: 'Deck/Patio/Porch',
       value: '10000',
-    },
-    {
-      id: 10,
-      name: 'Not Updated',
-      label: 'No',
-      value: '0',
+      deckUpdated: 'No',
+      notUpdatedValue: '0',
     },
   ];
 
@@ -174,11 +176,14 @@ export default function HouseAdditions() {
   const [newValue, setNewValue] = useState([]);
   const [userZpid, setUserZpid] = useState('');
 
-  useEffect(async () => {
-    const house = async () => await DB.getHouseByOwner(user.user.uid);
-    const [userHouse] = await house();
-    setUserZpid(userHouse.zpid);
-  }, []);
+  useEffect(() => {
+    async function fetchZpid() {
+      const house = async () => await DB.getHouseByOwner(user.user.uid);
+      const [userHouse] = await house();
+      setUserZpid(userHouse.zpid);
+    }
+    fetchZpid();
+  }, [userHouse]);
 
   const handleOnClick = (event) => {
     setValue({
@@ -189,6 +194,7 @@ export default function HouseAdditions() {
 
     newValue.push({
       hasUpdated: event.target.name,
+
       value: parseFloat(event.target.value),
     });
 
@@ -461,9 +467,9 @@ export default function HouseAdditions() {
               <FormControlLabel
                 onClick={handleOnClick}
                 control={<StyledRadio />}
-                label={value[10].label}
-                name={value[10].name}
-                value={value[10].value}
+                label={value[6].atticUpdated}
+                name={(value[6].name, value[6].atticUpdated)}
+                value={value[6].notUpdatedValue}
               />
             </RadioGroup>
           </FormControl>
@@ -487,9 +493,9 @@ export default function HouseAdditions() {
               <FormControlLabel
                 onClick={handleOnClick}
                 control={<StyledRadio />}
-                label={value[10].label}
-                name={value[10].name}
-                value={value[10].value}
+                label={value[7].landscapingUpdated}
+                name={(value[7].name, value[7].landscapingUpdated)}
+                value={value[7].notUpdatedValue}
               />
             </RadioGroup>
           </FormControl>
@@ -511,10 +517,10 @@ export default function HouseAdditions() {
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value={value[10].value}
+                value={value[8].notUpdatedValue}
                 control={<StyledRadio />}
-                label={value[10].label}
-                name={value[10].name}
+                label={value[8].entryDoorUpdated}
+                name={(value[8].name, value[8].entryDoorUpdated)}
               />
             </RadioGroup>
           </FormControl>
@@ -536,10 +542,10 @@ export default function HouseAdditions() {
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value={value[10].value}
+                value={value[9].notUpdatedValue}
                 control={<StyledRadio />}
-                label={value[10].label}
-                name={value[10].name}
+                label={value[9].deckUpdated}
+                name={(value[9].name, value[9].deckUpdated)}
               />
             </RadioGroup>
           </FormControl>

@@ -33,9 +33,6 @@ function Home(props) {
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
 
-
-
-
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
   const [compaddstreet, setcompaddstreet] = useState([]);
@@ -49,7 +46,7 @@ function Home(props) {
   let avgPerSqFt = 0;
   const [totalHouseValue, settotalHouseValue] = useState('');
   // let formData = [''];
- // let trendingData = [''];
+  // let trendingData = [''];
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -98,7 +95,7 @@ function Home(props) {
     ];
     setTrendingData(trendingData);
 
-    console.log(data)
+    console.log(data);
     /////////////////// FIRST API CALL /////////////////
 
     const displayaddress = await zillow.getaddress(data);
@@ -173,14 +170,14 @@ function Home(props) {
 
   return (
     <Container className='signup'>
-      <Grid container spacing={3} className="grid">
-
+      <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse className="card"
+          <MyHouse
+            className='card'
             street={streetdisplay}
             city={citydisplay}
             state={statedisplay}
@@ -200,23 +197,22 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             More
           </Typography>
-          <CompList className="card" street={compaddstreet}/>
+          <CompList className='card' street={compaddstreet} />
           <CompDetails />
         </Grid>
-
 
         {/* --------------- CHARTS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={FormData} className="card"/>
+          <FormChart data={FormData} className='card' />
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={TrendingData} className="card"/>
+          <TrendingChart data={TrendingData} className='card' />
         </Grid>
       </Grid>
     </Container>
