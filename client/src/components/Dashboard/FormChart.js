@@ -15,6 +15,7 @@ import { EventTracker, HoverState, Animation } from '@devexpress/dx-react-chart'
 // https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
 
 export default function FormChart (props) {
+  const [didMount, setDidMount] = useState(false)
   const [isActive, setIsActive] = useState(true);
   const [loaded, setLoaded]= useState(false);
   const [loadingData, setLoadingData] = useState([
@@ -29,6 +30,8 @@ export default function FormChart (props) {
   ]);
 
   const checkLoaded = () => {
+    setDidMount(true)
+    console.log(props)
     const {data} = props;
     if(data.length > 0){
       setLoaded(true);
@@ -46,7 +49,7 @@ export default function FormChart (props) {
             value: loadingData[(i+1) % loadingData.length].value
           } 
         })
-        setLoadingData(newArr);
+        // setLoadingData(newArr);
       }, 1000);
     } else if (!isActive) {
       clearInterval(interval);
