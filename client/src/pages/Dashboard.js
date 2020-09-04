@@ -35,8 +35,6 @@ function Home(props) {
   // const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
-  // let formData = [''];
-  //  let trendingData = [''];
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -137,7 +135,6 @@ function Home(props) {
 
       console.log('avgsqft:', avgPerSqFt);
     }, 3000);
-    console.log(streetdisplay)
   };
 
   useEffect(() => {

@@ -29,7 +29,7 @@ export default function FormChart (props) {
 
   const checkLoaded = () => {
     const {data} = props;
-    if(data){
+    if(data.length > 0){
       setLoaded(true);
     }
   }
@@ -51,7 +51,7 @@ export default function FormChart (props) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, loadingData]);
+  }, [isActive, loadingData, props]);
 
   return(
     loaded ? 

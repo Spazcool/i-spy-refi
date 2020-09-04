@@ -33,7 +33,7 @@ export default function TrendingChart(props) {
 
   const checkLoaded = () => {
     const {data} = props;
-    if(data){
+    if(data.length > 0){
       setLoaded(true);
     }
   }
