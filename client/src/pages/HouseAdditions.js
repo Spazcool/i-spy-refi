@@ -100,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
     variantMapping: {
       h1: 'h1',
       h2: 'h2',
+      h3: 'h3',
     },
   },
 }));
@@ -325,7 +326,7 @@ export default function HouseAdditions() {
         flexWrap: 'wrap',
       }}
     >
-      <Typography variant='h2'> Add Your House to Get Started</Typography>
+      <Typography variant='h2'>Find Your House:</Typography>
       <Container>
         <FormGroup id='initInput'>
           <FormLabel style={{ alignSelf: 'center' }}>
