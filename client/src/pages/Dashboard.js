@@ -47,6 +47,9 @@ function Home(props) {
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
+
+  const [FormData, setFormData] = useState([]);
+  const [TrendingData, setTrendingData] = useState([]);
   const [compaddstreet, setcompaddstreet] = useState([]);
   const [compestatedisplay, setcompstatedisplay] = useState('');
   const [complastsoldprice, setcomplastsoldprice] = useState('');
@@ -54,29 +57,68 @@ function Home(props) {
   const [value, setVale] = useState('');
   const [description, setDescription] = useState('');
 
-  // House EVAL
-  const finishedSqFt = '2466';
+  // const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
   const [totalHouseValue, settotalHouseValue] = useState('');
+  // let formData = [''];
+  //  let trendingData = [''];
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
 
     // User id is passed once the user login is completed
-    const [{ street, state, city, zip }] = await houseinfoDB();
+    const [
+      { street, state, city, zip, hid, formdata, comps },
+    ] = await houseinfoDB();
 
     const data = {
       street,
       city,
       state,
       zip,
+      hid,
+      formdata,
+      comps,
     };
+
+    console.log('data : ', data);
+    // TODO THIS DATA WILL BE COMING FROMTHE DB
+
+    const formData = [
+      { country: 'Russia', area: 12 },
+      { country: 'Canada', area: 7 },
+      { country: 'USA', area: 7 },
+      { country: 'China', area: 7 },
+      { country: 'Brazil', area: 6 },
+      { country: 'Australia', area: 5 },
+      { country: 'India', area: 2 },
+      { country: 'Others', area: 55 },
+    ];
+
+    setFormData(formData);
+
+    // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
+    // console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a"))
+    const trendingData = [
+      { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
+      { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
+      {
+        date: moment().subtract(10, 'days').format('DD-MM-YY'),
+        value: 1234567,
+      },
+      { date: moment().format('DD-MM-YY'), value: 1098765 },
+    ];
+    setTrendingData(trendingData);
+
     console.log(data)
     /////////////////// FIRST API CALL /////////////////
 
     const displayaddress = await zillow.getaddress(data);
 
+    // console.log('houseinfo from zillow :', displayaddress);
+    const finishedsqftzillow = displayaddress[0].finishedSqFt;
+    //console.log('fsq:', finishedsqftzillow);
     console.log('houseinfo from zillow :', displayaddress.error);
     // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
@@ -134,7 +176,7 @@ function Home(props) {
 
       // Calculating The House Value
 
-      const tot = Math.round(finishedSqFt * avgPerSqFt);
+      const tot = Math.round(finishedsqftzillow * avgPerSqFt);
       settotalHouseValue(tot);
       console.log('housevalue:', tot);
 
@@ -148,16 +190,21 @@ function Home(props) {
 
   return (
     <Container className='signup'>
-      <Grid container spacing={2} style={{ padding: 24 }}>
+      <Grid container spacing={3} className="grid">
+
         {/* --------------- USERS HOUSE --------------- */}
-        <Grid item xs={12} sm={5} lg={4} xl={4}>
-          <Typography variant='h4' component='h2'>My House</Typography>
-          <MyHouse 
+        <Grid item xs={12} sm={5} lg={5} xl={5}>
+          <Typography variant='h4' component='h2'>
+            My House
+          </Typography>
+          <MyHouse className="card"
             street={streetdisplay}
-            imageData={imageData}
-            value={value}
+            city={citydisplay}
+            state={statedisplay}
+            imagedata={imageData}
+            value={totalHouseValue}
             description={description}
-            />
+          />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
@@ -165,11 +212,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Comps near Me
           </Typography>
-          <CompDetails />
+          <CompDetails className="card" />
         </Grid> */}
-        <Grid item xs={12} sm={6} lg={6} xl={3}>
-          <Typography variant='h4' component='h2'>Comps</Typography>
-          <CompList street={compaddstreet} />
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
+          <Typography variant='h4' component='h2'>
+            Comps
+          </Typography>
+          <CompList className="card" street={compaddstreet}/>
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
@@ -177,13 +226,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={formData}/> 
+          <FormChart data={FormData} className="card"/>
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={trendingData}/>
+          <TrendingChart data={TrendingData} className="card"/>
         </Grid>
       </Grid>
     </Container>

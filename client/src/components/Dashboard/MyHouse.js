@@ -47,38 +47,52 @@ export default function MyHouse(props) {
 
   return ( 
     loaded ? 
-      <Card>
-        <CardActionArea>
-          <CardMedia className={classes.lazyImage} component='img' image={props.imageData} title='My House' />
-          <CardContent className={classes.block}>
-            <Typography variant='h5' component='h2'>
-              {props.street} 
-            </Typography>
+      <Paper boxShadow={8} className='card-radius box-shadow'>
+        <Card className='card-radius' borderRadius={16}>
+          <CardActionArea>
+            <CardMedia className={classes.lazyImage} component='img' image={props.imageData} title='My House' />
+            <CardContent className={classes.block}>
+              <Typography variant='h5' component='h2'>
+                {props.street}, {props.city}, {props.state}
+              </Typography>
 
-            <h4>Value</h4>
-            <Typography variant='body1' component='p'>
-              $ {props.value}
-            </Typography>
+              <h4>Value</h4>
+              <Typography variant='body1' component='p'>
+                $ {props.value}
+              </Typography>
 
-            <h4>Description/Details</h4>
-            <Typography variant='body2' component='p'>
-              {props.description} 
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+              <h4>Description/Details</h4>
+              <Typography variant='body2' component='p'>
+                {props.description} 
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions className='list'>
+            <Button size='small' className='button'>
+              View Stats
+            </Button>
+          </CardActions>
+        </Card>
+      </Paper>
     : 
-      <Card> 
-        <CardActionArea>
-          <CardMedia className={classes.lazyImage} title='My House'><CircularProgress className={'mt-4'}/></CardMedia>
-           <CardContent>
-            <LinearProgress />
-            <h4>Value</h4>
-            <LinearProgress color='secondary'/>
-            <h4>Description/Details</h4>
-            <LinearProgress />
-          </CardContent>
-        </CardActionArea>
-      </Card>
+      <Paper boxShadow={8} className='card-radius box-shadow'>
+        <Card className='card-radius' borderRadius={16}>
+          <CardActionArea>
+            <CardMedia className={classes.lazyImage} title='My House'><CircularProgress className={'mt-4'}/></CardMedia>
+            <CardContent>
+              <LinearProgress />
+              <h4>Value</h4>
+              <LinearProgress color='secondary'/>
+              <h4>Description/Details</h4>
+              <LinearProgress />
+            </CardContent>
+          </CardActionArea>
+          <CardActions className='list'>
+            <Button size='small' className='button'>
+              View Stats
+            </Button>
+          </CardActions>
+        </Card>
+      </Paper>
   )
 }

@@ -92,18 +92,3 @@ export default function TrendingChart(props) {
       </Paper>
   );
 }
-
-// const [data, setData] = useState([]);
-
-// const generateData = (start, end, step) => {
-//   const plots = [];
-//   for (let i = start; i < end; i += step) {
-//     plots.push({ splineValue: Math.sin(i) / i, lineValue: ((i / 15) ** 2.718) - 0.2, argument: i });
-//   }
-//   console.log(plots)
-//   setData(plots);
-// };
-
-// useEffect(() => {
-//   generateData(props.data.x, props.data.y, props.data.z);
-// },[])
