@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
 import { Form } from 'react-bootstrap';
 import { zillow } from '../api/zillow.js';
@@ -32,10 +32,21 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: '50%',
+      justifyContent: 'center',
     },
     '&:hover': {
       backgroundColor: 'transparent',
     },
+  },
+  label: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    padding: '0',
+    fontSize: ' 1rem',
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+    fontWeight: '400',
+    lineHeight: '1',
+    letterSpacing: '0.00938em',
+    textAlign: 'center',
   },
   icon: {
     borderRadius: '50%',
@@ -82,8 +93,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   button: {
-    justifyContent: 'center',
-    width: '50',
+    alignSelf: 'center',
+    width: '25%',
+  },
+  MuiTypography: {
+    variantMapping: {
+      h1: 'h1',
+      h2: 'h2',
+    },
   },
 }));
 
@@ -304,17 +321,14 @@ export default function HouseAdditions() {
       style={{
         minWidth: 500,
         maxHeight: 500,
-        overflow: 'auto',
+
         flexWrap: 'wrap',
       }}
     >
-      <h1 style={{ marginTop: 10, flexWrap: 'nowrap' }}>
-        {' '}
-        Add Your House to Get Started
-      </h1>
+      <Typography variant='h2'> Add Your House to Get Started</Typography>
       <Container>
         <FormGroup id='initInput'>
-          <FormLabel>
+          <FormLabel style={{ alignSelf: 'center' }}>
             <TextField
               required
               id='outlined-required'
@@ -371,7 +385,9 @@ export default function HouseAdditions() {
 
           <FormGroup>
             <FormControl component='fieldset'>
-              <FormLabel component='legend'>Kitchen Renovations: </FormLabel>
+              <FormLabel component='legend' className={classes.label}>
+                Kitchen Renovations:{' '}
+              </FormLabel>
               <br />
               <RadioGroup
                 className={classes.group}
@@ -397,7 +413,9 @@ export default function HouseAdditions() {
             <br />
 
             <FormControl component='fieldset'>
-              <FormLabel component='legend'>Roof Renovations: </FormLabel>
+              <FormLabel component='legend' className={classes.label}>
+                Roof Renovations:{' '}
+              </FormLabel>
               <br />
               <RadioGroup
                 className={classes.group}
@@ -423,7 +441,9 @@ export default function HouseAdditions() {
           </FormGroup>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Bathroom Remodel:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Bathroom Remodel:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -449,7 +469,9 @@ export default function HouseAdditions() {
           </FormControl>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Attic Bedroom Conversion:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Attic Bedroom Conversion:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -475,7 +497,9 @@ export default function HouseAdditions() {
           </FormControl>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Landscaping:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Landscaping:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -499,8 +523,11 @@ export default function HouseAdditions() {
               />
             </RadioGroup>
           </FormControl>
+          <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Entry Door Replacement:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Entry Door Replacement:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -524,8 +551,11 @@ export default function HouseAdditions() {
               />
             </RadioGroup>
           </FormControl>
+          <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Deck/Patio/Porch Addition:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Deck/Patio/Porch Addition:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -549,6 +579,7 @@ export default function HouseAdditions() {
               />
             </RadioGroup>
           </FormControl>
+          <br />
           <Button
             type='submit'
             variant='contained'
