@@ -55,7 +55,7 @@ export default function FormChart (props) {
 
   return(
     loaded ? 
-      <Paper>
+      <Paper className='card-radius box-shadow'>
         <Chart data={props.data}>
           <PieSeries valueField="value" argumentField="room"/>
           <Animation/>
@@ -67,7 +67,7 @@ export default function FormChart (props) {
         </Chart>
       </Paper>
       :
-      <Paper>
+      <Paper className='card-radius box-shadow'>
         <Chart data={loadingData}>
           <PieSeries valueField="value" argumentField="room"/>
           <Animation/>

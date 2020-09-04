@@ -228,7 +228,7 @@ export const DB = {
 
     let houseArr = [];
     const houseObj = await returnedHouse;
-    console.log(houseObj);
+
     houseObj.forEach((house) => {
       if (house.message) {
         houseArr.push(house);

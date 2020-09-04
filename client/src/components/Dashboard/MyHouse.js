@@ -36,16 +36,15 @@ export default function MyHouse(props) {
   const classes = useStyles();
 
   const checkLoaded = () => {
-    console.log(props)
     const {imageData, street, description, value } = props;
-    if(imageData && street){ // && description && value (if not all values are sent, the component never loads)
+    if(value){ //presumes value will take the longest to load
       setLoaded(true);
     }
   }
 
   useEffect(() => {
     checkLoaded();
-  },[loaded])
+  },[props])
 
   return ( 
     loaded ? 
@@ -82,9 +81,7 @@ export default function MyHouse(props) {
           <CardActionArea>
             <CardMedia className={classes.lazyImage} title='My House'><CircularProgress className={'mt-4'}/></CardMedia>
             <CardContent>
-              <LinearProgress />
               <h4>Value</h4>
-              <LinearProgress color='secondary'/>
               <h4>Description/Details</h4>
               <LinearProgress />
             </CardContent>

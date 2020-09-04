@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Grid from '@material-ui/core/Grid';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -18,22 +19,23 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
     width: '100%',
-  },
-  center: {
     alignItems:"center",
     justifyContent:"center",
     display: 'flex',
   },
+  'v-align': {
+    display:'flex',
+    'flex-direction': 'column',
+    'justify-content': 'center',
+  }
 }));
 
-export default function CompListItem({ comp }) {
+export default function CompListItem(props) {
   const classes = useStyles();
 
   return (
-    comp ? 
+    props.comp ? 
       <Accordion>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
@@ -41,26 +43,26 @@ export default function CompListItem({ comp }) {
         id='panel1a-header'
       >
         <Typography color='textSecondary' gutterBottom>
-          summary
+          {props.comp.address.street}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
         <CardContent>
           <Typography color='textSecondary' gutterBottom></Typography>
           <Typography variant='h5' component='h2'>
-            {comp.address.street}
+            {props.comp.address.street}
           </Typography>
           <Typography variant='h5' component='h2'>
-            $ {comp.lastSoldPrice.value}
+            $ {props.comp.lastSoldPrice.value}
           </Typography>
           <Typography color='textSecondary'>
-            {comp.address.city}, {comp.address.state},
+            {props.comp.address.city}, {props.comp.address.state},
           </Typography>
           <Typography variant='body2' component='p'>
-            Last Sold Date:{comp.lastSoldDate}
+            Last Sold Date:{props.comp.lastSoldDate}
           </Typography>
         </CardContent>
-        <CardActions className={classes.center}>
+        <CardActions className={classes.root}>
           <Button size='small' className='button'><CircularProgress/></Button>
         </CardActions>
       </AccordionDetails>
@@ -72,21 +74,25 @@ export default function CompListItem({ comp }) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Typography color='textSecondary' gutterBottom>
-          summary
-        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={4}>
+            <Typography color='textSecondary' gutterBottom>
+              Comp {props.i + 1}
+            </Typography>
+          </Grid>
+          <Grid item xs={8} className={classes['v-align']}> <LinearProgress /></Grid>
+        </Grid>
       </AccordionSummary>
       <AccordionDetails>
         <CardContent>
           <Typography variant='h5' component='h2'>
-          </Typography>
-          <LinearProgress/>
+          </Typography>    
           <br/>
           <Typography variant='h5' component='h2'>
           </Typography>
           <LinearProgress color='secondary'/>
         </CardContent>
-        <CardActions className={classes.center}>
+        <CardActions className={classes.root}>
           <Button size='small' className='button'><CircularProgress/></Button>
         </CardActions>
       </AccordionDetails>

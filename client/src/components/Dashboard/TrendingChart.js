@@ -59,7 +59,7 @@ export default function TrendingChart(props) {
 
   return (
     loaded ? 
-      <Paper>
+      <Paper className='card-radius box-shadow'>
         <Chart data={props.data}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
@@ -75,7 +75,7 @@ export default function TrendingChart(props) {
         </Chart>
       </Paper>
       :
-      <Paper>
+      <Paper className='card-radius box-shadow'>
         <Chart data={loadingData}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
