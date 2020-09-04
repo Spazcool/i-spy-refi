@@ -197,7 +197,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          <MyHouse className="card"
+          <MyHouse 
             street={streetdisplay}
             city={citydisplay}
             state={statedisplay}
@@ -218,7 +218,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Comps
           </Typography>
-          <CompList className="card" street={compaddstreet}/>
+          <CompList street={compaddstreet}/>
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
@@ -226,13 +226,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={FormData} className="card"/>
+          <FormChart data={FormData}/>
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={TrendingData} className="card"/>
+          <TrendingChart data={TrendingData}/>
         </Grid>
       </Grid>
     </Container>

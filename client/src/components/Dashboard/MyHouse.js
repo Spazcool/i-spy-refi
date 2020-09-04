@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
+import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -35,6 +36,7 @@ export default function MyHouse(props) {
   const classes = useStyles();
 
   const checkLoaded = () => {
+    console.log(props)
     const {imageData, street, description, value } = props;
     if(imageData && street){ // && description && value (if not all values are sent, the component never loads)
       setLoaded(true);
@@ -43,12 +45,12 @@ export default function MyHouse(props) {
 
   useEffect(() => {
     checkLoaded();
-  })
+  },[loaded])
 
   return ( 
     loaded ? 
-      <Paper boxShadow={8} className='card-radius box-shadow'>
-        <Card className='card-radius' borderRadius={16}>
+      <Paper className='card-radius box-shadow'>
+        <Card className='card-radius'>
           <CardActionArea>
             <CardMedia className={classes.lazyImage} component='img' image={props.imageData} title='My House' />
             <CardContent className={classes.block}>
@@ -75,8 +77,8 @@ export default function MyHouse(props) {
         </Card>
       </Paper>
     : 
-      <Paper boxShadow={8} className='card-radius box-shadow'>
-        <Card className='card-radius' borderRadius={16}>
+      <Paper className='card-radius box-shadow'>
+        <Card className='card-radius'>
           <CardActionArea>
             <CardMedia className={classes.lazyImage} title='My House'><CircularProgress className={'mt-4'}/></CardMedia>
             <CardContent>
