@@ -4,10 +4,6 @@
 
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
 
-/* * {
-  border: 1px solid black;
-} */
-
 .flip{
   transition: transform 0.8s;
   transform-style: preserve-3d;
@@ -40,7 +36,6 @@
   margin-left: 20px !important;
   height: 45px;
 }
-
 
 /* NEW TRICKS WITH CSS */
 

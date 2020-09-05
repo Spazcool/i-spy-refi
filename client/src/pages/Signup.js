@@ -12,7 +12,7 @@ function Signup(props) {
   const { isAuth } = useContext(AuthContext)
 
   return (
-    isAuth ? <Redirect to='/' />
+    isAuth ? <Redirect to='/dashboard' />
     :
     <Container className="signup">
       <h1>SignUp Page</h1>

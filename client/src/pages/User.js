@@ -325,7 +325,7 @@ function User(props) {
     !isAuth ? 
       <Redirect to='/' />
       :
-      <Container className="signup">
+      <Container className="">
           <h1>User Page</h1>
         <Grid container justify="center" spacing={spacing}>
           <Grid item xs={12} md={6}>

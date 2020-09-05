@@ -5,9 +5,7 @@ export const zillow = {
   async getaddress(obj) {
     //get address api
     let addressdata;
-    // console.log('object:', obj);
-    console.log('proc:', process.env.REACT_APP_API_KEY);
-    
+
     await axios({
       method: 'GET',
       url: 'https://zillow-com.p.rapidapi.com/search/address',
