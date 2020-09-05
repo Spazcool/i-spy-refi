@@ -33,9 +33,6 @@ function Home(props) {
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
 
-
-
-
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
   const [compaddstreet, setcompaddstreet] = useState([]);
@@ -69,7 +66,6 @@ function Home(props) {
       comps,
     };
 
-    console.log('data : ', data);
     // TODO THIS DATA WILL BE COMING FROMTHE DB
 
     const formData = [
@@ -100,7 +96,7 @@ function Home(props) {
 
     console.log(data)
     /////////////////// FIRST API CALL /////////////////
-
+    console.log(window.location.href)
     const displayaddress = await zillow.getaddress(data);
 
     // console.log('houseinfo from zillow :', displayaddress);
