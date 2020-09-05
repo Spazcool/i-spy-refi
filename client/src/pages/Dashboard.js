@@ -22,10 +22,6 @@ function Home(props) {
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
-<<<<<<< HEAD
-
-=======
->>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
   const [compaddstreet, setcompaddstreet] = useState([]);
@@ -39,12 +35,6 @@ function Home(props) {
   // const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
-<<<<<<< HEAD
-  const [totalHouseValue, settotalHouseValue] = useState('');
-  // let formData = [''];
-  // let trendingData = [''];
-=======
->>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -85,10 +75,6 @@ function Home(props) {
       { date: moment().format('DD-MM-YY'), value: 1098765 },
     ]);
 
-<<<<<<< HEAD
-    console.log(data);
-=======
->>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
     /////////////////// FIRST API CALL /////////////////
     const displayaddress = await zillow.getaddress(data);
 
@@ -140,7 +126,7 @@ function Home(props) {
       avgPerSqFt = avgSqFt / index;
 
       console.log('avgpersqft:', avgPerSqFt);
-      console.log(streetdisplay)
+      console.log(streetdisplay);
       // Calculating The House Value
 
       const tot = Math.round(finishedsqftzillow * avgPerSqFt);
@@ -156,7 +142,6 @@ function Home(props) {
   }, []);
 
   return (
-
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
@@ -164,12 +149,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-<<<<<<< HEAD
           <MyHouse
-            className='card'
-=======
-          <MyHouse 
->>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
             street={streetdisplay}
             city={citydisplay}
             state={statedisplay}
@@ -184,12 +164,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Comps
           </Typography>
-<<<<<<< HEAD
-          <CompList className='card' street={compaddstreet} />
-          <CompDetails />
-=======
-          <CompList street={compaddstreet}/>
->>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
+          <CompList street={compaddstreet} />
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
@@ -197,21 +172,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-<<<<<<< HEAD
-          <FormChart data={FormData} className='card' />
-=======
-          <FormChart data={FormData}/>
->>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
+          <FormChart data={FormData} />
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-<<<<<<< HEAD
-          <TrendingChart data={TrendingData} className='card' />
-=======
-          <TrendingChart data={TrendingData}/>
->>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
+          <TrendingChart data={TrendingData} />
         </Grid>
       </Grid>
     </Container>
