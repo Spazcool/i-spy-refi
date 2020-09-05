@@ -1,52 +1,50 @@
 import React, { useState, useEffect, useContext } from 'react';
-import moment from 'moment';
+import { DB } from '../api/firestore';
+import { AuthContext } from '../providers/AuthProvider';
+import { zillow } from '../api/zillow';
+import moment from 'moment'; //for fake data, can be removed or used elsewhere when the fake data is pulled out
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import CompList from '../components/Dashboard/CompList';
-import CompListItem from '../components/Dashboard/CompListItem';
-import CompDetails from '../components/Dashboard/CompDetails';
 import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
 import TrendingChart from '../components/Dashboard/TrendingChart';
 
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
-import { DB } from '../api/firestore';
-import { AuthContext } from '../providers/AuthProvider';
-import { zillow } from '../api/zillow';
 
 function Home(props) {
-  // const { isAuth, logout } = useContext(AuthContext);
-
-  useEffect(() => {
-    fetchaddress();
-  }, []);
-
   // House Display Info Logic - STEFFI
-
   const { user } = useContext(AuthContext);
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
   const [compaddstreet, setcompaddstreet] = useState([]);
+  const [description, setDescription] = useState('');
+  const [totalHouseValue, settotalHouseValue] = useState('');
+
   const [compestatedisplay, setcompstatedisplay] = useState('');
   const [complastsoldprice, setcomplastsoldprice] = useState('');
   const [complastsolddate, setcomplastsolddate] = useState('');
-  // House EVAL
 
   // const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
+<<<<<<< HEAD
   const [totalHouseValue, settotalHouseValue] = useState('');
   // let formData = [''];
   // let trendingData = [''];
+=======
+>>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -66,10 +64,7 @@ function Home(props) {
       comps,
     };
 
-    console.log('data : ', data);
-    // TODO THIS DATA WILL BE COMING FROMTHE DB
-
-    const formData = [
+    setFormData([
       { country: 'Russia', area: 12 },
       { country: 'Canada', area: 7 },
       { country: 'USA', area: 7 },
@@ -78,13 +73,9 @@ function Home(props) {
       { country: 'Australia', area: 5 },
       { country: 'India', area: 2 },
       { country: 'Others', area: 55 },
-    ];
+    ]);
 
-    setFormData(formData);
-
-    // moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); // "Sunday, February 14th 2010, 3:25:50 pm"
-    // console.log(moment().subtract(10,'days').format("dddd, MMMM Do YYYY, h:mm:ss a"))
-    const trendingData = [
+    setTrendingData([
       { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
       { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
       {
@@ -92,19 +83,16 @@ function Home(props) {
         value: 1234567,
       },
       { date: moment().format('DD-MM-YY'), value: 1098765 },
-    ];
-    setTrendingData(trendingData);
+    ]);
 
+<<<<<<< HEAD
     console.log(data);
+=======
+>>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
     /////////////////// FIRST API CALL /////////////////
-
     const displayaddress = await zillow.getaddress(data);
 
-    // console.log('houseinfo from zillow :', displayaddress);
     const finishedsqftzillow = displayaddress[0].finishedSqFt;
-    //console.log('fsq:', finishedsqftzillow);
-    console.log('houseinfo from zillow :', displayaddress.error);
-    // HardCoded DATA
     const statezillow = displayaddress[0].address.state;
     setstatedisplay(statezillow);
     const cityzillow = displayaddress[0].address.city;
@@ -113,23 +101,18 @@ function Home(props) {
     setstreetdisplay(streetzillow);
     const zillowzpid = displayaddress[0].zpid;
 
-    // const state = 'NH';
-    // const city = 'portsmouth';
-    // const street = '31 Sudbury St';
-    // const zip = '03801';
-    // setTimeout(() => {
     //////////////////////// SECOND CALL ///////////////////
 
     setTimeout(async () => {
       const getimageurl = await zillow.getzillowpropid(zillowzpid);
       setImage(getimageurl);
-      console.log('getimageurl:', getimageurl);
-    }, 1000);
+    }, 1200);
 
+    //////////////////////// THIRD CALL ///////////////////
     // APi call to get house eval & 10 comparables
     setTimeout(async () => {
       const houseval = await zillow.gethouseval(zillowzpid);
-      console.log('gethouseval:', houseval.data);
+      // console.log('gethouseval:', houseval.data);
 
       // const statestreetcomp = houseval.data.comparables[0].address.street;
       //  statestreetcomp = houseval.data;
@@ -157,7 +140,7 @@ function Home(props) {
       avgPerSqFt = avgSqFt / index;
 
       console.log('avgpersqft:', avgPerSqFt);
-
+      console.log(streetdisplay)
       // Calculating The House Value
 
       const tot = Math.round(finishedsqftzillow * avgPerSqFt);
@@ -168,7 +151,12 @@ function Home(props) {
     }, 3000);
   };
 
+  useEffect(() => {
+    fetchaddress();
+  }, []);
+
   return (
+
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
@@ -176,29 +164,32 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
+<<<<<<< HEAD
           <MyHouse
             className='card'
+=======
+          <MyHouse 
+>>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
             street={streetdisplay}
             city={citydisplay}
             state={statedisplay}
-            imagedata={imageData}
-            totalhouseValue={totalHouseValue}
+            imageData={imageData}
+            value={totalHouseValue}
+            description={description}
           />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
-        {/* <Grid item xs={12} sm={7} lg={6} xl={4}>
-          <Typography variant='h4' component='h2'>
-            Comps near Me
-          </Typography>
-          <CompDetails className="card" />
-        </Grid> */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
-            More
+            Comps
           </Typography>
+<<<<<<< HEAD
           <CompList className='card' street={compaddstreet} />
           <CompDetails />
+=======
+          <CompList street={compaddstreet}/>
+>>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
@@ -206,13 +197,21 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
+<<<<<<< HEAD
           <FormChart data={FormData} className='card' />
+=======
+          <FormChart data={FormData}/>
+>>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
+<<<<<<< HEAD
           <TrendingChart data={TrendingData} className='card' />
+=======
+          <TrendingChart data={TrendingData}/>
+>>>>>>> 5a1546dbde53b703b1c3b62654939f662b08544e
         </Grid>
       </Grid>
     </Container>
