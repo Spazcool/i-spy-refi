@@ -7,9 +7,13 @@ import {
   PieSeries,
   Legend,
   Title,
-  Tooltip
+  Tooltip,
 } from '@devexpress/dx-react-chart-material-ui';
-import { EventTracker, HoverState, Animation } from '@devexpress/dx-react-chart';
+import {
+  EventTracker,
+  HoverState,
+  Animation,
+} from '@devexpress/dx-react-chart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,19 +27,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormChart (props) {
-  return(
+export default function FormChart(props) {
+  console.log('formchart', props.data);
+  return (
     <Paper className='card-radius'>
       <Chart data={props.data}>
-        <PieSeries valueField="area" argumentField="country"/>
-        <Animation/>
-        <Legend/>
-        <Title text='Doug'/>
-        <EventTracker/>
-        <HoverState/>
-        <Tooltip/>
+        <PieSeries valueField='value' argumentField='country' />
+        <Animation />
+        <Legend />
+        <Title text='Doug' />
+        <EventTracker />
+        <HoverState />
+        <Tooltip />
       </Chart>
     </Paper>
-  )
-
+  );
 }
