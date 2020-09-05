@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import {
   Route,
   Switch,
@@ -8,6 +8,11 @@ import {
 } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
 import { CustomThemeProvider } from './providers/ThemeProvider';
+
+import { useLocation } from 'react-router-dom';
+import AppRoute from './utils/AppRoute';
+import ScrollReveal from './utils/ScrollReveal';
+import ReactGA from 'react-ga';
 
 import Dashboard from './pages/Dashboard';
 import Signup from './pages/Signup';
@@ -36,7 +41,7 @@ function App() {
   return (
     <Router>
       <>
-        <Navbar className="navbar" />
+        <Navbar className='navbar' />
         <Switch>
           <Route exact path='/' render={(props) => <Splash {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />
