@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import moment from 'moment';
+
 import Paper from '@material-ui/core/Paper';
+
 import {
   Chart,
   BarSeries,
@@ -20,50 +21,52 @@ import {
   Stack,
 } from '@devexpress/dx-react-chart';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    minWidth: 275,
-  },
-  list: {
-    height: '70vh',
-    'overflow-y': 'scroll',
-  },
-}));
+export default function TrendingChart(props) {
+  const [loaded, setLoaded]= useState(false);
 
+  const checkLoaded = () => {
+    const {data} = props;
+    if(data.length > 0){
+      setLoaded(true);
+    }
+  }
 
-export default function TrendingChart (props) {
-  return(
-    <Paper className='card-radius'>
-      <Chart data={props.data}>
-        <ArgumentScale factory={scaleBand} />
-        <ArgumentAxis />
-        <ValueAxis />
-        <BarSeries valueField='value' argumentField='date' name='thing' />
-        <Stack />
-        <Animation />
-        <Legend />
-        <Title text='Doug' />
-        <EventTracker />
-        <HoverState />
-        <Tooltip />
-      </Chart>
-    </Paper>
+  useEffect(() => {
+    checkLoaded();
+  },[props])
+  
+  return (
+    loaded ? 
+      <Paper className='card-radius box-shadow'>
+        <Chart data={props.data}>
+          <ArgumentScale factory={scaleBand} />
+          <ArgumentAxis />
+          <ValueAxis />
+          <BarSeries valueField='value' argumentField='date' name='value' />
+          <Stack />
+          <Animation />
+          <Legend />
+          <Title text='Your Trending Value' />
+          <EventTracker />
+          <HoverState />
+          <Tooltip />
+        </Chart>
+      </Paper>
+      :
+      <Paper className='card-radius box-shadow'>
+        <Chart data={ [{date: moment().format('DD-MM-YY'), value: 50000}]}>
+          <ArgumentScale factory={scaleBand} />
+          <ArgumentAxis />
+          <ValueAxis />
+          <BarSeries valueField='value' argumentField='date' name='loading ...' />
+          <Stack />
+          <Animation />
+          <Legend />
+          <Title text='Your Trending Value' />
+          <EventTracker />
+          <HoverState />
+          <Tooltip />
+        </Chart>
+      </Paper>
   );
 }
-
-// const [data, setData] = useState([]);
-
-// const generateData = (start, end, step) => {
-//   const plots = [];
-//   for (let i = start; i < end; i += step) {
-//     plots.push({ splineValue: Math.sin(i) / i, lineValue: ((i / 15) ** 2.718) - 0.2, argument: i });
-//   }
-//   console.log(plots)
-//   setData(plots);
-// };
-
-// useEffect(() => {
-//   generateData(props.data.x, props.data.y, props.data.z);
-// },[])
