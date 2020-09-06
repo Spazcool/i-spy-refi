@@ -43,12 +43,13 @@ function Home(props) {
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
 
-        // User id is passed once the user login is completed
+    // User id is passed once the user login is completed
     const [
-      { street, state, city, zip, hid, formdata, comps },
+      { zpid, street, state, city, zip, hid, formdata, comps },
     ] = await houseinfoDB();
 
     const data = {
+      zpid,
       street,
       city,
       state,
@@ -59,10 +60,45 @@ function Home(props) {
     };
 
     console.log('data : ', data);
+    //     // TODO THIS DATA WILL BE COMING FROMTHE DB
+
+    //     const formData = [
+    //       { country: 'Russia', value: 8765 },
+    //       { country: 'Canada', value: 7 },
+    //       { country: 'USA', value: 7 },
+    //       { country: 'China', value: 7 },
+    //       { country: 'Brazil', value: 6 },
+    //       { country: 'Australia', value: 5 },
+    //       { country: 'India', value: 2 },
+    //       { country: 'Others', value: 55 },
+    //     ];
+
+    //     setFormData(formData);
+
+    //     setTrendingData([
+    //       { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
+    //       { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
+    //       {
+    //         date: moment().subtract(10, 'days').format('DD-MM-YY'),
+    //         value: 1234567,
+    //       },
+    //       { date: moment().format('DD-MM-YY'), value: 1098765 },
+    //     ]);
+
+    const statedb = state;
+    setstatedisplay(statedb);
+    const citydb = city;
+    setcitydisplay(citydb);
+
+    const streetdb = street;
+    setstreetdisplay(streetdb);
+
+    const zpiddb = zpid;
+    console.log(zpiddb);
   };
 
   return (
-    <div></div>
+    <div>{streetdisplay}</div>
     // <Container className='signup'>
     //   <Grid container spacing={3} className='grid'>
     //     {/* --------------- USERS HOUSE --------------- */}
