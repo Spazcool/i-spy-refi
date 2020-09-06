@@ -1,4 +1,4 @@
-import { auth, firestore as db } from '../firebase.js';
+import { firestore as db } from '../firebase.js';
 import User from '../models/User';
 import House from '../models/House';
   
@@ -228,7 +228,7 @@ export const DB = {
 
     let houseArr = [];
     const houseObj = await returnedHouse;
-    console.log(houseObj);
+
     houseObj.forEach((house) => {
       if (house.message) {
         houseArr.push(house);
@@ -370,7 +370,6 @@ export const DB = {
       street,
       comps,
       formData,
-      lastUpdated,
     } = updateHouseData;
     const data = new House(
       hid,
