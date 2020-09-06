@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
 import { CustomThemeProvider } from './providers/ThemeProvider';
-
 import Dashboard from './pages/Dashboard';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -33,7 +32,7 @@ function App() {
   return (
     <Router>
       <>
-        <Navbar className="navbar" />
+        <Navbar className='navbar' />
         <Switch>
           <Route exact path='/' render={(props) => <Splash {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />

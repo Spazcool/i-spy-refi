@@ -1,7 +1,7 @@
 import { firestore as db } from '../firebase.js';
 import User from '../models/User';
 import House from '../models/House';
-  
+
 // ------------------------ NOTES ------------------------
 // expected fields:
 // * user(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated)
@@ -216,6 +216,7 @@ export const DB = {
   },
 
   async getHouseByOwner(userId) {
+    console.log('userid', userId);
     let returnedHouse;
 
     const house = db().collection('houses').where('user', '==', userId);
@@ -261,8 +262,9 @@ export const DB = {
       );
 
       houseArr.push(data.getHouseData());
+      console.log('housearr', houseArr);
     });
-
+    console.log(houseArr);
     return houseArr;
   },
 
@@ -313,7 +315,7 @@ export const DB = {
 
   // ------------------------ UPDATE ------------------------
   async updateUser(user, updateUserData) {
-    console.log(user)
+    console.log(user);
     const userRef = db().doc(`users/${user}`);
     const snapshot = await userRef.get();
 
@@ -342,19 +344,19 @@ export const DB = {
       );
       const mergeObj = {};
       const Obj = data.getUserData();
-  
-      for(const property in Obj){
-        if(Obj[property] !== undefined){
-          mergeObj[property] = Obj[property]
+
+      for (const property in Obj) {
+        if (Obj[property] !== undefined) {
+          mergeObj[property] = Obj[property];
         }
       }
 
       try {
         await userRef.set(mergeObj, { merge: true });
       } catch (error) {
-        return {message: `Error updating User ${user}: ${error}`}
+        return { message: `Error updating User ${user}: ${error}` };
       }
-      return {message: `User ${user} updated successfully.`};
+      return { message: `User ${user} updated successfully.` };
     }
   },
 
@@ -387,12 +389,12 @@ export const DB = {
     const mergeObj = {};
     const Obj = data.getHouseData();
 
-    for(const property in Obj){
-      if(Obj[property] !== undefined){
-        mergeObj[property] = Obj[property]
+    for (const property in Obj) {
+      if (Obj[property] !== undefined) {
+        mergeObj[property] = Obj[property];
       }
     }
-    
+
     return db()
       .collection('houses')
       .where('zpid', '==', mergeObj.zpid)
@@ -403,10 +405,10 @@ export const DB = {
         return house;
       })
       .then((house) => {
-        return {message: `${house.id} updated successfully.`}
+        return { message: `${house.id} updated successfully.` };
       })
       .catch((err) => {
-        return {message: `Error updating house document: ${err}`}
+        return { message: `Error updating house document: ${err}` };
       });
   },
 
@@ -421,13 +423,13 @@ export const DB = {
     } else {
       const usersHouses = await this.getHouseByOwner(userID);
 
-      if(usersHouses.length > 0){
+      if (usersHouses.length > 0) {
         usersHouses.forEach(async (house) => {
           const deletedHouse = await this.deleteHouse(house.hid.toString());
-          message.push(deletedHouse.message)
-        })
+          message.push(deletedHouse.message);
+        });
       }
-      
+
       try {
         await userRef.delete();
         message.push(`User ${userID} deleted successfully.`);
@@ -436,7 +438,6 @@ export const DB = {
         message.push(`Error deleting User ${userID}: ${error}`);
         return message;
       }
-
 
       // TODO DELETES THE AUTH CREDS FOR THE CURRENTLY SIGNED IN USER
       // NOT SURE IF WE CAN FIND THE CREDS FOR ANY USER & DELETE THEM...BECUASE
