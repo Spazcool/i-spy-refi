@@ -27,7 +27,7 @@ function Home(props) {
   const [compaddstreet, setcompaddstreet] = useState([]);
   const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
-
+  const [hasHouse, setHasHouse] = useState(false);
   const [compestatedisplay, setcompstatedisplay] = useState('');
   const [complastsoldprice, setcomplastsoldprice] = useState('');
   const [complastsolddate, setcomplastsolddate] = useState('');
@@ -36,23 +36,28 @@ function Home(props) {
   let avgSqFt = 0;
   let avgPerSqFt = 0;
 
-  const fetchaddress = async () => {
+  const checkHasHouse = () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
-
+    let data;
     // User id is passed once the user login is completed
-    const [
-      { street, state, city, zip, hid, formdata, comps },
-    ] = await houseinfoDB();
+    // const [{ street, state, city, zip, hid, formdata, comps }] = await houseinfoDB();
+    houseinfoDB()
+      .then((data)=> {
+        if (data.length > 0){
+          data = {
+            street,
+            city,
+            state,
+            zip,
+            hid,
+            formdata,
+            comps,
+          };
+          setHasHouse(true)
+        }
+      })
+      .catch((err) => console.log('yo it broek'))
 
-    const data = {
-      street,
-      city,
-      state,
-      zip,
-      hid,
-      formdata,
-      comps,
-    };
 
     setFormData([
       { country: 'Russia', area: 12 },
@@ -74,7 +79,12 @@ function Home(props) {
       },
       { date: moment().format('DD-MM-YY'), value: 1098765 },
     ]);
-
+  }
+  
+  const fetchaddress = async () => {
+    if(checkHasHouse()){
+      
+    }
     /////////////////// FIRST API CALL /////////////////
     const displayaddress = await zillow.getaddress(data);
 
@@ -138,7 +148,7 @@ function Home(props) {
   };
 
   useEffect(() => {
-    // fetchaddress();
+    fetchaddress();
   }, []);
 
   return (
