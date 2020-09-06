@@ -8,6 +8,14 @@
     ],
     "rewrites": [
       {
+        "source": "timestamp-cached",
+        "function": "thing"
+      },
+      {
+        "source": "/timestamp",
+        "function": "thing"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
