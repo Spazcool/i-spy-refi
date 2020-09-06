@@ -22,7 +22,7 @@ function Home(props) {
   // const { isAuth, logout } = useContext(AuthContext);
 
   useEffect(() => {
-    fetchaddress();
+    // fetchaddress();
   }, []);
 
   // House Display Info Logic - STEFFI
