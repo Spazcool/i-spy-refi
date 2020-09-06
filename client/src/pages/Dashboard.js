@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
-import { zillow } from '../api/zillow';
+import { realtor } from '../api/realtor';
 import moment from 'moment'; //for fake data, can be removed or used elsewhere when the fake data is pulled out
 
 import Container from '@material-ui/core/Container';
@@ -95,51 +95,56 @@ function Home(props) {
 
     const zpiddb = zpid;
     console.log(zpiddb);
+
+    /// FIRST API CALL ///
+
+    const getimageurl = await realtor.getAddressDetails(zpiddb);
+    setImage(getimageurl);
   };
 
   return (
-    <div>{streetdisplay}</div>
-    // <Container className='signup'>
-    //   <Grid container spacing={3} className='grid'>
-    //     {/* --------------- USERS HOUSE --------------- */}
-    //     <Grid item xs={12} sm={5} lg={5} xl={5}>
-    //       <Typography variant='h4' component='h2'>
-    //         My House
-    //       </Typography>
-    //       <MyHouse
-    //         className='card'
-    //         street={streetdisplay}
-    //         city={citydisplay}
-    //         state={statedisplay}
-    //         imageData={imageData}
-    //         value={totalHouseValue}
-    //         description={description}
-    //       />
-    //     </Grid>
+    
+    <Container className='signup'>
+      <Grid container spacing={3} className='grid'>
+        {/* --------------- USERS HOUSE --------------- */}
+        <Grid item xs={12} sm={5} lg={5} xl={5}>
+          <Typography variant='h4' component='h2'>
+            My House
+          </Typography>
+          <MyHouse
+            className='card'
+            street={streetdisplay}
+            city={citydisplay}
+            state={statedisplay}
+            imageData={imageData}
+            value={totalHouseValue}
+            description={description}
+          />
+        </Grid>
 
-    //     {/* --------------- COMPS --------------- */}
-    //     <Grid item xs={12} sm={6} lg={6} xl={6}>
-    //       <Typography variant='h4' component='h2'>
-    //         Comps
-    //       </Typography>
-    //       <CompList street={compaddstreet} />
-    //     </Grid>
+        {/* --------------- COMPS --------------- */}
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
+          <Typography variant='h4' component='h2'>
+            Comps
+          </Typography>
+          <CompList street={compaddstreet} />
+        </Grid>
 
-    //     {/* --------------- CHARTS --------------- */}
-    //     <Grid item xs={12} sm={6} lg={6} xl={6}>
-    //       <Typography variant='h4' component='h2'>
-    //         Refi Form Data Values
-    //       </Typography>
-    //       <FormChart data={FormData} />
-    //     </Grid>
-    //     <Grid item xs={12} sm={6} lg={6} xl={6}>
-    //       <Typography variant='h4' component='h2'>
-    //         Comps Trending Data Values
-    //       </Typography>
-    //       <TrendingChart data={TrendingData} />
-    //     </Grid>
-    //   </Grid>
-    // </Container>
+        {/* --------------- CHARTS --------------- */}
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
+          <Typography variant='h4' component='h2'>
+            Refi Form Data Values
+          </Typography>
+          <FormChart data={FormData} />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
+          <Typography variant='h4' component='h2'>
+            Comps Trending Data Values
+          </Typography>
+          <TrendingChart data={TrendingData} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 export default Home;
