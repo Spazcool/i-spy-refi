@@ -117,8 +117,8 @@ function Home(props) {
             city={citydisplay}
             state={statedisplay}
             imageData={imageData}
-            value={totalHouseValue}
-            description={description}
+            // value={totalHouseValue}
+           
           />
         </Grid>
 
