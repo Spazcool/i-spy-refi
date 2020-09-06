@@ -72,6 +72,12 @@ export default function MyHouse(props) {
             <Button size='small' className='button'>
               View Stats
             </Button>
+            <Button size='small' className='button' onClick={(e) => {
+                e.preventDefault();
+                props.history.push('/additions');
+              }}>
+              View Stats
+            </Button>
           </CardActions>
         </Card>
       </Paper>

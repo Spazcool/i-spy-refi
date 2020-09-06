@@ -32,7 +32,7 @@ function Login(props) {
   if(userHouse && isAuth){
     return <Redirect to='/dashboard' />
   }else if(userHouse === undefined && isAuth){
-    return <Redirect to='/HouseAdditions' />
+    return <Redirect to='/additions' />
   }else{
     return (
       <Container className="signup">

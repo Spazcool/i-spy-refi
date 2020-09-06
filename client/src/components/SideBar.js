@@ -150,7 +150,7 @@ export default withRouter(function TemporaryDrawer(props) {
                 key='House Additions'
                 onClick={(e) => {
                   e.preventDefault();
-                  props.history.push('/HouseAdditions');
+                  props.history.push('/additions');
                 }}
                 button
               >
