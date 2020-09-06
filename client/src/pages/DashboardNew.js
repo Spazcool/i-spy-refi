@@ -16,7 +16,78 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import '../App.css';
 
 function Home(props) {
+  // House Display Info Logic - STEFFI
+  const { user } = useContext(AuthContext);
+  const [imageData, setImage] = useState([]);
+  const [streetdisplay, setstreetdisplay] = useState('');
+  const [citydisplay, setcitydisplay] = useState('');
+  const [statedisplay, setstatedisplay] = useState('');
+  const [FormData, setFormData] = useState([]);
+  const [TrendingData, setTrendingData] = useState([]);
+  const [compaddstreet, setcompaddstreet] = useState([]);
+  const [description, setDescription] = useState('');
+  const [totalHouseValue, settotalHouseValue] = useState('');
 
+  const [compestatedisplay, setcompstatedisplay] = useState('');
+  const [complastsoldprice, setcomplastsoldprice] = useState('');
+  const [complastsolddate, setcomplastsolddate] = useState('');
 
-    
+  // const finishedSqFt = '2466';
+  let avgSqFt = 0;
+  let avgPerSqFt = 0;
+
+  const fetchaddress = async () => {
+    const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
+
+    console.log('realtor:', houseinfoDB);
+  };
+
+  useEffect(() => {
+    fetchaddress();
+  }, []);
+
+  return (
+    <Container className='signup'>
+      <Grid container spacing={3} className='grid'>
+        {/* --------------- USERS HOUSE --------------- */}
+        <Grid item xs={12} sm={5} lg={5} xl={5}>
+          <Typography variant='h4' component='h2'>
+            My House
+          </Typography>
+          <MyHouse
+            className='card'
+            street={streetdisplay}
+            city={citydisplay}
+            state={statedisplay}
+            imageData={imageData}
+            value={totalHouseValue}
+            description={description}
+          />
+        </Grid>
+
+        {/* --------------- COMPS --------------- */}
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
+          <Typography variant='h4' component='h2'>
+            Comps
+          </Typography>
+          <CompList street={compaddstreet} />
+        </Grid>
+
+        {/* --------------- CHARTS --------------- */}
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
+          <Typography variant='h4' component='h2'>
+            Refi Form Data Values
+          </Typography>
+          <FormChart data={FormData} />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
+          <Typography variant='h4' component='h2'>
+            Comps Trending Data Values
+          </Typography>
+          <TrendingChart data={TrendingData} />
+        </Grid>
+      </Grid>
+    </Container>
+  );
 }
+export default Home;

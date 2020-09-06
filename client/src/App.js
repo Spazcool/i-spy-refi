@@ -17,9 +17,6 @@ import Splash from './pages/Splash';
 
 import Navbar from './components/Navbar';
 import HouseAdditions from './pages/HouseAdditions';
-
-import SimilarProperties from './components/SimilarProperties';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 function App() {
