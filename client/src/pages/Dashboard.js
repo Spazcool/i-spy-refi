@@ -15,7 +15,7 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import '../App.css';
 
 function Home(props) {
-  const { user } = useContext(AuthContext);
+  const { user, isAuth } = useContext(AuthContext);
   // DB
   const [hasHouse, setHasHouse] = useState(false);
   const [houseData, setHouseData] = useState({});
@@ -163,7 +163,11 @@ function Home(props) {
   }
 
   useEffect(() => {
-    fetchaddress();
+    if(isAuth){
+      fetchaddress();
+    }else{
+      //todo error toast
+    }
   }, []);
 
   return (

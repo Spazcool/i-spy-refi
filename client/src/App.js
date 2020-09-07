@@ -40,18 +40,9 @@ function App() {
         <Switch>
           <Route exact path='/' render={(props) => <Splash {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />
-          <Route
-            exact
-            path='/signup'
-            render={(props) => <Signup {...props} />}
-          />
-          {/* <PrivateRoute exact path='/houses' component={Houses} /> */}
-          <PrivateRoute
-            exact
-            path='/additions'
-            component={HouseAdditions}
-          />
-          {/* <Route exact path='/signup' render={(props) => <Signup {...props} />} /> */}
+          <Route exact path='/signup' render={(props) => <Signup {...props} />} />
+
+          <PrivateRoute exact path='/additions' component={HouseAdditions} />
           <PrivateRoute exact path='/dashboard' component={Dashboard} />
           <PrivateRoute exact path='/user' component={User} />
         </Switch>

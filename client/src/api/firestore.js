@@ -113,7 +113,9 @@ export const DB = {
     try {
       returnedUser = await user.get();
     } catch (err) {
-      console.error(err);
+      returnedUser = { message: `Error loading user: ${err}.` };
+
+      // console.error(err);
     }
     const userObj = await returnedUser;
     const {
@@ -332,36 +334,39 @@ export const DB = {
     const housesArr = [];
     const houses = await returnedHouses;
 
-    houses.forEach(async (house) => {
-      const {
-        hid,
-        zpid,
-        location,
-        user,
-        zip,
-        state,
-        city,
-        street,
-        comps,
-        formData,
-        lastUpdated,
-      } = house.data();
-      const data = new House(
-        hid,
-        zpid,
-        user,
-        location,
-        zip,
-        state,
-        city,
-        street,
-        comps,
-        formData,
-        lastUpdated
-      );
-
-      housesArr.push(data.getHouseData());
-    });
+    if(!houses.message){
+      houses.forEach(async (house) => {
+        const {
+          hid,
+          zpid,
+          location,
+          user,
+          zip,
+          state,
+          city,
+          street,
+          comps,
+          formData,
+          lastUpdated,
+        } = house.data();
+        const data = new House(
+          hid,
+          zpid,
+          user,
+          location,
+          zip,
+          state,
+          city,
+          street,
+          comps,
+          formData,
+          lastUpdated
+        );
+  
+        housesArr.push(data.getHouseData());
+      });
+    }
+   
     return housesArr;
   },
 
