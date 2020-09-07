@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom'
 import { zillow } from '../api/zillow.js';
 import { DB } from '../api/firestore';
@@ -371,98 +371,19 @@ export default function HouseAdditions() {
               onChange={handleInputChange}
             />
             <br />
-
-            <FormGroup>
-              <FormControl component='fieldset'>
-                <FormLabel component='legend'>Kitchen Renovations:</FormLabel>
-                <br />
-                <RadioGroup
-                  className={classes.group}
-                  aria-label='renovations'
-                  name='customized-radios'
-                >
-                  <FormControlLabel
-                    value='Yes'
-                    control={<StyledRadio />}
-                    label='Yes'
-                  />
-                  <FormControlLabel
-                    value='No'
-                    control={<StyledRadio />}
-                    label='No'
-                  />
-                </RadioGroup>
-              </FormControl>
-              <br />
-              <FormControl component='fieldset'>
-                <FormLabel component='legend'>What have you renovated?</FormLabel>
-                <br />
-                <RadioGroup
-                  className={classes.group}
-                  aria-label='renovations'
-                  name='customized-radios'
-                >
-                  <FormControlLabel
-                    onClick={handleOnClick}
-                    value={value[0].value}
-                    control={<StyledRadio />}
-                    label={value[0].name}
-                  />
-                  <FormControlLabel
-                    onClick={handleOnClick}
-                    value={value[1].value}
-                    control={<StyledRadio />}
-                    label={value[1].name}
-                  />
-                </RadioGroup>
-              </FormControl>
-              <br />
-              <FormControl component='fieldset'>
-                <FormLabel component='legend'>Roof Renovations:</FormLabel>
-                <br />
-                <RadioGroup
-                  className={classes.group}
-                  defaultValue='no'
-                  aria-label='renovations'
-                  name='customized-radios'
-                >
-                  <FormControlLabel
-                    value='Yes'
-                    control={<StyledRadio />}
-                    label='Yes'
-                  />
-                  <FormControlLabel
-                    value='No'
-                    control={<StyledRadio />}
-                    label='No'
-                  />
-                </RadioGroup>
-              </FormControl>
-              <br />
-              <FormControl component='fieldset'>
-                <FormLabel component='legend'>Pick your Roof Style: </FormLabel>
-                <br />
-                <RadioGroup
-                  className={classes.group}
-                  aria-label='renovations'
-                  name='customized-radios'
-                >
-                  <FormControlLabel
-                    onClick={handleOnClick}
-                    value={value[2].value}
-                    control={<StyledRadio />}
-                    label={value[2].name}
-                  />
-                  <FormControlLabel
-                    onClick={handleOnClick}
-                    value={value[3].value}
-                    control={<StyledRadio />}
-                    label={value[3].name}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </FormGroup>
-            <br />
+          </FormLabel>
+          <FormGroup />
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            onClick={handleSubmit}
+            className={classes.button}
+          >
+            Submit
+          </Button>
+          <br />
+          <FormGroup>
             <FormControl component='fieldset'>
               <FormLabel component='legend' className={classes.label}>
                 Kitchen Renovations:{' '}
@@ -470,21 +391,20 @@ export default function HouseAdditions() {
               <br />
               <RadioGroup
                 className={classes.group}
-                defaultValue='no'
                 aria-label='renovations'
                 name='customized-radios'
                 // onChange={handleOnChange}
               >
                 <FormControlLabel
                   onClick={handleOnClick}
-                  value={value[7].value}
+                  value={value[0].value}
                   control={<StyledRadio />}
                   label={value[0].name}
                   name={value[0].name}
                 />
                 <FormControlLabel
                   onClick={handleOnClick}
-                  value='No'
+                  value={value[1].value}
                   control={<StyledRadio />}
                   label={value[1].name}
                   name={value[1].name}
@@ -492,7 +412,6 @@ export default function HouseAdditions() {
               </RadioGroup>
             </FormControl>
             <br />
-
             <FormControl component='fieldset'>
               <FormLabel component='legend' className={classes.label}>
                 Roof Renovations:{' '}
@@ -500,20 +419,19 @@ export default function HouseAdditions() {
               <br />
               <RadioGroup
                 className={classes.group}
-                defaultValue='no'
                 aria-label='renovations'
                 name='customized-radios'
               >
                 <FormControlLabel
                   onClick={handleOnClick}
-                  value={value[9].value}
+                  value={value[2].value}
                   control={<StyledRadio />}
                   label={value[2].name}
                   name={value[2].name}
                 />
                 <FormControlLabel
                   onClick={handleOnClick}
-                  value='No'
+                  value={value[3].value}
                   control={<StyledRadio />}
                   label={value[3].name}
                   name={value[3].name}
