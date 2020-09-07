@@ -43,8 +43,6 @@ function Home(props) {
     const house = await houseinfoDB();
     
     if (house.length > 0){
-      console.log('house db ')
-
       const [{ street, state, city, zip, hid, formData, comps }] = house;
       const data = {
         street,
@@ -55,9 +53,9 @@ function Home(props) {
         formData,
         comps,
       };
+
       console.log(formData)
-      console.log(comps)
-      
+
       setHasHouse(true);
       setHouseData(data);
       setFormData(formData);

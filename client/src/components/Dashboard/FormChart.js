@@ -11,17 +11,16 @@ import {
 } from '@devexpress/dx-react-chart-material-ui';
 import { EventTracker, HoverState, Animation } from '@devexpress/dx-react-chart';
 
-// TODO SPECIFY COLORS THAT MATCH OUR LOOK
-// https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
-
 export default function FormChart (props) {
-  const [loaded, setLoaded]= useState(false);
-
+  const [loaded, setLoaded] = useState(false);
+  const [data, setData] = useState([{ room: 'loading ...', value: 1 }])
+  
   const checkLoaded = () => {
     const {data} = props;
     if(data.length > 0){
-      setLoaded(true);
+      setData(data)
     }
+    setLoaded(true);
   }
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function FormChart (props) {
   
   return(
     <Paper className='card-radius box-shadow'>
-      <Chart data={loaded ? props.data : [{ room: 'loading ...', value: 1 }]}>
+      <Chart data={data}>
         <PieSeries valueField="value" argumentField="room"/>
         <Animation/>
         <Legend/>

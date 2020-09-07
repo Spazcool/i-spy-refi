@@ -25,14 +25,14 @@ import {
 
 export default function TrendingChart(props) {
   const [loaded, setLoaded] = useState(false);
-  const [data, setData] = useState([{data:'',value:''}]);
+  const [data, setData] = useState([{date: moment().format('DD-MM-YY'), value: 0}]);
 
   const checkLoaded = () => {
     const {data} = props;
     if(data.length > 0){
-      setLoaded(true);
       setData(data)
     }
+    setLoaded(true);
   }
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function TrendingChart(props) {
   
   return (
     <Paper className='card-radius box-shadow'>
-      <Chart data={ data.length > 0 ? data : [{date: moment().format('DD-MM-YY'), value: 50000}]}>
+      <Chart data={ data }>
         <ArgumentScale factory={scaleBand} />
         <ValueScale name="fuck"/>
         <ArgumentAxis />
