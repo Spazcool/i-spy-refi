@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+
 import SideBar from './SideBar.js';
 
 import logo from "../../src/logo-white-removebg-preview.png"
@@ -23,11 +24,6 @@ const useStyles = makeStyles((theme) => ({
 export default withRouter(function Navbar(props) {
   const { isAuth } = useContext(AuthContext);
   const classes = useStyles();
-  // const [open, setOpen] = useState(false);
-
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
 
     return (
       <div className={classes.root}>
@@ -52,7 +48,6 @@ export default withRouter(function Navbar(props) {
                   props.history.push('/login');
                 }}
               >
-                {/* <SignInUpModal open={open} setOpen={setOpen}/> */}
                 Login
               </Button>
 

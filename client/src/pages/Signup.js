@@ -26,7 +26,7 @@ function Signup(props) {
       fetchHouse();
     }
     return () => mounted = false;
-  },[isAuth])
+  },[isAuth, fetchHouse])
 
   if(userHouse && isAuth){
     return <Redirect to='/dashboard' />
@@ -38,7 +38,7 @@ function Signup(props) {
         <h1>SignUp Page</h1>
         <Grid container justify="center" spacing={spacing}>
           <Grid item xs={12} md={6}>
-            <SignupForm {...props}/>
+            <SignupForm />
           </Grid>
         </Grid>
       </Container>

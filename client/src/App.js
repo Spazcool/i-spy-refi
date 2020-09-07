@@ -14,11 +14,9 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import User from './pages/User';
 import Splash from './pages/Splash';
-
-import Navbar from './components/Navbar';
 import HouseAdditions from './pages/HouseAdditions';
 
-import SimilarProperties from './components/SimilarProperties';
+import Navbar from './components/Navbar';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -40,7 +38,7 @@ function App() {
         <Switch>
           <Route exact path='/' render={(props) => <Splash {...props} />} />
           <Route exact path='/login' render={(props) => <Login {...props} />} />
-          <Route exact path='/signup' render={(props) => <Signup {...props} />} />
+          <Route exact path='/signup' render={() => <Signup />} />
 
           <PrivateRoute exact path='/additions' component={HouseAdditions} />
           <PrivateRoute exact path='/dashboard' component={Dashboard} />
