@@ -41,8 +41,8 @@ function Home(props) {
   const checkHasHouse = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
-    
-    if (house.length > 0){
+
+    if (house.length > 0) {
       const [{ street, state, city, zip, hid, formData, comps }] = house;
       const data = {
         street,
@@ -62,20 +62,20 @@ function Home(props) {
       return true;
     }
     return false;
-  }
-  
+  };
+
   const fetchAddressApi = async () => {
     const apiAddress = await zillow.getaddress(houseData);
 
-    if(apiAddress !== undefined){
-      console.log('add ')
+    if (apiAddress !== undefined) {
+      console.log('add ');
 
       const finishedsqftzillow = apiAddress[0].finishedSqFt;
       const statezillow = apiAddress[0].address.state;
       const cityzillow = apiAddress[0].address.city;
       const streetzillow = apiAddress[0].address.street;
       const zillowzpid = apiAddress[0].zpid;
-  
+
       setSqFeet(finishedsqftzillow);
       setstatedisplay(statezillow);
       setcitydisplay(cityzillow);
@@ -85,25 +85,25 @@ function Home(props) {
       return true;
     }
     return false;
-  }
+  };
 
   const fetchAddressImageApi = async () => {
     const getimageurl = await zillow.getzillowpropid(PID);
-    if(getimageurl !== undefined){
-      console.log('img ')
+    if (getimageurl !== undefined) {
+      console.log('img ');
 
       setImage(getimageurl);
       return true;
     }
     setImage('http://placekitten.com/200/300');
     return false;
-  }
+  };
 
   const fetchAddressEval = async () => {
     // APi call to get house eval & 10 comparables
     const houseval = await zillow.gethouseval(PID);
-    if(houseval !== undefined){
-      console.log('eval ')
+    if (houseval !== undefined) {
+      console.log('eval ');
       // console.log('gethouseval:', houseval.data);
       // const statestreetcomp = houseval.data.comparables[0].address.street;
       //  statestreetcomp = houseval.data;
@@ -127,15 +127,9 @@ function Home(props) {
         index = i + 1;
       }
       avgPerSqFt = avgSqFt / index;
-<<<<<<< HEAD
-
-      console.log('avgpersqft:', avgPerSqFt);
-      console.log(streetdisplay);
-=======
       // console.log(avgSqFt);
       // console.log('avgpersqft:', avgPerSqFt);
       // console.log(streetdisplay)
->>>>>>> 4bd2ca1cc45181d00270089bb407085ca866c6ee
       // Calculating The House Value
       const tot = Math.round(sqFeet * avgPerSqFt);
       settotalHouseValue(tot);
@@ -143,30 +137,30 @@ function Home(props) {
       // console.log('avgsqft:', avgPerSqFt);
       return true;
     }
-    return false;   
-  }
+    return false;
+  };
 
   const fetchaddress = async () => {
     /////////////////// DB CALL /////////////////
-    if(await checkHasHouse() === false){
-      console.log('user doesnt have a house')
+    if ((await checkHasHouse()) === false) {
+      console.log('user doesnt have a house');
       //todo create a toast OR modal telling the user to go make a ahouse
     }
     /////////////////// FIRST API CALL /////////////////
-    if(await fetchAddressApi() === false){
-      console.log('didnt find house via API')
+    if ((await fetchAddressApi()) === false) {
+      console.log('didnt find house via API');
       //todo createa  toast OR modal suggesting ... maybe an edit to the hosueaddress
     }
     ////////////////////// SECOND CALL ///////////////////
-    if(await fetchAddressImageApi() === false){
+    if ((await fetchAddressImageApi()) === false) {
       console.log('didnt find image for house via api');
     }
     //////////////////////// THIRD CALL ///////////////////
-    if(await fetchAddressEval() === false){
+    if ((await fetchAddressEval()) === false) {
       console.log('faled to grab house eval');
       //todo toast 'somethign went wrong'
     }
-  }
+  };
 
   useEffect(() => {
     // fetchaddress();
