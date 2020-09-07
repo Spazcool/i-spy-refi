@@ -193,6 +193,7 @@ export default function HouseAdditions() {
   const [value, setValue] = useState(nationalAverages);
   const [newValue, setNewValue] = useState([]);
   const [userZpid, setUserZpid] = useState('');
+  // const [selected, setSelected] = useState({});
 
   useEffect(() => {
     async function fetchZpid() {
@@ -202,6 +203,15 @@ export default function HouseAdditions() {
     }
     fetchZpid();
   }, [userHouse]);
+  // const handleOnChange = (event) => {
+  //   setSelected({
+  //     ...selected,
+  //     [event.target.name]: event.target.value,
+  //   });
+  //   console.log(event.target.value);
+  //   setSelected(selected);
+  //   console.log(selected);
+  // };
 
   const handleOnClick = (event) => {
     setValue({
@@ -224,7 +234,6 @@ export default function HouseAdditions() {
 
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
-    console.log(event);
 
     let theSum = 0;
     for (let i = 0, numb = newValue.length; i < numb; i++) {
@@ -393,6 +402,7 @@ export default function HouseAdditions() {
                 className={classes.group}
                 aria-label='renovations'
                 name='customized-radios'
+                // onChange={handleOnChange}
               >
                 <FormControlLabel
                   onClick={handleOnClick}
