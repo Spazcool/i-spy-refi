@@ -59,12 +59,13 @@ export const DB = {
 
   async createHouse(userID, houseData) {
     let message = { message: 'house already exists' };
+    
     const checkZpid = async() => await this.getHouseByZpid(houseData.zpid);
     const zpidUsed = await checkZpid();
+
     const houseRef = db().doc(`houses/${houseData.hid}`);
     const snapshot = await houseRef.get();
-    console.log(snapshot)
-    console.log(zpidUsed)
+
     if (!snapshot.exists && zpidUsed.length === 0) {
       const {
         hid,
