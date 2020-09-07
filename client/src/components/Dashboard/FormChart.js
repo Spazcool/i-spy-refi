@@ -29,29 +29,16 @@ export default function FormChart (props) {
   },[props])
   
   return(
-    loaded ? 
-      <Paper className='card-radius box-shadow'>
-        <Chart data={props.data}>
-          <PieSeries valueField="value" argumentField="room"/>
-          <Animation/>
-          <Legend/>
-          <Title text='Approximate Renovation Value'/>
-          <EventTracker/>
-          <HoverState/>
-          <Tooltip/>
-        </Chart>
-      </Paper>
-      :
-      <Paper className='card-radius box-shadow'>
-        <Chart data={[{ room: 'loading ...', value: 1 }]}>
-          <PieSeries valueField="value" argumentField="room"/>
-          <Animation/>
-          <Legend/>
-          <Title text='Approximate Renovation Value'/>
-          <EventTracker/>
-          <HoverState/>
-          <Tooltip/>
-        </Chart>
-      </Paper>
+    <Paper className='card-radius box-shadow'>
+      <Chart data={loaded ? props.data : [{ room: 'loading ...', value: 1 }]}>
+        <PieSeries valueField="value" argumentField="room"/>
+        <Animation/>
+        <Legend/>
+        <Title text='Approximate Renovation Value'/>
+        <EventTracker/>
+        <HoverState/>
+        <Tooltip/>
+      </Chart>
+    </Paper>
   )
 }
