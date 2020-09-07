@@ -98,12 +98,21 @@ function Home(props) {
 
     /// FIRST API CALL ///
 
-    const getimageurl = await realtor.getAddressDetails(zpiddb);
+    const addressresponse = await realtor.getAddressDetails(zpiddb);
+    const getimageurl = addressresponse.data.properties[0].photos[0].href;
     setImage(getimageurl);
+    const finishedsqFt = addressresponse.data.properties[0].building_size.size;
+    console.log(finishedsqFt);
+    // SECOND API CALL //
+
+    const gethousemedian = await realtor.gethousevalue(citydb, statedb);
+
+    const FinalHouseValue = finishedsqFt * gethousemedian;
+
+    console.log('HV:', FinalHouseValue);
   };
 
   return (
-    
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
@@ -117,8 +126,7 @@ function Home(props) {
             city={citydisplay}
             state={statedisplay}
             imageData={imageData}
-            // value={totalHouseValue}
-           
+            value={45678}
           />
         </Grid>
 

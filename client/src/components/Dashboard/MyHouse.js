@@ -61,10 +61,7 @@ export default function MyHouse(props) {
               <Typography variant='body1' component='p'>
                 $ {props.value}
               </Typography>
-
-              <h4>Description/Details</h4>
               <Typography variant='body2' component='p'>
-                {props.description} 
               </Typography>
             </CardContent>
           </CardActionArea>
