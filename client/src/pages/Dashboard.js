@@ -109,7 +109,7 @@ function Home(props) {
 
     const FinalHouseValue = finishedsqFt * gethousemedian;
 
-    console.log('HV:', FinalHouseValue);
+    settotalHouseValue(FinalHouseValue);
   };
 
   return (
@@ -126,7 +126,7 @@ function Home(props) {
             city={citydisplay}
             state={statedisplay}
             imageData={imageData}
-            value={45678}
+            value={totalHouseValue}
           />
         </Grid>
 
