@@ -24,7 +24,7 @@ function Home(props) {
   const [statedisplay, setstatedisplay] = useState('');
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
-  const [compaddstreet, setcompaddstreet] = useState([]);
+  const [compsList, setcompsList] = useState([]);
   const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
 
@@ -129,7 +129,6 @@ function Home(props) {
     });
 
     const housearraymedian = houseprice_array.sort((a, b) => a - b);
-    console.log('median:', housearraymedian);
 
     const mid = Math.floor(housearraymedian.length / 2);
     const housemedian =
@@ -140,8 +139,18 @@ function Home(props) {
     const FinalHouseValue = finishedsqFt * housemedian;
 
     settotalHouseValue(FinalHouseValue);
-  };
 
+    // COMPS LOGIC //
+    let compsarray = [];
+
+    for (let i = 0; i < 10; i++) {
+      compsarray.push(gethouseResponse.data.properties[i]);
+
+      // console.log(compsarray);
+    }
+    setcompsList(compsarray);
+  };
+  console.log('dashboardcomp:', compsList);
   return (
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
@@ -165,7 +174,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Comps
           </Typography>
-          <CompList street={compaddstreet} />
+          <CompList compslist={compsList} />
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
