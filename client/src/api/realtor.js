@@ -10,7 +10,7 @@ export const realtor = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'realtor.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         useQueryString: true,
       },
       params: {
@@ -19,7 +19,6 @@ export const realtor = {
     })
       .then((response) => {
         getaddressResponse = response;
-        console.log('get address', response);
       })
       .catch((error) => {
         console.log(error);
@@ -35,7 +34,7 @@ export const realtor = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'realtor.p.rapidapi.com',
-        'x-rapidapi-key': '26d05b2092msh8d14d2474ce38e0p120b64jsn0baeb38641f3',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         useQueryString: true,
       },
       params: {
@@ -49,7 +48,6 @@ export const realtor = {
       .then((response) => {
         let houseprice_array = [];
         let responsehouses = response.data.properties;
-        console.log('resP:', responsehouses);
 
         responsehouses.forEach((responsehouse) => {
           //   console.log('responsehouse', responsehouse);
@@ -73,8 +71,6 @@ export const realtor = {
           housearraymedian.length % 2 !== 0
             ? housearraymedian[mid]
             : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
-
-        console.log(housemedian);
       })
       .catch((error) => {
         console.log(error);

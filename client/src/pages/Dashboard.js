@@ -32,9 +32,7 @@ function Home(props) {
   const [complastsoldprice, setcomplastsoldprice] = useState('');
   const [complastsolddate, setcomplastsolddate] = useState('');
 
-  // const finishedSqFt = '2466';
-  let avgSqFt = 0;
-  let avgPerSqFt = 0;
+  let finishedsqFt;
 
   useEffect(() => {
     fetchaddress();
@@ -101,7 +99,14 @@ function Home(props) {
     const addressresponse = await realtor.getAddressDetails(zpiddb);
     const getimageurl = addressresponse.data.properties[0].photos[0].href;
     setImage(getimageurl);
-    const finishedsqFt = addressresponse.data.properties[0].building_size.size;
+
+    let housebuildingsizeValid = addressresponse.data.properties[0];
+    if (
+      housebuildingsizeValid.hasOwnProperty('building_size') &&
+      housebuildingsizeValid.building_size.size > 0
+    ) {
+      finishedsqFt = housebuildingsizeValid.building_size.size;
+    }
     console.log(finishedsqFt);
     // SECOND API CALL //
 
