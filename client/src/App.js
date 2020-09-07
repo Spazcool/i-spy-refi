@@ -54,7 +54,7 @@ const App = () => {
       children={() => (
         <Router>
           <>
-            {/* <Navbar className='navbar' /> // TODO */}
+            <Navbar className='navbar' />
             <Switch>
               <AppRoute
                 exact
