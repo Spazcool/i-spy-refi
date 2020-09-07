@@ -18,7 +18,7 @@
 }
 
 .navbar {
-  background-color: #5398be !important;
+  background-color: #437779 !important;
   display: flex;
   align-items: flex-start;
   font-family: 'Comfortaa', cursive !important;
@@ -31,11 +31,10 @@
   font-size: 25px !important;
   font-weight: 700 !important;
 }
-/* 
 .logo {
   margin-left: 20px !important;
   height: 45px;
-} */
+}
 
 /* NEW TRICKS WITH CSS */
 
@@ -86,7 +85,7 @@
   border-radius: 30px 30px 0 0 !important;
 }
 .card-radius-bottom {
-  border-radius:  0 0 30px 30px!important;
+  border-radius: 0 0 30px 30px !important;
 }
 
 /* .button { //TODO Delete

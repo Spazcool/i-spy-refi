@@ -132,7 +132,7 @@ const App = () => {
 export default () => {
   return (
     <AuthProvider>
-      {/* <CustomThemeProvider> // TODO Delete */}
+      {/* <CustomThemeProvider> // TODO Delete //TODO DELETE */}
       {/* <CssBaseline /> // TODO ERASE - was overwriting color */}
       {/* <LayoutDefault /> */}
       <App />
