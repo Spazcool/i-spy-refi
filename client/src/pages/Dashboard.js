@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { zillow } from '../api/zillow';
-import moment from 'moment'; //for fake data, can be removed or used elsewhere when the fake data is pulled out
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -16,104 +15,101 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import '../App.css';
 
 function Home(props) {
-  // House Display Info Logic - STEFFI
   const { user } = useContext(AuthContext);
+  // DB
+  const [hasHouse, setHasHouse] = useState(false);
+  const [houseData, setHouseData] = useState({});
+  const [FormData, setFormData] = useState([]);
+  const [TrendingData, setTrendingData] = useState([]);
+  // API
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
-  const [FormData, setFormData] = useState([]);
-  const [TrendingData, setTrendingData] = useState([]);
-  const [compaddstreet, setcompaddstreet] = useState([]);
+  const [PID, setPID] = useState('');
   const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
-  const [hasHouse, setHasHouse] = useState(false);
+  const [sqFeet, setSqFeet] = useState('');
+  const [compaddstreet, setcompaddstreet] = useState([]);
   const [compestatedisplay, setcompstatedisplay] = useState('');
   const [complastsoldprice, setcomplastsoldprice] = useState('');
   const [complastsolddate, setcomplastsolddate] = useState('');
 
-  // const finishedSqFt = '2466';
   let avgSqFt = 0;
   let avgPerSqFt = 0;
 
-  const checkHasHouse = () => {
+  const checkHasHouse = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
-    let data;
-    // User id is passed once the user login is completed
-    // const [{ street, state, city, zip, hid, formdata, comps }] = await houseinfoDB();
-    houseinfoDB()
-      .then((data)=> {
-        if (data.length > 0){
-          data = {
-            street,
-            city,
-            state,
-            zip,
-            hid,
-            formdata,
-            comps,
-          };
-          setHasHouse(true)
-        }
-      })
-      .catch((err) => console.log('yo it broek'))
+    const house = await houseinfoDB();
+    
+    if (house.length > 0){
+      console.log('house db ')
 
+      const [{ street, state, city, zip, hid, formdata, comps }] = house;
+      const data = {
+        street,
+        city,
+        state,
+        zip,
+        hid,
+        formdata,
+        comps,
+      };
+      setHasHouse(true);
+      setHouseData(data);
+      setFormData(formdata);
+      setTrendingData(comps);
 
-    setFormData([
-      { country: 'Russia', area: 12 },
-      { country: 'Canada', area: 7 },
-      { country: 'USA', area: 7 },
-      { country: 'China', area: 7 },
-      { country: 'Brazil', area: 6 },
-      { country: 'Australia', area: 5 },
-      { country: 'India', area: 2 },
-      { country: 'Others', area: 55 },
-    ]);
-
-    setTrendingData([
-      { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
-      { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
-      {
-        date: moment().subtract(10, 'days').format('DD-MM-YY'),
-        value: 1234567,
-      },
-      { date: moment().format('DD-MM-YY'), value: 1098765 },
-    ]);
+      return true;
+    }
+    return false;
   }
   
-  const fetchaddress = async () => {
-    if(checkHasHouse()){
-      
+  const fetchAddressApi = async () => {
+    const apiAddress = await zillow.getaddress(houseData);
+
+    if(apiAddress !== undefined){
+      console.log('add ')
+
+      const finishedsqftzillow = apiAddress[0].finishedSqFt;
+      const statezillow = apiAddress[0].address.state;
+      const cityzillow = apiAddress[0].address.city;
+      const streetzillow = apiAddress[0].address.street;
+      const zillowzpid = apiAddress[0].zpid;
+  
+      setSqFeet(finishedsqftzillow);
+      setstatedisplay(statezillow);
+      setcitydisplay(cityzillow);
+      setstreetdisplay(streetzillow);
+      setPID(zillowzpid);
+
+      return true;
     }
-    /////////////////// FIRST API CALL /////////////////
-    const displayaddress = await zillow.getaddress(data);
+    return false;
+  }
 
-    const finishedsqftzillow = displayaddress[0].finishedSqFt;
-    const statezillow = displayaddress[0].address.state;
-    setstatedisplay(statezillow);
-    const cityzillow = displayaddress[0].address.city;
-    setcitydisplay(cityzillow);
-    const streetzillow = displayaddress[0].address.street;
-    setstreetdisplay(streetzillow);
-    const zillowzpid = displayaddress[0].zpid;
+  const fetchAddressImageApi = async () => {
+    const getimageurl = await zillow.getzillowpropid(PID);
+    if(getimageurl !== undefined){
+      console.log('img ')
 
-    //////////////////////// SECOND CALL ///////////////////
-
-    setTimeout(async () => {
-      const getimageurl = await zillow.getzillowpropid(zillowzpid);
       setImage(getimageurl);
-    }, 1200);
+      return true;
+    }
+    setImage('http://placekitten.com/200/300');
+    return false;
+  }
 
-    //////////////////////// THIRD CALL ///////////////////
+  const fetchAddressEval = async () => {
     // APi call to get house eval & 10 comparables
-    setTimeout(async () => {
-      const houseval = await zillow.gethouseval(zillowzpid);
+    const houseval = await zillow.gethouseval(PID);
+    if(houseval !== undefined){
+      console.log('eval ')
       // console.log('gethouseval:', houseval.data);
-
       // const statestreetcomp = houseval.data.comparables[0].address.street;
       //  statestreetcomp = houseval.data;
       // console.log(statestreetcomp);
-      setcompaddstreet(houseval.data.comparables);
+      // setcompaddstreet(houseval.data.comparables);
       // const cityzillow = displayaddress[0].address.city;
       // setcitydisplay(cityzillow);
       // const streetzillow = displayaddress[0].address.street;
@@ -122,7 +118,6 @@ function Home(props) {
 
       let comlength = houseval.data.comparables.length;
       //console.log('complength' + comlength);
-
       // calculating the Average SqFt
       let index = 0;
 
@@ -132,20 +127,41 @@ function Home(props) {
           houseval.data.comparables[i].finishedSqFt;
         index = i + 1;
       }
-      console.log(avgSqFt);
       avgPerSqFt = avgSqFt / index;
-
-      console.log('avgpersqft:', avgPerSqFt);
-      console.log(streetdisplay)
+      // console.log(avgSqFt);
+      // console.log('avgpersqft:', avgPerSqFt);
+      // console.log(streetdisplay)
       // Calculating The House Value
-
-      const tot = Math.round(finishedsqftzillow * avgPerSqFt);
+      const tot = Math.round(sqFeet * avgPerSqFt);
       settotalHouseValue(tot);
-      console.log('housevalue:', tot);
+      // console.log('housevalue:', tot);
+      // console.log('avgsqft:', avgPerSqFt);
+      return true;
+    }
+    return false;   
+  }
 
-      console.log('avgsqft:', avgPerSqFt);
-    }, 3000);
-  };
+  const fetchaddress = async () => {
+    /////////////////// DB CALL /////////////////
+    if(await checkHasHouse() === false){
+      console.log('user doesnt have a house')
+      //todo create a toast OR modal telling the user to go make a ahouse
+    }
+    /////////////////// FIRST API CALL /////////////////
+    if(await fetchAddressApi() === false){
+      console.log('didnt find house via API')
+      //todo createa  toast OR modal suggesting ... maybe an edit to the hosueaddress
+    }
+    ////////////////////// SECOND CALL ///////////////////
+    if(await fetchAddressImageApi() === false){
+      console.log('didnt find image for house via api');
+    }
+    //////////////////////// THIRD CALL ///////////////////
+    if(await fetchAddressEval() === false){
+      console.log('faled to grab house eval');
+      //todo toast 'somethign went wrong'
+    }
+  }
 
   useEffect(() => {
     fetchaddress();
