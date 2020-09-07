@@ -12,7 +12,6 @@ import {
   Title,
   Tooltip,
 } from '@devexpress/dx-react-chart-material-ui';
-// import { Plugin } from '@devexpress/dx-react-core';
 import { scaleBand } from '@devexpress/dx-chart-core';
 import {
   EventTracker,
@@ -20,19 +19,16 @@ import {
   Animation,
   ArgumentScale,
   Stack,
-  ValueScale
 } from '@devexpress/dx-react-chart';
 
 export default function TrendingChart(props) {
-  const [loaded, setLoaded] = useState(false);
-  const [data, setData] = useState([{date: moment().format('DD-MM-YY'), value: 0}]);
+  const [loaded, setLoaded]= useState(false);
 
   const checkLoaded = () => {
     const {data} = props;
     if(data.length > 0){
-      setData(data)
+      setLoaded(true);
     }
-    setLoaded(true);
   }
 
   useEffect(() => {
@@ -40,21 +36,37 @@ export default function TrendingChart(props) {
   },[props])
   
   return (
-    <Paper className='card-radius box-shadow'>
-      <Chart data={ data }>
-        <ArgumentScale factory={scaleBand} />
-        <ValueScale name="fuck"/>
-        <ArgumentAxis />
-        <ValueAxis />
-        <BarSeries valueField='value' argumentField='date' name={loaded ? 'value' :'loading ...'} />
-        <Stack />
-        <Animation />
-        <Legend />
-        <Title text='Your Trending Value' />
-        <EventTracker />
-        <HoverState />
-        <Tooltip />
-      </Chart>
-    </Paper>
+    loaded ? 
+      <Paper className='card-radius box-shadow'>
+        <Chart data={props.data}>
+          <ArgumentScale factory={scaleBand} />
+          <ArgumentAxis />
+          <ValueAxis />
+          <BarSeries valueField='value' argumentField='date' name='value' />
+          <Stack />
+          <Animation />
+          <Legend />
+          <Title text='Your Trending Value' />
+          <EventTracker />
+          <HoverState />
+          <Tooltip />
+        </Chart>
+      </Paper>
+      :
+      <Paper className='card-radius box-shadow'>
+        <Chart data={ [{date: moment().format('DD-MM-YY'), value: 50000}]}>
+          <ArgumentScale factory={scaleBand} />
+          <ArgumentAxis />
+          <ValueAxis />
+          <BarSeries valueField='value' argumentField='date' name='loading ...' />
+          <Stack />
+          <Animation />
+          <Legend />
+          <Title text='Your Trending Value' />
+          <EventTracker />
+          <HoverState />
+          <Tooltip />
+        </Chart>
+      </Paper>
   );
 }
