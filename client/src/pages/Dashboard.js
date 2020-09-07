@@ -43,7 +43,7 @@ function Home(props) {
 
     // User id is passed once the user login is completed
     const [
-      { zpid, street, state, city, zip, hid, formdata, comps },
+      { zpid, street, state, city, zip, hid, formData, comps },
     ] = await houseinfoDB();
 
     const data = {
@@ -53,7 +53,7 @@ function Home(props) {
       state,
       zip,
       hid,
-      formdata,
+      formData,
       comps,
     };
 
@@ -92,7 +92,7 @@ function Home(props) {
     setstreetdisplay(streetdb);
 
     const zpiddb = zpid;
-    
+
     /// FIRST API CALL ///
 
     const addressresponse = await realtor.getAddressDetails(zpiddb);
@@ -106,12 +106,38 @@ function Home(props) {
     ) {
       finishedsqFt = housebuildingsizeValid.building_size.size;
     }
-    
+
     // SECOND API CALL //
 
-    const gethousemedian = await realtor.gethousevalue(citydb, statedb);
+    const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
 
-    const FinalHouseValue = finishedsqFt * gethousemedian;
+    let houseprice_array = [];
+    let responsehouses = gethouseResponse.data.properties;
+
+    responsehouses.forEach((responsehouse) => {
+      //   console.log('responsehouse', responsehouse);
+      //   const result = responsehouse.hasOwnProperty('building_size');
+      //   console.log('result:', result);
+      if (
+        responsehouse.hasOwnProperty('building_size') &&
+        responsehouse.building_size.size > 0
+      ) {
+        houseprice_array.push(
+          parseInt(responsehouse.price / responsehouse.building_size.size)
+        );
+      }
+    });
+
+    const housearraymedian = houseprice_array.sort((a, b) => a - b);
+    console.log('median:', housearraymedian);
+
+    const mid = Math.floor(housearraymedian.length / 2);
+    const housemedian =
+      housearraymedian.length % 2 !== 0
+        ? housearraymedian[mid]
+        : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
+
+    const FinalHouseValue = finishedsqFt * housemedian;
 
     settotalHouseValue(FinalHouseValue);
   };
