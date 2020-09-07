@@ -34,15 +34,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CompListItem(props) {
   const classes = useStyles();
-  console.log(props.comp);
   return props.comp ? (
     <Accordion>
-      <CardMedia
+      {/* <CardMedia
         className={classes.lazyImage}
         component='img'
-        image={props.comps.photos[0]}
+        //image={props.comps.photos[0].href}
         title='My Comps'
-      />
+      /> */}
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'
@@ -51,6 +50,12 @@ export default function CompListItem(props) {
         <Typography color='textSecondary' gutterBottom>
           {props.comp.address.street_number} {props.comp.address.street}{' '}
           {props.comp.address.street_suffix}
+          <CardMedia
+            className={classes.lazyImage}
+            component='img'
+            image={props.comp.photos[0].href}
+            title='My House'
+          />
         </Typography>
       </AccordionSummary>
 
