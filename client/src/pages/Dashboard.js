@@ -42,9 +42,7 @@ function Home(props) {
     const house = await houseinfoDB();
 
     if (house.length > 0) {
-      console.log('house db ');
-
-      const [{ street, state, city, zip, hid, formdata, comps }] = house;
+      const [{ street, state, city, zip, hid, formData, comps }] = house;
       const data = {
         street,
         city,

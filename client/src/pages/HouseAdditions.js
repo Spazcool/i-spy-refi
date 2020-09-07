@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
 import { Form } from 'react-bootstrap';
 import { zillow } from '../api/zillow.js';
@@ -32,10 +32,21 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: '50%',
+      justifyContent: 'center',
     },
     '&:hover': {
       backgroundColor: 'transparent',
     },
+  },
+  label: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    padding: '0',
+    fontSize: ' 1rem',
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+    fontWeight: '400',
+    lineHeight: '1',
+    letterSpacing: '0.00938em',
+    textAlign: 'center',
   },
   icon: {
     borderRadius: '50%',
@@ -82,8 +93,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   button: {
-    justifyContent: 'center',
-    width: '50',
+    alignSelf: 'center',
+    width: '25%',
+  },
+  MuiTypography: {
+    variantMapping: {
+      h1: 'h1',
+      h2: 'h2',
+      h3: 'h3',
+    },
   },
 }));
 
@@ -134,7 +152,7 @@ export default function HouseAdditions() {
     {
       id: 4,
       name: 'Minor Bathroom Remodel',
-      value: 10700,
+      value: '10700',
     },
     {
       id: 5,
@@ -145,25 +163,55 @@ export default function HouseAdditions() {
       id: 6,
       name: 'Attic Bedroom Conversion',
       value: '36700',
+      notUpdated: 'Attic Bedroom Conversion: No',
+      notUpdatedValue: '0',
     },
     {
       id: 7,
       name: 'Landscaping',
       value: '4900',
+      notUpdated: 'Landscaping: No',
+      notUpdatedValue: '0',
     },
     {
       id: 8,
       name: 'Entry Door Replacement',
       value: '1280',
+      notUpdated: 'Entry Door Replacement: No',
+      notUpdatedValue: '0',
     },
     {
       id: 9,
       name: 'Deck/Patio/Porch',
       value: '10000',
+      notUpdated: 'Deck/Patio/Porch: No',
+      notUpdatedValue: '0',
     },
   ];
+
   const [userHouse, setUserHouse] = useState(houseCreds);
   const [value, setValue] = useState(nationalAverages);
+  const [newValue, setNewValue] = useState([]);
+  const [userZpid, setUserZpid] = useState('');
+  // const [selected, setSelected] = useState({});
+
+  useEffect(() => {
+    async function fetchZpid() {
+      const house = async () => await DB.getHouseByOwner(user.user.uid);
+      const [userHouse] = await house();
+      setUserZpid(userHouse.zpid);
+    }
+    fetchZpid();
+  }, [userHouse]);
+  // const handleOnChange = (event) => {
+  //   setSelected({
+  //     ...selected,
+  //     [event.target.name]: event.target.value,
+  //   });
+  //   console.log(event.target.value);
+  //   setSelected(selected);
+  //   console.log(selected);
+  // };
 
   const handleOnClick = (event) => {
     setValue({
@@ -171,6 +219,44 @@ export default function HouseAdditions() {
       [event.target.name]: event.target.value,
     });
     console.log(event.target.value);
+
+    newValue.push({
+      hasUpdated: event.target.name,
+      value: parseFloat(event.target.value),
+    });
+
+    let filteredValue = [...new Set(newValue.map(JSON.stringify))].map(
+      JSON.parse
+    );
+    setNewValue(filteredValue);
+    console.log(filteredValue);
+  };
+
+  const handleSubmitCalc = async (event) => {
+    event.preventDefault();
+
+    let theSum = 0;
+    for (let i = 0, numb = newValue.length; i < numb; i++) {
+      theSum += newValue[i].value;
+    }
+    newValue.push({ renovationValue: theSum });
+    console.log(theSum);
+    setNewValue(theSum);
+
+    // console.log(value);
+    console.log(newValue);
+
+    const data = {
+      zpid: userZpid,
+      formData: newValue,
+    };
+
+    const house = async () => await DB.updateHouse(data);
+    const updatedHouse = await house().then((res) => {
+      console.log(res);
+    });
+
+    // DB.updateHouse(updatedHouse);
   };
 
   const handleInputChange = (event) => {
@@ -231,6 +317,9 @@ export default function HouseAdditions() {
       // console.log(houseData[1].zpid);
       console.log(houseData);
       DB.createHouse(user.user.uid, houseData);
+      // handleSubmitCalc(houseData);
+      console.log(houseData.zpid);
+      setUserZpid(houseData.zpid);
     });
   };
   return (
@@ -241,23 +330,20 @@ export default function HouseAdditions() {
       style={{
         minWidth: 500,
         maxHeight: 500,
-        overflow: 'auto',
+
         flexWrap: 'wrap',
       }}
     >
-      <h1 style={{ marginTop: 10, flexWrap: 'nowrap' }}>
-        {' '}
-        Add Your House to Get Started
-      </h1>
+      <Typography variant='h2'>Find Your House:</Typography>
       <Container>
         <FormGroup id='initInput'>
-          <FormLabel>
+          <FormLabel style={{ alignSelf: 'center' }}>
             <TextField
               required
               label='Street'
               placeholder='Street'
               variant='outlined'
-              name='Street'
+              name='street'
               value={userHouse.street}
               onChange={handleInputChange}
             />
@@ -304,73 +390,38 @@ export default function HouseAdditions() {
 
           <FormGroup>
             <FormControl component='fieldset'>
-              <FormLabel component='legend'>Kitchen Renovations:</FormLabel>
+              <FormLabel component='legend' className={classes.label}>
+                Kitchen Renovations:{' '}
+              </FormLabel>
               <br />
               <RadioGroup
                 className={classes.group}
                 aria-label='renovations'
                 name='customized-radios'
-              >
-                <FormControlLabel
-                  value='Yes'
-                  control={<StyledRadio />}
-                  label='Yes'
-                />
-                <FormControlLabel
-                  value='No'
-                  control={<StyledRadio />}
-                  label='No'
-                />
-              </RadioGroup>
-            </FormControl>
-            <br />
-            <FormControl component='fieldset'>
-              <FormLabel component='legend'>What have you renovated?</FormLabel>
-              <br />
-              <RadioGroup
-                className={classes.group}
-                aria-label='renovations'
-                name='customized-radios'
+                // onChange={handleOnChange}
               >
                 <FormControlLabel
                   onClick={handleOnClick}
                   value={value[0].value}
                   control={<StyledRadio />}
                   label={value[0].name}
+                  name={value[0].name}
                 />
                 <FormControlLabel
                   onClick={handleOnClick}
                   value={value[1].value}
                   control={<StyledRadio />}
                   label={value[1].name}
+                  name={value[1].name}
                 />
               </RadioGroup>
             </FormControl>
             <br />
+
             <FormControl component='fieldset'>
-              <FormLabel component='legend'>Roof Renovations:</FormLabel>
-              <br />
-              <RadioGroup
-                className={classes.group}
-                defaultValue='no'
-                aria-label='renovations'
-                name='customized-radios'
-              >
-                <FormControlLabel
-                  value='Yes'
-                  control={<StyledRadio />}
-                  label='Yes'
-                />
-                <FormControlLabel
-                  value='No'
-                  control={<StyledRadio />}
-                  label='No'
-                />
-              </RadioGroup>
-            </FormControl>
-            <br />
-            <FormControl component='fieldset'>
-              <FormLabel component='legend'>Pick your Roof Style: </FormLabel>
+              <FormLabel component='legend' className={classes.label}>
+                Roof Renovations:{' '}
+              </FormLabel>
               <br />
               <RadioGroup
                 className={classes.group}
@@ -382,19 +433,23 @@ export default function HouseAdditions() {
                   value={value[2].value}
                   control={<StyledRadio />}
                   label={value[2].name}
+                  name={value[2].name}
                 />
                 <FormControlLabel
                   onClick={handleOnClick}
                   value={value[3].value}
                   control={<StyledRadio />}
                   label={value[3].name}
+                  name={value[3].name}
                 />
               </RadioGroup>
             </FormControl>
           </FormGroup>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Bathroom Remodel:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Bathroom Remodel:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -407,18 +462,22 @@ export default function HouseAdditions() {
                 value={value[4].value}
                 control={<StyledRadio />}
                 label={value[4].name}
+                name={value[4].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
                 value={value[5].value}
                 control={<StyledRadio />}
                 label={value[5].name}
+                name={value[5].name}
               />
             </RadioGroup>
           </FormControl>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Attic Bedroom Conversion:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Attic Bedroom Conversion:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -431,18 +490,22 @@ export default function HouseAdditions() {
                 value={value[6].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[6].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
                 control={<StyledRadio />}
                 label='No'
+                name={value[6].notUpdated}
+                value={value[6].notUpdatedValue}
               />
             </RadioGroup>
           </FormControl>
           <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Landscaping:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Landscaping:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -455,17 +518,22 @@ export default function HouseAdditions() {
                 value={value[7].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[7].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
                 control={<StyledRadio />}
                 label='No'
+                name={value[7].notUpdated}
+                value={value[7].notUpdatedValue}
               />
             </RadioGroup>
           </FormControl>
+          <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Entry Door Replacement:</FormLabel>
+            <FormLabel component='legend' className={classes.label}>
+              Entry Door Replacement:
+            </FormLabel>
             <br />
             <RadioGroup
               className={classes.group}
@@ -478,18 +546,21 @@ export default function HouseAdditions() {
                 value={value[8].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[8].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
+                value={value[8].notUpdatedValue}
                 control={<StyledRadio />}
                 label='No'
+                name={value[8].notUpdated}
               />
             </RadioGroup>
           </FormControl>
+          <br />
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>
-              Deck/Patio/Porch Addition :
+            <FormLabel component='legend' className={classes.label}>
+              Deck/Patio/Porch Addition:
             </FormLabel>
             <br />
             <RadioGroup
@@ -503,15 +574,27 @@ export default function HouseAdditions() {
                 value={value[9].value}
                 control={<StyledRadio />}
                 label='Yes'
+                name={value[9].name}
               />
               <FormControlLabel
                 onClick={handleOnClick}
-                value='No'
+                value={value[9].notUpdatedValue}
                 control={<StyledRadio />}
                 label='No'
+                name={value[9].notUpdated}
               />
             </RadioGroup>
           </FormControl>
+          <br />
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            onClick={handleSubmitCalc}
+            className={classes.button}
+          >
+            Calculate
+          </Button>
         </FormGroup>
       </Container>
     </div>
