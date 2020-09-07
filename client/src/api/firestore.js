@@ -59,11 +59,13 @@ export const DB = {
 
   async createHouse(userID, houseData) {
     let message = { message: 'house already exists' };
-
+    const checkZpid = async() => await this.getHouseByZpid(houseData.zpid);
+    const zpidUsed = await checkZpid();
     const houseRef = db().doc(`houses/${houseData.hid}`);
     const snapshot = await houseRef.get();
-
-    if (!snapshot.exists) {
+    console.log(snapshot)
+    console.log(zpidUsed)
+    if (!snapshot.exists && zpidUsed.length === 0) {
       const {
         hid,
         zpid,
@@ -219,6 +221,57 @@ export const DB = {
     let returnedHouse;
 
     const house = db().collection('houses').where('user', '==', userId);
+
+    try {
+      returnedHouse = await house.get();
+    } catch (err) {
+      returnedHouse = { message: `Error loading house: ${err}.` };
+    }
+
+    let houseArr = [];
+    const houseObj = await returnedHouse;
+
+    houseObj.forEach((house) => {
+      if (house.message) {
+        houseArr.push(house);
+      }
+      const {
+        hid,
+        zpid,
+        location,
+        user,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated,
+      } = house.data();
+      const data = new House(
+        hid,
+        zpid,
+        user,
+        location,
+        zip,
+        state,
+        city,
+        street,
+        comps,
+        formData,
+        lastUpdated
+      );
+
+      houseArr.push(data.getHouseData());
+    });
+
+    return houseArr;
+  },
+
+  async getHouseByZpid(zpid) {
+    let returnedHouse;
+
+    const house = db().collection('houses').where('zpid', '==', zpid);
 
     try {
       returnedHouse = await house.get();
