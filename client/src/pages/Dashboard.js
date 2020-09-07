@@ -54,8 +54,6 @@ function Home(props) {
         comps,
       };
 
-      console.log(formData)
-
       setHasHouse(true);
       setHouseData(data);
       setFormData(formData);
