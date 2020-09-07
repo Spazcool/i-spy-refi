@@ -254,7 +254,6 @@ export default function HouseAdditions() {
           <FormLabel>
             <TextField
               required
-              id='outlined-required'
               label='Street'
               placeholder='Street'
               variant='outlined'
@@ -264,7 +263,6 @@ export default function HouseAdditions() {
             />
             <TextField
               required
-              id='outlined-required'
               label='City'
               placeholder='City'
               variant='outlined'
@@ -274,7 +272,6 @@ export default function HouseAdditions() {
             />
             <TextField
               required
-              id='outlined-required'
               label='Zip'
               placeholder='Zip'
               variant='outlined'
@@ -284,7 +281,6 @@ export default function HouseAdditions() {
             />
             <TextField
               required
-              id='outlined-required'
               label='State'
               placeholder='State'
               variant='outlined'
