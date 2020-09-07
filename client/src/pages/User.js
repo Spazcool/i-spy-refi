@@ -45,7 +45,7 @@ function User(props) {
   const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' }
   const { isAuth, user } = useContext(AuthContext);
   
-  const [spacing] = React.useState(2);
+  const [spacing] = useState(2);
   const [userfromdb, setUser] = useState('');
   const [users, setUsers] = useState([]);
   const [house, setHouse] = useState('');
@@ -60,8 +60,8 @@ function User(props) {
   const [passwordColor, setPasswordColor] = useState('')
   const [toBeDeleted, setToBeDeleted] = useState('');
   const [toBeDeletedUser, setUserToBeDeleted] = useState('');
-  const [open, setOpen] = React.useState(false);
-  const [open2, setOpen2] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [houseData, setHouseData] = useState('');
   const [userData, setUserData] = useState('');
 
@@ -102,7 +102,7 @@ function User(props) {
     } else {
       house = async () => await DB.getHouseByOwner(user.user.uid);
       const [userHouse] = await house();
-      setHouse(userHouse);
+      userHouse === undefined ? setHouse('') : setHouse(userHouse);
     }
   }
   const fetchHouses = async() => {
@@ -115,8 +115,8 @@ function User(props) {
   // -------------------- CREATE THE THINGS --------------------
   const createFakeHouse = async() => {
     const data = {
-      hid: 12345678905, //todo will require a uuid library here
-      zpid: 56358239,
+      hid: 12345678906123445673, //todo will require a uuid library here
+      zpid: 56358231311,
       latitude: 89,
       longitude: 23,
       zip: '02451',
@@ -304,7 +304,7 @@ function User(props) {
 
   // -------------------- SHOW ALL THE THINGS --------------------
   const listHouses = () => {
-    return (houses.map((house) => <MenuItem key={house.hid} value={house.hid}>{house.hid}</MenuItem>));
+    return (houses.map((house,i) => <MenuItem key={'house'+i} value={house.hid}>{house.hid}</MenuItem>));
   }
   
   // -------------------- DROPDOWNS --------------------
@@ -357,7 +357,7 @@ function User(props) {
           </Grid>
           <Grid item xs={3} className={classes.border}>
             <h3>house HID</h3>
-            <span>{house.hid}</span>
+            <span>{house.hid === undefined ? '' : house.hid}</span>
           </Grid>
           <Grid item xs={3} className={classes.border}>
             <h3>houses HID</h3>

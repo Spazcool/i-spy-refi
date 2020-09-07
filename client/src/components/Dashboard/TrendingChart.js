@@ -12,6 +12,7 @@ import {
   Title,
   Tooltip,
 } from '@devexpress/dx-react-chart-material-ui';
+// import { Plugin } from '@devexpress/dx-react-core';
 import { scaleBand } from '@devexpress/dx-chart-core';
 import {
   EventTracker,
@@ -19,76 +20,41 @@ import {
   Animation,
   ArgumentScale,
   Stack,
+  ValueScale
 } from '@devexpress/dx-react-chart';
 
 export default function TrendingChart(props) {
-  const [isActive, setIsActive] = useState(true);
-  const [loaded, setLoaded]= useState(false);
-  const [loadingData, setLoadingData] = useState([
-    { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 1000 },
-    { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 2000 },
-    { date: moment().subtract(10, 'days').format('DD-MM-YY'), value: 4000 },
-    { date: moment().format('DD-MM-YY'), value: 8000 },
-  ]);
+  const [loaded, setLoaded] = useState(false);
+  const [data, setData] = useState([{date: moment().format('DD-MM-YY'), value: 0}]);
 
   const checkLoaded = () => {
     const {data} = props;
     if(data.length > 0){
-      setLoaded(true);
+      setData(data)
     }
+    setLoaded(true);
   }
 
   useEffect(() => {
     checkLoaded();
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        const newArr = loadingData.map((datum, i) => {
-          return {
-            date: [loadingData[i].date],
-            value: loadingData[(i+1) % loadingData.length].value
-          } 
-        })
-        setLoadingData(newArr)
-      }, 800);
-    } else if (!isActive) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive, loadingData]);
-
+  },[props])
+  
   return (
-    loaded ? 
-      <Paper className='card-radius box-shadow'>
-        <Chart data={props.data}>
-          <ArgumentScale factory={scaleBand} />
-          <ArgumentAxis />
-          <ValueAxis />
-          <BarSeries valueField='value' argumentField='date' name='value' />
-          <Stack />
-          <Animation />
-          <Legend />
-          <Title text='Your Trending Value' />
-          <EventTracker />
-          <HoverState />
-          <Tooltip />
-        </Chart>
-      </Paper>
-      :
-      <Paper className='card-radius box-shadow'>
-        <Chart data={loadingData}>
-          <ArgumentScale factory={scaleBand} />
-          <ArgumentAxis />
-          <ValueAxis />
-          <BarSeries valueField='value' argumentField='date' name='value' />
-          <Stack />
-          <Animation />
-          <Legend />
-          <Title text='Your Trending Value' />
-          <EventTracker />
-          <HoverState />
-          <Tooltip />
-        </Chart>
-      </Paper>
+    <Paper className='card-radius box-shadow'>
+      <Chart data={ data }>
+        <ArgumentScale factory={scaleBand} />
+        <ValueScale name="fuck"/>
+        <ArgumentAxis />
+        <ValueAxis />
+        <BarSeries valueField='value' argumentField='date' name={loaded ? 'value' :'loading ...'} />
+        <Stack />
+        <Animation />
+        <Legend />
+        <Title text='Your Trending Value' />
+        <EventTracker />
+        <HoverState />
+        <Tooltip />
+      </Chart>
+    </Paper>
   );
 }

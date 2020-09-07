@@ -23,5 +23,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# firebase
 key.json
+<<<<<<< HEAD
 
+=======
+.runtimeconfig.json
+firebase-debug.log
+ui-debug.log
+firestore-debug.log
+database-debug.log
+>>>>>>> 4bd2ca1cc45181d00270089bb407085ca866c6ee
