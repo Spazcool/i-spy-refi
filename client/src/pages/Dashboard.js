@@ -92,8 +92,7 @@ function Home(props) {
     setstreetdisplay(streetdb);
 
     const zpiddb = zpid;
-    console.log(zpiddb);
-
+    
     /// FIRST API CALL ///
 
     const addressresponse = await realtor.getAddressDetails(zpiddb);
@@ -107,7 +106,7 @@ function Home(props) {
     ) {
       finishedsqFt = housebuildingsizeValid.building_size.size;
     }
-    console.log(finishedsqFt);
+    
     // SECOND API CALL //
 
     const gethousemedian = await realtor.gethousevalue(citydb, statedb);
