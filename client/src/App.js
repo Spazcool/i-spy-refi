@@ -50,9 +50,9 @@ const App = () => {
       ref={childRef}
       children={() => (
         <Router>
+          <Navbar className='navbar' />
           <>
             <LayoutDefault>
-              <Navbar className='navbar' />
               <Switch>
                 <AppRoute
                   exact
@@ -69,28 +69,41 @@ const App = () => {
                   exact
                   path='/login'
                   render={(props) => <Login {...props} />}
+                  layout={LayoutDefault}
                 />
                 <Route
                   exact
                   path='/signup'
                   render={(props) => <Signup {...props} />}
+                  layout={LayoutDefault}
                 />
                 {/* <PrivateRoute exact path='/houses' component={Houses} /> */}
                 <PrivateRoute
                   exact
                   path='/additions'
                   component={HouseAdditions}
+                  layout={LayoutDefault}
                 />
                 {/* <Route exact path='/signup' render={(props) => <Signup {...props} />} /> */}
-                <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                <PrivateRoute exact path='/user' component={User} />
+                <PrivateRoute
+                  exact
+                  path='/dashboard'
+                  component={Dashboard}
+                  layout={LayoutDefault}
+                />
+                <PrivateRoute
+                  exact
+                  path='/user'
+                  component={User}
+                  layout={LayoutDefault}
+                />
               </Switch>
             </LayoutDefault>
           </>
         </Router>
       )}
     />
-    // <Router>
+    // <Router> //TODO DELETE
     //   <>
     //     <Navbar className="navbar" />
     //     <Switch>
@@ -119,9 +132,9 @@ const App = () => {
 export default () => {
   return (
     <AuthProvider>
-      {/* <LayoutDefault /> */}
-      {/* <CustomThemeProvider> // TODO ERASE */}
+      {/* <CustomThemeProvider> // TODO Delete */}
       {/* <CssBaseline /> // TODO ERASE - was overwriting color */}
+      {/* <LayoutDefault /> */}
       <App />
       {/* </CustomThemeProvider> */}
     </AuthProvider>

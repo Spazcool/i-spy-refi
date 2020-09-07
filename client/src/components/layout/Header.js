@@ -112,7 +112,7 @@ const Header = ({
                     )}
                   >
                     <li>
-                      <Link to='/houseadditions' onClick={closeMenu}>
+                      <Link to='/additions' onClick={closeMenu}>
                         House Additions
                       </Link>
                     </li>

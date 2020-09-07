@@ -34,7 +34,7 @@ export default withRouter(function Navbar(props) {
     <div className={classes.root}>
       <AppBar position='static' className='navbar'>
         <Toolbar>
-          {/* <SideBar props={props} /> */}
+          <SideBar props={props} />
           <img src={logo} alt='logo' className='logo' />
           <Typography variant='h6' className='brand'>
             I Spy Refi

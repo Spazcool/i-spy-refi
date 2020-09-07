@@ -49,12 +49,12 @@ function Home(props) {
         state,
         zip,
         hid,
-        formdata,
+        formData,
         comps,
       };
       setHasHouse(true);
       setHouseData(data);
-      setFormData(formdata);
+      setFormData(formData);
       setTrendingData(comps);
 
       return true;

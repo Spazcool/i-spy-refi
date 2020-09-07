@@ -35,9 +35,8 @@ const useStyles = makeStyles({
   },
 });
 
-// export default withRouter(
-export default function TemporaryDrawer(props) {
-  const { theme, toggleTheme } = useContext(CustomThemeContext);
+export default withRouter(function TemporaryDrawer(props) {
+  // const { theme, toggleTheme } = useContext(CustomThemeContext);
   const { isAuth, logout, user } = useContext(AuthContext);
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -166,7 +165,7 @@ export default function TemporaryDrawer(props) {
               <></>
             )}
 
-            <ListItem
+            {/* <ListItem
               className={classes.link}
               key='theme'
               onClick={(e) => {
@@ -181,7 +180,7 @@ export default function TemporaryDrawer(props) {
                 </span>
               </ListItemIcon>
               <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
-            </ListItem>
+            </ListItem> */}
 
             {isAuth ? (
               <ListItem
@@ -208,4 +207,4 @@ export default function TemporaryDrawer(props) {
       </Drawer>
     </>
   );
-}
+});
