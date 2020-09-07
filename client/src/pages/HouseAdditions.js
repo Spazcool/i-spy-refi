@@ -114,6 +114,7 @@ export default function HouseAdditions() {
   const { user, isAuth } = useContext(AuthContext);
   const classes = useStyles();
   const houseCreds = {
+    street:'',
     address: '',
     city: '',
     zip: '',
@@ -384,7 +385,6 @@ export default function HouseAdditions() {
           </Button>
           <br />
           <FormGroup>
-            <FormControl component='fieldset'>
               <FormLabel component='legend' className={classes.label}>
                 Kitchen Renovations:{' '}
               </FormLabel>
@@ -395,22 +395,21 @@ export default function HouseAdditions() {
                 name='customized-radios'
                 // onChange={handleOnChange}
               >
+              <FormControl component='fieldset'>
                 <FormControlLabel
-                  onClick={handleOnClick}
                   value={value[0].value}
-                  control={<StyledRadio />}
+                  control={<StyledRadio onClick={handleOnClick}/>}
                   label={value[0].name}
                   name={value[0].name}
                 />
                 <FormControlLabel
-                  onClick={handleOnClick}
                   value={value[1].value}
-                  control={<StyledRadio />}
+                  control={<StyledRadio onClick={handleOnClick}/>}
                   label={value[1].name}
                   name={value[1].name}
                 />
+                </FormControl>
               </RadioGroup>
-            </FormControl>
             <br />
             <FormControl component='fieldset'>
               <FormLabel component='legend' className={classes.label}>
