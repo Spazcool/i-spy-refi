@@ -26,7 +26,7 @@ function Signup(props) {
       fetchHouse();
     }
     return () => mounted = false;
-  },[isAuth, fetchHouse])
+  },[isAuth])
 
   if(userHouse && isAuth){
     return <Redirect to='/dashboard' />
