@@ -104,9 +104,9 @@ export default function CompListItem(props) {
           </Typography>
         </CardContent>
         <CardActions className={classes.root}>
-          <Button size='small' className='button'>
+          {/* <Button size='small' className='button'>
             <CircularProgress />
-          </Button>
+          </Button> */}
         </CardActions>
       </AccordionDetails>
     </Accordion>
@@ -138,7 +138,7 @@ export default function CompListItem(props) {
         </CardContent>
         <CardActions className={classes.root}>
           <Button size='small' className='button'>
-            <CircularProgress />
+            {/* <CircularProgress /> */}
           </Button>
         </CardActions>
       </AccordionDetails>
