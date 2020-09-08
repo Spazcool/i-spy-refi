@@ -51,10 +51,9 @@ export default function CompListItem(props) {
           {props.comp.address.street_number} {props.comp.address.street}{' '}
           {props.comp.address.street_suffix}
           <CardMedia
-            className={classes.lazyImage}
             component='img'
             image={props.comp.photos[0].href}
-            title='My House'
+            title='My Comps'
           />
         </Typography>
       </AccordionSummary>
