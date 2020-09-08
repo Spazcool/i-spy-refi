@@ -101,7 +101,6 @@ function StyledRadio(props) {
   return (
     <Radio
       className={classes.group}
-      disableRipple
       color='default'
       checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
       icon={<span className={classes.icon} />}
@@ -330,7 +329,7 @@ export default function HouseAdditions() {
       autoComplete='off'
       style={{
         minWidth: 500,
-        maxHeight: 500,
+        // maxHeight: 500,
 
         flexWrap: 'wrap',
       }}
