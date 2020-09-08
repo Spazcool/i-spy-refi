@@ -117,8 +117,8 @@ function User(props) {
   // -------------------- CREATE THE THINGS --------------------
   const createFakeHouse = async() => {
     const data = {
-      hid: 12345678906123445673, //todo will require a uuid library here
-      zpid: 56358231311,
+      hid: 12345678906, //todo will require a uuid library here
+      zpid: 56358239,
       latitude: 89,
       longitude: 23,
       zip: '02451',

@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+// TODO Delete
+import React, { useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
@@ -10,7 +11,7 @@ import Button from '@material-ui/core/Button';
 
 import SideBar from './SideBar.js';
 
-import logo from "../../src/logo-white-removebg-preview.png"
+import logo from '../assets/logo/white_logo_transparent_background.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,16 +26,13 @@ export default withRouter(function Navbar(props) {
   const { isAuth } = useContext(AuthContext);
   const classes = useStyles();
 
-    return (
-      <div className={classes.root}>
-        <AppBar position="static" className="navbar" >
-          <Toolbar>
-            <SideBar props={props} />
-            <img src={logo} alt="logo" className="logo" />
-            <Typography variant="h6" className="brand" >
-              I Spy Refi
-            </Typography>
-            
+  return (
+    <div className={classes.root}>
+      <AppBar position='static' className='navbar'>
+        <Toolbar>
+          <SideBar props={props} />
+          <img src={logo} alt='logo' className='logo' />
+          <Typography variant='h6' className='brand'></Typography>
 
           {isAuth ? (
             <></>

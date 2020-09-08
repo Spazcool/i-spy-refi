@@ -189,13 +189,17 @@ export default function HouseAdditions() {
   // const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    async function fetchZpid() {
-      const house = async () => await DB.getHouseByOwner(user.user.uid);
-      const [userHouse] = await house();
-      setUserZpid(userHouse.zpid);
+    if(isAuth){
+      fetchZpid();
     }
-    fetchZpid();
+    
   }, [userHouse]);
+
+  async function fetchZpid() {
+    const house = async () => await DB.getHouseByOwner(user.user.uid);
+    const [userHouse] = await house();
+    setUserZpid(userHouse.zpid);
+  }
   // const handleOnChange = (event) => {
   //   setSelected({
   //     ...selected,
@@ -379,7 +383,8 @@ export default function HouseAdditions() {
             variant='contained'
             color='primary'
             onClick={handleSubmit}
-            className={classes.button}
+            // className={classes.button}
+            className='button button-primary button-wide-mobile button-sm'
           >
             Submit
           </Button>
