@@ -48,26 +48,26 @@ function Home(props) {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
 
-    //   if (house.length > 0) {
-    //     const [{ street, state, city, zip, hid, formData, comps }] = house;
-    //     const data = {
-    //       street,
-    //       city,
-    //       state,
-    //       zip,
-    //       hid,
-    //       formData,
-    //       comps,
-    //     };
-    //     setHasHouse(true);
-    //     setHouseData(data);
-    //     setFormData(formData);
-    //     setTrendingData(comps);
+  //   if (house.length > 0) {
+  //     const [{ street, state, city, zip, hid, formData, comps }] = house;
+  //     const data = {
+  //       street,
+  //       city,
+  //       state,
+  //       zip,
+  //       hid,
+  //       formData,
+  //       comps,
+  //     };
+  //     setHasHouse(true);
+  //     setHouseData(data);
+  //     setFormData(formData);
+  //     setTrendingData(comps);
 
-    //     return true;
-    //   }
-    //   return false;
-    // };
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
     // User id is passed once the user login is completed
     const [
@@ -123,17 +123,17 @@ function Home(props) {
 
     /// FIRST API CALL ///
 
-    // const addressresponse = await realtor.getAddressDetails(zpiddb);
-    // const getimageurl = addressresponse.data.properties[0].photos[0].href;
-    // setImage(getimageurl);
+    const addressresponse = await realtor.getAddressDetails(zpiddb);
+    const getimageurl = addressresponse.data.properties[0].photos[0].href;
+    setImage(getimageurl);
 
-    // let housebuildingsizeValid = addressresponse.data.properties[0];
-    // if (
-    //   housebuildingsizeValid.hasOwnProperty('building_size') &&
-    //   housebuildingsizeValid.building_size.size > 0
-    // ) {
-    //   finishedsqFt = housebuildingsizeValid.building_size.size;
-    // }
+    let housebuildingsizeValid = addressresponse.data.properties[0];
+    if (
+      housebuildingsizeValid.hasOwnProperty('building_size') &&
+      housebuildingsizeValid.building_size.size > 0
+    ) {
+      finishedsqFt = housebuildingsizeValid.building_size.size;
+    }
 
     // SECOND API CALL //
 
@@ -164,7 +164,7 @@ function Home(props) {
         ? housearraymedian[mid]
         : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
 
-    const FinalHouseValue = 2466 * housemedian;
+    const FinalHouseValue = finishedsqFt * housemedian;
 
     settotalHouseValue(FinalHouseValue);
 
@@ -187,14 +187,14 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             My House
           </Typography>
-          {/* <MyHouse
+          <MyHouse
             className='card'
             street={streetdisplay}
             city={citydisplay}
             state={statedisplay}
             imageData={imageData}
             value={totalHouseValue}
-          /> */}
+          />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
@@ -203,9 +203,9 @@ function Home(props) {
             Comps
           </Typography>
           <CompList compslist={compsList} />
-        </Grid>
+        </Grid> 
 
-        {/* //--------------- CHARTS --------------- */}
+        {/* --------------- CHARTS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
