@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
-// import { CustomThemeProvider } from './providers/ThemeProvider'; //TODO DELETE
+import { CustomThemeProvider } from './providers/ThemeProvider'; //TODO DELETE
 
 // import { useLocation } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
@@ -132,11 +132,11 @@ const App = () => {
 export default () => {
   return (
     <AuthProvider>
-      {/* <CustomThemeProvider> // TODO Delete //TODO DELETE */}
-      {/* <CssBaseline /> // TODO ERASE - was overwriting color */}
-      {/* <LayoutDefault /> */}
-      <App />
-      {/* </CustomThemeProvider> */}
+      <CustomThemeProvider>
+        {' '}
+        <CssBaseline />
+        <App />
+      </CustomThemeProvider>
     </AuthProvider>
   );
 };
