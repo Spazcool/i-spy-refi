@@ -25,7 +25,7 @@ export const DB = {
           '',
           '',
           false,
-          ''
+          db.FieldValue.serverTimestamp()
         );
       } else {
         const { email, firstName, lastName } = additionalData;
@@ -38,7 +38,7 @@ export const DB = {
           lastName,
           '',
           false,
-          ''
+          db.FieldValue.serverTimestamp()
         );
       }
 
@@ -88,7 +88,7 @@ export const DB = {
         street,
         comps,
         formData,
-        lastUpdated
+        db.FieldValue.serverTimestamp()
       );
 
       try {
@@ -345,7 +345,7 @@ export const DB = {
         lastName,
         zpid,
         admin,
-        lastUpdated
+        db.FieldValue.serverTimestamp()
       );
       const mergeObj = {};
       const Obj = data.getUserData();
