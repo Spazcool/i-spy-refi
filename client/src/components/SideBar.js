@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 });
 
 export default withRouter(function TemporaryDrawer(props) {
-  const { theme, toggleTheme } = useContext(CustomThemeContext);
+  // const { theme, toggleTheme } = useContext(CustomThemeContext);
   const { isAuth, logout, user } = useContext(AuthContext);
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -150,7 +150,7 @@ export default withRouter(function TemporaryDrawer(props) {
                 key='House Additions'
                 onClick={(e) => {
                   e.preventDefault();
-                  props.history.push('/HouseAdditions');
+                  props.history.push('/additions');
                 }}
                 button
               >
@@ -165,7 +165,7 @@ export default withRouter(function TemporaryDrawer(props) {
               <></>
             )}
 
-            <ListItem
+            {/* <ListItem
               className={classes.link}
               key='theme'
               onClick={(e) => {
@@ -180,7 +180,7 @@ export default withRouter(function TemporaryDrawer(props) {
                 </span>
               </ListItemIcon>
               <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
-            </ListItem>
+            </ListItem> */}
 
             {isAuth ? (
               <ListItem

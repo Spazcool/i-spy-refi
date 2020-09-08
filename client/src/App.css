@@ -4,12 +4,12 @@
 
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
 
-.flip{
+.flip {
   transition: transform 0.8s;
   transform-style: preserve-3d;
 }
 
-.flip:hover{
+.flip:hover {
   transform: rotateY(180deg);
 }
 
@@ -18,7 +18,7 @@
 }
 
 .navbar {
-  background-color: #5398BE !important;
+  background-color: #437779 !important;
   display: flex;
   align-items: flex-start;
   font-family: 'Comfortaa', cursive !important;
@@ -31,7 +31,6 @@
   font-size: 25px !important;
   font-weight: 700 !important;
 }
-
 .logo {
   margin-left: 20px !important;
   height: 45px;
@@ -47,7 +46,8 @@
   background: #353535;
   font-size: 3rem;
   color: #fff;
-  box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+  box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem,
+    rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
   height: 100%;
   width: 100%;
   border-radius: 4px;
@@ -81,22 +81,26 @@
 .card-radius {
   border-radius: 30px !important;
 }
-
-.button {
-  color: #5398BE !important;
+.card-radius-top {
+  border-radius: 30px 30px 0 0 !important;
+}
+.card-radius-bottom {
+  border-radius: 0 0 30px 30px !important;
 }
 
-.box-shadow {
-  box-shadow: 3px 3px 3px #5398BE !important;
+/* .button { //TODO Delete
+  color: #5398be !important;
+} */
 
+.box-shadow {
+  box-shadow: 3px 3px 3px #5398be !important;
 }
 
 .img-accord {
   height: 50px;
   width: 50px;
-  background-image: url("https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg");
- /* width:33%; */
-
+  background-image: url('https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg');
+  /* width:33%; */
 }
 
 .img-list {

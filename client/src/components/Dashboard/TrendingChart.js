@@ -22,14 +22,7 @@ import {
 } from '@devexpress/dx-react-chart';
 
 export default function TrendingChart(props) {
-  const [isActive, setIsActive] = useState(true);
   const [loaded, setLoaded]= useState(false);
-  const [loadingData, setLoadingData] = useState([
-    { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 1000 },
-    { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 2000 },
-    { date: moment().subtract(10, 'days').format('DD-MM-YY'), value: 4000 },
-    { date: moment().format('DD-MM-YY'), value: 8000 },
-  ]);
 
   const checkLoaded = () => {
     const {data} = props;
@@ -40,23 +33,8 @@ export default function TrendingChart(props) {
 
   useEffect(() => {
     checkLoaded();
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        const newArr = loadingData.map((datum, i) => {
-          return {
-            date: [loadingData[i].date],
-            value: loadingData[(i+1) % loadingData.length].value
-          } 
-        })
-        setLoadingData(newArr)
-      }, 800);
-    } else if (!isActive) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive, loadingData]);
-
+  },[props])
+  
   return (
     loaded ? 
       <Paper className='card-radius box-shadow'>
@@ -76,11 +54,11 @@ export default function TrendingChart(props) {
       </Paper>
       :
       <Paper className='card-radius box-shadow'>
-        <Chart data={loadingData}>
+        <Chart data={ [{date: moment().format('DD-MM-YY'), value: 50000}]}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
-          <BarSeries valueField='value' argumentField='date' name='value' />
+          <BarSeries valueField='value' argumentField='date' name='loading ...' />
           <Stack />
           <Animation />
           <Legend />

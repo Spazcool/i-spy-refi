@@ -16,8 +16,11 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import '../App.css';
 
 function Home(props) {
-  // House Display Info Logic - STEFFI
   const { user } = useContext(AuthContext);
+  // DB
+  const [hasHouse, setHasHouse] = useState(false);
+  const [houseData, setHouseData] = useState({});
+  // API
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
@@ -25,12 +28,15 @@ function Home(props) {
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
   const [compsList, setcompsList] = useState([]);
+  const [PID, setPID] = useState('');
   const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
 
-  const [compestatedisplay, setcompstatedisplay] = useState('');
-  const [complastsoldprice, setcomplastsoldprice] = useState('');
-  const [complastsolddate, setcomplastsolddate] = useState('');
+  const [sqFeet, setSqFeet] = useState('');
+  // const [compaddstreet, setcompaddstreet] = useState([]);
+  // const [compestatedisplay, setcompstatedisplay] = useState('');
+  // const [complastsoldprice, setcomplastsoldprice] = useState('');
+  // const [complastsolddate, setcomplastsolddate] = useState('');
 
   let finishedsqFt;
 
@@ -40,6 +46,28 @@ function Home(props) {
 
   const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
+    const house = await houseinfoDB();
+
+  //   if (house.length > 0) {
+  //     const [{ street, state, city, zip, hid, formData, comps }] = house;
+  //     const data = {
+  //       street,
+  //       city,
+  //       state,
+  //       zip,
+  //       hid,
+  //       formData,
+  //       comps,
+  //     };
+  //     setHasHouse(true);
+  //     setHouseData(data);
+  //     setFormData(formData);
+  //     setTrendingData(comps);
+
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
     // User id is passed once the user login is completed
     const [
