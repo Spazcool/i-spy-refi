@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Paper from '@material-ui/core/Paper';
 
@@ -7,9 +7,13 @@ import {
   PieSeries,
   Legend,
   Title,
-  Tooltip
+  Tooltip,
 } from '@devexpress/dx-react-chart-material-ui';
-import { EventTracker, HoverState, Animation } from '@devexpress/dx-react-chart';
+import {
+  EventTracker,
+  HoverState,
+  Animation,
+} from '@devexpress/dx-react-chart';
 
 // TODO SPECIFY COLORS THAT MATCH OUR LOOK
 // https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
