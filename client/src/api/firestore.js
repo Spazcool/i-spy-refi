@@ -218,6 +218,7 @@ export const DB = {
   },
 
   async getHouseByOwner(userId) {
+    console.log('userid', userId);
     let returnedHouse;
 
     const house = db().collection('houses').where('user', '==', userId);
@@ -263,8 +264,9 @@ export const DB = {
       );
 
       houseArr.push(data.getHouseData());
+      console.log('housearr', houseArr);
     });
-
+    console.log(houseArr);
     return houseArr;
   },
 

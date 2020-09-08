@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Paper from '@material-ui/core/Paper';
 import CompListItem from './CompListItem';
@@ -33,38 +33,39 @@ const useStyles = makeStyles((theme) => ({
     width: '33.33%',
     height: 50,
   },
-  
 }));
 
 export default function CompList(props) {
-  const [loaded, setLoaded]= useState(false);
+  const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
 
   const checkLoaded = () => {
-    const {street} = props;
-    if(street.length > 0) setLoaded(true);
-  }
+    const { compslist } = props;
+    if (compslist.length > 0) setLoaded(true);
+  };
 
   useEffect(() => {
     checkLoaded();
-  })
+  });
 
-  return (
-    loaded ? 
-      <Paper elevation={4} className='card-radius box-shadow'>
-        <div className={classes.list}>
-          {props.street.map((comp,i) => (
-            <CompListItem comp={comp} key={'compItem'+i}/>
-          ))}
-        </div>
-      </Paper>
-    :
-      <Paper className='card-radius box-shadow'>
-        <div className={classes.list}>
-          {Array.from({length: 10}).map((e,i) => (
-            <CompListItem key={'loading'+i} i={i}/>
-          ))}
-        </div>
+  // console.log('compslist:', props.compslist);
+
+  
+  return loaded ? (
+    <Paper elevation={4} className='card-radius box-shadow'>
+      <div className={classes.list}>
+        {props.compslist.map((comp, i) => (
+          <CompListItem comp={comp} key={'compItem' + i} />
+        ))}
+      </div>
+    </Paper>
+  ) : (
+    <Paper className='card-radius box-shadow'>
+      <div className={classes.list}>
+        {Array.from({ length: 10 }).map((e, i) => (
+          <CompListItem key={'loading' + i} i={i} />
+        ))}
+      </div>
     </Paper>
   );
 }
