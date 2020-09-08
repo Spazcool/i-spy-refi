@@ -382,7 +382,8 @@ export default function HouseAdditions() {
             variant='contained'
             color='primary'
             onClick={handleSubmit}
-            className={classes.button}
+            // className={classes.button}
+            className='button button-primary button-wide-mobile button-sm'
           >
             Submit
           </Button>

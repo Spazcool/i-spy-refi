@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { zillow } from '../api/zillow';
-
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -53,7 +52,6 @@ function Home(props) {
         formData,
         comps,
       };
-
       setHasHouse(true);
       setHouseData(data);
       setFormData(formData);
