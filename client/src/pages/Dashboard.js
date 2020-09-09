@@ -86,6 +86,7 @@ function Home(props) {
     };
 
     console.log('data : ', data);
+    console.log(data.zip);
     //     // TODO THIS DATA WILL BE COMING FROMTHE DB
 
     //     const formData = [
@@ -121,6 +122,10 @@ function Home(props) {
 
     const zpiddb = zpid;
 
+    const addressZipApi = await realtor.getMortgageRates(zip);
+    console.log(addressZipApi);
+    const addressZip = addressZipApi.data.rates;
+    console.log(addressZip);
     /// FIRST API CALL ///
 
     const addressresponse = await realtor.getAddressDetails(zpiddb);

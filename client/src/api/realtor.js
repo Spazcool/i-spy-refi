@@ -25,6 +25,30 @@ export const realtor = {
       });
     return getaddressResponse;
   },
+  // Gets mortgage rates based off address of Zip
+  async getMortgageRates(zipfirestore) {
+    let getZipAddress;
+    await axios({
+      method: 'GET',
+      url: 'https://realtor.p.rapidapi.com/finance/rates',
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'realtor.p.rapidapi.com',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+        useQueryString: true,
+      },
+      params: {
+        loc: `${zipfirestore}`,
+      },
+    })
+      .then((response) => {
+        getZipAddress = response;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return getZipAddress;
+  },
 
   async gethousevalue(cityfirestore, statefirestore) {
     let houseresponse;
