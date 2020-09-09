@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import FormLabel from '@material-ui/core/FormLabel';
-
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
 
-import { makeStyles, Typography } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,16 +66,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  button: {
+    justifyContent: 'center',
+    width: '50',
+  },
   alignContent: {
     display: 'flex',
     textAlign: 'center',
-  },
-  MuiTypography: {
-    variantMapping: {
-      h1: 'h1',
-      h2: 'h2',
-      h3: 'h3',
-    },
   },
 }));
 
@@ -94,47 +91,56 @@ function StyledRadio(props) {
 }
 
 export default function AddRenos(props) {
-  const [isMounted, setIsMounted] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      setIsMounted(true);
+      setHasMounted(true);
     }
     return () => (mounted = false);
-  }, [isMounted]);
+  }, [hasMounted]);
 
   const listRadios = () => {
-    // console.log(props);
+    console.log(props);
     return props.values.map((room, i) => {
       return (
-        <Grid item xs={12} s={8} m={6} l={4} key={room.id + i}>
+        <Grid item xs={12} key={room.id + i}>
           <FormLabel component='legend'>{room.description}</FormLabel>
           <FormControl component='fieldset'>
             <RadioGroup
               className={classes.group}
-              aria-label='Check Your Renovations'
+              aria-label='renovations'
               name={room.id}
             >
               <FormControlLabel
-                onClick={props.handleOnClick}
-                value={room.minor.value}
-                control={<StyledRadio />}
+                control={
+                  <StyledRadio
+                    onClick={props.handleOnClick}
+                    value={room.minor.value}
+                  />
+                }
                 label={room.minor.type}
               />
+
               <FormControlLabel
-                onClick={props.handleOnClick}
-                value={room.major.value}
-                control={<StyledRadio />}
+                control={
+                  <StyledRadio
+                    onClick={props.handleOnClick}
+                    value={room.major.value}
+                  />
+                }
                 label={room.major.type}
               />
-
               {room.noSelection !== undefined ? (
                 <FormControlLabel
-                  onClick={props.handleOnClick}
-                  value={room.noSelection.value}
-                  control={<StyledRadio />}
+                  control={
+                    <StyledRadio
+                      onClick={props.handleOnClick}
+                      value={room.noSelection.value}
+                    />
+                  }
                   label={room.noSelection.type}
                 />
               ) : (
@@ -146,19 +152,18 @@ export default function AddRenos(props) {
       );
     });
   };
+
   return (
     <Box display='flex'>
       <Box m='auto'>
-        <br />
         <Grid
           container
           justify='center'
           spacing={2}
           className={classes.alignContent}
         >
-          <Typography variant='h3'>Renovations:</Typography>
-          <br />
-          {isMounted ? listRadios() : ''}
+          <h3 className='mt-5'>Renovations</h3>
+          {hasMounted ? listRadios() : ''}
           <Button
             type='submit'
             variant='contained'
@@ -166,7 +171,7 @@ export default function AddRenos(props) {
             onClick={props.handleSubmitCalc}
             className={classes.button}
           >
-            Calculate
+            Submit
           </Button>
         </Grid>
       </Box>
