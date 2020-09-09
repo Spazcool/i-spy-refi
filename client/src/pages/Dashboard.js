@@ -48,26 +48,26 @@ function Home(props) {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
 
-  //   if (house.length > 0) {
-  //     const [{ street, state, city, zip, hid, formData, comps }] = house;
-  //     const data = {
-  //       street,
-  //       city,
-  //       state,
-  //       zip,
-  //       hid,
-  //       formData,
-  //       comps,
-  //     };
-  //     setHasHouse(true);
-  //     setHouseData(data);
-  //     setFormData(formData);
-  //     setTrendingData(comps);
+    //   if (house.length > 0) {
+    //     const [{ street, state, city, zip, hid, formData, comps }] = house;
+    //     const data = {
+    //       street,
+    //       city,
+    //       state,
+    //       zip,
+    //       hid,
+    //       formData,
+    //       comps,
+    //     };
+    //     setHasHouse(true);
+    //     setHouseData(data);
+    //     setFormData(formData);
+    //     setTrendingData(comps);
 
-  //     return true;
-  //   }
-  //   return false;
-  // };
+    //     return true;
+    //   }
+    //   return false;
+    // };
 
     // User id is passed once the user login is completed
     const [
