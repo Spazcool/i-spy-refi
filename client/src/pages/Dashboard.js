@@ -17,9 +17,7 @@ import '../App.css';
 
 function Home(props) {
   const { user } = useContext(AuthContext);
-  // DB
-  const [hasHouse, setHasHouse] = useState(false);
-  const [houseData, setHouseData] = useState({});
+
   // API
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
@@ -28,17 +26,9 @@ function Home(props) {
   const [FormData, setFormData] = useState([]);
   const [TrendingData, setTrendingData] = useState([]);
   const [compsList, setcompsList] = useState([]);
-  const [PID, setPID] = useState('');
-  const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
 
   const [sqFeet, setSqFeet] = useState('');
-  // const [compaddstreet, setcompaddstreet] = useState([]);
-  // const [compestatedisplay, setcompstatedisplay] = useState('');
-  // const [complastsoldprice, setcomplastsoldprice] = useState('');
-  // const [complastsolddate, setcomplastsolddate] = useState('');
-
-  let finishedsqFt;
 
   useEffect(() => {
     fetchaddress();
@@ -48,44 +38,22 @@ function Home(props) {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
 
-  //   if (house.length > 0) {
-  //     const [{ street, state, city, zip, hid, formData, comps }] = house;
-  //     const data = {
-  //       street,
-  //       city,
-  //       state,
-  //       zip,
-  //       hid,
-  //       formData,
-  //       comps,
-  //     };
-  //     setHasHouse(true);
-  //     setHouseData(data);
-  //     setFormData(formData);
-  //     setTrendingData(comps);
-
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
     // User id is passed once the user login is completed
     const [
-      { zpid, street, state, city, zip, hid, formData, comps },
+      { street, state, city, formData, houseImage, building_size },
     ] = await houseinfoDB();
 
     const data = {
-      zpid,
       street,
       city,
       state,
-      zip,
-      hid,
       formData,
-      comps,
+      houseImage,
+      building_size,
     };
 
     console.log('data : ', data);
+
     //     // TODO THIS DATA WILL BE COMING FROMTHE DB
 
     //     const formData = [
@@ -119,23 +87,12 @@ function Home(props) {
     const streetdb = street;
     setstreetdisplay(streetdb);
 
-    const zpiddb = zpid;
+    setImage(houseImage);
 
-    /// FIRST API CALL ///
+    console.log('image:', houseImage);
+    console.log('houseImage:', building_size);
 
-    const addressresponse = await realtor.getAddressDetails(zpiddb);
-    const getimageurl = addressresponse.data.properties[0].photos[0].href;
-    setImage(getimageurl);
-
-    let housebuildingsizeValid = addressresponse.data.properties[0];
-    if (
-      housebuildingsizeValid.hasOwnProperty('building_size') &&
-      housebuildingsizeValid.building_size.size > 0
-    ) {
-      finishedsqFt = housebuildingsizeValid.building_size.size;
-    }
-
-    // SECOND API CALL //
+    // FIRST API CALL //
 
     const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
 
@@ -143,9 +100,6 @@ function Home(props) {
     let responsehouses = gethouseResponse.data.properties;
 
     responsehouses.forEach((responsehouse) => {
-      //   console.log('responsehouse', responsehouse);
-      //   const result = responsehouse.hasOwnProperty('building_size');
-      //   console.log('result:', result);
       if (
         responsehouse.hasOwnProperty('building_size') &&
         responsehouse.building_size.size > 0
@@ -164,7 +118,7 @@ function Home(props) {
         ? housearraymedian[mid]
         : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
 
-    const FinalHouseValue = finishedsqFt * housemedian;
+    const FinalHouseValue = building_size * housemedian;
 
     settotalHouseValue(FinalHouseValue);
 
@@ -178,7 +132,6 @@ function Home(props) {
     }
     setcompsList(compsarray);
   };
-  console.log('dashboardcomp:', compsList);
   return (
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
@@ -203,7 +156,7 @@ function Home(props) {
             Comps
           </Typography>
           <CompList compslist={compsList} />
-        </Grid> 
+        </Grid>
 
         {/* --------------- CHARTS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
