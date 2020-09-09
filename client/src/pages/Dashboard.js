@@ -122,11 +122,12 @@ function Home(props) {
 
     const zpiddb = zpid;
 
+    // GET Mortgage Rates Array
     const addressZipApi = await realtor.getMortgageRates(zip);
-    console.log(addressZipApi);
     const addressZip = addressZipApi.data.rates;
     console.log(addressZip);
-    /// FIRST API CALL ///
+
+    // Get Address Details API call
 
     const addressresponse = await realtor.getAddressDetails(zpiddb);
     const getimageurl = addressresponse.data.properties[0].photos[0].href;
@@ -140,7 +141,7 @@ function Home(props) {
       finishedsqFt = housebuildingsizeValid.building_size.size;
     }
 
-    // SECOND API CALL //
+    // Get Houses from Zip API call
 
     const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
 
