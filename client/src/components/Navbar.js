@@ -1,3 +1,4 @@
+// TODO Delete
 import React, { useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
@@ -9,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SideBar from './SideBar.js';
 
-import logo from "../../src/logo-white-removebg-preview.png"
+import logo from '../assets/logo/white_logo_transparent_background.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,16 +30,13 @@ export default withRouter(function Navbar(props) {
   //   setOpen(true);
   // };
 
-    return (
-      <div className={classes.root}>
-        <AppBar position="static" className="navbar" >
-          <Toolbar>
-            <SideBar props={props} />
-            <img src={logo} alt="logo" className="logo" />
-            <Typography variant="h6" className="brand" >
-              I Spy Refi
-            </Typography>
-            
+  return (
+    <div className={classes.root}>
+      <AppBar position='static' className='navbar'>
+        <Toolbar>
+          <SideBar props={props} />
+          <img src={logo} alt='logo' className='logo' />
+          <Typography variant='h6' className='brand'></Typography>
 
           {isAuth ? (
             <></>

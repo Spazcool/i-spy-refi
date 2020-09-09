@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
-import { zillow } from '../api/zillow';
+import { realtor } from '../api/realtor';
+import moment from 'moment'; //for fake data, can be removed or used elsewhere when the fake data is pulled out
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -19,153 +20,165 @@ function Home(props) {
   // DB
   const [hasHouse, setHasHouse] = useState(false);
   const [houseData, setHouseData] = useState({});
-  const [FormData, setFormData] = useState([]);
-  const [TrendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
+  const [FormData, setFormData] = useState([]);
+  const [TrendingData, setTrendingData] = useState([]);
+  const [compsList, setcompsList] = useState([]);
   const [PID, setPID] = useState('');
   const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
+
   const [sqFeet, setSqFeet] = useState('');
-  const [compaddstreet, setcompaddstreet] = useState([]);
-  const [compestatedisplay, setcompstatedisplay] = useState('');
-  const [complastsoldprice, setcomplastsoldprice] = useState('');
-  const [complastsolddate, setcomplastsolddate] = useState('');
+  // const [compaddstreet, setcompaddstreet] = useState([]);
+  // const [compestatedisplay, setcompstatedisplay] = useState('');
+  // const [complastsoldprice, setcomplastsoldprice] = useState('');
+  // const [complastsolddate, setcomplastsolddate] = useState('');
 
-  let avgSqFt = 0;
-  let avgPerSqFt = 0;
+  let finishedsqFt;
 
-  const checkHasHouse = async () => {
+  useEffect(() => {
+    fetchaddress();
+  }, []);
+
+  const fetchaddress = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
 
-    if (house.length > 0) {
-      const [{ street, state, city, zip, hid, formData, comps }] = house;
-      const data = {
-        street,
-        city,
-        state,
-        zip,
-        hid,
-        formData,
-        comps,
-      };
+    //   if (house.length > 0) {
+    //     const [{ street, state, city, zip, hid, formData, comps }] = house;
+    //     const data = {
+    //       street,
+    //       city,
+    //       state,
+    //       zip,
+    //       hid,
+    //       formData,
+    //       comps,
+    //     };
+    //     setHasHouse(true);
+    //     setHouseData(data);
+    //     setFormData(formData);
+    //     setTrendingData(comps);
 
-      setHasHouse(true);
-      setHouseData(data);
-      setFormData(formData);
-      setTrendingData(comps);
+    //     return true;
+    //   }
+    //   return false;
+    // };
 
-      return true;
+    // User id is passed once the user login is completed
+    const [
+      { zpid, street, state, city, zip, hid, formData, comps },
+    ] = await houseinfoDB();
+
+    const data = {
+      zpid,
+      street,
+      city,
+      state,
+      zip,
+      hid,
+      formData,
+      comps,
+    };
+
+    console.log('data : ', data);
+    //     // TODO THIS DATA WILL BE COMING FROMTHE DB
+
+    //     const formData = [
+    //       { country: 'Russia', value: 8765 },
+    //       { country: 'Canada', value: 7 },
+    //       { country: 'USA', value: 7 },
+    //       { country: 'China', value: 7 },
+    //       { country: 'Brazil', value: 6 },
+    //       { country: 'Australia', value: 5 },
+    //       { country: 'India', value: 2 },
+    //       { country: 'Others', value: 55 },
+    //     ];
+
+    //     setFormData(formData);
+
+    //     setTrendingData([
+    //       { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
+    //       { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
+    //       {
+    //         date: moment().subtract(10, 'days').format('DD-MM-YY'),
+    //         value: 1234567,
+    //       },
+    //       { date: moment().format('DD-MM-YY'), value: 1098765 },
+    //     ]);
+
+    const statedb = state;
+    setstatedisplay(statedb);
+    const citydb = city;
+    setcitydisplay(citydb);
+
+    const streetdb = street;
+    setstreetdisplay(streetdb);
+
+    const zpiddb = zpid;
+
+    /// FIRST API CALL ///
+
+    const addressresponse = await realtor.getAddressDetails(zpiddb);
+    const getimageurl = addressresponse.data.properties[0].photos[0].href;
+    setImage(getimageurl);
+
+    let housebuildingsizeValid = addressresponse.data.properties[0];
+    if (
+      housebuildingsizeValid.hasOwnProperty('building_size') &&
+      housebuildingsizeValid.building_size.size > 0
+    ) {
+      finishedsqFt = housebuildingsizeValid.building_size.size;
     }
-    return false;
-  };
 
-  const fetchAddressApi = async () => {
-    const apiAddress = await zillow.getaddress(houseData);
+    // SECOND API CALL //
 
-    if (apiAddress !== undefined) {
-      console.log('add ');
+    const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
 
-      const finishedsqftzillow = apiAddress[0].finishedSqFt;
-      const statezillow = apiAddress[0].address.state;
-      const cityzillow = apiAddress[0].address.city;
-      const streetzillow = apiAddress[0].address.street;
-      const zillowzpid = apiAddress[0].zpid;
+    let houseprice_array = [];
+    let responsehouses = gethouseResponse.data.properties;
 
-      setSqFeet(finishedsqftzillow);
-      setstatedisplay(statezillow);
-      setcitydisplay(cityzillow);
-      setstreetdisplay(streetzillow);
-      setPID(zillowzpid);
-
-      return true;
-    }
-    return false;
-  };
-
-  const fetchAddressImageApi = async () => {
-    const getimageurl = await zillow.getzillowpropid(PID);
-    if (getimageurl !== undefined) {
-      console.log('img ');
-
-      setImage(getimageurl);
-      return true;
-    }
-    setImage('http://placekitten.com/200/300');
-    return false;
-  };
-
-  const fetchAddressEval = async () => {
-    // APi call to get house eval & 10 comparables
-    const houseval = await zillow.gethouseval(PID);
-    if (houseval !== undefined) {
-      console.log('eval ');
-      // console.log('gethouseval:', houseval.data);
-      // const statestreetcomp = houseval.data.comparables[0].address.street;
-      //  statestreetcomp = houseval.data;
-      // console.log(statestreetcomp);
-      // setcompaddstreet(houseval.data.comparables);
-      // const cityzillow = displayaddress[0].address.city;
-      // setcitydisplay(cityzillow);
-      // const streetzillow = displayaddress[0].address.street;
-      // setstreetdisplay(streetzillow);
-      // const zillowzpid = displayaddress[0].zpid;
-
-      let comlength = houseval.data.comparables.length;
-      //console.log('complength' + comlength);
-      // calculating the Average SqFt
-      let index = 0;
-
-      for (let i = 0; i < comlength; i++) {
-        avgSqFt +=
-          houseval.data.comparables[i].lastSoldPrice.value /
-          houseval.data.comparables[i].finishedSqFt;
-        index = i + 1;
+    responsehouses.forEach((responsehouse) => {
+      //   console.log('responsehouse', responsehouse);
+      //   const result = responsehouse.hasOwnProperty('building_size');
+      //   console.log('result:', result);
+      if (
+        responsehouse.hasOwnProperty('building_size') &&
+        responsehouse.building_size.size > 0
+      ) {
+        houseprice_array.push(
+          parseInt(responsehouse.price / responsehouse.building_size.size)
+        );
       }
-      avgPerSqFt = avgSqFt / index;
-      // console.log(avgSqFt);
-      // console.log('avgpersqft:', avgPerSqFt);
-      // console.log(streetdisplay)
-      // Calculating The House Value
-      const tot = Math.round(sqFeet * avgPerSqFt);
-      settotalHouseValue(tot);
-      // console.log('housevalue:', tot);
-      // console.log('avgsqft:', avgPerSqFt);
-      return true;
+    });
+
+    const housearraymedian = houseprice_array.sort((a, b) => a - b);
+
+    const mid = Math.floor(housearraymedian.length / 2);
+    const housemedian =
+      housearraymedian.length % 2 !== 0
+        ? housearraymedian[mid]
+        : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
+
+    const FinalHouseValue = finishedsqFt * housemedian;
+
+    settotalHouseValue(FinalHouseValue);
+
+    // COMPS LOGIC //
+    let compsarray = [];
+
+    for (let i = 0; i < 10; i++) {
+      compsarray.push(gethouseResponse.data.properties[i]);
+
+      // console.log(compsarray);
     }
-    return false;
+    setcompsList(compsarray);
   };
-
-  const fetchaddress = async () => {
-    /////////////////// DB CALL /////////////////
-    if ((await checkHasHouse()) === false) {
-      console.log('user doesnt have a house');
-      //todo create a toast OR modal telling the user to go make a ahouse
-    }
-    /////////////////// FIRST API CALL /////////////////
-    if ((await fetchAddressApi()) === false) {
-      console.log('didnt find house via API');
-      //todo createa  toast OR modal suggesting ... maybe an edit to the hosueaddress
-    }
-    ////////////////////// SECOND CALL ///////////////////
-    if ((await fetchAddressImageApi()) === false) {
-      console.log('didnt find image for house via api');
-    }
-    //////////////////////// THIRD CALL ///////////////////
-    if ((await fetchAddressEval()) === false) {
-      console.log('faled to grab house eval');
-      //todo toast 'somethign went wrong'
-    }
-  };
-
-  useEffect(() => {
-    // fetchaddress();
-  }, []);
-
+  console.log('dashboardcomp:', compsList);
   return (
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
@@ -175,12 +188,12 @@ function Home(props) {
             My House
           </Typography>
           <MyHouse
+            className='card'
             street={streetdisplay}
             city={citydisplay}
             state={statedisplay}
             imageData={imageData}
             value={totalHouseValue}
-            description={description}
           />
         </Grid>
 
@@ -189,7 +202,7 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Comps
           </Typography>
-          <CompList street={compaddstreet} />
+          <CompList compslist={compsList} />
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
@@ -209,5 +222,4 @@ function Home(props) {
     </Container>
   );
 }
-
 export default Home;

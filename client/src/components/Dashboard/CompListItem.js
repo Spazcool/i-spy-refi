@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
+import CardMedia from '@material-ui/core/CardMedia';
+import Image from 'material-ui-image';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -20,54 +22,95 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    alignItems:"center",
-    justifyContent:"center",
+    alignItems: 'center',
+    justifyContent: 'center',
     display: 'flex',
   },
   'v-align': {
-    display:'flex',
+    display: 'flex',
     'flex-direction': 'column',
     'justify-content': 'center',
-  }
+  },
 }));
 
 export default function CompListItem(props) {
+  const styles = {
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    card: {
+      position: 'relative',
+    },
+    overlay: {
+      position: 'absolute',
+      top: '20px',
+      left: '20px',
+      color: 'white',
+      background: 'rgba(0, 0, 0, 0.5)',
+      // backgroundColor: 'white',
+    },
+  };
   const classes = useStyles();
-
-  return (
-    props.comp ? 
-      <Accordion>
+  return props.comp ? (
+    <Accordion>
+      {/* <CardMedia
+        className={classes.lazyImage}
+        component='img'
+        //image={props.comps.photos[0].href}
+        title='My Comps'
+      /> */}
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
         <Typography color='textSecondary' gutterBottom>
-          {props.comp.address.street}
+          {/* {props.comp.address.street_number} {props.comp.address.street}{' '}
+          {props.comp.address.street_suffix} */}
+          <CardMedia
+            className={classes.lazyImage}
+            className='media'
+            component='img'
+            image={props.comp.photos[0].href}
+            title='My House'
+          />
+          <div style={styles.overlay}>
+            {props.comp.address.street_number} {props.comp.address.street}{' '}
+            {props.comp.address.street_suffix} {props.comp.address.city},{' '}
+            {props.comp.address.state}
+          </div>
         </Typography>
+        <div>
+          <Image src={props.comp.photos[0].href} />
+        </div>
       </AccordionSummary>
+
       <AccordionDetails>
         <CardContent>
           <Typography color='textSecondary' gutterBottom></Typography>
           <Typography variant='h5' component='h2'>
-            {props.comp.address.street}
+            {props.comp.address.street_number} {props.comp.address.street}{' '}
+            {props.comp.address.street_suffix}
           </Typography>
           <Typography variant='h5' component='h2'>
-            $ {props.comp.lastSoldPrice.value}
+            $ {props.comp.price}
           </Typography>
           <Typography color='textSecondary'>
             {props.comp.address.city}, {props.comp.address.state},
           </Typography>
           <Typography variant='body2' component='p'>
-            Last Sold Date:{props.comp.lastSoldDate}
+            {/* Last Sold Date:{props.comp.lastSoldDate} */}
           </Typography>
         </CardContent>
         <CardActions className={classes.root}>
-          <Button size='small' className='button'><CircularProgress/></Button>
+          {/* <Button size='small' className='button'>
+            <CircularProgress />
+          </Button> */}
         </CardActions>
       </AccordionDetails>
     </Accordion>
-    :
+  ) : (
     <Accordion>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
@@ -80,20 +123,23 @@ export default function CompListItem(props) {
               Comp {props.i + 1}
             </Typography>
           </Grid>
-          <Grid item xs={8} className={classes['v-align']}> <LinearProgress /></Grid>
+          <Grid item xs={8} className={classes['v-align']}>
+            {' '}
+            <LinearProgress />
+          </Grid>
         </Grid>
       </AccordionSummary>
       <AccordionDetails>
         <CardContent>
-          <Typography variant='h5' component='h2'>
-          </Typography>    
-          <br/>
-          <Typography variant='h5' component='h2'>
-          </Typography>
-          <LinearProgress color='secondary'/>
+          <Typography variant='h5' component='h2'></Typography>
+          <br />
+          <Typography variant='h5' component='h2'></Typography>
+          <LinearProgress color='secondary' />
         </CardContent>
         <CardActions className={classes.root}>
-          <Button size='small' className='button'><CircularProgress/></Button>
+          <Button size='small' className='button'>
+            {/* <CircularProgress /> */}
+          </Button>
         </CardActions>
       </AccordionDetails>
     </Accordion>
