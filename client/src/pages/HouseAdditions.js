@@ -69,9 +69,9 @@ const nationalAverages = [
 export default function HouseAdditions() {
   const { user } = useContext(AuthContext);
   const classes = useStyles();
-  const spacing = useState(2);
+  // const spacing = useState(2);
   const [values, setValue] = useState(nationalAverages);
-  const [newValue, setNewValue] = useState([]);
+  // const [newValue, setNewValue] = useState([]);
   const [userHouse, setUserHouse] = useState({
     street: '',
     address: '',
