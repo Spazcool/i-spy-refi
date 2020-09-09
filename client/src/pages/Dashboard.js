@@ -30,6 +30,8 @@ function Home(props) {
 
   const [sqFeet, setSqFeet] = useState('');
 
+  let renovationHouseValue;
+
   useEffect(() => {
     fetchaddress();
   }, []);
@@ -42,17 +44,6 @@ function Home(props) {
     const [
       { street, state, city, formData, houseImage, building_size },
     ] = await houseinfoDB();
-
-    const data = {
-      street,
-      city,
-      state,
-      formData,
-      houseImage,
-      building_size,
-    };
-
-    console.log('data : ', data);
 
     //     // TODO THIS DATA WILL BE COMING FROMTHE DB
 
@@ -89,9 +80,6 @@ function Home(props) {
 
     setImage(houseImage);
 
-    console.log('image:', houseImage);
-    console.log('houseImage:', building_size);
-
     // FIRST API CALL //
 
     const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
@@ -118,8 +106,12 @@ function Home(props) {
         ? housearraymedian[mid]
         : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
 
-    const FinalHouseValue = building_size * housemedian;
+    
+    // RenovationHouseValue
+    renovationHouseValue = formData.renovationValue.value;
+    console.log('formvalue:', renovationHouseValue);
 
+    const FinalHouseValue = ((building_size * housemedian)+renovationHouseValue);
     settotalHouseValue(FinalHouseValue);
 
     // COMPS LOGIC //
