@@ -86,6 +86,7 @@ function Home(props) {
     };
 
     console.log('data : ', data);
+    console.log(data.zip);
     //     // TODO THIS DATA WILL BE COMING FROMTHE DB
 
     //     const formData = [
@@ -121,7 +122,12 @@ function Home(props) {
 
     const zpiddb = zpid;
 
-    /// FIRST API CALL ///
+    // GET Mortgage Rates Array
+    const addressZipApi = await realtor.getMortgageRates(zip);
+    const addressZip = addressZipApi.data.rates;
+    console.log(addressZip);
+
+    // Get Address Details API call
 
     const addressresponse = await realtor.getAddressDetails(zpiddb);
     const getimageurl = addressresponse.data.properties[0].photos[0].href;
@@ -135,7 +141,7 @@ function Home(props) {
       finishedsqFt = housebuildingsizeValid.building_size.size;
     }
 
-    // SECOND API CALL //
+    // Get Houses from Zip API call
 
     const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
 
