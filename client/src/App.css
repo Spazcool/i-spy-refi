@@ -112,3 +112,8 @@
   width: 500;
   height: 450;
 }
+
+.section-inner {
+  /* padding-top: 0px !important; */
+  /* padding-bottom: 80px; // TO DO delete */
+}

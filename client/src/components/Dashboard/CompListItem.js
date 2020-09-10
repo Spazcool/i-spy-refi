@@ -44,8 +44,27 @@ export default function CompListItem(props) {
     },
     overlay: {
       position: 'absolute',
-      top: '20px',
-      left: '20px',
+      top: '10%',
+      left: '10%',
+      color: 'white',
+      background: 'rgba(0, 0, 0, 0.5)',
+      padding: '3px',
+
+      // backgroundColor: 'white',
+    },
+  };
+  const stylesPrice = {
+    media: {
+      height: 0,
+      paddingTop: '.00%', // 16:9
+    },
+    card: {
+      position: 'relative',
+    },
+    overlay: {
+      position: 'absolute',
+      top: '30%',
+      left: '12%',
       color: 'white',
       background: 'rgba(0, 0, 0, 0.5)',
       padding: '3px',
@@ -81,7 +100,9 @@ export default function CompListItem(props) {
             {props.comp.address.street_number} {props.comp.address.street}{' '}
             {props.comp.address.street_suffix} {props.comp.address.city},{' '}
             {props.comp.address.state}
-            <>$ {props.comp.price}</>
+          </div>
+          <div style={stylesPrice.overlay}>
+            $ {props.comp.price.toLocaleString()}
           </div>
         </Typography>
         <div>
