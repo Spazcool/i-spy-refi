@@ -48,6 +48,8 @@ export default function CompListItem(props) {
       left: '20px',
       color: 'white',
       background: 'rgba(0, 0, 0, 0.5)',
+      padding: '3px',
+
       // backgroundColor: 'white',
     },
   };
@@ -69,7 +71,7 @@ export default function CompListItem(props) {
           {/* {props.comp.address.street_number} {props.comp.address.street}{' '}
           {props.comp.address.street_suffix} */}
           <CardMedia
-            className={classes.lazyImage}
+            // className={classes.lazyImage} // TODO not needed?
             className='media'
             component='img'
             image={props.comp.photos[0].href}
@@ -79,6 +81,7 @@ export default function CompListItem(props) {
             {props.comp.address.street_number} {props.comp.address.street}{' '}
             {props.comp.address.street_suffix} {props.comp.address.city},{' '}
             {props.comp.address.state}
+            <>$ {props.comp.price}</>
           </div>
         </Typography>
         <div>

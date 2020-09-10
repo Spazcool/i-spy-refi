@@ -39,15 +39,36 @@ export const realtor = {
       params: {
         input: `${params.street} ${params.city} ${params.zip} ${params.state}`,
       },
+    }).then((response) => {
+      console.log(response);
+      autoComplete = response;
+      return autoComplete;
+    });
+  },
+  // Gets mortgage rates based off address of Zip
+  async getMortgageRates(zipfirestore) {
+    let getZipAddress;
+    await axios({
+      method: 'GET',
+      url: 'https://realtor.p.rapidapi.com/finance/rates',
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'realtor.p.rapidapi.com',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+        useQueryString: true,
+      },
+      params: {
+        loc: `${zipfirestore}`,
+      },
     })
       .then((response) => {
-        console.log(response);
-        autoComplete = response;
+        getZipAddress = response;
       })
       .catch((error) => {
         console.log(error);
       });
-    return autoComplete;
+
+    return getZipAddress;
   },
 
   async gethousevalue(cityfirestore, statefirestore) {
