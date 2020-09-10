@@ -199,7 +199,7 @@ function Home(props) {
             component='h2'
             className='fontCinzelBlack'
           >
-            <h2 className='fontCinzelWhite'> House Assessment</h2>
+            <span className='fontCinzelWhite'> House Assessment</span>
           </Typography>
           <MyHouse
             className='card'
@@ -217,7 +217,7 @@ function Home(props) {
             align='center'
             variant='h4'
             component='h2'
-            class='fontCinzelWhite'
+            className='fontCinzelWhite'
           >
             Similar Homes
           </Typography>
