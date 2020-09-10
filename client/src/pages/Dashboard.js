@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { realtor } from '../api/realtor';
-import moment from 'moment'; //for fake data, can be removed or used elsewhere when the fake data is pulled out
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -16,17 +15,17 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import '../App.css';
 
 function Home(props) {
-  const { user } = useContext(AuthContext);
+  const { user, isAuth } = useContext(AuthContext);
   // DB
   const [hasHouse, setHasHouse] = useState(false);
   const [houseData, setHouseData] = useState({});
+  const [FormData, setFormData] = useState([]);
+  const [TrendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState([]);
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
-  const [formData, setFormData] = useState([]);
-  const [TrendingData, setTrendingData] = useState([]);
   const [compsList, setcompsList] = useState([]);
   const [PID, setPID] = useState('');
   const [description, setDescription] = useState('');
@@ -40,116 +39,12 @@ function Home(props) {
 
   let finishedsqFt;
 
-  useEffect(() => {
-    fetchaddress();
-  }, []);
-
-  const fetchaddress = async () => {
+  const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
 
-<<<<<<< HEAD
-    //   if (house.length > 0) {
-    //     const [{ street, state, city, zip, hid, formData, comps }] = house;
-    //     const data = {
-    //       street,
-    //       city,
-    //       state,
-    //       zip,
-    //       hid,
-    //       formData,
-    //       comps,
-    //     };
-    //     setHasHouse(true);
-    //     setHouseData(data);
-    //     setFormData(formData);
-    //     setTrendingData(comps);
-
-    //     return true;
-    //   }
-    //   return false;
-    // };
-
-    // User id is passed once the user login is completed
-    const [
-      { zpid, street, state, city, zip, hid, formData, comps },
-    ] = await houseinfoDB();
-
-    const data = {
-      zpid,
-      street,
-      city,
-      state,
-      zip,
-      hid,
-      formData,
-      comps,
-    };
-
-    console.log('data : ', data);
-    console.log(data.zip);
-    console.log(data);
-    //     // TODO THIS DATA WILL BE COMING FROMTHE DB
-
-    //     const formData = [
-    //       { country: 'Russia', value: 8765 },
-    //       { country: 'Canada', value: 7 },
-    //       { country: 'USA', value: 7 },
-    //       { country: 'China', value: 7 },
-    //       { country: 'Brazil', value: 6 },
-    //       { country: 'Australia', value: 5 },
-    //       { country: 'India', value: 2 },
-    //       { country: 'Others', value: 55 },
-    //     ];
-
-    //     setFormData(formData);
-
-    //     setTrendingData([
-    //       { date: moment().subtract(30, 'days').format('DD-MM-YY'), value: 87654 },
-    //       { date: moment().subtract(20, 'days').format('DD-MM-YY'), value: 45678 },
-    //       {
-    //         date: moment().subtract(10, 'days').format('DD-MM-YY'),
-    //         value: 1234567,
-    //       },
-    //       { date: moment().format('DD-MM-YY'), value: 1098765 },
-    //     ]);
-
-    const statedb = state;
-    setstatedisplay(statedb);
-    const citydb = city;
-    setcitydisplay(citydb);
-
-    const streetdb = street;
-    setstreetdisplay(streetdb);
-    // set Form data to be passed
-    setFormData(data);
-
-    // setFormData(data.formData);
-    // console.log(data.FormData);
-    // console.log(setFormData);
-
-    const zpiddb = zpid;
-
-    // GET Mortgage Rates Array
-    const addressZipApi = await realtor.getMortgageRates(zip);
-    const addressZip = addressZipApi.data.rates;
-    console.log(addressZip);
-
-    // Get Address Details API call
-
-    const addressresponse = await realtor.getAddressDetails(zpiddb);
-    const getimageurl = addressresponse.data.properties[0].photos[0].href;
-    setImage(getimageurl);
-
-    let housebuildingsizeValid = addressresponse.data.properties[0];
-    if (
-      housebuildingsizeValid.hasOwnProperty('building_size') &&
-      housebuildingsizeValid.building_size.size > 0
-    ) {
-      finishedsqFt = housebuildingsizeValid.building_size.size;
-=======
     if (house.length > 0) {
-      const [{ street, state, city, zip, hid, zpid,formData, comps }] = house;
+      const [{ street, state, city, zip, hid, zpid, formData, comps }] = house;
       const data = {
         street,
         city,
@@ -171,25 +66,21 @@ function Home(props) {
 
       // return true;
       return data;
->>>>>>> db617a9028250f9aee607f71506e99821134be6e
     }
+    return false;
+  };
 
-<<<<<<< HEAD
-    // Get Houses from Zip API call
-
-    const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
-=======
   const checkHasHouseInAPI = async (house) => {
-    console.log(house)
-    const getAddress = async() => await realtor.getAddressDetails(house.zpid);
+    console.log(house);
+    const getAddress = async () => await realtor.getAddressDetails(house.zpid);
     const addressResponse = await getAddress();
-    console.log(addressResponse)
+    console.log(addressResponse);
 
-    if(addressResponse !== undefined){
-      console.log(addressResponse)
+    if (addressResponse !== undefined) {
+      console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
-  
+
       let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
         housebuildingsizeValid.hasOwnProperty('building_size') &&
@@ -205,22 +96,22 @@ function Home(props) {
 
   const checkHouseCompsInAPI = async (address) => {
     const { city, state_code } = address.data.properties[0].address;
-    console.log(address)
-    console.log(address.data.properties[0].address.city)
-    console.log(address.data.properties[0].address.state_code)
+    console.log(address);
+    console.log(address.data.properties[0].address.city);
+    console.log(address.data.properties[0].address.state_code);
 
     const gethouseResponse = await realtor.gethousevalue(city, state_code);
-    if(gethouseResponse !== undefined){
-      findTotalHouseValue(gethouseResponse)
-      setCompsListFromAPI(gethouseResponse.data.properties)
+    if (gethouseResponse !== undefined) {
+      findTotalHouseValue(gethouseResponse);
+      setCompsListFromAPI(gethouseResponse.data.properties);
       return true;
     }
     return false;
-  }
->>>>>>> db617a9028250f9aee607f71506e99821134be6e
+  };
 
+  const findTotalHouseValue = (list) => {
     let houseprice_array = [];
-    let responsehouses = gethouseResponse.data.properties;
+    let responsehouses = list.data.properties;
 
     responsehouses.forEach((responsehouse) => {
       //   console.log('responsehouse', responsehouse);
@@ -247,36 +138,29 @@ function Home(props) {
     const FinalHouseValue = finishedsqFt * housemedian;
 
     settotalHouseValue(FinalHouseValue);
+  };
 
-    // COMPS LOGIC //
+  const setCompsListFromAPI = (properties) => {
     let compsarray = [];
 
     for (let i = 0; i < 10; i++) {
-      compsarray.push(gethouseResponse.data.properties[i]);
-
-<<<<<<< HEAD
-      // console.log(compsarray);
+      compsarray.push(properties[i]);
     }
-    setcompsList(compsarray);
-  };
-  console.log('dashboardcomp:', compsList);
-=======
+
     setcompsList(compsarray);
     console.log('dashboardcomp:', compsList);
-  }
+  };
 
   const fetchAllData = async () => {
     checkHasHouseInDB()
-    .then((res) => {
-      checkHasHouseInAPI(res)
-      .then((resp) => {
-        checkHouseCompsInAPI(resp)
+      .then((res) => {
+        checkHasHouseInAPI(res)
+          .then((resp) => {
+            checkHouseCompsInAPI(resp);
+          })
+          .catch((err) => console.log('broke api house', err));
       })
-      .catch((err) => console.log('broke api house', err))
-    })
-    .catch((err) => console.log('broke hosue db', err))
-
-
+      .catch((err) => console.log('broke hosue db', err));
 
     // if(await checkHasHouseInDB() === false){
     //   console.log('user deosnt have a house in db')
@@ -293,24 +177,23 @@ function Home(props) {
     // }else{
     //   console.log('house has comps')
     // }
-  }
+  };
 
   useEffect(() => {
-    if(isAuth){
+    if (isAuth) {
       fetchAllData();
-    }else{
+    } else {
       //todo error toast
     }
   }, []);
 
->>>>>>> db617a9028250f9aee607f71506e99821134be6e
   return (
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-          <Typography align='center' variant='h4' component='h2'>
-            House Assessment
+          <Typography variant='h4' component='h2'>
+            My House
           </Typography>
           <MyHouse
             className='card'
@@ -319,14 +202,13 @@ function Home(props) {
             state={statedisplay}
             imageData={imageData}
             value={totalHouseValue}
-            formData={formData}
           />
         </Grid>
 
         {/* --------------- COMPS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
-          <Typography variant='h5' component='h2'>
-            Similar Properties
+          <Typography variant='h4' component='h2'>
+            Comps
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
@@ -348,4 +230,5 @@ function Home(props) {
     </Container>
   );
 }
+
 export default Home;
