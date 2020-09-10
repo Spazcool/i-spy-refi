@@ -138,7 +138,7 @@ export default function HouseAdditions() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const inputHouseCreds = {
       city: userHouse.city,
@@ -147,7 +147,7 @@ export default function HouseAdditions() {
       state: userHouse.state,
     };
     console.log(inputHouseCreds);
-    setUserHouse(inputHouseCreds);
+    await setUserHouse(inputHouseCreds);
     afterSubmit();
   };
 
