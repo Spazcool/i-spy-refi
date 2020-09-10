@@ -21,12 +21,12 @@ export const light = {
 export const dark = {
   palette: {
     type: 'dark',
-    // primary: {
-    // main: '#000',
-    // },
-    // secondary: {
-      // main: 
-    // }
+    primary: {
+      main: '#437779',
+    },
+    secondary: {
+      main: '#437779',
+    },
   },
 };
 
