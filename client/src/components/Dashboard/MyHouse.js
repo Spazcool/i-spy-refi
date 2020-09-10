@@ -83,7 +83,6 @@ export default withRouter(function MyHouse(props) {
   return loaded ? (
     <Paper className='card-radius box-shadow'>
       <Card className='card-radius-top'>
-        <CardActionArea>
           <CardMedia
             component='img'
             image={props.imageData}
@@ -117,7 +116,6 @@ export default withRouter(function MyHouse(props) {
               {props.description}
             </Typography> */}
           </CardContent>
-        </CardActionArea>
       </Card>
       <Accordion className='card-radius-bottom'>
         <AccordionSummary

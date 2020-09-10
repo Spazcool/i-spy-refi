@@ -52,7 +52,7 @@ body {
 }
 
 .media {
-  height: 150px;
+  height: 70px;
 }
 
 .navbar {
@@ -126,6 +126,10 @@ body {
   border-radius: 0 0 30px 30px !important;
 }
 
+.block {
+  display: block !important;
+}
+
 .box-shadow {
   box-shadow: 3px 3px 3px #437779 !important;
 }
@@ -150,4 +154,12 @@ body {
 .section-inner {
   /* padding-top: 0px !important; */
   /* padding-bottom: 80px; // TO DO delete */
+}
+
+.chart {
+  padding-top: 20px;
+}
+
+.house-icon {
+  
 }
