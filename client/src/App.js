@@ -8,12 +8,11 @@ import {
 } from 'react-router-dom';
 
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
-// import { CustomThemeProvider } from './providers/ThemeProvider'; //TODO DELETE
+import { CustomThemeProvider } from './providers/ThemeProvider'; //TODO DELETE
 
 // import { useLocation } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ScrollReveal from './utils/ScrollReveal';
-import ReactGA from 'react-ga';
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
 // Views
@@ -104,11 +103,10 @@ const App = () => {
 export default () => {
   return (
     <AuthProvider>
-      {/* <CustomThemeProvider> // TODO Delete */}
-      {/* <CssBaseline /> // TODO ERASE - was overwriting color */}
-      {/* <LayoutDefault /> */}
-      <App />
-      {/* </CustomThemeProvider> */}
+      <CustomThemeProvider>
+        <CssBaseline />
+        <App />
+      </CustomThemeProvider>
     </AuthProvider>
   );
 };

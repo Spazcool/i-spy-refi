@@ -13,6 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
+import Image from 'material-ui-image';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -33,6 +34,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompListItem(props) {
+  const styles = {
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    card: {
+      position: 'relative',
+    },
+    overlay: {
+      position: 'absolute',
+      top: '20px',
+      left: '20px',
+      color: 'white',
+      background: 'rgba(0, 0, 0, 0.5)',
+      padding: '3px',
+
+      // backgroundColor: 'white',
+    },
+  };
   const classes = useStyles();
   return props.comp ? (
     <Accordion>
@@ -48,15 +68,25 @@ export default function CompListItem(props) {
         id='panel1a-header'
       >
         <Typography color='textSecondary' gutterBottom>
-          {props.comp.address.street_number} {props.comp.address.street}{' '}
-          {props.comp.address.street_suffix}
+          {/* {props.comp.address.street_number} {props.comp.address.street}{' '}
+          {props.comp.address.street_suffix} */}
           <CardMedia
-            className={classes.lazyImage}
+            // className={classes.lazyImage} // TODO not needed?
+            className='media'
             component='img'
             image={props.comp.photos[0].href}
             title='My House'
           />
+          <div style={styles.overlay}>
+            {props.comp.address.street_number} {props.comp.address.street}{' '}
+            {props.comp.address.street_suffix} {props.comp.address.city},{' '}
+            {props.comp.address.state}
+            <>$ {props.comp.price}</>
+          </div>
         </Typography>
+        <div>
+          <Image src={props.comp.photos[0].href} />
+        </div>
       </AccordionSummary>
 
       <AccordionDetails>
@@ -77,9 +107,9 @@ export default function CompListItem(props) {
           </Typography>
         </CardContent>
         <CardActions className={classes.root}>
-          <Button size='small' className='button'>
+          {/* <Button size='small' className='button'>
             <CircularProgress />
-          </Button>
+          </Button> */}
         </CardActions>
       </AccordionDetails>
     </Accordion>
@@ -111,7 +141,7 @@ export default function CompListItem(props) {
         </CardContent>
         <CardActions className={classes.root}>
           <Button size='small' className='button'>
-            <CircularProgress />
+            {/* <CircularProgress /> */}
           </Button>
         </CardActions>
       </AccordionDetails>
