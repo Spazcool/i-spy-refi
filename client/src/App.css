@@ -1,3 +1,41 @@
+@font-face {
+  font-family: 'Cinzel';
+  src: url(../../client/src/assets/fonts/Cinzel/Cinzel-VariableFont_wght.ttf);
+}
+
+h4 {
+  font-family: 'Cinzel';
+  margin: 0;
+  color: #437779;
+  /* font-size: 4vw; */
+  /* text-shadow: 1px 1px 2px orange; */
+}
+
+body {
+  font-family: 'Cinzel';
+  margin: 0;
+  /* font-size: 4vw; */
+  /* text-shadow: 1px 1px 2px orange; */
+}
+
+.fontCinzelWhite {
+  font-family: 'Cinzel';
+  margin: 0;
+  color: #437779;
+  /* font-size: 4vw; */
+  text-shadow: 1px 1px 2px white;
+  text-align: center;
+}
+
+.fontCinzelBlack {
+  font-family: 'Cinzel';
+  margin: 0;
+  color: #437779;
+  /* font-size: 4vw; */
+  text-shadow: 1px 1px 2px black;
+  text-align: center;
+}
+
 .signup {
   padding-top: 50px;
 }
@@ -111,4 +149,9 @@
   display: block;
   width: 500;
   height: 450;
+}
+
+.section-inner {
+  /* padding-top: 0px !important; */
+  /* padding-bottom: 80px; // TO DO delete */
 }

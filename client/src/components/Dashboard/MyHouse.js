@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-
+import '../../../src/App.css';
+// import '../../assets/scss/style.scss';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -37,12 +38,34 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
   },
 }));
+
+const styles = {
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  card: {
+    position: 'relative',
+  },
+  overlay: {
+    position: 'absolute',
+    top: '40%',
+    left: '10%',
+    color: 'white',
+    background: 'rgba(0, 0, 0, 0.5)',
+    padding: '3px',
+
+    // backgroundColor: 'white',
+  },
+};
+
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
 
   const checkLoaded = () => {
     const { imageData, street, description, value } = props;
+    console.log(props);
     if (value) {
       //presumes value will take the longest to load
       setLoaded(true);
@@ -52,6 +75,10 @@ export default withRouter(function MyHouse(props) {
   useEffect(() => {
     checkLoaded();
   }, [props]);
+
+  console.log(props);
+  // const renovationCost = props.formData.formData;
+  // console.log(renovationCost);
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
@@ -64,19 +91,32 @@ export default withRouter(function MyHouse(props) {
             title='My House'
           />
           <CardContent className={classes.block}>
-            <Typography variant='h5' component='h2'>
+            <h4 className='fontCinzelBlack'>
               {props.street}, {props.city}, {props.state}
+            </h4>
+            {/* <Typography variant='h5' component='h4'>
+              {props.street}, {props.city}, {props.state}
+            </Typography> */}
+            <Typography variant='body2' component='p'>
+              {' '}
+              $ {props.value.toLocaleString()} I Spy Refi Estimate
             </Typography>
-
-            <h4>Value</h4>
-            <Typography variant='body1' component='p'>
-              $ {props.value}
+            <Typography variant='body2' component='p'>
+              {' '}
+              $ {props.value.toLocaleString()} Renovation Additions
             </Typography>
-
+            <Typography variant='body3' component='h5'>
+              {' '}
+              $ {props.value.toLocaleString()} Final House Assessment Value
+            </Typography>
+            <Typography variant='body3' component='p'>
+              {/* Home Renovation Value $ {renovationCost} */}
+            </Typography>
+            {/* 
             <h4>Description/Details</h4>
             <Typography variant='body2' component='p'>
               {props.description}
-            </Typography>
+            </Typography> */}
           </CardContent>
         </CardActionArea>
       </Card>
@@ -87,21 +127,14 @@ export default withRouter(function MyHouse(props) {
           id='panel1a-header'
         >
           <Typography color='textSecondary' gutterBottom>
-            View Stats
+            View/Update renovations
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <CardContent>
             <Typography color='textSecondary' gutterBottom></Typography>
             <Typography variant='h5' component='h2'>
-              {props.street}, {props.city}, {props.state}
-            </Typography>
-            <Typography variant='h5' component='h2'>
-              $ {props.value}
-            </Typography>
-            <Typography color='textSecondary'>{props.description}</Typography>
-            <Typography variant='body2' component='p'>
-              {/* Last Sold Date:{props.lastSoldDate} */}
+              reno data
             </Typography>
           </CardContent>
           <CardActions className={classes.root}>
@@ -113,7 +146,7 @@ export default withRouter(function MyHouse(props) {
                 props.history.push('/additions');
               }}
             >
-              Update Stats
+              Update Renovation Info
             </Button>
           </CardActions>
         </AccordionDetails>
@@ -126,9 +159,8 @@ export default withRouter(function MyHouse(props) {
           <CardMedia className={classes.lazyImage} title='My House'>
             <CircularProgress className={'mt-4'} />
           </CardMedia>
-          <CardContent>
-            <h4>Value</h4>
-            <h4>Description/Details</h4>
+          <CardContent align='center'>
+            <h4>Calculating House Assessment</h4>
             <LinearProgress />
           </CardContent>
         </CardActionArea>
@@ -139,14 +171,12 @@ export default withRouter(function MyHouse(props) {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography color='textSecondary' gutterBottom>
-            View Stats
-          </Typography>
+          <Typography color='textSecondary' gutterBottom></Typography>
         </AccordionSummary>
         <AccordionDetails>
           <CardActions className={classes.root}>
             <Button size='small' className='button'>
-              Update Stats
+              Update home renovation
             </Button>
           </CardActions>
         </AccordionDetails>

@@ -65,7 +65,7 @@ const Hero = ({
                 <Image
                   // className='has-shadow'
                   // src={require('./../../assets/logo/logo_white_background.jpg')}
-                  src={require('./../../assets/logo/logo_transparent_background.png')}
+                  src={require('./../../assets/logo/ispy.png')}
                   // src={require('./../../assets/logo/white_logo_color_background.jpg')}
                   alt='logo'
                   width={896}
@@ -82,12 +82,7 @@ const Hero = ({
               </p>
               <div className='reveal-from-bottom' data-reveal-delay='600'>
                 <ButtonGroup>
-                  <Button
-                    tag='a'
-                    color='primary'
-                    wideMobile
-                    href='/HouseAdditions'
-                  >
+                  <Button tag='a' color='primary' wideMobile href='/additions'>
                     Get Started Now
                   </Button>
                   {/* //TODO DELETE */}

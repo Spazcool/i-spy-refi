@@ -25,7 +25,7 @@ export const DB = {
           '',
           '',
           false,
-          ''
+          db.FieldValue.serverTimestamp()
         );
       } else {
         const { email, firstName, lastName } = additionalData;
@@ -38,7 +38,7 @@ export const DB = {
           lastName,
           '',
           false,
-          ''
+          db.FieldValue.serverTimestamp()
         );
       }
 
@@ -59,7 +59,7 @@ export const DB = {
 
   async createHouse(userID, houseData) {
     let message = { message: 'house already exists' };
-
+    // get.getHouseByOwner
     const houseRef = db().doc(`houses/${houseData.hid}`);
     const snapshot = await houseRef.get();
 
@@ -90,13 +90,23 @@ export const DB = {
         street,
         comps,
         formData,
+<<<<<<< HEAD
         lastUpdated,
         building_size,
         houseImage,
+=======
+        db.FieldValue.serverTimestamp()
+>>>>>>> 5df374b734ce7665a7e90bc483904a7f612ebdf2
       );
+      const mergeData = {};
 
+      for (const property in data.getHouseData()) {
+        if (data[property] !== undefined) {
+          mergeData[property] = data[property];
+        }
+      }
       try {
-        houseRef.set(data.getHouseData(), { merge: true });
+        houseRef.set(mergeData, { merge: true });
         message = { message: 'success' };
       } catch (error) {
         message = { message: error };
@@ -114,7 +124,9 @@ export const DB = {
     try {
       returnedUser = await user.get();
     } catch (err) {
-      console.error(err);
+      returnedUser = { message: `Error loading user: ${err}.` };
+
+      // console.error(err);
     }
     const userObj = await returnedUser;
     const {
@@ -290,6 +302,7 @@ export const DB = {
     const housesArr = [];
     const houses = await returnedHouses;
 
+<<<<<<< HEAD
     houses.forEach(async (house) => {
       const {
         hid,
@@ -324,6 +337,41 @@ export const DB = {
 
       housesArr.push(data.getHouseData());
     });
+=======
+    if(!houses.message){
+      houses.forEach(async (house) => {
+        const {
+          hid,
+          zpid,
+          location,
+          user,
+          zip,
+          state,
+          city,
+          street,
+          comps,
+          formData,
+          lastUpdated,
+        } = house.data();
+        const data = new House(
+          hid,
+          zpid,
+          user,
+          location,
+          zip,
+          state,
+          city,
+          street,
+          comps,
+          formData,
+          lastUpdated
+        );
+  
+        housesArr.push(data.getHouseData());
+      });
+    }
+   
+>>>>>>> 5df374b734ce7665a7e90bc483904a7f612ebdf2
     return housesArr;
   },
 
@@ -353,7 +401,7 @@ export const DB = {
         lastName,
         zpid,
         admin,
-        lastUpdated
+        db.FieldValue.serverTimestamp()
       );
       const mergeObj = {};
       const Obj = data.getUserData();
