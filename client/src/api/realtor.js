@@ -3,6 +3,8 @@ require('dotenv').config();
 
 export const realtor = {
   async getAddressDetails(propertyid) {
+    console.log(propertyid)
+    console.log(`${propertyid}`)
     let getaddressResponse;
     await axios({
       method: 'GET',
@@ -25,9 +27,10 @@ export const realtor = {
       });
     return getaddressResponse;
   },
+
   async autoCompleteApi(params) {
     let autoComplete;
-    await axios({
+    return axios({
       method: 'GET',
       url: 'https://realtor.p.rapidapi.com/locations/auto-complete',
       headers: {
@@ -49,6 +52,7 @@ export const realtor = {
       });
     return autoComplete;
   },
+
   // Gets mortgage rates based off address of Zip
   async getMortgageRates(zipfirestore) {
     let getZipAddress;
