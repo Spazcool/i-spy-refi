@@ -43,6 +43,7 @@ export default withRouter(function MyHouse(props) {
 
   const checkLoaded = () => {
     const { imageData, street, description, value } = props;
+    console.log(props);
     if (value) {
       //presumes value will take the longest to load
       setLoaded(true);

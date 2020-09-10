@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { shadows } from '@material-ui/system';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -56,7 +57,7 @@ export default function CompListItem(props) {
   const stylesPrice = {
     media: {
       height: 0,
-      paddingTop: '.00%', // 16:9
+      paddingTop: '56.25%', // 16:9
     },
     card: {
       position: 'relative',
@@ -92,18 +93,12 @@ export default function CompListItem(props) {
   const classes = useStyles();
   return props.comp ? (
     <Accordion>
-      {/* <CardMedia
-        className={classes.lazyImage}
-        component='img'
-        //image={props.comps.photos[0].href}
-        title='My Comps'
-      /> */}
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Typography color='textSecondary' gutterBottom>
+        <Typography boxShadow={3} color='textSecondary' gutterBottom>
           {/* {props.comp.address.street_number} {props.comp.address.street}{' '}
           {props.comp.address.street_suffix} */}
           <CardMedia
@@ -123,7 +118,7 @@ export default function CompListItem(props) {
           </div>
         </Typography>
         <div>
-          <Image src={props.comp.photos[0].href} />
+          <Image boxShadow={1} src={props.comp.photos[0].href} />
         </div>
       </AccordionSummary>
 
@@ -131,7 +126,7 @@ export default function CompListItem(props) {
         <CardContent style={stylesDetails.overlay}>
           {/* <Typography color='textSecondary' gutterBottom></Typography> */}
           {/* <Typography variant='h5' component='h2'> */}
-          <Typography color='#437779'>Additonal Details</Typography>
+          <Typography color='#secondary'>Additonal Details</Typography>
 
           {/* </Typography> */}
           {/* <Typography variant='h5' component='h2'>
@@ -162,31 +157,18 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
-            <Typography color='textSecondary' gutterBottom>
-              Comp {props.i + 1}
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Typography align='center' color='textSecondary' gutterBottom>
+              Pulling Similar Property
             </Typography>
           </Grid>
-          <Grid item xs={8} className={classes['v-align']}>
+          <Grid item xs={12} className={classes['v-align']}>
             {' '}
             <LinearProgress />
           </Grid>
         </Grid>
       </AccordionSummary>
-      <AccordionDetails>
-        <CardContent>
-          <Typography variant='h5' component='h2'></Typography>
-          <br />
-          <Typography variant='h5' component='h2'></Typography>
-          <LinearProgress color='secondary' />
-        </CardContent>
-        <CardActions className={classes.root}>
-          <Button size='small' className='button'>
-            {/* <CircularProgress /> */}
-          </Button>
-        </CardActions>
-      </AccordionDetails>
     </Accordion>
   );
 }

@@ -190,8 +190,8 @@ function Home(props) {
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-          <Typography variant='h4' component='h2'>
-            Home Assessment
+          <Typography align='center' variant='h4' component='h2'>
+            House Assessment
           </Typography>
           <MyHouse
             className='card'
