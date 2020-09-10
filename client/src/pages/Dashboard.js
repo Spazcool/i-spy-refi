@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { realtor } from '../api/realtor';
-
+import '../../src/App.css';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +15,7 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import '../App.css';
 
 function Home(props) {
+  console.log(props);
   const { user, isAuth } = useContext(AuthContext);
   // DB
   const [hasHouse, setHasHouse] = useState(false);
@@ -55,7 +56,7 @@ function Home(props) {
         formData,
         comps,
       };
-
+      console.log(formData);
       setHasHouse(true);
       setHouseData(data);
       setFormData(formData);
@@ -192,8 +193,13 @@ function Home(props) {
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-          <Typography variant='h4' component='h2'>
-            My House
+          <Typography
+            align='center'
+            variant='h4'
+            component='h2'
+            className='fontCinzelBlack'
+          >
+            <h2 className='fontCinzelWhite'> House Assessment</h2>
           </Typography>
           <MyHouse
             className='card'
@@ -207,8 +213,13 @@ function Home(props) {
 
         {/* --------------- COMPS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
-          <Typography variant='h4' component='h2'>
-            Comps
+          <Typography
+            align='center'
+            variant='h4'
+            component='h2'
+            class='fontCinzelWhite'
+          >
+            Similar Homes
           </Typography>
           <CompList compslist={compsList} />
         </Grid>

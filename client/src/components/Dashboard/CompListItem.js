@@ -1,5 +1,6 @@
 import React from 'react';
-
+import '../../../src/App.css';
+// import '../../assets/scss/style.scss';
 import { shadows } from '@material-ui/system';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompListItem(props) {
+  console.log(props);
   const styles = {
     media: {
       height: 0,
@@ -60,7 +62,7 @@ export default function CompListItem(props) {
       paddingTop: '56.25%', // 16:9
     },
     card: {
-      position: 'relative',
+      position: 'center',
     },
     overlay: {
       position: 'absolute',
@@ -84,9 +86,8 @@ export default function CompListItem(props) {
       //   top: '40%',
       //   left: '10%',
       //   color: 'white',
-      background: '#437779',
+      // background: '#437779', // Sets background color of Additional Details
       //   padding: '3px',
-
       // backgroundColor: '#437779',
     },
   };
@@ -118,36 +119,39 @@ export default function CompListItem(props) {
           </div>
         </Typography>
         <div>
-          <Image boxShadow={1} src={props.comp.photos[0].href} />
+          <Image boxShadow={5} src={props.comp.photos[0].href} />
         </div>
       </AccordionSummary>
 
       <AccordionDetails>
         <CardContent style={stylesDetails.overlay}>
-          {/* <Typography color='textSecondary' gutterBottom></Typography> */}
-          {/* <Typography variant='h5' component='h2'> */}
-          <Typography color='#secondary'>Additonal Details</Typography>
-
-          {/* </Typography> */}
-          {/* <Typography variant='h5' component='h2'>
-            $ {props.comp.price}
-          </Typography> */}
-          <Typography variant='body2' component='p'>
-            - House Size: {props.comp.building_size.size.toLocaleString()} sqft
-          </Typography>
-          <Typography variant='body2' component='p'>
-            - Baths {props.comp.baths}
-          </Typography>
-          <Typography variant='body2' component='p'>
-            - Beds: {props.comp.beds}
-          </Typography>
-          <Typography variant='body2' component='p'>
-            - Property Type: {props.comp.prop_type}
-          </Typography>
+          <Grid item xs={12}>
+            <Typography className='fontCinzelBlack '>
+              Additonal Details
+            </Typography>
+            <Typography
+              variant='body2'
+              color='textSecondary'
+              component='p'
+              className='fontCinzel'
+            >
+              House Size: {props.comp.building_size.size.toLocaleString()} sqft
+            </Typography>
+            <Typography variant='body2' color='textSecondary' component='p'>
+              Baths {props.comp.baths}
+            </Typography>
+            <Typography variant='body2' color='textSecondary' component='p'>
+              Beds: {props.comp.beds}
+            </Typography>
+            <Typography variant='body2' color='textSecondary' component='p'>
+              Property Type: {props.comp.prop_type}
+            </Typography>
+            <Typography variant='body2' color='textSecondary' component='p'>
+              Year Built: {props.comp.year_built}
+            </Typography>
+          </Grid>
         </CardContent>
-        {/* <CardActions className={classes.root}>
-  
-        </CardActions> */}
+        {/* <CardActions className={classes.root}></CardActions> */}
       </AccordionDetails>
     </Accordion>
   ) : (
@@ -157,7 +161,7 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Grid container spacing={1}>
+        <Grid container spacing={12}>
           <Grid item xs={12}>
             <Typography align='center' color='textSecondary' gutterBottom>
               Pulling Similar Property
