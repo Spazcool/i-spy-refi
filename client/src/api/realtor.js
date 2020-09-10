@@ -25,9 +25,33 @@ export const realtor = {
       });
     return getaddressResponse;
   },
+  async autoCompleteApi(params) {
+    let autoComplete;
+    await axios({
+      method: 'GET',
+      url: 'https://realtor.p.rapidapi.com/locations/auto-complete',
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'realtor.p.rapidapi.com',
+        'x-rapidapi-key': '1768c0c17amsh8d6bab5e9fe23ffp1f4c9ajsna6b8dd6f9e86',
+        useQueryString: true,
+      },
+      params: {
+        input: `${params.street} ${params.city} ${params.zip} ${params.state}`,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        autoComplete = response;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return autoComplete;
+  },
 
   async gethousevalue(cityfirestore, statefirestore) {
-    let houseresponse;
+    let houseResponse;
     await axios({
       method: 'GET',
       url: 'https://realtor.p.rapidapi.com/properties/v2/list-sold',
@@ -46,12 +70,13 @@ export const realtor = {
       },
     })
       .then((response) => {
-        houseresponse = response;
+        console.log(response);
+        houseResponse = response;
       })
       .catch((error) => {
         console.log(error);
       });
-    return houseresponse;
+    return houseResponse;
   },
 
   //   async getComps(cityfirestoreComps, statefirestoreComps) {
