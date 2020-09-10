@@ -48,6 +48,7 @@ function Home(props) {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
 
+<<<<<<< HEAD
     //   if (house.length > 0) {
     //     const [{ street, state, city, zip, hid, formData, comps }] = house;
     //     const data = {
@@ -146,11 +147,77 @@ function Home(props) {
       housebuildingsizeValid.building_size.size > 0
     ) {
       finishedsqFt = housebuildingsizeValid.building_size.size;
+=======
+    if (house.length > 0) {
+      const [{ street, state, city, zip, hid, zpid,formData, comps }] = house;
+      const data = {
+        street,
+        city,
+        state,
+        zip,
+        hid,
+        zpid,
+        formData,
+        comps,
+      };
+
+      setHasHouse(true);
+      setHouseData(data);
+      setFormData(formData);
+      setTrendingData(comps);
+      setstreetdisplay(data.street);
+      setstatedisplay(data.state);
+      setcitydisplay(data.city);
+
+      // return true;
+      return data;
+>>>>>>> db617a9028250f9aee607f71506e99821134be6e
     }
 
+<<<<<<< HEAD
     // Get Houses from Zip API call
 
     const gethouseResponse = await realtor.gethousevalue(citydb, statedb);
+=======
+  const checkHasHouseInAPI = async (house) => {
+    console.log(house)
+    const getAddress = async() => await realtor.getAddressDetails(house.zpid);
+    const addressResponse = await getAddress();
+    console.log(addressResponse)
+
+    if(addressResponse !== undefined){
+      console.log(addressResponse)
+      const getimageurl = addressResponse.data.properties[0].photos[0].href;
+      setImage(getimageurl);
+  
+      let housebuildingsizeValid = addressResponse.data.properties[0];
+      if (
+        housebuildingsizeValid.hasOwnProperty('building_size') &&
+        housebuildingsizeValid.building_size.size > 0
+      ) {
+        finishedsqFt = housebuildingsizeValid.building_size.size;
+      }
+      return addressResponse;
+      // return true;
+    }
+    return false;
+  };
+
+  const checkHouseCompsInAPI = async (address) => {
+    const { city, state_code } = address.data.properties[0].address;
+    console.log(address)
+    console.log(address.data.properties[0].address.city)
+    console.log(address.data.properties[0].address.state_code)
+
+    const gethouseResponse = await realtor.gethousevalue(city, state_code);
+    if(gethouseResponse !== undefined){
+      findTotalHouseValue(gethouseResponse)
+      setCompsListFromAPI(gethouseResponse.data.properties)
+      return true;
+    }
+    return false;
+  }
+>>>>>>> db617a9028250f9aee607f71506e99821134be6e
 
     let houseprice_array = [];
     let responsehouses = gethouseResponse.data.properties;
@@ -187,11 +254,56 @@ function Home(props) {
     for (let i = 0; i < 10; i++) {
       compsarray.push(gethouseResponse.data.properties[i]);
 
+<<<<<<< HEAD
       // console.log(compsarray);
     }
     setcompsList(compsarray);
   };
   console.log('dashboardcomp:', compsList);
+=======
+    setcompsList(compsarray);
+    console.log('dashboardcomp:', compsList);
+  }
+
+  const fetchAllData = async () => {
+    checkHasHouseInDB()
+    .then((res) => {
+      checkHasHouseInAPI(res)
+      .then((resp) => {
+        checkHouseCompsInAPI(resp)
+      })
+      .catch((err) => console.log('broke api house', err))
+    })
+    .catch((err) => console.log('broke hosue db', err))
+
+
+
+    // if(await checkHasHouseInDB() === false){
+    //   console.log('user deosnt have a house in db')
+    // }else{
+    //   console.log('user has house in db')
+    // }
+    // if(await checkHasHouseInAPI() === false){
+    //   console.log('user deosnt have a house in API')
+    // }else{
+    //   console.log('user has hous in api')
+    // }
+    // if(await checkHouseCompsInAPI() === false){
+    //   console.log('user doesnt have comps')
+    // }else{
+    //   console.log('house has comps')
+    // }
+  }
+
+  useEffect(() => {
+    if(isAuth){
+      fetchAllData();
+    }else{
+      //todo error toast
+    }
+  }, []);
+
+>>>>>>> db617a9028250f9aee607f71506e99821134be6e
   return (
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
@@ -224,13 +336,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={FormData} />
+          {/* <FormChart data={FormData} /> */}
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={TrendingData} />
+          {/* <TrendingChart data={TrendingData} /> */}
         </Grid>
       </Grid>
     </Container>
