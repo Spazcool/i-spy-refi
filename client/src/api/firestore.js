@@ -59,7 +59,7 @@ export const DB = {
 
   async createHouse(userID, houseData) {
     let message = { message: 'house already exists' };
-
+    // get.getHouseByOwner
     const houseRef = db().doc(`houses/${houseData.hid}`);
     const snapshot = await houseRef.get();
 
@@ -90,9 +90,15 @@ export const DB = {
         formData,
         db.FieldValue.serverTimestamp()
       );
+      const mergeData = {};
 
+      for (const property in data.getHouseData()) {
+        if (data[property] !== undefined) {
+          mergeData[property] = data[property];
+        }
+      }
       try {
-        houseRef.set(data.getHouseData(), { merge: true });
+        houseRef.set(mergeData, { merge: true });
         message = { message: 'success' };
       } catch (error) {
         message = { message: error };

@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
+
 import { zillow } from '../api/zillow.js'; // todo swap out this for Steffi's fix
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { v4 as uuidv4 } from 'uuid';
 
+import { realtor } from '../api/realtor';
 import AddHouse from '../components/HouseAdditions/AddHouse';
 import AddRenos from '../components/HouseAdditions/AddRenos';
 
@@ -89,7 +91,16 @@ export default function HouseAdditions() {
     attic: 0,
     deck_patio_porch: 0,
   });
-
+  const [userZpid, setUserZpid] = useState('');
+  useEffect(() => {
+    fetchHouse();
+  }, [userHouse]);
+  const fetchHouse = async () => {
+    const house = async () => await DB.getHouseByOwner(user.user.uid);
+    const [userHouse] = await house();
+    userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
+    console.log(userHouse);
+  };
   const handleOnClick = (event) => {
     const returnedTarget = Object.assign(radios);
     returnedTarget[event.target.name] = parseFloat(event.target.value);
@@ -110,7 +121,7 @@ export default function HouseAdditions() {
     formData.push(totalValue);
 
     const data = {
-      zpid: '3972249581', //todo grab the zpid from someplace
+      zpid: userZpid[0].zpid,
       formData,
     };
     const house = async () => await DB.updateHouse(data);
@@ -140,7 +151,7 @@ export default function HouseAdditions() {
     afterSubmit();
   };
 
-  const afterSubmit = () => {
+  const afterSubmit = async () => {
     // const url = 'http:localhost:5000/GetSearchResults';
     const params = {
       street: userHouse.street.toLowerCase(),
@@ -153,60 +164,57 @@ export default function HouseAdditions() {
       //   userHouse.zip
       // ),
     };
-    // zillow.getaddress(params).then((response) => {
-    //   console.log(response);
-    //   // console.log(response[0].address);
-    //   // console.log(response[0].zpid);
-    //   // let address = response[0].address;
-    //   // let zpid = response[0].zpid;
+    const autoCompleteResponse = await realtor.autoCompleteApi(params);
 
-    //   let houseData = {
-    //     hid: uuidv4(),
-    //     zpid: response[0].zpid,
-    //     latitude: response[0].address.latitude,
-    //     longitude: response[0].address.longitude,
-    //     zip: response[0].address.zipcode,
-    //     state: response[0].address.state,
-    //     city: response[0].address.city,
-    //     street: response[0].address.street,
-    //     comps: '',
-    //     formData: '',
-    //     lastUpdated: '',
-    //   };
-    //   // console.log(houseData[0].address);
-    //   // console.log(houseData[1].zpid);
-    //   console.log(houseData);
-    //   DB.createHouse(user.user.uid, houseData);
-    // });
+    const { mpr_id, centroid } = autoCompleteResponse.data.autocomplete[0];
+
+    console.log(mpr_id);
+
+    setUserZpid(mpr_id);
+
+    const data = {
+      zip: autoCompleteResponse.data.autocomplete[0].postal_code,
+      state: autoCompleteResponse.data.autocomplete[0].state_code,
+      city: autoCompleteResponse.data.autocomplete[0].city,
+      street: autoCompleteResponse.data.autocomplete[0].line,
+      // comps,
+      // formData,
+      // lastUpdated,
+      hid: mpr_id,
+      // hid: user.user.uid
+      zpid: mpr_id,
+      latitude: centroid.lat,
+      longitude: centroid.lon,
+    };
+    DB.createHouse(user.user.uid, data);
   };
 
-  return (
-    !isAuth ? 
-      <Redirect to='/login' />
-    :
-    (
+  return !isAuth ? (
+    <Redirect to='/login' />
+  ) : (
     <Grid
       container
       justify='center'
       spacing={2}
       className={classes.alignContent}
     >
-      <Grid item xs={12}>
-        <AddHouse
-          userHouse={userHouse}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <AddRenos
-          handleOnClick={handleOnClick}
-          handleSubmitCalc={handleSubmitCalc}
-          values={values}
-        />
-      </Grid>
+      {userHouse.hid !== undefined ? (
+        <Grid item xs={12}>
+          <AddHouse
+            userHouse={userHouse}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+          />
+        </Grid>
+      ) : (
+        <Grid item xs={12}>
+          <AddRenos
+            handleOnClick={handleOnClick}
+            handleSubmitCalc={handleSubmitCalc}
+            values={values}
+          />
+        </Grid>
+      )}
     </Grid>
-    )
   );
 }
