@@ -2,20 +2,34 @@ import React, { useState } from 'react';
 import { auth } from "../firebase";
 import LoginGoogle from '../components/LoginGoogle';
 
-import Form from 'react-bootstrap/Form';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
+
 import EmailIcon from '@material-ui/icons/Email';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    display: 'flex',
+    flexWrap: 'wrap',
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: '25ch',
   },
   control: {
     'padding-left': theme.spacing(1),
+  },
+  right: {
+    float: 'right',
+    marginTop: '1em'
   },
 }));
 
@@ -49,27 +63,49 @@ const LoginOptions = props => {
           console.error("Error signing in with password and email", error);
         });
     };
+
     return (
-      <Form onSubmit={handleFormSubmit}>
-        <Form.Group controlId="emailInput">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange} />
-        </Form.Group>
-        <Form.Group controlId="inputPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange} />
-        </Form.Group>
-        <Form.Group>
-            <Form.Text className="text-danger">
-                {credsAreInvalid}
-            </Form.Text>
-        </Form.Group>
-        <Button className='m-1' type="submit" variant="contained" >
-          <span className="flip"><EmailIcon /></span>
-          <span className={classes.control}>Sign-In</span>
-        </Button>
-        <LoginGoogle/>
-      </Form>
+      <Grid
+        container
+        justify='center'
+        spacing={2}
+      >
+        <Grid item xs={12}>        
+          <form onSubmit={handleFormSubmit}>
+            <Typography>Sign in with your Email:</Typography>
+            <FormControl>
+              <InputLabel htmlFor="my-input">Email address</InputLabel>
+              <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange}/>
+              <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
+            </FormControl>
+
+            <FormControl>
+              <InputLabel htmlFor="my-input">Password</InputLabel>
+              <Input className={classes.textField}id="my-input" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password" value={formData.emailInput} onChange={handleInputChange}/>
+            </FormControl>
+
+            <FormControl>
+              <FormHelperText className="text-danger" id="my-helper-text"> {credsAreInvalid}</FormHelperText>
+            </FormControl>
+
+            <span className={classes.right} >
+              <Button type="submit" variant="contained" >
+                <span className="flip"><EmailIcon /></span>
+                <span className={classes.control}>Sign-In</span>
+              </Button>
+            </span>
+          </form>
+        </Grid>
+
+          <Grid item xs={12}>        
+            <form>
+              <Typography>Sign in with your Google account:</Typography>
+              <span className={classes.right}>
+                <LoginGoogle/>
+              </span>
+            </form>
+          </Grid>
+      </Grid>
     )
 }
 
