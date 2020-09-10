@@ -66,12 +66,14 @@ function User(props) {
   const [userData, setUserData] = useState('');
 
   useEffect(() => {
-    fetchUser();
-    //example code below
-    fetchUsers();
-    fetchHouse();
-    fetchHouses();
-  }, []);
+    if(isAuth){
+      fetchUser();
+      //example code below
+      fetchUsers();
+      fetchHouse();
+      fetchHouses();
+    }
+  }, [isAuth]);
 
   // -------------------- GET THE THINGS --------------------
   const fetchUser = async() => {

@@ -13,7 +13,6 @@ import { CustomThemeProvider } from './providers/ThemeProvider'; //TODO DELETE
 // import { useLocation } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ScrollReveal from './utils/ScrollReveal';
-import ReactGA from 'react-ga';
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
 // Views
@@ -22,9 +21,10 @@ import Dashboard from './pages/Dashboard';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import User from './pages/User';
+import HouseAdditions from './pages/HouseAdditions';
+
 // import Splash from './pages/Splash';  // TODO DELETE
 import Navbar from './components/Navbar'; // TODO DELETE
-import HouseAdditions from './pages/HouseAdditions';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 const App = () => {
@@ -60,11 +60,6 @@ const App = () => {
                   component={Home}
                   layout={LayoutDefault}
                 />
-                {/* <Route
-                  exact
-                  path='/'
-                  render={(props) => <Splash {...props} />}
-                /> */}
                 <Route
                   exact
                   path='/login'
@@ -103,37 +98,12 @@ const App = () => {
         </Router>
       )}
     />
-    // <Router> //TODO DELETE
-    //   <>
-    //     <Navbar className="navbar" />
-    //     <Switch>
-    //       <Route exact path='/' render={(props) => <Splash {...props} />} />
-    //       <Route exact path='/login' render={(props) => <Login {...props} />} />
-    //       <Route
-    //         exact
-    //         path='/signup'
-    //         render={(props) => <Signup {...props} />}
-    //       />
-    //       {/* <PrivateRoute exact path='/houses' component={Houses} /> */}
-    //       <PrivateRoute
-    //         exact
-    //         path='/additions'
-    //         component={HouseAdditions}
-    //       />
-    //       {/* <Route exact path='/signup' render={(props) => <Signup {...props} />} /> */}
-    //       <PrivateRoute exact path='/dashboard' component={Dashboard} />
-    //       <PrivateRoute exact path='/user' component={User} />
-    //     </Switch>
-    //   </>
-    // </Router>
-  );
-};
+  )};
 
 export default () => {
   return (
     <AuthProvider>
       <CustomThemeProvider>
-        {' '}
         <CssBaseline />
         <App />
       </CustomThemeProvider>

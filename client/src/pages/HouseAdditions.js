@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
+
 import { zillow } from '../api/zillow.js'; // todo swap out this for Steffi's fix
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
@@ -69,7 +70,7 @@ const nationalAverages = [
 ];
 
 export default function HouseAdditions() {
-  const { user } = useContext(AuthContext);
+  const { user, isAuth } = useContext(AuthContext);
   const classes = useStyles();
   // const spacing = useState(2);
   const [values, setValue] = useState(nationalAverages);
@@ -188,7 +189,9 @@ export default function HouseAdditions() {
     DB.createHouse(user.user.uid, data);
   };
 
-  return (
+  return !isAuth ? (
+    <Redirect to='/login' />
+  ) : (
     <Grid
       container
       justify='center'

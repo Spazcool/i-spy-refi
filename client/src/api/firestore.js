@@ -25,7 +25,7 @@ export const DB = {
           '',
           '',
           false,
-          ''
+          db.FieldValue.serverTimestamp()
         );
       } else {
         const { email, firstName, lastName } = additionalData;
@@ -38,7 +38,7 @@ export const DB = {
           lastName,
           '',
           false,
-          ''
+          db.FieldValue.serverTimestamp()
         );
       }
 
@@ -88,7 +88,7 @@ export const DB = {
         street,
         comps,
         formData,
-        lastUpdated
+        db.FieldValue.serverTimestamp()
       );
       const mergeData = {};
 
@@ -116,7 +116,9 @@ export const DB = {
     try {
       returnedUser = await user.get();
     } catch (err) {
-      console.error(err);
+      returnedUser = { message: `Error loading user: ${err}.` };
+
+      // console.error(err);
     }
     const userObj = await returnedUser;
     const {
@@ -286,36 +288,39 @@ export const DB = {
     const housesArr = [];
     const houses = await returnedHouses;
 
-    houses.forEach(async (house) => {
-      const {
-        hid,
-        zpid,
-        location,
-        user,
-        zip,
-        state,
-        city,
-        street,
-        comps,
-        formData,
-        lastUpdated,
-      } = house.data();
-      const data = new House(
-        hid,
-        zpid,
-        user,
-        location,
-        zip,
-        state,
-        city,
-        street,
-        comps,
-        formData,
-        lastUpdated
-      );
-
-      housesArr.push(data.getHouseData());
-    });
+    if(!houses.message){
+      houses.forEach(async (house) => {
+        const {
+          hid,
+          zpid,
+          location,
+          user,
+          zip,
+          state,
+          city,
+          street,
+          comps,
+          formData,
+          lastUpdated,
+        } = house.data();
+        const data = new House(
+          hid,
+          zpid,
+          user,
+          location,
+          zip,
+          state,
+          city,
+          street,
+          comps,
+          formData,
+          lastUpdated
+        );
+  
+        housesArr.push(data.getHouseData());
+      });
+    }
+   
     return housesArr;
   },
 
@@ -346,7 +351,7 @@ export const DB = {
         lastName,
         zpid,
         admin,
-        lastUpdated
+        db.FieldValue.serverTimestamp()
       );
       const mergeObj = {};
       const Obj = data.getUserData();
