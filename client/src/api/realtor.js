@@ -3,8 +3,8 @@ require('dotenv').config();
 
 export const realtor = {
   async getAddressDetails(propertyid) {
-    console.log(propertyid)
-    console.log(`${propertyid}`)
+    console.log(propertyid);
+    console.log(`${propertyid}`);
     let getaddressResponse;
     await axios({
       method: 'GET',
@@ -30,7 +30,7 @@ export const realtor = {
 
   async autoCompleteApi(params) {
     let autoComplete;
-    return axios({
+    await axios({
       method: 'GET',
       url: 'https://realtor.p.rapidapi.com/locations/auto-complete',
       headers: {
