@@ -207,23 +207,23 @@ export default function HouseAdditions() {
       spacing={2}
       className={classes.alignContent}
     >
-      {/* {userHouse.hid !== undefined ? ( */}
-      <Grid item xs={12}>
-        <AddHouse
-          userHouse={userHouse}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-        />
-      </Grid>
-      {/* ) : ( */}
-      <Grid item xs={12}>
-        <AddRenos
-          handleOnClick={handleOnClick}
-          handleSubmitCalc={handleSubmitCalc}
-          values={values}
-        />
-      </Grid>
-      {/* )} */}
+      {userHouse.hid !== undefined ? (
+        <Grid item xs={12}>
+          <AddHouse
+            userHouse={userHouse}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+          />
+        </Grid>
+      ) : (
+        <Grid item xs={12}>
+          <AddRenos
+            handleOnClick={handleOnClick}
+            handleSubmitCalc={handleSubmitCalc}
+            values={values}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 }
