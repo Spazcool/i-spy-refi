@@ -106,12 +106,11 @@ function Home(props) {
         ? housearraymedian[mid]
         : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
 
-    
     // RenovationHouseValue
     renovationHouseValue = formData.renovationValue.value;
     console.log('formvalue:', renovationHouseValue);
 
-    const FinalHouseValue = ((building_size * housemedian)+renovationHouseValue);
+    const FinalHouseValue = building_size * housemedian + renovationHouseValue;
     settotalHouseValue(FinalHouseValue);
 
     // COMPS LOGIC //
