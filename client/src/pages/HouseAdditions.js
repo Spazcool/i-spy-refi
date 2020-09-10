@@ -1,12 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 
-import { zillow } from '../api/zillow.js'; // todo swap out this for Steffi's fix
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
-import { v4 as uuidv4 } from 'uuid';
-
 import { realtor } from '../api/realtor';
+
 import AddHouse from '../components/HouseAdditions/AddHouse';
 import AddRenos from '../components/HouseAdditions/AddRenos';
 
@@ -21,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const nationalAverages = [
-  //jsut fo the commit
   {
     id: 'kitchen',
     minor: { value: '14600', type: 'minor' },
@@ -72,9 +69,8 @@ const nationalAverages = [
 export default function HouseAdditions() {
   const { user, isAuth } = useContext(AuthContext);
   const classes = useStyles();
-  // const spacing = useState(2);
   const [values, setValue] = useState(nationalAverages);
-  // const [newValue, setNewValue] = useState([]);
+  const [userZpid, setUserZpid] = useState('');
   const [userHouse, setUserHouse] = useState({
     street: '',
     address: '',
@@ -91,16 +87,18 @@ export default function HouseAdditions() {
     attic: 0,
     deck_patio_porch: 0,
   });
-  const [userZpid, setUserZpid] = useState('');
+  
   useEffect(() => {
     fetchHouse();
-  }, [userHouse]);
+  }, []);
+
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
     console.log(userHouse);
   };
+
   const handleOnClick = (event) => {
     const returnedTarget = Object.assign(radios);
     returnedTarget[event.target.name] = parseFloat(event.target.value);
@@ -110,23 +108,29 @@ export default function HouseAdditions() {
 
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
-    let totalValue = 0;
-    for (const room in radios) {
-      totalValue += radios[room];
+    if(userZpid !== ''){
+      let totalValue = 0;
+      for (const room in radios) {
+        totalValue += radios[room];
+      }
+      let formData = [];
+      for (const room in radios) {
+        formData.push({ room: room, value: radios[room] });
+      }
+      formData.push(totalValue);
+  
+      const data = {
+        zpid: userZpid[0].zpid,
+        formData,
+      };
+      const house = async () => await DB.updateHouse(data);
+      const updatedHouse = await house();
+      console.log(updatedHouse); 
+      //todo make this a toast, can grabe the message for the toast from this updatedHouse
+      // toast reading updated house successfully
     }
-    let formData = [];
-    for (const room in radios) {
-      formData.push({ room: room, value: radios[room] });
-    }
-    formData.push(totalValue);
-
-    const data = {
-      zpid: userZpid[0].zpid,
-      formData,
-    };
-    const house = async () => await DB.updateHouse(data);
-    const updatedHouse = await house();
-    console.log(updatedHouse); //todo make this a toast, can grabe the message for the toast from this updatedHouse
+    console.log('no house to add these too')
+    // todo toast, sorry you aint got a house bro, go do that
   };
 
   const handleInputChange = (event) => {
@@ -152,20 +156,15 @@ export default function HouseAdditions() {
   };
 
   const afterSubmit = async () => {
-    // const url = 'http:localhost:5000/GetSearchResults';
     const params = {
       street: userHouse.street.toLowerCase(),
       city: userHouse.city.toLowerCase(),
       state: userHouse.state.toLowerCase(),
       zip: userHouse.zip.toLowerCase(),
-      // citystatezip: encodeURIComponent(
-      //   userHouse.city,
-      //   userHouse.state,
-      //   userHouse.zip
-      // ),
     };
-    const autoCompleteResponse = await realtor.autoCompleteApi(params);
-
+    console.log(params)
+    const autoComplete = async () => await realtor.autoCompleteApi(params);
+    const autoCompleteResponse = await autoComplete();
     const { mpr_id, centroid } = autoCompleteResponse.data.autocomplete[0];
 
     console.log(mpr_id);
@@ -186,7 +185,17 @@ export default function HouseAdditions() {
       latitude: centroid.lat,
       longitude: centroid.lon,
     };
-    DB.createHouse(user.user.uid, data);
+
+    const createdHouse = async() => await DB.createHouse(user.user.uid, data);
+    const response = await createdHouse();
+
+    if(response.message === 'success'){
+      console.log('house creaed')
+      //todo add toast
+    }else{
+      //todo something broke
+      console.log('you broke something:', response.message)
+    }
   };
 
   return !isAuth ? (
@@ -198,7 +207,7 @@ export default function HouseAdditions() {
       spacing={2}
       className={classes.alignContent}
     >
-      {userHouse.hid !== undefined ? (
+      {/* {userHouse.hid !== undefined ? ( */}
         <Grid item xs={12}>
           <AddHouse
             userHouse={userHouse}
@@ -206,7 +215,7 @@ export default function HouseAdditions() {
             handleSubmit={handleSubmit}
           />
         </Grid>
-      ) : (
+      {/* ) : ( */}
         <Grid item xs={12}>
           <AddRenos
             handleOnClick={handleOnClick}
@@ -214,7 +223,7 @@ export default function HouseAdditions() {
             values={values}
           />
         </Grid>
-      )}
+      {/* )} */}
     </Grid>
   );
 }

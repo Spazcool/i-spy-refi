@@ -44,13 +44,14 @@ function Home(props) {
     const house = await houseinfoDB();
 
     if (house.length > 0) {
-      const [{ street, state, city, zip, hid, formData, comps }] = house;
+      const [{ street, state, city, zip, hid, zpid,formData, comps }] = house;
       const data = {
         street,
         city,
         state,
         zip,
         hid,
+        zpid,
         formData,
         comps,
       };
@@ -63,32 +64,43 @@ function Home(props) {
       setstatedisplay(data.state);
       setcitydisplay(data.city);
 
-      return true;
+      // return true;
+      return data;
     }
     return false;
   };
 
-  const checkHasHouseInAPI = async () => {
-    const addressresponse = await realtor.getAddressDetails(houseData.mpr_id);
-    if(addressresponse !== undefined){
-      console.log(addressresponse)
-      const getimageurl = addressresponse.data.properties[0].photos[0].href;
+  const checkHasHouseInAPI = async (house) => {
+    console.log(house)
+    const getAddress = async() => await realtor.getAddressDetails(house.zpid);
+    const addressResponse = await getAddress();
+    console.log(addressResponse)
+
+    if(addressResponse !== undefined){
+      console.log(addressResponse)
+      const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
   
-      let housebuildingsizeValid = addressresponse.data.properties[0];
+      let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
         housebuildingsizeValid.hasOwnProperty('building_size') &&
         housebuildingsizeValid.building_size.size > 0
       ) {
         finishedsqFt = housebuildingsizeValid.building_size.size;
       }
-      return true;
+      return addressResponse;
+      // return true;
     }
     return false;
   };
 
-  const checkHouseCompsInAPI = async () => {
-    const gethouseResponse = await realtor.gethousevalue(citydisplay, statedisplay);
+  const checkHouseCompsInAPI = async (address) => {
+    const { city, state_code } = address.data.properties[0].address;
+    console.log(address)
+    console.log(address.data.properties[0].address.city)
+    console.log(address.data.properties[0].address.state_code)
+
+    const gethouseResponse = await realtor.gethousevalue(city, state_code);
     if(gethouseResponse !== undefined){
       findTotalHouseValue(gethouseResponse)
       setCompsListFromAPI(gethouseResponse.data.properties)
@@ -140,15 +152,33 @@ function Home(props) {
   }
 
   const fetchAllData = async () => {
-    if(await checkHasHouseInDB() === false){
-      console.log('user deosnt have a house in db')
-    }
-    if(await checkHasHouseInAPI() === false){
-      console.log('user deosnt have a house in API')
-    }
-    if(await checkHouseCompsInAPI() === false){
-      console.log('user doesnt have comps')
-    }
+    checkHasHouseInDB()
+    .then((res) => {
+      checkHasHouseInAPI(res)
+      .then((resp) => {
+        checkHouseCompsInAPI(resp)
+      })
+      .catch((err) => console.log('broke api house', err))
+    })
+    .catch((err) => console.log('broke hosue db', err))
+
+
+
+    // if(await checkHasHouseInDB() === false){
+    //   console.log('user deosnt have a house in db')
+    // }else{
+    //   console.log('user has house in db')
+    // }
+    // if(await checkHasHouseInAPI() === false){
+    //   console.log('user deosnt have a house in API')
+    // }else{
+    //   console.log('user has hous in api')
+    // }
+    // if(await checkHouseCompsInAPI() === false){
+    //   console.log('user doesnt have comps')
+    // }else{
+    //   console.log('house has comps')
+    // }
   }
 
   useEffect(() => {
@@ -190,13 +220,13 @@ function Home(props) {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography>
-          <FormChart data={FormData} />
+          {/* <FormChart data={FormData} /> */}
         </Grid>
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
-          <TrendingChart data={TrendingData} />
+          {/* <TrendingChart data={TrendingData} /> */}
         </Grid>
       </Grid>
     </Container>
