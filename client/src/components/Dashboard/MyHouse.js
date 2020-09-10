@@ -53,6 +53,9 @@ export default withRouter(function MyHouse(props) {
   useEffect(() => {
     checkLoaded();
   }, [props]);
+  console.log(props.formData);
+  const renovationCost = props.formData.formData;
+  console.log(renovationCost);
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
@@ -65,19 +68,32 @@ export default withRouter(function MyHouse(props) {
             title='My House'
           />
           <CardContent className={classes.block}>
-            <Typography variant='h5' component='h2'>
+            <h4>
               {props.street}, {props.city}, {props.state}
+            </h4>
+            {/* <Typography variant='h5' component='h4'>
+              {props.street}, {props.city}, {props.state}
+            </Typography> */}
+            <Typography variant='body2' component='p'>
+              {' '}
+              - $ {props.value.toLocaleString()} I Spy Refi Estimate
             </Typography>
-
-            <h4>Value</h4>
-            <Typography variant='body1' component='p'>
-              $ {props.value}
+            <Typography variant='body2' component='p'>
+              {' '}
+              - $ {props.value.toLocaleString()} Renovation Additions
             </Typography>
-
+            <Typography variant='body3' component='h5'>
+              {' '}
+              - $ {props.value.toLocaleString()} Final House Assessment Value
+            </Typography>
+            <Typography variant='body3' component='p'>
+              {/* Home Renovation Value $ {renovationCost} */}
+            </Typography>
+            {/* 
             <h4>Description/Details</h4>
             <Typography variant='body2' component='p'>
               {props.description}
-            </Typography>
+            </Typography> */}
           </CardContent>
         </CardActionArea>
       </Card>

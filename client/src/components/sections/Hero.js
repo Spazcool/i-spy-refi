@@ -82,12 +82,7 @@ const Hero = ({
               </p>
               <div className='reveal-from-bottom' data-reveal-delay='600'>
                 <ButtonGroup>
-                  <Button
-                    tag='a'
-                    color='primary'
-                    wideMobile
-                    href='/additions'
-                  >
+                  <Button tag='a' color='primary' wideMobile href='/additions'>
                     Get Started Now
                   </Button>
                   {/* //TODO DELETE */}
