@@ -99,7 +99,7 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Typography boxShadow={3} color='textSecondary' gutterBottom>
+        <Typography color='textSecondary' gutterBottom>
           {/* {props.comp.address.street_number} {props.comp.address.street}{' '}
           {props.comp.address.street_suffix} */}
           <CardMedia
@@ -109,18 +109,18 @@ export default function CompListItem(props) {
             image={props.comp.photos[0].href}
             title='My Comps'
           />
-          <div style={styles.overlay}>
+          <span style={styles.overlay}>
             {props.comp.address.street_number} {props.comp.address.street}{' '}
             {props.comp.address.street_suffix} {props.comp.address.city},{' '}
             {props.comp.address.state}
-          </div>
-          <div style={stylesPrice.overlay}>
+          </span>
+          <span style={stylesPrice.overlay}>
             $ {props.comp.price.toLocaleString()}
-          </div>
+          </span>
         </Typography>
-        <div>
-          <Image boxShadow={5} src={props.comp.photos[0].href} />
-        </div>
+        <span>
+          <Image src={props.comp.photos[0].href} />
+        </span>
       </AccordionSummary>
 
       <AccordionDetails>
@@ -161,7 +161,7 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Grid container spacing={12}>
+        <Grid container spacing={10}>
           <Grid item xs={12}>
             <Typography align='center' color='textSecondary' gutterBottom>
               Pulling Similar Property

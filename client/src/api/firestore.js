@@ -106,6 +106,9 @@ export const DB = {
         message = { message: error };
         console.error('Error creating house document', error);
       }
+
+      const addHouseToUser = async() => await this.updateUser(userID, {zpid});
+      await addHouseToUser();
     }
 
     return message;
