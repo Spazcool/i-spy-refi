@@ -87,7 +87,7 @@ export default function HouseAdditions() {
     attic: 0,
     deck_patio_porch: 0,
   });
-  
+
   useEffect(() => {
     fetchHouse();
   }, []);
@@ -108,7 +108,7 @@ export default function HouseAdditions() {
 
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
-    if(userZpid !== ''){
+    if (userZpid !== '') {
       let totalValue = 0;
       for (const room in radios) {
         totalValue += radios[room];
@@ -118,18 +118,18 @@ export default function HouseAdditions() {
         formData.push({ room: room, value: radios[room] });
       }
       formData.push(totalValue);
-  
+
       const data = {
         zpid: userZpid[0].zpid,
         formData,
       };
       const house = async () => await DB.updateHouse(data);
       const updatedHouse = await house();
-      console.log(updatedHouse); 
+      console.log(updatedHouse);
       //todo make this a toast, can grabe the message for the toast from this updatedHouse
       // toast reading updated house successfully
     }
-    console.log('no house to add these too')
+    console.log('no house to add these too');
     // todo toast, sorry you aint got a house bro, go do that
   };
 
@@ -162,7 +162,7 @@ export default function HouseAdditions() {
       state: userHouse.state.toLowerCase(),
       zip: userHouse.zip.toLowerCase(),
     };
-    console.log(params)
+    console.log(params);
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
     const { mpr_id, centroid } = autoCompleteResponse.data.autocomplete[0];
@@ -186,15 +186,15 @@ export default function HouseAdditions() {
       longitude: centroid.lon,
     };
 
-    const createdHouse = async() => await DB.createHouse(user.user.uid, data);
+    const createdHouse = async () => await DB.createHouse(user.user.uid, data);
     const response = await createdHouse();
 
-    if(response.message === 'success'){
-      console.log('house creaed')
+    if (response.message === 'success') {
+      console.log('house creaed');
       //todo add toast
-    }else{
+    } else {
       //todo something broke
-      console.log('you broke something:', response.message)
+      console.log('you broke something:', response.message);
     }
   };
 
@@ -208,21 +208,21 @@ export default function HouseAdditions() {
       className={classes.alignContent}
     >
       {/* {userHouse.hid !== undefined ? ( */}
-        <Grid item xs={12}>
-          <AddHouse
-            userHouse={userHouse}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
-          />
-        </Grid>
+      <Grid item xs={12}>
+        <AddHouse
+          userHouse={userHouse}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
+      </Grid>
       {/* ) : ( */}
-        <Grid item xs={12}>
-          <AddRenos
-            handleOnClick={handleOnClick}
-            handleSubmitCalc={handleSubmitCalc}
-            values={values}
-          />
-        </Grid>
+      <Grid item xs={12}>
+        <AddRenos
+          handleOnClick={handleOnClick}
+          handleSubmitCalc={handleSubmitCalc}
+          values={values}
+        />
+      </Grid>
       {/* )} */}
     </Grid>
   );

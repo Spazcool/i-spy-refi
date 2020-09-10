@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { realtor } from '../api/realtor';
-
+import '../../src/App.css';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +15,7 @@ import TrendingChart from '../components/Dashboard/TrendingChart';
 import '../App.css';
 
 function Home(props) {
+  console.log(props);
   const { user, isAuth } = useContext(AuthContext);
   // DB
   const [hasHouse, setHasHouse] = useState(false);
@@ -44,7 +45,7 @@ function Home(props) {
     const house = await houseinfoDB();
 
     if (house.length > 0) {
-      const [{ street, state, city, zip, hid, zpid,formData, comps }] = house;
+      const [{ street, state, city, zip, hid, zpid, formData, comps }] = house;
       const data = {
         street,
         city,
@@ -55,7 +56,7 @@ function Home(props) {
         formData,
         comps,
       };
-
+      console.log(formData);
       setHasHouse(true);
       setHouseData(data);
       setFormData(formData);
@@ -71,16 +72,16 @@ function Home(props) {
   };
 
   const checkHasHouseInAPI = async (house) => {
-    console.log(house)
-    const getAddress = async() => await realtor.getAddressDetails(house.zpid);
+    console.log(house);
+    const getAddress = async () => await realtor.getAddressDetails(house.zpid);
     const addressResponse = await getAddress();
-    console.log(addressResponse)
+    console.log(addressResponse);
 
-    if(addressResponse !== undefined){
-      console.log(addressResponse)
+    if (addressResponse !== undefined) {
+      console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
-  
+
       let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
         housebuildingsizeValid.hasOwnProperty('building_size') &&
@@ -96,18 +97,18 @@ function Home(props) {
 
   const checkHouseCompsInAPI = async (address) => {
     const { city, state_code } = address.data.properties[0].address;
-    console.log(address)
-    console.log(address.data.properties[0].address.city)
-    console.log(address.data.properties[0].address.state_code)
+    console.log(address);
+    console.log(address.data.properties[0].address.city);
+    console.log(address.data.properties[0].address.state_code);
 
     const gethouseResponse = await realtor.gethousevalue(city, state_code);
-    if(gethouseResponse !== undefined){
-      findTotalHouseValue(gethouseResponse)
-      setCompsListFromAPI(gethouseResponse.data.properties)
+    if (gethouseResponse !== undefined) {
+      findTotalHouseValue(gethouseResponse);
+      setCompsListFromAPI(gethouseResponse.data.properties);
       return true;
     }
     return false;
-  }
+  };
 
   const findTotalHouseValue = (list) => {
     let houseprice_array = [];
@@ -138,7 +139,7 @@ function Home(props) {
     const FinalHouseValue = finishedsqFt * housemedian;
 
     settotalHouseValue(FinalHouseValue);
-  }
+  };
 
   const setCompsListFromAPI = (properties) => {
     let compsarray = [];
@@ -149,20 +150,18 @@ function Home(props) {
 
     setcompsList(compsarray);
     console.log('dashboardcomp:', compsList);
-  }
+  };
 
   const fetchAllData = async () => {
     checkHasHouseInDB()
-    .then((res) => {
-      checkHasHouseInAPI(res)
-      .then((resp) => {
-        checkHouseCompsInAPI(resp)
+      .then((res) => {
+        checkHasHouseInAPI(res)
+          .then((resp) => {
+            checkHouseCompsInAPI(resp);
+          })
+          .catch((err) => console.log('broke api house', err));
       })
-      .catch((err) => console.log('broke api house', err))
-    })
-    .catch((err) => console.log('broke hosue db', err))
-
-
+      .catch((err) => console.log('broke hosue db', err));
 
     // if(await checkHasHouseInDB() === false){
     //   console.log('user deosnt have a house in db')
@@ -179,12 +178,12 @@ function Home(props) {
     // }else{
     //   console.log('house has comps')
     // }
-  }
+  };
 
   useEffect(() => {
-    if(isAuth){
+    if (isAuth) {
       fetchAllData();
-    }else{
+    } else {
       //todo error toast
     }
   }, []);
@@ -194,8 +193,13 @@ function Home(props) {
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-          <Typography variant='h4' component='h2'>
-            My House
+          <Typography
+            align='center'
+            variant='h4'
+            component='h2'
+            className='fontCinzelBlack'
+          >
+            <h2 className='fontCinzelWhite'> House Assessment</h2>
           </Typography>
           <MyHouse
             className='card'
@@ -209,8 +213,13 @@ function Home(props) {
 
         {/* --------------- COMPS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
-          <Typography variant='h4' component='h2'>
-            Comps
+          <Typography
+            align='center'
+            variant='h4'
+            component='h2'
+            class='fontCinzelWhite'
+          >
+            Similar Homes
           </Typography>
           <CompList compslist={compsList} />
         </Grid>

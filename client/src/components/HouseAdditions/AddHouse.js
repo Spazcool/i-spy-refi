@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     padding: '1em',
     width: '25%',
+    color: '#437779',
   },
 }));
 
