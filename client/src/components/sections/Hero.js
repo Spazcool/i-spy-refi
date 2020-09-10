@@ -86,7 +86,7 @@ const Hero = ({
                     tag='a'
                     color='primary'
                     wideMobile
-                    href='/HouseAdditions'
+                    href='/additions'
                   >
                     Get Started Now
                   </Button>
