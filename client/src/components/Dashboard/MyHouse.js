@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(2),
     },
   },
-  lazyImage: {
-    width: '100%',
-    'max-height': '300px',
-    alignItems: 'center',
-    justifyContent: 'center',
-    display: 'flex',
-  },
+  // lazyImage: {
+  //   width: '100%',
+  //   'max-height': '300px',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   display: 'flex',
+  // },
   block: {
     display: 'block',
   },
@@ -82,10 +82,9 @@ export default withRouter(function MyHouse(props) {
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
-      <Card className='card-radius'>
+      <Card className='card-radius-top'>
         <CardActionArea>
           <CardMedia
-            className={classes.lazyImage}
             component='img'
             image={props.imageData}
             title='My House'
