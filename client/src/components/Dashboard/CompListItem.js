@@ -63,13 +63,30 @@ export default function CompListItem(props) {
     },
     overlay: {
       position: 'absolute',
-      top: '30%',
-      left: '12%',
+      top: '40%',
+      left: '10%',
       color: 'white',
       background: 'rgba(0, 0, 0, 0.5)',
       padding: '3px',
 
       // backgroundColor: 'white',
+    },
+  };
+  const stylesDetails = {
+    // media: {
+    //   height: 0,
+    //   paddingTop: '.00%', // 16:9
+    // },
+
+    overlay: {
+      //   position: 'absolute',
+      //   top: '40%',
+      //   left: '10%',
+      //   color: 'white',
+      background: '#437779',
+      //   padding: '3px',
+
+      // backgroundColor: '#437779',
     },
   };
   const classes = useStyles();
@@ -111,27 +128,31 @@ export default function CompListItem(props) {
       </AccordionSummary>
 
       <AccordionDetails>
-        <CardContent>
-          <Typography color='textSecondary' gutterBottom></Typography>
-          <Typography variant='h5' component='h2'>
-            {props.comp.address.street_number} {props.comp.address.street}{' '}
-            {props.comp.address.street_suffix}
-          </Typography>
-          <Typography variant='h5' component='h2'>
+        <CardContent style={stylesDetails.overlay}>
+          {/* <Typography color='textSecondary' gutterBottom></Typography> */}
+          {/* <Typography variant='h5' component='h2'> */}
+          <Typography color='#437779'>Additonal Details</Typography>
+
+          {/* </Typography> */}
+          {/* <Typography variant='h5' component='h2'>
             $ {props.comp.price}
-          </Typography>
-          <Typography color='textSecondary'>
-            {props.comp.address.city}, {props.comp.address.state},
+          </Typography> */}
+          <Typography variant='body2' component='p'>
+            - House Size: {props.comp.building_size.size.toLocaleString()} sqft
           </Typography>
           <Typography variant='body2' component='p'>
-            {/* Last Sold Date:{props.comp.lastSoldDate} */}
+            - Baths {props.comp.baths}
+          </Typography>
+          <Typography variant='body2' component='p'>
+            - Beds: {props.comp.beds}
+          </Typography>
+          <Typography variant='body2' component='p'>
+            - Property Type: {props.comp.prop_type}
           </Typography>
         </CardContent>
-        <CardActions className={classes.root}>
-          {/* <Button size='small' className='button'>
-            <CircularProgress />
-          </Button> */}
-        </CardActions>
+        {/* <CardActions className={classes.root}>
+  
+        </CardActions> */}
       </AccordionDetails>
     </Accordion>
   ) : (

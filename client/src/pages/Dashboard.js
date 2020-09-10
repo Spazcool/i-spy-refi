@@ -191,7 +191,7 @@ function Home(props) {
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
           <Typography variant='h4' component='h2'>
-            My House
+            Home Assessment
           </Typography>
           <MyHouse
             className='card'
@@ -205,8 +205,8 @@ function Home(props) {
 
         {/* --------------- COMPS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
-          <Typography variant='h4' component='h2'>
-            Comps
+          <Typography variant='h5' component='h2'>
+            Similar Properties
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
