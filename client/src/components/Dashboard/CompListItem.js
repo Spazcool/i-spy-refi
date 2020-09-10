@@ -2,7 +2,7 @@ import React from 'react';
 import '../../../src/App.css';
 // import '../../assets/scss/style.scss';
 import HouseIcon from '@material-ui/icons/House';
-import multi from "../../assets/images/apartment-removebg-preview.png" 
+import multi from '../../assets/images/apartment-removebg-preview.png';
 import { shadows } from '@material-ui/system';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -85,12 +85,12 @@ export default function CompListItem(props) {
     // },
 
     overlay: {
-        position: 'absolute',
-        top: '40%',
-        left: '10%',
-        color: 'white',
+      position: 'absolute',
+      top: '40%',
+      left: '10%',
+      color: 'white',
       background: '#437779', // Sets background color of Additional Details
-        padding: '3px',
+      padding: '3px',
       backgroundColor: '#437779',
     },
   };
@@ -102,64 +102,64 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Typography boxShadow={3} color='textSecondary' gutterBottom>
-          {/* {props.comp.address.street_number} {props.comp.address.street}{' '}
-          {props.comp.address.street_suffix} */}
-          {/* <CardMedia
+        <Grid container className='grid'>
+          <Grid item>
+          <HouseIcon className='house-icon' />
+          </Grid>
+          <Grid item xs={10} sm={10} lg={10} xl={10}>
+          <div>
+              {props.comp.address.street_number} {props.comp.address.street}{' '}
+              {props.comp.address.street_suffix}, {props.comp.address.city},{' '}
+              {props.comp.address.state_code}
+            </div>
+
+            <div>$ {props.comp.price.toLocaleString()}</div>
+          </Grid>
+        </Grid>
+      </AccordionSummary>
+      <AccordionDetails>
+        {/* <CardContent style={stylesDetails.overlay}> */}
+   
+         
+
+        <Grid item xs={6}>
+        <Typography className='fontCinzelBlack '>
+            Additonal Details
+          </Typography>
+
+          <Typography
+            variant='body2'
+            color='textSecondary'
+            component='p'
+            className='fontCinzel'
+          >
+            House Size: {props.comp.building_size.size.toLocaleString()} sqft
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            Baths {props.comp.baths}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            Beds: {props.comp.beds}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            Property Type: {props.comp.prop_type}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            Year Built: {props.comp.year_built}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+
+          <CardMedia
             // className={classes.lazyImage} // TODO not needed?
             className='media'
             component='img'
-            image={multi}
+            image="https://honka.com/wp-json/image/resize?w=860&h=570&src=uploads%2Fupload_7a7f9699ea710e1b677391928fcc5795.jpg"
             title='My House'
-          /> */}
-         
-          <div >
-          <HouseIcon className="house-icon" />
-          {props.comp.address.street_number} {props.comp.address.street} {props.comp.address.street_suffix}, {props.comp.address.city}, {props.comp.address.state_code}
-            </div>
-        
-          <div>
-            $ {props.comp.price.toLocaleString()}
-          </div>
-        </Typography>
-      </AccordionSummary>
+          />
 
-      <AccordionDetails>
-        {/* <CardContent style={stylesDetails.overlay}> */}
-        <Grid item className="row">
-        <Typography className='fontCinzelBlack '>
-              Additonal Details
-            </Typography>
+
         </Grid>
-          
-            <Grid item xs={6}>
-            <Typography
-              variant='body2'
-              color='textSecondary'
-              component='p'
-              className='fontCinzel'
-            >
-              House Size: {props.comp.building_size.size.toLocaleString()} sqft
-            </Typography>
-            <Typography variant='body2' color='textSecondary' component='p'>
-              Baths {props.comp.baths}
-            </Typography>
-            <Typography variant='body2' color='textSecondary' component='p'>
-              Beds: {props.comp.beds}
-            </Typography>
-            
-          </Grid>
-          <Grid item xs={6}>
-          <Typography variant='body2' color='textSecondary' component='p'>
-              Property Type: {props.comp.prop_type}
-            </Typography>
-            <Typography variant='body2' color='textSecondary' component='p'>
-              Year Built: {props.comp.year_built}
-            </Typography>
-          </Grid>
-            
-        {/* </CardContent> */}
-        {/* <CardActions className={classes.root}></CardActions> */}
       </AccordionDetails>
     </Accordion>
   ) : (
