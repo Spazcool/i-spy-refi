@@ -6,14 +6,13 @@ import '../../src/App.css';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-​
 import CompList from '../components/Dashboard/CompList';
 import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
 import TrendingChart from '../components/Dashboard/TrendingChart';
-​
+
 import '../App.css';
-​
+
 function Home(props) {
   console.log(props);
   const { user, isAuth } = useContext(AuthContext);
@@ -31,19 +30,19 @@ function Home(props) {
   const [PID, setPID] = useState('');
   const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
-​
+
   const [sqFeet, setSqFeet] = useState('');
   // const [compaddstreet, setcompaddstreet] = useState([]);
   // const [compestatedisplay, setcompstatedisplay] = useState('');
   // const [complastsoldprice, setcomplastsoldprice] = useState('');
   // const [complastsolddate, setcomplastsolddate] = useState('');
-​
+
   let finishedsqFt;
-​
+
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
     const house = await houseinfoDB();
-​
+
     if (house.length > 0) {
       const [{ street, state, city, zip, hid, zpid, formData, comps }] = house;
       const data = {
@@ -64,24 +63,24 @@ function Home(props) {
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
-​
+
       // return true;
       return data;
     }
     return false;
   };
-​
+
   const checkHasHouseInAPI = async (house) => {
     console.log(house);
     const getAddress = async () => await realtor.getAddressDetails(house.zpid);
     const addressResponse = await getAddress();
     console.log(addressResponse);
-​
+
     if (addressResponse !== undefined) {
       console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
-​
+
       let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
         housebuildingsizeValid.hasOwnProperty('building_size') &&
@@ -94,13 +93,13 @@ function Home(props) {
     }
     return false;
   };
-​
+
   const checkHouseCompsInAPI = async (address) => {
     const { city, state_code } = address.data.properties[0].address;
     console.log(address);
     console.log(address.data.properties[0].address.city);
     console.log(address.data.properties[0].address.state_code);
-​
+
     const gethouseResponse = await realtor.gethousevalue(city, state_code);
     if (gethouseResponse !== undefined) {
       findTotalHouseValue(gethouseResponse);
@@ -109,11 +108,11 @@ function Home(props) {
     }
     return false;
   };
-​
+
   const findTotalHouseValue = (list) => {
     let houseprice_array = [];
     let responsehouses = list.data.properties;
-​
+
     responsehouses.forEach((responsehouse) => {
       //   console.log('responsehouse', responsehouse);
       //   const result = responsehouse.hasOwnProperty('building_size');
@@ -127,31 +126,31 @@ function Home(props) {
         );
       }
     });
-​
+
     const housearraymedian = houseprice_array.sort((a, b) => a - b);
-​
+
     const mid = Math.floor(housearraymedian.length / 2);
     const housemedian =
       housearraymedian.length % 2 !== 0
         ? housearraymedian[mid]
         : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
-​
+
     const FinalHouseValue = finishedsqFt * housemedian;
-​
+
     settotalHouseValue(FinalHouseValue);
   };
-​
+
   const setCompsListFromAPI = (properties) => {
     let compsarray = [];
-​
+
     for (let i = 0; i < 10; i++) {
       compsarray.push(properties[i]);
     }
-​
+
     setcompsList(compsarray);
     console.log('dashboardcomp:', compsList);
   };
-​
+
   const fetchAllData = async () => {
     checkHasHouseInDB()
       .then((res) => {
@@ -162,7 +161,7 @@ function Home(props) {
           .catch((err) => console.log('broke api house', err));
       })
       .catch((err) => console.log('broke hosue db', err));
-​
+
     // if(await checkHasHouseInDB() === false){
     //   console.log('user deosnt have a house in db')
     // }else{
@@ -179,7 +178,7 @@ function Home(props) {
     //   console.log('house has comps')
     // }
   };
-​
+
   useEffect(() => {
     if (isAuth) {
       fetchAllData();
@@ -187,7 +186,7 @@ function Home(props) {
       //todo error toast
     }
   }, []);
-​
+
   return (
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
@@ -210,7 +209,7 @@ function Home(props) {
             value={totalHouseValue}
           />
         </Grid>
-​
+
         {/* --------------- COMPS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography
@@ -223,7 +222,7 @@ function Home(props) {
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
-​
+
         {/* --------------- CHARTS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
@@ -241,7 +240,5 @@ function Home(props) {
     </Container>
   );
 }
-​
+
 export default Home;
-
-

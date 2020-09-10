@@ -90,13 +90,7 @@ export const DB = {
         street,
         comps,
         formData,
-<<<<<<< HEAD
-        lastUpdated,
-        building_size,
-        houseImage,
-=======
         db.FieldValue.serverTimestamp()
->>>>>>> 5df374b734ce7665a7e90bc483904a7f612ebdf2
       );
       const mergeData = {};
 
@@ -302,42 +296,6 @@ export const DB = {
     const housesArr = [];
     const houses = await returnedHouses;
 
-<<<<<<< HEAD
-    houses.forEach(async (house) => {
-      const {
-        hid,
-        zpid,
-        location,
-        user,
-        zip,
-        state,
-        city,
-        street,
-        comps,
-        formData,
-        lastUpdated,
-        building_size,
-        houseImage,
-      } = house.data();
-      const data = new House(
-        hid,
-        zpid,
-        user,
-        location,
-        zip,
-        state,
-        city,
-        street,
-        comps,
-        formData,
-        lastUpdated,
-        building_size,
-        houseImage,
-      );
-
-      housesArr.push(data.getHouseData());
-    });
-=======
     if(!houses.message){
       houses.forEach(async (house) => {
         const {
@@ -371,7 +329,6 @@ export const DB = {
       });
     }
    
->>>>>>> 5df374b734ce7665a7e90bc483904a7f612ebdf2
     return housesArr;
   },
 
