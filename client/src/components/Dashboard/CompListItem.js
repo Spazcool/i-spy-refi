@@ -151,6 +151,7 @@ export default function CompListItem(props) {
         <Grid item xs={6}>
 
           <CardMedia
+            // boxShadow: '10px 5px 5px 5px #437779'
             // className={classes.lazyImage} // TODO not needed?
             className='media'
             component='img'
@@ -169,7 +170,7 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Grid container spacing={12}>
+        <Grid container spacing={10}>
           <Grid item xs={12}>
             <Typography align='center' color='textSecondary' gutterBottom>
               Pulling Similar Property

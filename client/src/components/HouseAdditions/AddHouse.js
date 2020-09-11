@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 
-import { makeStyles, Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     padding: '1em',
     width: '25%',
-    color: '#437779',
+    'background-color': '#437779',
   },
 }));
 

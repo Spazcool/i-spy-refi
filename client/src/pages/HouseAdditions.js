@@ -3,6 +3,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
+import { HouseContext } from '../providers/HouseProvider';
 import { realtor } from '../api/realtor';
 
 import AddHouse from '../components/HouseAdditions/AddHouse';
@@ -89,8 +90,10 @@ export default function HouseAdditions() {
   });
 
   useEffect(() => {
-    fetchHouse();
-  }, []);
+    if(userZpid.zpid == undefined){
+      fetchHouse();
+    }
+  }, [userZpid]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -108,7 +111,7 @@ export default function HouseAdditions() {
 
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
-    if (userZpid !== '') {
+    if (userZpid.zpid !== '') {
       let totalValue = 0;
       for (const room in radios) {
         totalValue += radios[room];
@@ -117,10 +120,10 @@ export default function HouseAdditions() {
       for (const room in radios) {
         formData.push({ room: room, value: radios[room] });
       }
-      formData.push(totalValue);
+      formData.push({ RenovationValue: totalValue });
 
       const data = {
-        zpid: userZpid[0].zpid,
+        zpid: userZpid.zpid,
         formData,
       };
       const house = async () => await DB.updateHouse(data);
@@ -128,9 +131,10 @@ export default function HouseAdditions() {
       console.log(updatedHouse);
       //todo make this a toast, can grabe the message for the toast from this updatedHouse
       // toast reading updated house successfully
+    }else{
+      console.log('no house to add these too');
+      // todo toast, sorry you aint got a house bro, go do that
     }
-    console.log('no house to add these too');
-    // todo toast, sorry you aint got a house bro, go do that
   };
 
   const handleInputChange = (event) => {
@@ -142,7 +146,7 @@ export default function HouseAdditions() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const inputHouseCreds = {
       city: userHouse.city,
@@ -151,7 +155,7 @@ export default function HouseAdditions() {
       state: userHouse.state,
     };
     console.log(inputHouseCreds);
-    setUserHouse(inputHouseCreds);
+    await setUserHouse(inputHouseCreds);
     afterSubmit();
   };
 
@@ -190,7 +194,7 @@ export default function HouseAdditions() {
     const response = await createdHouse();
 
     if (response.message === 'success') {
-      console.log('house creaed');
+      console.log('house created');
       //todo add toast
     } else {
       //todo something broke
@@ -207,23 +211,23 @@ export default function HouseAdditions() {
       spacing={2}
       className={classes.alignContent}
     >
-      {/* {userHouse.hid !== undefined ? ( */}
-      <Grid item xs={12}>
-        <AddHouse
-          userHouse={userHouse}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-        />
-      </Grid>
-      {/* ) : ( */}
-      <Grid item xs={12}>
-        <AddRenos
-          handleOnClick={handleOnClick}
-          handleSubmitCalc={handleSubmitCalc}
-          values={values}
-        />
-      </Grid>
-      {/* )} */}
+      {userZpid.zpid === undefined ? (
+        <Grid item xs={12}>
+          <AddHouse
+            userHouse={userHouse}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+          />
+        </Grid>
+      ) : (
+        <Grid item xs={12}>
+          <AddRenos
+            handleOnClick={handleOnClick}
+            handleSubmitCalc={handleSubmitCalc}
+            values={values}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 }

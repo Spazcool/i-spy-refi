@@ -106,7 +106,7 @@ export default function AddRenos(props) {
     console.log(props);
     return props.values.map((room, i) => {
       return (
-        <Grid item xs={12} key={room.id + i}>
+        <Grid item xs={12} key={room.id + i} align='center'>
           <FormLabel component='legend'>{room.description}</FormLabel>
           <FormControl component='fieldset'>
             <RadioGroup

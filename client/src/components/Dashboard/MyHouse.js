@@ -27,13 +27,14 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(2),
     },
   },
-  // lazyImage: {
-  //   width: '100%',
-  //   'max-height': '300px',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   display: 'flex',
-  // },
+  lazyImage: {
+    width: '100%',
+    'max-height': '300px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    boxShadow: '10px 5px 5px 5px #437779'
+  },
   block: {
     display: 'block',
   },
@@ -96,18 +97,15 @@ export default withRouter(function MyHouse(props) {
               {props.street}, {props.city}, {props.state}
             </Typography> */}
             <Typography variant='body2' component='p'>
-              {' '}
               $ {props.value.toLocaleString()} I Spy Refi Estimate
             </Typography>
             <Typography variant='body2' component='p'>
-              {' '}
               $ {props.value.toLocaleString()} Renovation Additions
             </Typography>
-            <Typography variant='body3' component='h5'>
-              {' '}
+            <Typography variant='body2' component='h5'>
               $ {props.value.toLocaleString()} Final House Assessment Value
             </Typography>
-            <Typography variant='body3' component='p'>
+            <Typography variant='body2' component='p'>
               {/* Home Renovation Value $ {renovationCost} */}
             </Typography>
             {/* 
