@@ -68,17 +68,25 @@ const nationalAverages = [
 ];
 
 export default function HouseAdditions() {
-  const { user, isAuth } = useContext(AuthContext);
   const classes = useStyles();
-  const [values, setValue] = useState(nationalAverages);
-  const [userZpid, setUserZpid] = useState('');
-  const [userHouse, setUserHouse] = useState({
+  const errorMessage = '* all fields are required';
+  const [credsAreInvalid, setCredsAreInvalid] = useState(false)
+  const [streetColor, setStreetColor] = useState(false)
+  const [cityColor, setCityColor] = useState(false)
+  const [zipColor, setZipColor] = useState(false)
+  const [stateColor, setStateColor] = useState(false)
+  const emptyHouse = {
     street: '',
     address: '',
     city: '',
     zip: '',
     state: '',
-  });
+  };
+  const { user, isAuth } = useContext(AuthContext);
+  const [values, setValue] = useState(nationalAverages);
+  const [userZpid, setUserZpid] = useState('');
+  const [userHouse, setUserHouse] = useState(emptyHouse);
+  const [formData, setFormData] = useState(emptyHouse)
   const [radios, setRadios] = useState({
     kitchen: 0,
     roof: 0,
@@ -154,9 +162,15 @@ export default function HouseAdditions() {
       zip: userHouse.zip,
       state: userHouse.state,
     };
-    console.log(inputHouseCreds);
-    await setUserHouse(inputHouseCreds);
-    afterSubmit();
+
+    if (validateHouseInputs(inputHouseCreds)) {
+      await setUserHouse(inputHouseCreds);
+      afterSubmit();
+      setFormData(emptyHouse)
+    } else {
+      setCredsAreInvalid(errorMessage);
+      console.log('bad inputs')
+    }
   };
 
   const afterSubmit = async () => {
@@ -198,6 +212,40 @@ export default function HouseAdditions() {
     }
   };
 
+  const validateHouseInputs = ({ street, city, zip, state }) => {
+    let isValid = true;
+
+    if (!street) {
+      setStreetColor(true)
+      isValid = false;
+    } else {
+        setStreetColor(false)
+    }
+
+    if (!city) {
+      setCityColor(true)
+      isValid = false;
+    } else {
+      setCityColor(false)
+    }
+
+    if (!zip) {
+      setZipColor(true)
+      isValid = false;
+    } else {
+      setZipColor(false)
+    }
+
+    if (!state) {
+      setStateColor(true)
+      isValid = false;
+    } else {
+      setStateColor(false)
+    }
+
+    return isValid;
+  };
+
   return !isAuth ? (
     <Redirect to='/login' />
   ) : (
@@ -213,6 +261,11 @@ export default function HouseAdditions() {
             userHouse={userHouse}
             handleInputChange={handleInputChange}
             handleSubmit={handleSubmit}
+            credsAreInvalid={credsAreInvalid}
+            streetColor={streetColor}
+            cityColor={cityColor}
+            zipColor={zipColor}
+            stateColor={stateColor}
           />
         </Grid>
       ) : (

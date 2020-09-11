@@ -157,3 +157,7 @@ body {
     ../assets/logo/white_logo_transparent_background.png
   }
 } */
+
+.text-danger{
+  color: red;
+}
