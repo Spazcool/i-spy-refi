@@ -147,7 +147,7 @@ function Home(props) {
   };
 
   const findHouseRenovation = (FormData, FinalHouseValue) => {
-    console.log('FORMDATA:', FormData);
+   
     let index = FormData.length - 1;
     let RenoValue = FormData[index].RenovationValue;
     setRenovationValue(RenoValue);
