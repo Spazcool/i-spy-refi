@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompListItem(props) {
-  console.log(props);
   const styles = {
     media: {
       height: 0,
@@ -92,6 +91,7 @@ export default function CompListItem(props) {
     },
   };
   const classes = useStyles();
+
   return props.comp ? (
     <Accordion>
       <AccordionSummary
@@ -139,7 +139,7 @@ export default function CompListItem(props) {
               House Size: {props.comp.building_size.size.toLocaleString()} sqft
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
-              Baths {props.comp.baths}
+              Baths: {props.comp.baths}
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
               Beds: {props.comp.beds}
