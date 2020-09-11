@@ -68,7 +68,7 @@ export const realtor = {
       },
     })
       .then((response) => {
-        getZipAddress = response;
+        getZipAddress = response.data.rates;
       })
       .catch((error) => {
         console.log(error);

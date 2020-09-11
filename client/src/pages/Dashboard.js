@@ -29,10 +29,12 @@ function Home(props) {
   const [statedisplay, setstatedisplay] = useState('');
   const [compsList, setcompsList] = useState([]);
   const [totalHouseValue, settotalHouseValue] = useState('');
+  const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
 
   let finishedsqFt;
   let zipCode;
   let renVal;
+  // let mortgageRates;
 
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -50,13 +52,16 @@ function Home(props) {
         formData,
         comps,
       };
-
+      console.log(data.zip);
+      getMortgageRates(data.zip);
+      console.log(getMortgageRates);
       setHasHouse(true);
       // setHouseData(data);
       setTrendingData(comps);
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
+
       zipCode = data.zip;
       renVal = data.formData;
       // return true;
@@ -90,18 +95,17 @@ function Home(props) {
     return false;
   };
 
-  // const getMortgages = async () => await realtor.getMortgageRates(zipCode);
-
-  const getMortgages = async (mortgage) => {
-    zipCode = mortgage;
-    console.log(mortgage);
-    if (mortgage !== undefined) {
-      return true;
-    }
-    return false;
+  const getMortgageRates = async (zip) => {
+    console.log(zip);
+    let mortgageRates = await realtor.getMortgageRates();
+    setMorgageRatesDisplay(mortgageRates);
+    // return false;
   };
+  // const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
+  console.log(mortgageRatesDisplay);
+  // getMortgageRates();
+  // console.log(getMortgageRates)
 
-  // console.log(getMortgages);
   const checkHouseCompsInAPI = async (address) => {
     const { city, state_code } = address.data.properties[0].address;
 
@@ -184,6 +188,7 @@ function Home(props) {
   useEffect(() => {
     if (isAuth) {
       fetchAllData();
+      // getMortgageRates();
     } else {
       //todo error toast
     }
@@ -211,6 +216,7 @@ function Home(props) {
             value={totalHouseValue}
             reno={RenovationValue}
             finalhousevalue={finalHouseAssessmentValue}
+            financeRates={mortgageRatesDisplay}
           />
         </Grid>
 

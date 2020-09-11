@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
-    boxShadow: '10px 5px 5px 5px #437779'
+    boxShadow: '10px 5px 5px 5px #437779',
   },
   block: {
     display: 'block',
@@ -63,10 +63,11 @@ const styles = {
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
-
+  console.log(props.financeRates);
   const checkLoaded = () => {
     const { imageData, street, description, value } = props;
-    if (value >= 0) { //presumes value will take the longest to load
+    if (value >= 0) {
+      //presumes value will take the longest to load
       setLoaded(true);
     }
   };
@@ -95,15 +96,9 @@ export default withRouter(function MyHouse(props) {
             <Typography variant='body2' component='p'>
               $ {props.reno.toLocaleString()} Renovation Additions
             </Typography>
-<<<<<<< HEAD
-            <Typography variant='body3' component='h5'>
-              {' '}
-              - $ {props.value.toLocaleString()} Final House Assessment Value
-=======
             <Typography variant='body2' component='h5'>
               $ {props.finalhousevalue.toLocaleString()} Final House Assessment
               Value
->>>>>>> 5e2a24eb725dd7f0db5a65d4601990519dc3d752
             </Typography>
             <Typography variant='body3' component='p'>
               {/* Home Renovation Value $ {renovationCost} */}
