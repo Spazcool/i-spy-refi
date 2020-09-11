@@ -73,6 +73,11 @@ export default function HouseAdditions() {
   const classes = useStyles();
   const [values, setValue] = useState(nationalAverages);
   const [userZpid, setUserZpid] = useState('');
+  // const [RenovationValue, setRenovationValue] = useState('');
+  // const [finalHouseAssessmentValue, setFinalHouseAssessmentValue] = useState(
+  //   ''
+  // );
+
   const [userHouse, setUserHouse] = useState({
     street: '',
     address: '',
@@ -94,8 +99,9 @@ export default function HouseAdditions() {
   useEffect(() => {
     if (userZpid.zpid == undefined) {
       fetchHouse();
+      // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid]);
+  }, [userZpid, userHouse]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -230,7 +236,7 @@ export default function HouseAdditions() {
             handleSubmitCalc={handleSubmitCalc}
             values={values}
           />
-          {/* <FormChart data={userHouse} /> */}
+          <FormChart data={userHouse} />
         </Grid>
       )}
     </Grid>
