@@ -171,10 +171,6 @@ function Home(props) {
     checkHasHouseInDB()
       .then((res) => {
         console.log(res.zip);
-
-        getMortgages(res.zip)
-        .then((resp) => {
-        })
           checkHouseCompsInAPI(resp);
         })
         .catch((err) => console.log('broke api house', err));
