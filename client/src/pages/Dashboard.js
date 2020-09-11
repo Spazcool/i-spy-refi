@@ -190,48 +190,35 @@ function Home(props) {
 
   return (
     <Container className='signup'>
-      <div className="row"></div>
+      <div className='row'></div>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-        <Grid item xs={12} sm={12} lg={12} xl={12}>
-        <Typography
-            align='center'
-            variant='h4'
-            component='h2'
-            className='fontCinzelBlack'
-          >
-            <span className='fontCinzelWhite'> House Assessment</span>
-          </Typography>
-          <MyHouse
-            className='card'
-            street={streetdisplay}
-            city={citydisplay}
-            state={statedisplay}
-            imageData={imageData}
-            value={totalHouseValue}
-          />
-        </Grid>
-          
-          
+          <Grid item xs={12} sm={12} lg={12} xl={12}>
+            <Typography align='center' variant='h4' component='h2'>
+              <span className='fontCinzelWhite'> House Assessment</span>
+            </Typography>
+            <MyHouse
+              className='card'
+              street={streetdisplay}
+              city={citydisplay}
+              state={statedisplay}
+              imageData={imageData}
+              value={totalHouseValue}
+            />
+          </Grid>
+
           {/* --------------- CHART1 --------------- */}
           <Grid item xs={12} sm={12} lg={12} xl={12}>
-          <h2 className='fontCinzelWhite chart'>
-            Comps Trending Data Values
-          </h2>
-          {/* <TrendingChart data={TrendingData} /> */}
+            <h2 className='fontCinzelWhite chart'>Comps Trending Data Values</h2>
+            {/* <TrendingChart data={TrendingData} /> */}
           </Grid>
         </Grid>
 
         {/* --------------- COMPS --------------- */}
         <Grid item xs={12} sm={6} lg={6} xl={6}>
-          <Typography
-            align='center'
-            variant='h4'
-            component='h2'
-            className='fontCinzelWhite'
-          >
-            Similar Homes
+          <Typography align='center' variant='h4' component='h2'>
+            <span className='fontCinzelWhite'> Similar Homes</span>
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
@@ -243,7 +230,6 @@ function Home(props) {
           </Typography>
           {/* <FormChart data={FormData} /> */}
         </Grid>
-        
       </Grid>
     </Container>
   );
