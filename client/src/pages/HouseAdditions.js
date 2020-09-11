@@ -109,7 +109,7 @@ export default function HouseAdditions() {
 
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
-    if (userZpid !== '') {
+    if (userZpid.zpid !== '') {
       let totalValue = 0;
       for (const room in radios) {
         totalValue += radios[room];
@@ -208,7 +208,7 @@ export default function HouseAdditions() {
       spacing={2}
       className={classes.alignContent}
     >
-      {userHouse.hid !== undefined ? (
+      {userZpid !== undefined ? (
         <Grid item xs={12}>
           <AddHouse
             userHouse={userHouse}
