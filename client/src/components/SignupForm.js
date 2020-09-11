@@ -3,22 +3,38 @@ import { auth, signUpWithEmail } from "../firebase";
 
 import LoginGoogle from '../components/LoginGoogle';
 
-import Form from 'react-bootstrap/Form';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
+
 import {GoSignIn} from 'react-icons/go';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    display: 'flex',
+    flexWrap: 'wrap',
   },
-  paper: {
-    // height: 140,
-    // width: 100,
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: '25ch',
   },
   control: {
     'padding-left': theme.spacing(1),
   },
+  right: {
+    float: 'right',
+    marginTop: '1em'
+  },
+  textDanger: {
+    color: 'red',
+  }
 }));
 
 const Signup = props => {
@@ -60,28 +76,28 @@ const Signup = props => {
         let isValid = true;
 
         if (!firstName) {
-            setFirstNameColor('text-danger')
+            setFirstNameColor(classes.textDanger)
             isValid = false;
         } else {
             setFirstNameColor('')
         }
 
         if (!lastName) {
-            setLastNameColor('text-danger')
+            setLastNameColor(classes.textDanger)
             isValid = false;
         } else {
             setLastNameColor('')
         }
 
         if (!email) {
-            setEmailColor('text-danger')
+            setEmailColor(classes.textDanger)
             isValid = false;
         } else {
             setEmailColor('')
         }
 
-        if (!password) {
-            setPasswordColor('text-danger')
+        if (!password || password.length < 8) {
+            setPasswordColor(classes.textDanger)
             isValid = false;
         } else {
             setPasswordColor('')
@@ -103,37 +119,57 @@ const Signup = props => {
     };
 
     return (
-      <Form onSubmit={handleFormSubmit}>
-        <Form.Group controlId="inputFirstName">
-            <Form.Label className={firstNameColor}>First Name</Form.Label>
-            <Form.Control name="firstNameInput" type="text" placeholder="" value={formData.firstNameInput} onChange={handleInputChange} />
-        </Form.Group>
-        <Form.Group controlId="inputLastName">
-            <Form.Label className={lastNameColor}>Last Name</Form.Label>
-            <Form.Control name="lastNameInput" type="text" placeholder="" value={formData.lastNameInput} onChange={handleInputChange} />
-        </Form.Group>
-        <Form.Group controlId="emailInput">
-            <Form.Label className={emailColor}>Email address</Form.Label>
-            <Form.Control name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange} />
-            <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-            </Form.Text>
-        </Form.Group>
-        <Form.Group controlId="inputPassword">
-            <Form.Label className={passwordColor}>Password</Form.Label>
-            <Form.Control name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange} />
-        </Form.Group>
-        <Form.Group>
-            <Form.Text className="text-danger">
-                {credsAreInvalid}
-            </Form.Text>
-        </Form.Group>
-        <Button className='m-1' variant="contained" type="submit">
-        <span className="flip"><GoSignIn/></span>
-        <span className={classes.control}>Sign-Up</span>
-        </Button>
-        <LoginGoogle/>
-      </Form>
+      <Grid
+      container
+      justify='center'
+      spacing={2}
+      >
+      <Grid item xs={12}>        
+        <form onSubmit={handleFormSubmit}>
+          <Typography>Sign up with your Email:</Typography>
+          <FormControl>
+            <InputLabel htmlFor="my-input-fname" className={firstNameColor}>First Name</InputLabel>
+            <Input className={classes.textField} id="my-input-fname" aria-describedby="my-helper-text" name="firstNameInput" type="text" placeholder={Date.now()%2 ? 'Joe' : 'Jane'} value={formData.firstNameInput} onChange={handleInputChange}/>
+          </FormControl>
+
+          <FormControl>
+            <InputLabel htmlFor="my-input-lname" className={lastNameColor}>Last Name</InputLabel>
+            <Input className={classes.textField} id="my-input-lname" aria-describedby="my-helper-text" name="lastNameInput" type="text" placeholder="Smith" value={formData.lastNameInput} onChange={handleInputChange}/>
+          </FormControl>
+
+          <FormControl>
+            <InputLabel htmlFor="my-input-email" className={emailColor}>Email address</InputLabel>
+            <Input className={classes.textField} id="my-input-email" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder={`${Date.now()%2 ? 'Joe' : 'Jane'}@smith.com`} value={formData.emailInput} onChange={handleInputChange}/>
+            <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
+          </FormControl>
+
+          <FormControl>
+            <InputLabel htmlFor="my-input-password" className={passwordColor}>Password</InputLabel>
+            <Input className={classes.textField} id="my-input-password" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password123" value={formData.passwordInput} onChange={handleInputChange}/>
+          </FormControl>
+
+          <FormControl>
+            <FormHelperText className="text-danger" id="my-helper-text">{credsAreInvalid}</FormHelperText>
+          </FormControl>
+
+          <span className={classes.right} >
+            <Button type="submit" variant="contained" >
+              <span className="flip"><GoSignIn /></span>
+              <span className={classes.control}>Sign-Up</span>
+            </Button>
+          </span>
+        </form>
+      </Grid>
+
+        <Grid item xs={12}>        
+          <form>
+            <Typography>Sign in with your Google account:</Typography>
+            <span className={classes.right}>
+              <LoginGoogle/>
+            </span>
+          </form>
+        </Grid>
+      </Grid>
     )
 }
 

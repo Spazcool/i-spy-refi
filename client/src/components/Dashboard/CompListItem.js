@@ -16,6 +16,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
 import Image from 'material-ui-image';
+import noHouseImage from '../../assets/logo/nologoimage/logo_transparent_background.png';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -36,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompListItem(props) {
-  console.log(props);
   const styles = {
     media: {
       height: 0,
@@ -92,6 +92,7 @@ export default function CompListItem(props) {
     },
   };
   const classes = useStyles();
+
   return props.comp ? (
     <Accordion>
       <AccordionSummary
@@ -107,7 +108,11 @@ export default function CompListItem(props) {
             // className={classes.lazyImage} // TODO not needed?
             className='media'
             component='img'
-            image={props.comp.photos[0].href.includes('googleapis') ? props.comp.photos[0].href : 'http://placekitten.com/200/300'}
+            image={
+              props.comp.photos[0].href.includes('googleapis')
+                ? props.comp.photos[0].href
+                : noHouseImage
+            }
             title='My House'
           />
           <span style={styles.overlay}>
@@ -139,7 +144,7 @@ export default function CompListItem(props) {
               House Size: {props.comp.building_size.size.toLocaleString()} sqft
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
-              Baths {props.comp.baths}
+              Baths: {props.comp.baths}
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
               Beds: {props.comp.beds}

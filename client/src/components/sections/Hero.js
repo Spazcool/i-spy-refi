@@ -5,6 +5,7 @@ import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 import Image from '../elements/Image';
 import Modal from '../elements/Modal';
+import font from '../../App.css';
 
 const propTypes = {
   ...SectionProps.types,
@@ -85,15 +86,6 @@ const Hero = ({
                   <Button tag='a' color='primary' wideMobile href='/additions'>
                     Get Started Now
                   </Button>
-                  {/* //TODO DELETE */}
-                  {/* <Button
-                    tag='a'
-                    color='dark'
-                    wideMobile
-                    href=''
-                  >
-                    View on Github
-                  </Button> */}
                 </ButtonGroup>
               </div>
             </div>
