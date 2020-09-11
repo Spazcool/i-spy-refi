@@ -212,13 +212,7 @@ function Home(props) {
         </Grid>
 
         {/* --------------- CHARTS --------------- */}
-        <Grid item xs={12} sm={6} lg={6} xl={6}>
-          <Typography variant='h4' component='h2'>
-            Refi Form Data Values
-          </Typography>
-          {/* <FormChart data={FormData} /> */}
-        </Grid>
-        <Grid item xs={12} sm={6} lg={6} xl={6}>
+        <Grid item xs={12} sm={12} lg={12} xl={12}>
           <Typography variant='h4' component='h2'>
             Comps Trending Data Values
           </Typography>
