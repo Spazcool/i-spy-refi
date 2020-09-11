@@ -103,11 +103,12 @@ export default withRouter(function MyHouse(props) {
             </Typography>
             <Typography variant='body2' component='p'>
               {' '}
-              $ {props.value.toLocaleString()} Renovation Additions
+              $ {props.reno.toLocaleString()} Renovation Additions
             </Typography>
             <Typography variant='body2' component='h5'>
               {' '}
-              $ {props.value.toLocaleString()} Final House Assessment Value
+              $ {props.finalhousevalue.toLocaleString()} Final House Assessment
+              Value
             </Typography>
             <Typography variant='body2' component='p'>
               {/* Home Renovation Value $ {renovationCost} */}
