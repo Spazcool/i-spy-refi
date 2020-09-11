@@ -105,11 +105,11 @@ export default withRouter(function MyHouse(props) {
               {' '}
               $ {props.value.toLocaleString()} Renovation Additions
             </Typography>
-            <Typography variant='body2' component='h5'>
+            <Typography variant='body3' component='h5'>
               {' '}
-              $ {props.value.toLocaleString()} Final House Assessment Value
+              - $ {props.value.toLocaleString()} Final House Assessment Value
             </Typography>
-            <Typography variant='body2' component='p'>
+            <Typography variant='body3' component='p'>
               {/* Home Renovation Value $ {renovationCost} */}
             </Typography>
             {/* 
@@ -128,6 +128,37 @@ export default withRouter(function MyHouse(props) {
         >
           <Typography color='textSecondary' gutterBottom>
             View/Update renovations
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <CardContent>
+            <Typography color='textSecondary' gutterBottom></Typography>
+            <Typography variant='h5' component='h2'>
+              reno data
+            </Typography>
+          </CardContent>
+          <CardActions className={classes.root}>
+            <Button
+              size='small'
+              className='button'
+              onClick={(e) => {
+                e.preventDefault();
+                props.history.push('/additions');
+              }}
+            >
+              Update Renovation Info
+            </Button>
+          </CardActions>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion className='card-radius-bottom'>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel1a-content'
+          id='panel1a-header'
+        >
+          <Typography color='textSecondary' gutterBottom>
+            Get current Refinance Rates in your Area
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
