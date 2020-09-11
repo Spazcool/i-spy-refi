@@ -125,24 +125,24 @@ const Signup = props => {
         <form onSubmit={handleFormSubmit}>
           <Typography>Sign up with your Email:</Typography>
           <FormControl>
-            <InputLabel htmlFor="my-input" className={firstNameColor}>First Name</InputLabel>
-            <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="firstNameInput" type="text" placeholder={Date.now()%2 ? 'Joe' : 'Jane'} value={formData.firstNameInput} onChange={handleInputChange}/>
+            <InputLabel htmlFor="my-input-fname" className={firstNameColor}>First Name</InputLabel>
+            <Input className={classes.textField} id="my-input-fname" aria-describedby="my-helper-text" name="firstNameInput" type="text" placeholder={Date.now()%2 ? 'Joe' : 'Jane'} value={formData.firstNameInput} onChange={handleInputChange}/>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="my-input" className={lastNameColor}>Last Name</InputLabel>
-            <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="lastNameInput" type="text" placeholder="Smith" value={formData.lastNameInput} onChange={handleInputChange}/>
+            <InputLabel htmlFor="my-input-lname" className={lastNameColor}>Last Name</InputLabel>
+            <Input className={classes.textField} id="my-input-lname" aria-describedby="my-helper-text" name="lastNameInput" type="text" placeholder="Smith" value={formData.lastNameInput} onChange={handleInputChange}/>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="my-input">Email address</InputLabel>
-            <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder={`${Date.now()%2 ? 'Joe' : 'Jane'}@smith.com`} value={formData.emailInput} onChange={handleInputChange}/>
+            <InputLabel htmlFor="my-input-email">Email address</InputLabel>
+            <Input className={classes.textField} id="my-input-email" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder={`${Date.now()%2 ? 'Joe' : 'Jane'}@smith.com`} value={formData.emailInput} onChange={handleInputChange}/>
             <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="my-input">Password</InputLabel>
-            <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password123" value={formData.passwordInput} onChange={handleInputChange}/>
+            <InputLabel htmlFor="my-input-password">Password</InputLabel>
+            <Input className={classes.textField} id="my-input-password" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password123" value={formData.passwordInput} onChange={handleInputChange}/>
           </FormControl>
 
           <FormControl>
@@ -171,43 +171,3 @@ const Signup = props => {
 }
 
 export default Signup;
-
-// {/* <Form onSubmit={handleFormSubmit}>
-
-    
-
-// <Form.Group controlId="inputLastName">
-//     <Form.Label className={lastNameColor}>Last Name</Form.Label>
-//     <Form.Control name="lastNameInput" type="text" placeholder="" value={formData.lastNameInput} onChange={handleInputChange} />
-// </Form.Group>
-
-// <Form.Group>
-//     <Form.Text className="text-danger">
-//         {credsAreInvalid}
-//     </Form.Text>
-// </Form.Group>
-
-// <Button className='m-1' variant="contained" type="submit">
-// <span className="flip"><GoSignIn/></span>
-// <span className={classes.control}>Sign-Up</span>
-// </Button>
-// <LoginGoogle/>
-
-// </Form> */}
-
-// <Form.Group controlId="emailInput">
-// <Form.Label className={emailColor}>Email address</Form.Label>
-// <Form.Control name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange} />
-// <Form.Text className="text-muted">
-//     We'll never share your email with anyone else.
-// </Form.Text>
-// </Form.Group>
-
-// <Form.Group controlId="inputPassword">
-// <Form.Label className={passwordColor}>Password</Form.Label>
-// <Form.Control name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange} />
-// </Form.Group>
-//     <Form.Group controlId="inputFirstName">
-// {/* <Form.Label className={firstNameColor}>First Name</Form.Label>
-// <Form.Control name="firstNameInput" type="text" placeholder="" value={formData.firstNameInput} onChange={handleInputChange} />
-// </Form.Group> */}

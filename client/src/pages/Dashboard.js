@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { realtor } from '../api/realtor';
-import '../../src/App.css';
+import '../App.css';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
