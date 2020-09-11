@@ -33,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
     'flex-direction': 'column',
     'justify-content': 'center',
   },
+  imageFirst: {
+    height: '150px',
+    'border-radius': '20px 0 0 0'
+  },
+  image:{  height: '150px'},
+  imageLast:{
+    height: '150px',
+    'border-radius': '0 0 0 20px'
+  }
 }));
 
 export default function CompListItem(props) {
@@ -104,8 +113,14 @@ export default function CompListItem(props) {
           {props.comp.address.street_suffix} */}
           <CardMedia
             // boxShadow: '10px 5px 5px 5px #437779'
-            // className={classes.lazyImage} // TODO not needed?
-            className='media'
+            className={
+              props.index === 0 ? 
+                classes.imageFirst
+              : props.len === props.index ?
+                  classes.imageLast
+                : 
+                  classes.image
+            }
             component='img'
             image={props.comp.photos[0].href.includes('googleapis') ? props.comp.photos[0].href : 'http://placekitten.com/200/300'}
             title='My House'
