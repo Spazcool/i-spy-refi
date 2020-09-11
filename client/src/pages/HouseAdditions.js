@@ -12,6 +12,7 @@ import FormChart from '../components/Dashboard/FormChart';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
+import MyHouse from '../components/Dashboard/MyHouse';
 
 const useStyles = makeStyles((theme) => ({
   alignContent: {
@@ -80,11 +81,12 @@ export default function HouseAdditions() {
 
   const [userHouse, setUserHouse] = useState({
     street: '',
-    address: '',
     city: '',
     zip: '',
     state: '',
     formData: [],
+    lat: '',
+    lon: '',
   });
   const [radios, setRadios] = useState({
     kitchen: 0,
@@ -101,7 +103,7 @@ export default function HouseAdditions() {
       fetchHouse();
       // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid, userHouse]);
+  }, [userZpid]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -179,8 +181,16 @@ export default function HouseAdditions() {
     console.log(params);
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
-    const { mpr_id, centroid, postal_code, state_code, city, line} = autoCompleteResponse.data.autocomplete[0];
-    const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
+    const {
+      mpr_id,
+      centroid,
+      postal_code,
+      state_code,
+      city,
+      line,
+    } = autoCompleteResponse.data.autocomplete[0];
+    const alternateCentroid =
+      autoCompleteResponse.data.autocomplete[1].centroid;
     console.log(mpr_id);
 
     setUserZpid(mpr_id);

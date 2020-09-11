@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import '../../../src/App.css';
+import FormChart from './FormChart';
+
 // import '../../assets/scss/style.scss';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
-    boxShadow: '10px 5px 5px 5px #437779'
+    boxShadow: '10px 5px 5px 5px #437779',
   },
   block: {
     display: 'block',
@@ -63,12 +65,21 @@ const styles = {
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
-
-  const checkLoaded = () => {
-    const { imageData, street, description, value } = props;
-    if (value >= 0) { //presumes value will take the longest to load
+  const [userFormData, setUserFormData] = useState([]);
+  const checkLoaded = async () => {
+    const { imageData, street, description, value, formData } = props;
+    if (value >= 0) {
+      //presumes value will take the longest to load
       setLoaded(true);
     }
+
+    await formData;
+    setUserFormData(formData);
+    console.log(formData);
+    // setUserHouseData(formData);
+    // if (formData.length > 0) {
+    //   setLoaded(true);
+    // }
   };
 
   useEffect(() => {
@@ -122,10 +133,11 @@ export default withRouter(function MyHouse(props) {
         </AccordionSummary>
         <AccordionDetails>
           <CardContent>
-            <Typography color='textSecondary' gutterBottom></Typography>
+            {/* <Typography color='textSecondary' gutterBottom></Typography>
             <Typography variant='h5' component='h2'>
               reno data
-            </Typography>
+            </Typography> */}
+            {/* <FormChart data={userFormData} /> */}
           </CardContent>
           <CardActions className={classes.root}>
             <Button

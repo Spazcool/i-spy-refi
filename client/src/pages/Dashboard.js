@@ -18,8 +18,11 @@ function Home(props) {
   const [hasHouse, setHasHouse] = useState();
   // const [houseData, setHouseData] = useState({});
   const [RenovationValue, setRenovationValue] = useState('');
-  const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState('');
-  const [TrendingData, setTrendingData] = useState([]);
+  const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState(
+    ''
+  );
+  const [formData, setFormData] = useState([]);
+  const [trendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState('');
   const [streetdisplay, setstreetdisplay] = useState('');
@@ -47,7 +50,7 @@ function Home(props) {
         formData,
         comps,
       };
-
+      console.log(formData);
       setHasHouse(true);
       // setHouseData(data);
       setTrendingData(comps);
@@ -55,10 +58,11 @@ function Home(props) {
       setstatedisplay(data.state);
       setcitydisplay(data.city);
       renVal = data.formData;
+      setFormData(formData);
       // return true;
       return data;
     }
-    setHasHouse(false)
+    setHasHouse(false);
     return false;
   };
 
@@ -114,20 +118,20 @@ function Home(props) {
       }
     });
 
-    if(houseprice_array.length > 0){
+    if (houseprice_array.length > 0) {
       const housearraymedian = houseprice_array.sort((a, b) => a - b);
       const mid = Math.floor(housearraymedian.length / 2);
       const housemedian =
         housearraymedian.length % 2 !== 0
           ? housearraymedian[mid]
           : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
-  
+
       const FinalHouseValue = finishedsqFt * housemedian;
-  
+
       settotalHouseValue(FinalHouseValue);
       findHouseRenovation(renVal, FinalHouseValue);
-    }else{
-      settotalHouseValue(0)
+    } else {
+      settotalHouseValue(0);
       findHouseRenovation([], 0);
     }
   };
@@ -145,7 +149,7 @@ function Home(props) {
     let compsarray = [];
 
     for (let i = 0; i < 10; i++) {
-      if(properties[i] !== undefined){
+      if (properties[i] !== undefined) {
         compsarray.push(properties[i]);
       }
     }
@@ -195,6 +199,7 @@ function Home(props) {
             value={totalHouseValue}
             reno={RenovationValue}
             finalhousevalue={finalHouseAssessmentValue}
+            formData={formData}
           />
         </Grid>
 
