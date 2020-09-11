@@ -103,10 +103,11 @@ export default function CompListItem(props) {
           {/* {props.comp.address.street_number} {props.comp.address.street}{' '}
           {props.comp.address.street_suffix} */}
           <CardMedia
+            // boxShadow: '10px 5px 5px 5px #437779'
             // className={classes.lazyImage} // TODO not needed?
             className='media'
             component='img'
-            image={props.comp.photos[0].href}
+            image={props.comp.photos[0].href.includes('googleapis') ? props.comp.photos[0].href : 'http://placekitten.com/200/300'}
             title='My House'
           />
           <span style={styles.overlay}>
