@@ -4,7 +4,7 @@ import { DB } from '../api/firestore.js';
 
 import { AuthContext } from '../providers/AuthProvider';
 
-import LoginOptions from '../components/Login.js';
+import LoginOptions from '../components/Login';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';

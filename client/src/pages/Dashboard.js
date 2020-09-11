@@ -2,43 +2,34 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { realtor } from '../api/realtor';
-import '../../src/App.css';
+import '../App.css';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import CompList from '../components/Dashboard/CompList';
 import MyHouse from '../components/Dashboard/MyHouse';
-import FormChart from '../components/Dashboard/FormChart';
 import TrendingChart from '../components/Dashboard/TrendingChart';
 
 import '../App.css';
 
 function Home(props) {
-  console.log(props);
   const { user, isAuth } = useContext(AuthContext);
   // DB
-  const [hasHouse, setHasHouse] = useState(false);
-  const [houseData, setHouseData] = useState({});
-  const [FormData, setFormData] = useState([]);
+  const [hasHouse, setHasHouse] = useState();
+  // const [houseData, setHouseData] = useState({});
+  const [RenovationValue, setRenovationValue] = useState('');
+  const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState('');
   const [TrendingData, setTrendingData] = useState([]);
   // API
-  const [imageData, setImage] = useState([]);
+  const [imageData, setImage] = useState('');
   const [streetdisplay, setstreetdisplay] = useState('');
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
   const [compsList, setcompsList] = useState([]);
-  const [PID, setPID] = useState('');
-  const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
 
-  const [sqFeet, setSqFeet] = useState('');
-  // const [compaddstreet, setcompaddstreet] = useState([]);
-  // const [compestatedisplay, setcompstatedisplay] = useState('');
-  // const [complastsoldprice, setcomplastsoldprice] = useState('');
-  // const [complastsolddate, setcomplastsolddate] = useState('');
-
   let finishedsqFt;
+  let renVal;
 
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -56,29 +47,29 @@ function Home(props) {
         formData,
         comps,
       };
-      console.log(formData);
+
       setHasHouse(true);
-      setHouseData(data);
-      setFormData(formData);
+      // setHouseData(data);
       setTrendingData(comps);
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
-
+      renVal = data.formData;
       // return true;
       return data;
     }
+    setHasHouse(false)
     return false;
   };
 
   const checkHasHouseInAPI = async (house) => {
-    console.log(house);
+    // console.log('house', house);
     const getAddress = async () => await realtor.getAddressDetails(house.zpid);
     const addressResponse = await getAddress();
-    console.log(addressResponse);
+    // console.log(addressResponse);
 
     if (addressResponse !== undefined) {
-      console.log(addressResponse);
+      // console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
 
@@ -97,14 +88,12 @@ function Home(props) {
 
   const checkHouseCompsInAPI = async (address) => {
     const { city, state_code } = address.data.properties[0].address;
-    console.log(address);
-    console.log(address.data.properties[0].address.city);
-    console.log(address.data.properties[0].address.state_code);
 
     const gethouseResponse = await realtor.gethousevalue(city, state_code);
     if (gethouseResponse !== undefined) {
       findTotalHouseValue(gethouseResponse);
       setCompsListFromAPI(gethouseResponse.data.properties);
+
       return true;
     }
     return false;
@@ -115,9 +104,6 @@ function Home(props) {
     let responsehouses = list.data.properties;
 
     responsehouses.forEach((responsehouse) => {
-      //   console.log('responsehouse', responsehouse);
-      //   const result = responsehouse.hasOwnProperty('building_size');
-      //   console.log('result:', result);
       if (
         responsehouse.hasOwnProperty('building_size') &&
         responsehouse.building_size.size > 0
@@ -128,28 +114,43 @@ function Home(props) {
       }
     });
 
-    const housearraymedian = houseprice_array.sort((a, b) => a - b);
+    if(houseprice_array.length > 0){
+      const housearraymedian = houseprice_array.sort((a, b) => a - b);
+      const mid = Math.floor(housearraymedian.length / 2);
+      const housemedian =
+        housearraymedian.length % 2 !== 0
+          ? housearraymedian[mid]
+          : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
+  
+      const FinalHouseValue = finishedsqFt * housemedian;
+  
+      settotalHouseValue(FinalHouseValue);
+      findHouseRenovation(renVal, FinalHouseValue);
+    }else{
+      settotalHouseValue(0)
+      findHouseRenovation([], 0);
+    }
+  };
 
-    const mid = Math.floor(housearraymedian.length / 2);
-    const housemedian =
-      housearraymedian.length % 2 !== 0
-        ? housearraymedian[mid]
-        : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
+  const findHouseRenovation = (FormData, FinalHouseValue) => {
+    let index = FormData.length - 1;
+    let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
+    let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
 
-    const FinalHouseValue = finishedsqFt * housemedian;
-
-    settotalHouseValue(FinalHouseValue);
+    setRenovationValue(RenoValue);
+    setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
   };
 
   const setCompsListFromAPI = (properties) => {
     let compsarray = [];
 
     for (let i = 0; i < 10; i++) {
-      compsarray.push(properties[i]);
+      if(properties[i] !== undefined){
+        compsarray.push(properties[i]);
+      }
     }
 
     setcompsList(compsarray);
-    console.log('dashboardcomp:', compsList);
   };
 
   const fetchAllData = async () => {
@@ -159,25 +160,9 @@ function Home(props) {
           .then((resp) => {
             checkHouseCompsInAPI(resp);
           })
-          .catch((err) => console.log('broke api house', err));
+          .catch((err) => console.log('broke api house', err)); // toast to go here about not having a house
       })
       .catch((err) => console.log('broke hosue db', err));
-
-    // if(await checkHasHouseInDB() === false){
-    //   console.log('user deosnt have a house in db')
-    // }else{
-    //   console.log('user has house in db')
-    // }
-    // if(await checkHasHouseInAPI() === false){
-    //   console.log('user deosnt have a house in API')
-    // }else{
-    //   console.log('user has hous in api')
-    // }
-    // if(await checkHouseCompsInAPI() === false){
-    //   console.log('user doesnt have comps')
-    // }else{
-    //   console.log('house has comps')
-    // }
   };
 
   useEffect(() => {

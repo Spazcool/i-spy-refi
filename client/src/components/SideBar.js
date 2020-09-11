@@ -20,6 +20,8 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import LightIcon from '@material-ui/icons/WbSunnyOutlined';
 import DarkIcon from '@material-ui/icons/WbSunnyRounded';
+import {FaTools} from 'react-icons/fa';
+
 import '../App.css';
 
 const useStyles = makeStyles({
@@ -156,7 +158,7 @@ export default withRouter(function TemporaryDrawer(props) {
               >
                 <ListItemIcon>
                   <span className='flip'>
-                    <HomeIcon />
+                    <FaTools />
                   </span>
                 </ListItemIcon>
                 <ListItemText primary='House Additions' />

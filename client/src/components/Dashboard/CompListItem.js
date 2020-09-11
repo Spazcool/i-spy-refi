@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompListItem(props) {
-  console.log(props);
   const styles = {
     media: {
       height: 0,
@@ -83,6 +82,7 @@ export default function CompListItem(props) {
     // },
   };
   const classes = useStyles();
+
   return props.comp ? (
     <Accordion>
       <AccordionSummary

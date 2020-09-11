@@ -3,8 +3,6 @@ require('dotenv').config();
 
 export const realtor = {
   async getAddressDetails(propertyid) {
-    console.log(propertyid);
-    console.log(`${propertyid}`);
     let getaddressResponse;
     await axios({
       method: 'GET',
@@ -99,7 +97,6 @@ export const realtor = {
       },
     })
       .then((response) => {
-        console.log(response);
         houseResponse = response;
       })
       .catch((error) => {
@@ -107,34 +104,4 @@ export const realtor = {
       });
     return houseResponse;
   },
-
-  //   async getComps(cityfirestoreComps, statefirestoreComps) {
-  //     let compsresponse;
-
-  //     await axios({
-  //       method: 'GET',
-  //       url: 'https://realtor.p.rapidapi.com/properties/v2/list-sold',
-  //       headers: {
-  //         'content-type': 'application/octet-stream',
-  //         'x-rapidapi-host': 'realtor.p.rapidapi.com',
-  //         'x-rapidapi-key': process.env.REACT_APP_API_KEY,
-  //         useQueryString: true,
-  //       },
-  //       params: {
-  //         sort: 'price_high',
-  //         city: `${cityfirestoreComps}`,
-  //         offset: '0',
-  //         state_code: `${statefirestoreComps}`,
-  //         limit: '100',
-  //       },
-  //     })
-  //       .then((response) => {
-  //         compsresponse = response;
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-
-  //     return compsresponse;
-  //   },
 };
