@@ -77,7 +77,7 @@ export default withRouter(function MyHouse(props) {
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
-      <Card className='card-radius'>
+      <Card className='card-radius-top'>
         <CardActionArea>
           <CardMedia
             className={classes.lazyImage}
