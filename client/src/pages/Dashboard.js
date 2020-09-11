@@ -52,9 +52,7 @@ function Home(props) {
         formData,
         comps,
       };
-      console.log(data.zip);
       getMortgageRates(data.zip);
-      console.log(getMortgageRates);
       setHasHouse(true);
       // setHouseData(data);
       setTrendingData(comps);
@@ -96,15 +94,10 @@ function Home(props) {
   };
 
   const getMortgageRates = async (zip) => {
-    console.log(zip);
     let mortgageRates = await realtor.getMortgageRates();
     setMorgageRatesDisplay(mortgageRates);
-    // return false;
+    // TO DO add ERROR handling
   };
-  // const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
-  console.log(mortgageRatesDisplay);
-  // getMortgageRates();
-  // console.log(getMortgageRates)
 
   const checkHouseCompsInAPI = async (address) => {
     const { city, state_code } = address.data.properties[0].address;
@@ -188,7 +181,6 @@ function Home(props) {
   useEffect(() => {
     if (isAuth) {
       fetchAllData();
-      // getMortgageRates();
     } else {
       //todo error toast
     }
@@ -205,7 +197,7 @@ function Home(props) {
             component='h2'
             className='fontCinzelBlack'
           >
-            <span className='fontCinzelWhite'> House Assessment</span>
+            <span className='fontCinzelLgNoShadow'> House Assessment</span>
           </Typography>
           <MyHouse
             className='card'
@@ -226,7 +218,7 @@ function Home(props) {
             align='center'
             variant='h4'
             component='h2'
-            className='fontCinzelWhite'
+            className='fontCinzelLgNoShadow'
           >
             Similar Homes
           </Typography>

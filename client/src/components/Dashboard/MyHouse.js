@@ -108,7 +108,7 @@ export default withRouter(function MyHouse(props) {
                     $ {props.value.toLocaleString()}
                   </TableCell>
                   <TableCell align='center' className='fontCinzelWhiteNoShadow'>
-                    I Spy Refi Estimate
+                    Similar Homes Calculation
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -126,7 +126,7 @@ export default withRouter(function MyHouse(props) {
                     $ {props.finalhousevalue.toLocaleString()}
                   </TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    Final House Assessment
+                    I Spi Refi Final Assessment
                   </TableCell>
                 </TableRow>
               </Table>
