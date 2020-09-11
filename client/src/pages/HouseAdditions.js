@@ -8,6 +8,7 @@ import { realtor } from '../api/realtor';
 
 import AddHouse from '../components/HouseAdditions/AddHouse';
 import AddRenos from '../components/HouseAdditions/AddRenos';
+import FormChart from '../components/Dashboard/FormChart';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
@@ -72,12 +73,18 @@ export default function HouseAdditions() {
   const classes = useStyles();
   const [values, setValue] = useState(nationalAverages);
   const [userZpid, setUserZpid] = useState('');
+  // const [RenovationValue, setRenovationValue] = useState('');
+  // const [finalHouseAssessmentValue, setFinalHouseAssessmentValue] = useState(
+  //   ''
+  // );
+
   const [userHouse, setUserHouse] = useState({
     street: '',
     address: '',
     city: '',
     zip: '',
     state: '',
+    formData: [],
   });
   const [radios, setRadios] = useState({
     kitchen: 0,
@@ -90,16 +97,19 @@ export default function HouseAdditions() {
   });
 
   useEffect(() => {
-    if(userZpid.zpid == undefined){
+    if (userZpid.zpid == undefined) {
       fetchHouse();
+      // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid]);
+  }, [userZpid, userHouse]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
     console.log(userHouse);
+
+    setUserHouse(userHouse);
   };
 
   const handleOnClick = (event) => {
@@ -131,7 +141,7 @@ export default function HouseAdditions() {
       console.log(updatedHouse);
       //todo make this a toast, can grabe the message for the toast from this updatedHouse
       // toast reading updated house successfully
-    }else{
+    } else {
       console.log('no house to add these too');
       // todo toast, sorry you aint got a house bro, go do that
     }
@@ -222,6 +232,7 @@ export default function HouseAdditions() {
             handleSubmitCalc={handleSubmitCalc}
             values={values}
           />
+          <FormChart data={userHouse} />
         </Grid>
       )}
     </Grid>
