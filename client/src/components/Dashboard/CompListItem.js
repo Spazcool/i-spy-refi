@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompListItem(props) {
-  console.log(props);
   const styles = {
     media: {
       height: 0,

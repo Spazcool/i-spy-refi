@@ -158,7 +158,7 @@ export default withRouter(function MyHouse(props) {
           id='panel1a-header'
         >
           <Typography color='textSecondary' gutterBottom>
-            Get current Refinance Rates in your Area
+            Refinance Rates in area
           </Typography>
         </AccordionSummary>
         <AccordionDetails>

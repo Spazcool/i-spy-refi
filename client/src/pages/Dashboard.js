@@ -28,6 +28,8 @@ function Home(props) {
   const [citydisplay, setcitydisplay] = useState('');
   const [statedisplay, setstatedisplay] = useState('');
   const [compsList, setcompsList] = useState([]);
+  const [mortgageRatesDisplay, setMortgageRates] = useState([]);
+  const [zipdisplay, setzipdisplay] = useState('');
   const [PID, setPID] = useState('');
   const [description, setDescription] = useState('');
   const [totalHouseValue, settotalHouseValue] = useState('');
@@ -39,6 +41,7 @@ function Home(props) {
   // const [complastsolddate, setcomplastsolddate] = useState('');
 
   let finishedsqFt;
+  let zipCode;
 
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -64,7 +67,7 @@ function Home(props) {
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
-
+      zipCode = data.zip;
       // return true;
       return data;
     }
@@ -95,6 +98,18 @@ function Home(props) {
     return false;
   };
 
+  // const getMortgages = async () => await realtor.getMortgageRates(zipCode);
+
+  const getMortgages = async (mortgage) => {
+    zipCode = mortgage;
+    console.log(mortgage);
+    if (mortgage !== undefined) {
+      return true;
+    }
+    return false;
+  };
+
+  // console.log(getMortgages);
   const checkHouseCompsInAPI = async (address) => {
     const { city, state_code } = address.data.properties[0].address;
     console.log(address);
@@ -155,13 +170,22 @@ function Home(props) {
   const fetchAllData = async () => {
     checkHasHouseInDB()
       .then((res) => {
+        console.log(res.zip);
+
+        getMortgages(res.zip)
+        .then((resp) => {
+        })
+          checkHouseCompsInAPI(resp);
+        })
+        .catch((err) => console.log('broke api house', err));
+    })
         checkHasHouseInAPI(res)
           .then((resp) => {
             checkHouseCompsInAPI(resp);
           })
           .catch((err) => console.log('broke api house', err));
       })
-      .catch((err) => console.log('broke hosue db', err));
+      .catch((err) => console.log('broke house db', err));
 
     // if(await checkHasHouseInDB() === false){
     //   console.log('user deosnt have a house in db')
@@ -178,6 +202,7 @@ function Home(props) {
     // }else{
     //   console.log('house has comps')
     // }
+    console.log(zipCode);
   };
 
   useEffect(() => {
