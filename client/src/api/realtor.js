@@ -3,8 +3,6 @@ require('dotenv').config();
 
 export const realtor = {
   async getAddressDetails(propertyid) {
-    console.log(propertyid);
-    console.log(`${propertyid}`);
     let getaddressResponse;
     await axios({
       method: 'GET',
@@ -99,7 +97,6 @@ export const realtor = {
       },
     })
       .then((response) => {
-        console.log(response);
         houseResponse = response;
       })
       .catch((error) => {
@@ -107,6 +104,4 @@ export const realtor = {
       });
     return houseResponse;
   },
-
- 
 };
