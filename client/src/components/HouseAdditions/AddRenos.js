@@ -67,8 +67,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   button: {
-    justifyContent: 'center',
-    width: '50',
+    padding: '1em',
+    width: '25%',
   },
   alignContent: {
     display: 'flex',
@@ -164,6 +164,7 @@ export default function AddRenos(props) {
         >
           <h3 className='mt-5'>Renovations</h3>
           {hasMounted ? listRadios() : ''}
+
           <Button
             type='submit'
             variant='contained'

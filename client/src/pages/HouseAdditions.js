@@ -8,6 +8,7 @@ import { realtor } from '../api/realtor';
 
 import AddHouse from '../components/HouseAdditions/AddHouse';
 import AddRenos from '../components/HouseAdditions/AddRenos';
+import FormChart from '../components/Dashboard/FormChart';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
@@ -69,24 +70,28 @@ const nationalAverages = [
 
 export default function HouseAdditions() {
   const classes = useStyles();
+  const { user, isAuth } = useContext(AuthContext);
+  // ------------ INPUT VALIDATION ------------
   const errorMessage = '* all fields are required';
-  const [credsAreInvalid, setCredsAreInvalid] = useState(false)
-  const [streetColor, setStreetColor] = useState(false)
-  const [cityColor, setCityColor] = useState(false)
-  const [zipColor, setZipColor] = useState(false)
-  const [stateColor, setStateColor] = useState(false)
+  const [credsAreInvalid, setCredsAreInvalid] = useState(false);
+  const [streetColor, setStreetColor] = useState(false);
+  const [cityColor, setCityColor] = useState(false);
+  const [zipColor, setZipColor] = useState(false);
+  const [stateColor, setStateColor] = useState(false);
+  // ------------ HOUSE CREATION ------------
   const emptyHouse = {
     street: '',
     address: '',
     city: '',
     zip: '',
     state: '',
+    formData:[]
   };
-  const { user, isAuth } = useContext(AuthContext);
-  const [values, setValue] = useState(nationalAverages);
-  const [userZpid, setUserZpid] = useState('');
+  const [userZpid, setUserZpid] = useState(''); //TODO should probably be taking emptyhouse
   const [userHouse, setUserHouse] = useState(emptyHouse);
-  const [formData, setFormData] = useState(emptyHouse)
+  // ------------ RADIO INPUTS ------------
+  const [formData, setFormData] = useState(emptyHouse);
+  const [values, setValue] = useState(nationalAverages);
   const [radios, setRadios] = useState({
     kitchen: 0,
     roof: 0,
@@ -98,16 +103,19 @@ export default function HouseAdditions() {
   });
 
   useEffect(() => {
-    if(userZpid.zpid == undefined){
+    if (userZpid.zpid == undefined) {
       fetchHouse();
+      // findHouseRenovation(userHouse.formData);
     }
   }, [userZpid]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
+    console.log(userHouse)
+    //todo might have soemthing to do with the state varaibel sharing the namespace with this uuserHouse
+    //todo this shit is wrong but it works so fuck it
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
-    console.log(userHouse);
   };
 
   const handleOnClick = (event) => {
@@ -139,14 +147,13 @@ export default function HouseAdditions() {
       console.log(updatedHouse);
       //todo make this a toast, can grabe the message for the toast from this updatedHouse
       // toast reading updated house successfully
-    }else{
+    } else {
       console.log('no house to add these too');
       // todo toast, sorry you aint got a house bro, go do that
     }
   };
 
   const handleInputChange = (event) => {
-    console.log(event.target.value);
     event.preventDefault();
     setUserHouse({
       ...userHouse,
@@ -169,7 +176,6 @@ export default function HouseAdditions() {
       setFormData(emptyHouse)
     } else {
       setCredsAreInvalid(errorMessage);
-      console.log('bad inputs')
     }
   };
 
@@ -180,12 +186,10 @@ export default function HouseAdditions() {
       state: userHouse.state.toLowerCase(),
       zip: userHouse.zip.toLowerCase(),
     };
-    console.log(params);
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
     const { mpr_id, centroid, postal_code, state_code, city, line} = autoCompleteResponse.data.autocomplete[0];
     const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
-    console.log(mpr_id);
 
     setUserZpid(mpr_id);
 
@@ -198,6 +202,7 @@ export default function HouseAdditions() {
       zpid: mpr_id,
       latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
       longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+      formData:[]
     };
 
     const createdHouse = async () => await DB.createHouse(user.user.uid, data);
@@ -275,6 +280,7 @@ export default function HouseAdditions() {
             handleSubmitCalc={handleSubmitCalc}
             values={values}
           />
+          {/* <FormChart datsa={userHouse} /> */}
         </Grid>
       )}
     </Grid>

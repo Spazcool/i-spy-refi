@@ -18,44 +18,48 @@ import {
 // TODO SPECIFY COLORS THAT MATCH OUR LOOK
 // https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
 
-export default function FormChart (props) {
-  const [loaded, setLoaded]= useState(false);
-
+export default function FormChart(props) {
+  const [loaded, setLoaded] = useState(false);
+  const [userHouseData, setUserHouseData] = useState([
+    { room: 'loading ...', value: 1 },
+  ]);
   const checkLoaded = () => {
-    const {data} = props;
-    if(data.length > 0){
+    const { formData } = props.data;
+    console.log(props);
+    console.log(formData);
+    setUserHouseData(formData);
+    if (formData.length > 0) {
       setLoaded(true);
     }
-  }
+  };
 
   useEffect(() => {
     checkLoaded();
-  },[props])
-  
-  return(
-    loaded ? 
-      <Paper className='card-radius box-shadow'>
-        <Chart data={props.data}>
-          <PieSeries valueField="value" argumentField="room"/>
-          <Animation/>
-          <Legend/>
-          <Title text='Approximate Renovation Value'/>
-          <EventTracker/>
-          <HoverState/>
-          <Tooltip/>
-        </Chart>
-      </Paper>
-      :
-      <Paper className='card-radius box-shadow'>
-        <Chart data={[{ room: 'loading ...', value: 1 }]}>
-          <PieSeries valueField="value" argumentField="room"/>
-          <Animation/>
-          <Legend/>
-          <Title text='Approximate Renovation Value'/>
-          <EventTracker/>
-          <HoverState/>
-          <Tooltip/>
-        </Chart>
-      </Paper>
-  )
+  }, [props, loaded]);
+
+  return loaded ? (
+    <Paper className='card-radius box-shadow'>
+      <Chart data={userHouseData}>
+        <PieSeries valueField='value' argumentField='room' />
+        <Animation />
+        <Legend />
+        <Title text='Approximate Renovation Value' />
+        <EventTracker />
+        <HoverState />
+        <Tooltip />
+      </Chart>
+    </Paper>
+  ) : (
+    <Paper className='card-radius box-shadow'>
+      <Chart data={[{ room: 'loading ...', value: 1 }]}>
+        <PieSeries valueField='value' argumentField='room' />
+        <Animation />
+        <Legend />
+        <Title text='Approximate Renovation Value' />
+        <EventTracker />
+        <HoverState />
+        <Tooltip />
+      </Chart>
+    </Paper>
+  );
 }

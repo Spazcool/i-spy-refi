@@ -146,18 +146,3 @@ body {
   width: 500;
   height: 450;
 }
-
-.section-inner {
-  /* padding-top: 0px !important; */
-  /* padding-bottom: 80px; // TO DO delete */
-}
-
-/* @media only screen and (min-width: 600px) {
-  #logo{
-    ../assets/logo/white_logo_transparent_background.png
-  }
-} */
-
-.text-danger{
-  color: red;
-}
