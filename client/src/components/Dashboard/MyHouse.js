@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
+    boxShadow: '10px 5px 5px 5px #437779'
   },
   block: {
     display: 'block',
@@ -98,15 +99,12 @@ export default withRouter(function MyHouse(props) {
               {props.street}, {props.city}, {props.state}
             </Typography> */}
             <Typography variant='body2' component='p'>
-              {' '}
               $ {props.value.toLocaleString()} I Spy Refi Estimate
             </Typography>
             <Typography variant='body2' component='p'>
-              {' '}
               $ {props.reno.toLocaleString()} Renovation Additions
             </Typography>
             <Typography variant='body2' component='h5'>
-              {' '}
               $ {props.finalhousevalue.toLocaleString()} Final House Assessment
               Value
             </Typography>

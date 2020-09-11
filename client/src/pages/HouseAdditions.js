@@ -90,8 +90,10 @@ export default function HouseAdditions() {
   });
 
   useEffect(() => {
-    fetchHouse();
-  }, []);
+    if(userZpid.zpid == undefined){
+      fetchHouse();
+    }
+  }, [userZpid]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -109,7 +111,7 @@ export default function HouseAdditions() {
 
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
-    if (userZpid !== '') {
+    if (userZpid.zpid !== '') {
       let totalValue = 0;
       for (const room in radios) {
         totalValue += radios[room];
@@ -129,9 +131,10 @@ export default function HouseAdditions() {
       console.log(updatedHouse);
       //todo make this a toast, can grabe the message for the toast from this updatedHouse
       // toast reading updated house successfully
+    }else{
+      console.log('no house to add these too');
+      // todo toast, sorry you aint got a house bro, go do that
     }
-    console.log('no house to add these too');
-    // todo toast, sorry you aint got a house bro, go do that
   };
 
   const handleInputChange = (event) => {
@@ -208,7 +211,7 @@ export default function HouseAdditions() {
       spacing={2}
       className={classes.alignContent}
     >
-      {userHouse.hid !== undefined ? (
+      {userZpid.zpid === undefined ? (
         <Grid item xs={12}>
           <AddHouse
             userHouse={userHouse}

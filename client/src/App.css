@@ -126,12 +126,8 @@ body {
   border-radius: 0 0 30px 30px !important;
 }
 
-/* .button { //TODO Delete
-  color: #5398be !important;
-} */
-
 .box-shadow {
-  box-shadow: 3px 3px 3px #5398be !important;
+  box-shadow: 3px 3px 3px #437779 !important;
 }
 
 .img-accord {
