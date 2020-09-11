@@ -6,7 +6,6 @@ import '../../src/App.css';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import CompList from '../components/Dashboard/CompList';
 import MyHouse from '../components/Dashboard/MyHouse';
 import FormChart from '../components/Dashboard/FormChart';
@@ -21,6 +20,8 @@ function Home(props) {
   const [hasHouse, setHasHouse] = useState(false);
   const [houseData, setHouseData] = useState({});
   const [FormData, setFormData] = useState([]);
+  const [RenovationValue, setRenovationValue] = useState('');
+  const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState('');
   const [TrendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState([]);
@@ -39,6 +40,7 @@ function Home(props) {
   // const [complastsolddate, setcomplastsolddate] = useState('');
 
   let finishedsqFt;
+  let renVal;
 
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -56,15 +58,16 @@ function Home(props) {
         formData,
         comps,
       };
-      console.log(formData);
+
+      // console.log('formdata:',formData[7]);
       setHasHouse(true);
       setHouseData(data);
-      setFormData(formData);
+      setFormData(data.formData);
       setTrendingData(comps);
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
-
+      renVal = data.formData;
       // return true;
       return data;
     }
@@ -72,7 +75,7 @@ function Home(props) {
   };
 
   const checkHasHouseInAPI = async (house) => {
-    console.log(house);
+    console.log('house', house);
     const getAddress = async () => await realtor.getAddressDetails(house.zpid);
     const addressResponse = await getAddress();
     console.log(addressResponse);
@@ -105,6 +108,7 @@ function Home(props) {
     if (gethouseResponse !== undefined) {
       findTotalHouseValue(gethouseResponse);
       setCompsListFromAPI(gethouseResponse.data.properties);
+
       return true;
     }
     return false;
@@ -139,6 +143,18 @@ function Home(props) {
     const FinalHouseValue = finishedsqFt * housemedian;
 
     settotalHouseValue(FinalHouseValue);
+    findHouseRenovation(renVal, FinalHouseValue);
+  };
+
+  const findHouseRenovation = (FormData, FinalHouseValue) => {
+    console.log('FORMDATA:', FormData);
+    let index = FormData.length - 1;
+    let RenoValue = FormData[index].RenovationValue;
+    setRenovationValue(RenoValue);
+    // console.log('RV:', RenovationValue);
+    let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
+
+    setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
   };
 
   const setCompsListFromAPI = (properties) => {
@@ -187,7 +203,6 @@ function Home(props) {
       //todo error toast
     }
   }, []);
-
   return (
     <Container className='signup'>
       <Grid container spacing={3} className='grid'>
@@ -208,6 +223,8 @@ function Home(props) {
             state={statedisplay}
             imageData={imageData}
             value={totalHouseValue}
+            reno={RenovationValue}
+            finalhousevalue={finalHouseAssessmentValue}
           />
         </Grid>
 

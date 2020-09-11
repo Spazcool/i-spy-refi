@@ -1,5 +1,5 @@
 class House {
-  constructor(hid, zpid, user, location, zip, state, city, street, comps, formData, lastUpdated){
+  constructor(hid, zpid, user, location, zip, state, city, street, comps, formData, lastUpdated,building_size,houseImage){
     this.hid = hid;
     this.zpid = zpid;
     this.user = user;
@@ -11,6 +11,8 @@ class House {
     this.comps = comps;
     this.formData = formData;
     this.lastUpdated = lastUpdated;
+    this.building_size=building_size;
+    this.houseImage=houseImage;
   }
 
   getHouseData(){    
@@ -26,6 +28,8 @@ class House {
       comps: this.comps,
       formData: this.formData,
       lastUpdated: this.lastUpdated,
+      building_size:this.building_size,
+      houseImage:this.houseImage,
     }
   }
 }
