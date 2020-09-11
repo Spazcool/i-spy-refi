@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth } from "../firebase";
+import { auth } from '../firebase';
 import LoginGoogle from '../components/LoginGoogle';
 
 import Grid from '@material-ui/core/Grid';
@@ -29,84 +29,111 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right',
-    marginTop: '1em'
+    marginTop: '1em',
   },
 }));
 
-const LoginOptions = props => {
-    const classes = useStyles();
-    const emptyCreds = { emailInput: '', passwordInput: '' }
-    const errorMessage = 'invalid credentials'
-    const [formData, setFormData] = useState(emptyCreds)
-    const [credsAreInvalid, setCredsAreInvalid] = useState('')
+const LoginOptions = (props) => {
+  const classes = useStyles();
+  const emptyCreds = { emailInput: '', passwordInput: '' };
+  const errorMessage = 'invalid credentials';
+  const [formData, setFormData] = useState(emptyCreds);
+  const [credsAreInvalid, setCredsAreInvalid] = useState('');
 
-    const handleInputChange = event => {
-        event.preventDefault()
-        const { name, value } = event.target
-        setFormData({ ...formData, [name]: value });
-    }
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const handleFormSubmit = event => {
-        event.preventDefault()
-        const inputCreds = {
-            email: formData.emailInput,
-            password: formData.passwordInput
-        }
-        login(inputCreds)
-        setFormData(emptyCreds)
-    }
-
-    const login = (creds) => {
-      auth.signInWithEmailAndPassword(creds.email, creds.password)
-        .catch(error => {
-          setCredsAreInvalid(errorMessage)
-          console.error("Error signing in with password and email", error);
-        });
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    const inputCreds = {
+      email: formData.emailInput,
+      password: formData.passwordInput,
     };
+    login(inputCreds);
+    setFormData(emptyCreds);
+  };
 
-    return (
-      <Grid
-        container
-        justify='center'
-        spacing={2}
-      >
-        <Grid item xs={12}>        
-          <form onSubmit={handleFormSubmit}>
-            <Typography>Sign in with your Email:</Typography>
-            <FormControl>
-              <InputLabel htmlFor="my-input">Email address</InputLabel>
-              <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange}/>
-              <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
-            </FormControl>
+  const login = (creds) => {
+    auth
+      .signInWithEmailAndPassword(creds.email, creds.password)
+      .catch((error) => {
+        setCredsAreInvalid(errorMessage);
+        console.error('Error signing in with password and email', error);
+      });
+  };
 
-            <FormControl>
-              <InputLabel htmlFor="my-input">Password</InputLabel>
-              <Input className={classes.textField}id="my-input" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password" value={formData.emailInput} onChange={handleInputChange}/>
-            </FormControl>
+  return (
+    <Grid container justify='center' spacing={2}>
+      <Grid item xs={12}>
+        <form onSubmit={handleFormSubmit}>
+          <Typography>Sign in with your Email:</Typography>
+          <FormControl>
+            <InputLabel htmlFor='my-input'>Email address</InputLabel>
+            <Input
+              className={classes.textField}
+              id='my-input'
+              aria-describedby='my-helper-text'
+              name='emailInput'
+              type='email'
+              placeholder='Enter email'
+              value={formData.emailInput}
+              onChange={handleInputChange}
+            />
+            <FormHelperText id='my-helper-text'>
+              We'll never share your email.
+            </FormHelperText>
+          </FormControl>
 
-            <FormControl>
-              <FormHelperText className="text-danger" id="my-helper-text"> {credsAreInvalid}</FormHelperText>
-            </FormControl>
+          <FormControl>
+            <InputLabel htmlFor='my-input'>Password</InputLabel>
+            <Input
+              className={classes.textField}
+              id='my-input'
+              aria-describedby='my-helper-text'
+              name='passwordInput'
+              type='password'
+              placeholder='Password'
+              value={formData.emailInput}
+              onChange={handleInputChange}
+            />
+          </FormControl>
 
-            <span className={classes.right} >
-              <Button type="submit" variant="contained" >
-                <span className="flip"><EmailIcon /></span>
-                <span className={classes.control}>Sign-In</span>
-              </Button>
-            </span>
-          </form>
-        </Grid>
+          <FormControl>
+            <FormHelperText className='text-danger' id='my-helper-text'>
+              {' '}
+              {credsAreInvalid}
+            </FormHelperText>
+          </FormControl>
 
-          <Grid item xs={12}>        
-            <form>
-              <Typography>Sign in with your Google account:</Typography>
-              <span className={classes.right}>
-                <LoginGoogle/>
+          <span className={classes.right}>
+            <Button type='submit' variant='contained'>
+              <span className='flip'>
+                <EmailIcon
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                />
               </span>
-            </form>
-          </Grid>
+              <span className={classes.control}>Sign-In</span>
+            </Button>
+          </span>
+        </form>
       </Grid>
-    )
-}
+
+      <Grid item xs={12}>
+        <form>
+          <Typography>Sign in with your Google account:</Typography>
+          <span className={classes.right}>
+            <LoginGoogle />
+          </span>
+        </form>
+      </Grid>
+    </Grid>
+  );
+};
 
 export default LoginOptions;
