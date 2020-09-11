@@ -30,10 +30,12 @@ function Home(props) {
   const [compsList, setcompsList] = useState([]);
   const [totalHouseValue, settotalHouseValue] = useState('');
   const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
+  const [realtorPrice, setrealtorPrice] = useState('');
 
   let finishedsqFt;
   let zipCode;
   let renVal;
+  let Realtorprice;
   // let mortgageRates;
 
   const checkHasHouseInDB = async () => {
@@ -79,6 +81,11 @@ function Home(props) {
       // console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
+      // Storing Realtor House Price
+
+      Realtorprice = addressResponse.data.properties[0].price;
+      setrealtorPrice(Realtorprice);
+      console.log('RP:', Realtorprice);
 
       let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
@@ -147,11 +154,13 @@ function Home(props) {
 
   const findHouseRenovation = (FormData, FinalHouseValue) => {
     let index = FormData.length - 1;
-    let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
-    let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
+    if (index > 0) {
+      let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
+      let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
 
-    setRenovationValue(RenoValue);
-    setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
+      setRenovationValue(RenoValue);
+      setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
+    }
   };
 
   const setCompsListFromAPI = (properties) => {
@@ -208,6 +217,7 @@ function Home(props) {
             value={totalHouseValue}
             reno={RenovationValue}
             finalhousevalue={finalHouseAssessmentValue}
+            realtorprice={realtorPrice}
             financeRates={mortgageRatesDisplay}
           />
         </Grid>
