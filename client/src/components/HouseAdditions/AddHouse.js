@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-// import FormControl from '@material-ui/core/FormControl';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -31,6 +32,7 @@ export default function AddHouse(props) {
         <h1 className='mt-5'>Add Your House to Get Started</h1>
         <FormGroup id='initInput' className={classes.root}>
           <TextField
+            error={props.streetColor}
             required
             label='Street'
             placeholder='Street'
@@ -40,6 +42,7 @@ export default function AddHouse(props) {
             onChange={props.handleInputChange}
           />
           <TextField
+            error={props.cityColor}
             required
             label='City'
             placeholder='City'
@@ -48,17 +51,8 @@ export default function AddHouse(props) {
             value={props.userHouse.city}
             onChange={props.handleInputChange}
           />
-
           <TextField
-            required
-            label='Zip'
-            placeholder='Zip'
-            variant='outlined'
-            name='zip'
-            value={props.userHouse.zip}
-            onChange={props.handleInputChange}
-          />
-          <TextField
+            error={props.stateColor}
             required
             label='State'
             placeholder='State'
@@ -67,7 +61,21 @@ export default function AddHouse(props) {
             value={props.userHouse.state}
             onChange={props.handleInputChange}
           />
+          <TextField
+            error={props.zipColor}
+            required
+            label='Zip'
+            placeholder='Zip'
+            variant='outlined'
+            name='zip'
+            value={props.userHouse.zip}
+            onChange={props.handleInputChange}
+          />
+          <FormControl>
+            <FormHelperText className="text-danger" id="my-helper-text">{props.credsAreInvalid} </FormHelperText>
+          </FormControl>
         </FormGroup>
+
         <Button
           type='submit'
           variant='contained'

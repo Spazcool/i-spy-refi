@@ -61,6 +61,7 @@ const LoginOptions = props => {
         .catch(error => {
           setCredsAreInvalid(errorMessage)
           console.error("Error signing in with password and email", error);
+          //todo toast
         });
     };
 
@@ -76,7 +77,6 @@ const LoginOptions = props => {
             <FormControl>
               <InputLabel htmlFor="my-input-email">Email address</InputLabel>
               <Input className={classes.textField} id="my-input-email" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange}/>
-              <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
             </FormControl>
 
             <FormControl>
