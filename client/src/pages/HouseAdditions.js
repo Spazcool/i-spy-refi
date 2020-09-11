@@ -169,25 +169,21 @@ export default function HouseAdditions() {
     console.log(params);
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
-    const { mpr_id, centroid } = autoCompleteResponse.data.autocomplete[0];
-
+    const { mpr_id, centroid, postal_code, state_code, city, line} = autoCompleteResponse.data.autocomplete[0];
+    const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
     console.log(mpr_id);
 
     setUserZpid(mpr_id);
 
     const data = {
-      zip: autoCompleteResponse.data.autocomplete[0].postal_code,
-      state: autoCompleteResponse.data.autocomplete[0].state_code,
-      city: autoCompleteResponse.data.autocomplete[0].city,
-      street: autoCompleteResponse.data.autocomplete[0].line,
-      // comps,
-      // formData,
-      // lastUpdated,
+      zip: postal_code,
+      state: state_code,
+      city: city,
+      street: line,
       hid: mpr_id,
-      // hid: user.user.uid
       zpid: mpr_id,
-      latitude: centroid.lat,
-      longitude: centroid.lon,
+      latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+      longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
     };
 
     const createdHouse = async () => await DB.createHouse(user.user.uid, data);

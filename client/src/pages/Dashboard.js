@@ -175,7 +175,7 @@ function Home(props) {
           .then((resp) => {
             checkHouseCompsInAPI(resp);
           })
-          .catch((err) => console.log('broke api house', err));
+          .catch((err) => console.log('broke api house', err)); // toast to go here about not having a house
       })
       .catch((err) => console.log('broke hosue db', err));
 
