@@ -160,6 +160,6 @@ body {
   padding-top: 20px;
 }
 
-.house-icon {
-
+.bold {
+  font-weight: 300 !important;
 }

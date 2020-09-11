@@ -133,19 +133,19 @@ export default function CompListItem(props) {
             component='p'
             className='fontCinzel'
           >
-            House Size: {props.comp.building_size.size.toLocaleString()} sqft
+            House Size: <b> {props.comp.building_size.size.toLocaleString()} sqft </b>
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p' className='bold'>
+          Baths: <b>{props.comp.baths}</b> 
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            Baths {props.comp.baths}
+          Beds: <b>{props.comp.beds}</b>
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            Beds: {props.comp.beds}
+           Property Type: <b>{props.comp.prop_type}</b>
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            Property Type: {props.comp.prop_type}
-          </Typography>
-          <Typography variant='body2' color='textSecondary' component='p'>
-            Year Built: {props.comp.year_built}
+           Year Built: <b>{props.comp.year_built}</b>
           </Typography>
         </Grid>
         <Grid item xs={6}>
