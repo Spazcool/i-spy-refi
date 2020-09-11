@@ -81,7 +81,7 @@ const LoginOptions = props => {
 
             <FormControl>
               <InputLabel htmlFor="my-input">Password</InputLabel>
-              <Input className={classes.textField}id="my-input" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password" value={formData.emailInput} onChange={handleInputChange}/>
+              <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange}/>
             </FormControl>
 
             <FormControl>

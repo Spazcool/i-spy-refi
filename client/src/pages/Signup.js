@@ -28,11 +28,11 @@ function Signup(props) {
     return () => mounted = false;
   },[isAuth])
 
-  if(userHouse && isAuth){
-    return <Redirect to='/dashboard' />
-  }else if(userHouse === undefined && isAuth){
-    return <Redirect to='/additions' />
-  }else{
+  // if(userHouse && isAuth){
+  //   return <Redirect to='/dashboard' />
+  // }else if(userHouse === undefined && isAuth){
+  //   return <Redirect to='/additions' />
+  // }else{
     return (
       <Container className="signup">
         <h1>SignUp Page</h1>
@@ -43,7 +43,7 @@ function Signup(props) {
         </Grid>
       </Container>
     );
-  }
+  // }
 }
 
 export default Signup;
