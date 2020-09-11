@@ -66,9 +66,7 @@ export default withRouter(function MyHouse(props) {
 
   const checkLoaded = () => {
     const { imageData, street, description, value } = props;
-    console.log(props);
-    if (value) {
-      //presumes value will take the longest to load
+    if (value >= 0) { //presumes value will take the longest to load
       setLoaded(true);
     }
   };
@@ -76,10 +74,6 @@ export default withRouter(function MyHouse(props) {
   useEffect(() => {
     checkLoaded();
   }, [props]);
-
-  console.log(props);
-  // const renovationCost = props.formData.formData;
-  // console.log(renovationCost);
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
@@ -95,9 +89,6 @@ export default withRouter(function MyHouse(props) {
             <h4 className='fontCinzelBlack'>
               {props.street}, {props.city}, {props.state}
             </h4>
-            {/* <Typography variant='h5' component='h4'>
-              {props.street}, {props.city}, {props.state}
-            </Typography> */}
             <Typography variant='body2' component='p'>
               $ {props.value.toLocaleString()} I Spy Refi Estimate
             </Typography>

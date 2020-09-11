@@ -8,8 +8,6 @@ class User {
     this.zpid = zpid;
     this.admin = admin;
     this.lastUpdated = lastUpdated;
-    this.building_size=building_size;
-    this.houseImage=houseImage;
   }
 
   getUserData(){
@@ -22,8 +20,6 @@ class User {
       zpid: this.zpid,
       admin: this.admin,
       lastUpdated: this.lastUpdated,
-     building_size:this.building_size,
-     houseImage:this.houseImage,
     }
   }
 }

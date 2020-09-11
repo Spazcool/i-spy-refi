@@ -283,7 +283,6 @@ export const DB = {
 
       houseArr.push(data.getHouseData());
     });
-    console.log('housearr:', houseArr);
     return houseArr;
   },
 

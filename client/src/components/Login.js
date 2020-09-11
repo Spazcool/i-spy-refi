@@ -74,14 +74,14 @@ const LoginOptions = props => {
           <form onSubmit={handleFormSubmit}>
             <Typography>Sign in with your Email:</Typography>
             <FormControl>
-              <InputLabel htmlFor="my-input">Email address</InputLabel>
-              <Input className={classes.textField} id="my-input" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange}/>
+              <InputLabel htmlFor="my-input-email">Email address</InputLabel>
+              <Input className={classes.textField} id="my-input-email" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder="Enter email" value={formData.emailInput} onChange={handleInputChange}/>
               <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
             </FormControl>
 
             <FormControl>
-              <InputLabel htmlFor="my-input">Password</InputLabel>
-              <Input className={classes.textField}id="my-input" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password" value={formData.emailInput} onChange={handleInputChange}/>
+              <InputLabel htmlFor="my-input-password">Password</InputLabel>
+              <Input className={classes.textField} id="my-input-password" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password" value={formData.passwordInput} onChange={handleInputChange}/>
             </FormControl>
 
             <FormControl>
