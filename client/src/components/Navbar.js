@@ -28,7 +28,7 @@ export default withRouter(function Navbar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static' className='navbar'>
+      <AppBar position='fixed' className='navbar'>
         <Toolbar>
           <SideBar props={props} />
           <img src={logo} alt='logo' className='logo' />
