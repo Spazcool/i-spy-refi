@@ -1,5 +1,5 @@
 class User {
-  constructor(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated){
+  constructor(uid, displayName, email, firstName, lastName, zpid, admin, lastUpdated,building_size,houseImage){
     this.uid = uid;
     this.displayName = displayName;
     this.email = email;
@@ -8,6 +8,8 @@ class User {
     this.zpid = zpid;
     this.admin = admin;
     this.lastUpdated = lastUpdated;
+    this.building_size=building_size;
+    this.houseImage=houseImage;
   }
 
   getUserData(){
@@ -20,6 +22,8 @@ class User {
       zpid: this.zpid,
       admin: this.admin,
       lastUpdated: this.lastUpdated,
+     building_size:this.building_size,
+     houseImage:this.houseImage,
     }
   }
 }

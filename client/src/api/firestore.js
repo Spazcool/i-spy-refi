@@ -76,6 +76,8 @@ export const DB = {
         comps,
         formData,
         lastUpdated,
+        building_size,
+        houseImage,
       } = houseData;
       const data = new House(
         hid,
@@ -208,6 +210,8 @@ export const DB = {
       comps,
       formData,
       lastUpdated,
+      building_size,
+      houseImage,
     } = houseObj.data();
     const data = new House(
       hid,
@@ -220,14 +224,15 @@ export const DB = {
       street,
       comps,
       formData,
-      lastUpdated
+      lastUpdated,
+      building_size,
+      houseImage
     );
 
     return data.getHouseData();
   },
 
   async getHouseByOwner(userId) {
-    console.log('userid', userId);
     let returnedHouse;
 
     const house = db().collection('houses').where('user', '==', userId);
@@ -257,6 +262,8 @@ export const DB = {
         comps,
         formData,
         lastUpdated,
+        building_size,
+        houseImage,
       } = house.data();
       const data = new House(
         hid,
@@ -269,13 +276,14 @@ export const DB = {
         street,
         comps,
         formData,
-        lastUpdated
+        lastUpdated,
+        building_size,
+        houseImage
       );
 
       houseArr.push(data.getHouseData());
-      console.log('housearr', houseArr);
     });
-    console.log(houseArr);
+    console.log('housearr:', houseArr);
     return houseArr;
   },
 
@@ -329,7 +337,6 @@ export const DB = {
 
   // ------------------------ UPDATE ------------------------
   async updateUser(user, updateUserData) {
-    console.log(user);
     const userRef = db().doc(`users/${user}`);
     const snapshot = await userRef.get();
 
@@ -386,6 +393,8 @@ export const DB = {
       street,
       comps,
       formData,
+      building_size,
+      houseImage,
     } = updateHouseData;
     const data = new House(
       hid,
@@ -398,6 +407,8 @@ export const DB = {
       street,
       comps,
       formData,
+      building_size,
+      houseImage,
       db.FieldValue.serverTimestamp()
     );
     const mergeObj = {};
@@ -408,7 +419,7 @@ export const DB = {
         mergeObj[property] = Obj[property];
       }
     }
-    console.log(mergeObj.zpid);
+
     return db()
       .collection('houses')
       .where('zpid', '==', mergeObj.zpid)
