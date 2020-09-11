@@ -90,8 +90,10 @@ export default function HouseAdditions() {
   });
 
   useEffect(() => {
-    fetchHouse();
-  }, []);
+    if(userZpid.zpid == undefined){
+      fetchHouse();
+    }
+  }, [userZpid]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -109,7 +111,7 @@ export default function HouseAdditions() {
 
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
-    if (userZpid !== '') {
+    if (userZpid.zpid !== '') {
       let totalValue = 0;
       for (const room in radios) {
         totalValue += radios[room];
@@ -129,9 +131,10 @@ export default function HouseAdditions() {
       console.log(updatedHouse);
       //todo make this a toast, can grabe the message for the toast from this updatedHouse
       // toast reading updated house successfully
+    }else{
+      console.log('no house to add these too');
+      // todo toast, sorry you aint got a house bro, go do that
     }
-    console.log('no house to add these too');
-    // todo toast, sorry you aint got a house bro, go do that
   };
 
   const handleInputChange = (event) => {
@@ -166,25 +169,21 @@ export default function HouseAdditions() {
     console.log(params);
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
-    const { mpr_id, centroid } = autoCompleteResponse.data.autocomplete[0];
-
+    const { mpr_id, centroid, postal_code, state_code, city, line} = autoCompleteResponse.data.autocomplete[0];
+    const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
     console.log(mpr_id);
 
     setUserZpid(mpr_id);
 
     const data = {
-      zip: autoCompleteResponse.data.autocomplete[0].postal_code,
-      state: autoCompleteResponse.data.autocomplete[0].state_code,
-      city: autoCompleteResponse.data.autocomplete[0].city,
-      street: autoCompleteResponse.data.autocomplete[0].line,
-      // comps,
-      // formData,
-      // lastUpdated,
+      zip: postal_code,
+      state: state_code,
+      city: city,
+      street: line,
       hid: mpr_id,
-      // hid: user.user.uid
       zpid: mpr_id,
-      latitude: centroid.lat,
-      longitude: centroid.lon,
+      latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+      longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
     };
 
     const createdHouse = async () => await DB.createHouse(user.user.uid, data);
@@ -208,7 +207,7 @@ export default function HouseAdditions() {
       spacing={2}
       className={classes.alignContent}
     >
-      {userHouse.hid !== undefined ? (
+      {userZpid.zpid === undefined ? (
         <Grid item xs={12}>
           <AddHouse
             userHouse={userHouse}

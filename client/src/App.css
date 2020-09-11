@@ -83,7 +83,7 @@ html {
 }
 
 /* NEW TRICKS WITH CSS */
-/* 
+
 .card {
   display: flex;
   flex-direction: column;
@@ -103,7 +103,7 @@ html {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-} */
+}
 
 /* .card:hover {
   box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
@@ -134,16 +134,12 @@ html {
   border-radius: 0 0 30px 30px !important;
 }
 
-/* .button { //TODO Delete
-  color: #5398be !important;
-} */
-
 .box-shadow {
-  box-shadow: 3px 3px 3px #5398be !important;
+  box-shadow: 3px 3px 3px #437779 !important;
 }
 
 .img-accord {
-  height: 70px;
+  height: 50px;
   width: 50px;
   background-image: url('https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg');
   /* width:33%; */
@@ -163,3 +159,9 @@ html {
   /* padding-top: 0px !important; */
   /* padding-bottom: 80px; // TO DO delete */
 }
+
+/* @media only screen and (min-width: 600px) {
+  #logo{
+    ../assets/logo/white_logo_transparent_background.png
+  }
+} */

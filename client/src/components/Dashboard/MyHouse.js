@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
+    boxShadow: '10px 5px 5px 5px #437779'
   },
   block: {
     display: 'block',
@@ -65,9 +66,7 @@ export default withRouter(function MyHouse(props) {
 
   const checkLoaded = () => {
     const { imageData, street, description, value } = props;
-    console.log(props);
-    if (value) {
-      //presumes value will take the longest to load
+    if (value >= 0) { //presumes value will take the longest to load
       setLoaded(true);
     }
   };
@@ -75,10 +74,6 @@ export default withRouter(function MyHouse(props) {
   useEffect(() => {
     checkLoaded();
   }, [props]);
-
-  console.log(props);
-  // const renovationCost = props.formData.formData;
-  // console.log(renovationCost);
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
@@ -94,20 +89,21 @@ export default withRouter(function MyHouse(props) {
             <h4 className='fontCinzelBlack'>
               {props.street}, {props.city}, {props.state}
             </h4>
-            {/* <Typography variant='h5' component='h4'>
-              {props.street}, {props.city}, {props.state}
-            </Typography> */}
             <Typography variant='body2' component='p'>
-              {' '}
               $ {props.value.toLocaleString()} I Spy Refi Estimate
             </Typography>
             <Typography variant='body2' component='p'>
-              {' '}
-              $ {props.value.toLocaleString()} Renovation Additions
+              $ {props.reno.toLocaleString()} Renovation Additions
             </Typography>
+<<<<<<< HEAD
             <Typography variant='body3' component='h5'>
               {' '}
               - $ {props.value.toLocaleString()} Final House Assessment Value
+=======
+            <Typography variant='body2' component='h5'>
+              $ {props.finalhousevalue.toLocaleString()} Final House Assessment
+              Value
+>>>>>>> 5e2a24eb725dd7f0db5a65d4601990519dc3d752
             </Typography>
             <Typography variant='body3' component='p'>
               {/* Home Renovation Value $ {renovationCost} */}
