@@ -2,13 +2,12 @@
 import React, { useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
-
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
 import SideBar from './SideBar.js';
 
 import logo from '../assets/logo/white_logo_transparent_background.png';
@@ -31,8 +30,12 @@ export default withRouter(function Navbar(props) {
       <AppBar position='static' className='navbar'>
         <Toolbar>
           <SideBar props={props} />
-          <img src={logo} alt='logo' className='logo' />
-          <Typography variant='h6' className='brand'></Typography>
+          <Link href='/'>
+          <img src={logo} alt='logo' className='logo'/>
+          </Link>
+         
+         
+          {/* <Typography variant='h6' className='brand'></Typography> */}
 
           {isAuth ? (
             <></>

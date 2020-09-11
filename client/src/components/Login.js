@@ -66,10 +66,11 @@ const LoginOptions = (props) => {
   };
 
   return (
-    <Grid container justify='center' spacing={2}>
+    <Grid container justify='center' spacing={2} className="card-radius-gray">
+      {/* <div class='login-margin center'> */}
       <Grid item xs={12}>
         <form onSubmit={handleFormSubmit}>
-          <Typography>Sign in with your Email:</Typography>
+          <h4>Email:</h4>
           <FormControl>
             <InputLabel htmlFor='my-input'>Email address</InputLabel>
             <Input
@@ -86,7 +87,7 @@ const LoginOptions = (props) => {
               We'll never share your email.
             </FormHelperText>
           </FormControl>
-
+          
           <FormControl>
             <InputLabel htmlFor='my-input'>Password</InputLabel>
             <Input
@@ -126,12 +127,13 @@ const LoginOptions = (props) => {
 
       <Grid item xs={12}>
         <form>
-          <Typography>Sign in with your Google account:</Typography>
+          <h4>Google account:</h4>
           <span className={classes.right}>
             <LoginGoogle />
           </span>
         </form>
       </Grid>
+      {/* </div> */}
     </Grid>
   );
 };
