@@ -8,6 +8,7 @@ import { realtor } from '../api/realtor';
 
 import AddHouse from '../components/HouseAdditions/AddHouse';
 import AddRenos from '../components/HouseAdditions/AddRenos';
+import FormChart from '../components/Dashboard/FormChart';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
@@ -78,6 +79,7 @@ export default function HouseAdditions() {
     city: '',
     zip: '',
     state: '',
+    formData: [],
   });
   const [radios, setRadios] = useState({
     kitchen: 0,
@@ -100,6 +102,8 @@ export default function HouseAdditions() {
     const [userHouse] = await house();
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
     console.log(userHouse);
+
+    setUserHouse(userHouse);
   };
 
   const handleOnClick = (event) => {
@@ -226,6 +230,7 @@ export default function HouseAdditions() {
             handleSubmitCalc={handleSubmitCalc}
             values={values}
           />
+          {/* <FormChart data={userHouse} /> */}
         </Grid>
       )}
     </Grid>

@@ -164,6 +164,7 @@ export default function AddRenos(props) {
         >
           <h3 className='mt-5'>Renovations</h3>
           {hasMounted ? listRadios() : ''}
+
           <Button
             type='submit'
             variant='contained'
