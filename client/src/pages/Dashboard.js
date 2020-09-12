@@ -32,10 +32,12 @@ function Home(props) {
   const [compsList, setcompsList] = useState([]);
   const [totalHouseValue, settotalHouseValue] = useState('');
   const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
+  const [realtorPrice, setrealtorPrice] = useState('');
 
   let finishedsqFt;
   let zipCode;
   let renVal;
+  let Realtorprice;
   // let mortgageRates;
 
   const checkHasHouseInDB = async () => {
@@ -85,6 +87,10 @@ function Home(props) {
       // console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
+      // Storing Realtor House Price
+
+      Realtorprice = addressResponse.data.properties[0].price;
+      setrealtorPrice(Realtorprice);
 
       let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
@@ -133,29 +139,33 @@ function Home(props) {
       }
     });
 
-    if (houseprice_array.length > 0) {
-      const housearraymedian = houseprice_array.sort((a, b) => a - b);
-      const mid = Math.floor(housearraymedian.length / 2);
-      const housemedian =
-        housearraymedian.length % 2 !== 0
-          ? housearraymedian[mid]
-          : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
+    // if (houseprice_array.length > 0) {
+    const housearraymedian = houseprice_array.sort((a, b) => a - b);
+    const mid = Math.floor(housearraymedian.length / 2);
+    const housemedian =
+      housearraymedian.length % 2 !== 0
+        ? housearraymedian[mid]
+        : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
 
-      const FinalHouseValue = finishedsqFt * housemedian;
+    const FinalHouseValue = finishedsqFt * housemedian;
 
-      settotalHouseValue(FinalHouseValue);
-      findHouseRenovation(renVal, FinalHouseValue);
-    } else {
-      settotalHouseValue(0);
-      findHouseRenovation([], 0);
-    }
+    settotalHouseValue(FinalHouseValue);
+    findHouseRenovation(renVal, FinalHouseValue);
+    // } else {
+    //   settotalHouseValue(0);
+    //   findHouseRenovation([], 0);
+    // }
   };
 
   const findHouseRenovation = (FormData, FinalHouseValue) => {
     let index = FormData.length - 1;
-    let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
-    let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
 
+    let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
+    let FinalHouseAssessmentValue =
+      FinalHouseValue > 0
+        ? FinalHouseValue + RenoValue
+        : Realtorprice + RenoValue;
+    console.log('ChkReno:', FinalHouseAssessmentValue);
     setRenovationValue(RenoValue);
     setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
   };
@@ -194,29 +204,41 @@ function Home(props) {
 
   return (
     <Container className='signup'>
+      <div className='row'></div>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-          <Typography
-            align='center'
-            variant='h4'
-            component='h2'
-            className='fontCinzelBlack'
-          >
-            <span className='fontCinzelLgNoShadow'> House Assessment</span>
-          </Typography>
-          <MyHouse
-            className='card'
-            street={streetdisplay}
-            city={citydisplay}
-            state={statedisplay}
-            imageData={imageData}
-            value={totalHouseValue}
-            reno={RenovationValue}
-            finalhousevalue={finalHouseAssessmentValue}
-            formData={formData}
-            financeRates={mortgageRatesDisplay}
-          />
+          <Grid item xs={12} sm={12} lg={12} xl={12}>
+            <Typography
+              align='center'
+              variant='h4'
+              component='h2'
+              className='fontCinzelBlack'
+            >
+              <span className='fontCinzelLgNoShadow'> House Assessment</span>
+            </Typography>
+            <MyHouse
+              className='card'
+              street={streetdisplay}
+              city={citydisplay}
+              state={statedisplay}
+              imageData={imageData}
+              value={totalHouseValue}
+              reno={RenovationValue}
+              finalhousevalue={finalHouseAssessmentValue}
+              realtorprice={realtorPrice}
+              formData={formData}
+              financeRates={mortgageRatesDisplay}
+            />
+          </Grid>
+
+          {/* --------------- CHART1 --------------- */}
+          <Grid item xs={12} sm={12} lg={12} xl={12}>
+            <h2 className='fontCinzelWhite chart'>
+              Comps Trending Data Values
+            </h2>
+            {/* <TrendingChart data={TrendingData} /> */}
+          </Grid>
         </Grid>
 
         {/* --------------- COMPS --------------- */}
@@ -227,17 +249,17 @@ function Home(props) {
             component='h2'
             className='fontCinzelLgNoShadow'
           >
-            Similar Homes
+            <span className='fontCinzelLgNoShadow'> Homes In Area</span>
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
 
-        {/* --------------- CHARTS --------------- */}
-        <Grid item xs={12} sm={12} lg={12} xl={12}>
+        {/* --------------- CHART2 --------------- */}
+        <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
-            Comps Trending Data Values
+            Refi Form Data Values
           </Typography>
-          {/* <TrendingChart data={TrendingData} /> */}
+          {/* <FormChart data={FormData} /> */}
         </Grid>
       </Grid>
     </Container>

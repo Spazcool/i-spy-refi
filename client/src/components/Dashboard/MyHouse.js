@@ -23,10 +23,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Grid from '@material-ui/core/Grid';
 import style from '../../App.css';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HomeIcon from '@material-ui/icons/Home';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -75,14 +77,19 @@ const styles = {
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
-  const [userFormData, setUserFormData] = useState([]);
+  const biggerThanMobile = useMediaQuery('(min-width:600px)');
+  // console.log(props.financeRates);
   const checkLoaded = async () => {
-    // const { imageData, street, description, value, formData } = props;
-    // console.log(props.financeRates);
-    console.log(props);
-    const { imageData, street, description, value, formData } = await props;
-    console.log(formData);
-    if (value >= 0) {
+    const {
+      imageData,
+      street,
+      description,
+      value,
+      finalhousevalue,
+      formData,
+    } = await props;
+
+    if (finalhousevalue > 0) {
       //presumes value will take the longest to load
       setLoaded(true);
       // console.log(formData);
@@ -102,53 +109,49 @@ export default withRouter(function MyHouse(props) {
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
-      <Card className='card-radius'>
-        <CardActionArea>
-          <CardMedia
-            className={classes.lazyImage}
-            component='img'
-            image={props.imageData}
-            title='My House'
-          />
-          <CardContent className={classes.block}>
-            <h4 className='fontCinzelLgNoShadow'>
-              {props.street}, {props.city}, {props.state}
-            </h4>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label='simple table'>
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center'>
-                    $ {props.value.toLocaleString()}
-                  </TableCell>
-                  <TableCell align='center' className='fontCinzelWhiteNoShadow'>
-                    Similar Homes Calculation
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center'>
-                    $ {props.reno.toLocaleString()}
-                  </TableCell>
-                  <TableCell align='center' coolor='secondary'>
-                    Renovation Additions
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    $ {props.finalhousevalue.toLocaleString()}
-                  </TableCell>
-                  <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    I Spi Refi Final Assessment
-                  </TableCell>
-                </TableRow>
-              </Table>
-            </TableContainer>
-          </CardContent>
-        </CardActionArea>
+      <Card className='card-radius-top'>
+        <CardMedia component='img' image={props.imageData} title='My House' />
+        <CardContent className={classes.block}>
+          <h4 className='fontCinzelLgNoShadow'>
+            {props.street}, {props.city}, {props.state}
+          </h4>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label='simple table'>
+              <TableRow>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'>
+                  ${' '}
+                  {props.value > 0
+                    ? props.value.toLocaleString()
+                    : props.realtorprice.toLocaleString()}
+                </TableCell>
+                <TableCell align='center' className='fontCinzelWhiteNoShadow'>
+                  Similar Homes Calculation
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'>
+                  $ {props.reno.toLocaleString()}
+                </TableCell>
+                <TableCell align='center' coolor='secondary'>
+                  Renovation Additions
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                  $ {props.finalhousevalue}
+                </TableCell>
+                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                  I Spi Refi Final Assessment
+                </TableCell>
+              </TableRow>
+            </Table>
+          </TableContainer>
+        </CardContent>
       </Card>
-      <Accordion className='card-radius-bottom'>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
@@ -165,10 +168,18 @@ export default withRouter(function MyHouse(props) {
             <Typography variant='h5' component='h2'>
               reno data
             </Typography> */}
+
             <FormChart data={props} />
           </CardContent>
           <CardActions className={classes.root}>
             <Button
+              style={{
+                position: 'absolute',
+                right: '0',
+                bottom: '0',
+                marginTop: '20px',
+                marginRight: '70px',
+              }}
               size='small'
               className='button'
               onClick={(e) => {
@@ -181,7 +192,7 @@ export default withRouter(function MyHouse(props) {
           </CardActions>
         </AccordionDetails>
       </Accordion>
-      <Accordion className='card-radius-bottom' align='centet'>
+      <Accordion className='card-radius-bottom' align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'

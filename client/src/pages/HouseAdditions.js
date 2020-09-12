@@ -103,11 +103,12 @@ export default function HouseAdditions() {
   });
 
   useEffect(() => {
-    if (userZpid.zpid == undefined) {
+    if (userZpid.zpid === undefined) {
       fetchHouse();
+
       // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid, userHouse]);
+  }, [userZpid, radios]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -145,6 +146,7 @@ export default function HouseAdditions() {
       const house = async () => await DB.updateHouse(data);
       const updatedHouse = await house();
       console.log(updatedHouse);
+      window.location.reload();
       //todo make this a toast, can grabe the message for the toast from this updatedHouse
       // toast reading updated house successfully
     } else {
@@ -196,8 +198,7 @@ export default function HouseAdditions() {
       city,
       line,
     } = autoCompleteResponse.data.autocomplete[0];
-    const alternateCentroid =
-      autoCompleteResponse.data.autocomplete[1].centroid;
+    // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
 
     setUserZpid(mpr_id);
 
@@ -208,8 +209,10 @@ export default function HouseAdditions() {
       street: line,
       hid: mpr_id,
       zpid: mpr_id,
-      latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
-      longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+      // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+      // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+      latitude: 50,
+      longitude: 50,
       formData: [],
     };
 

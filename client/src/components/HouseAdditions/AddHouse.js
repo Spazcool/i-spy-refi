@@ -29,7 +29,7 @@ export default function AddHouse(props) {
   return (
     <Box display='flex'>
       <Box m='auto'>
-        <h1 className='mt-5'>Add Your House to Get Started</h1>
+        <h2 className='fontCinzelLgNoShadow'>Enter Home Address To Begin</h2>
         <FormGroup id='initInput' className={classes.root}>
           <TextField
             error={props.streetColor}
@@ -72,7 +72,9 @@ export default function AddHouse(props) {
             onChange={props.handleInputChange}
           />
           <FormControl>
-            <FormHelperText className="text-danger" id="my-helper-text">{props.credsAreInvalid} </FormHelperText>
+            <FormHelperText className='text-danger' id='my-helper-text'>
+              {props.credsAreInvalid}{' '}
+            </FormHelperText>
           </FormControl>
         </FormGroup>
 

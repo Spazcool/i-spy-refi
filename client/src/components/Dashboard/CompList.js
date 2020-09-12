@@ -54,7 +54,7 @@ export default function CompList(props) {
     <Paper elevation={4} className='card-radius box-shadow'>
       <div className={classes.list}>
         {props.compslist.map((comp, i) => (
-          <CompListItem comp={comp} key={'compItem' + i} />
+          <CompListItem comp={comp} len={props.compslist.length -1} index={i} key={'compItem' + i} />
         ))}
       </div>
     </Paper>
