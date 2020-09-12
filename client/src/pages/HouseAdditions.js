@@ -12,6 +12,7 @@ import FormChart from '../components/Dashboard/FormChart';
 import Toast from '../components/Toast';
 
 import Grid from '@material-ui/core/Grid';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,6 +74,7 @@ const nationalAverages = [
 
 export default function HouseAdditions() {
   const classes = useStyles();
+  const biggerThanMobile = useMediaQuery('(min-width:600px)');
   const { user, isAuth } = useContext(AuthContext);
   // ------------ INPUT VALIDATION ------------
   const errorMessage = '* all fields are required';
@@ -200,8 +202,10 @@ export default function HouseAdditions() {
       zip: userHouse.zip.toLowerCase(),
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
-    const {data} = await autoComplete();
-    console.log(data.status)// todo error handling for a random 503 killed the app
+    const data = await autoComplete();
+    console.log(data)// todo error handling for a random 503 killed the app
+    console.log(data.message)
+    console.log(data.code)
 
     const {
       mpr_id,
@@ -296,14 +300,18 @@ export default function HouseAdditions() {
           />
         </Grid>
       ) : (
-        <Grid item xs={12} style={{ marginTop: '20%' }}>
-          <AddRenos
-            handleOnClick={handleOnClick}
-            handleSubmitCalc={handleSubmitCalc}
-            values={values}
-            clicked={clicked}
-          />
-          <FormChart data={userZpid} />
+        <Grid container item xs={12} style={{ marginTop: (biggerThanMobile ? '10%' : '20%') }}>
+          <Grid item xs={12} md={6} style={{marginBottom: '20%'}}>
+            <AddRenos
+              handleOnClick={handleOnClick}
+              handleSubmitCalc={handleSubmitCalc}
+              values={values}
+              clicked={clicked}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} style={{ marginBottom: '2em' }}>
+           <FormChart data={userZpid} />
+          </Grid>
         </Grid>
       )}
       <Toast openIt={openIt} message={toastMessage} />

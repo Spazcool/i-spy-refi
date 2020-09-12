@@ -37,7 +37,7 @@ export default function FormChart(props) {
   }, [props, userHouseData]);
 
   return loaded ? (
-    <Paper className='card-radius box-shadow'>
+    // <Paper className='card-radius box-shadow'>
       <Chart data={userHouseData}>
         <PieSeries valueField='value' argumentField='room' />
         <Animation />
@@ -47,9 +47,9 @@ export default function FormChart(props) {
         <HoverState />
         <Tooltip />
       </Chart>
-    </Paper>
+    // </Paper>
   ) : (
-    <Paper className='card-radius box-shadow'>
+    // <Paper className='card-radius box-shadow'>
       <Chart data={[{ room: 'loading ...', value: 1 }]}>
         <PieSeries valueField='value' argumentField='room' />
         <Animation />
@@ -59,6 +59,6 @@ export default function FormChart(props) {
         <HoverState />
         <Tooltip />
       </Chart>
-    </Paper>
+    // </Paper>
   );
 }
