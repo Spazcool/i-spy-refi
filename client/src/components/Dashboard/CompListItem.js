@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
-import Image from 'material-ui-image';
 import noHouseImage from '../../assets/logo/nologoimage/logo_transparent_background.png';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -29,13 +28,13 @@ const useStyles = makeStyles((theme) => ({
   },
   imageFirst: {
     height: '150px',
-    'border-radius': '20px 0 0 0'
+    'border-radius': '20px 0 0 0',
   },
-  image:{  height: '150px'},
-  imageLast:{
+  image: { height: '150px' },
+  imageLast: {
     height: '150px',
-    'border-radius': '0 0 0 20px'
-  }
+    'border-radius': '0 0 0 20px',
+  },
 }));
 
 export default function CompListItem(props) {
@@ -58,41 +57,7 @@ export default function CompListItem(props) {
       // backgroundColor: 'white',
     },
   };
-  // const stylesPrice = {
-  //   media: {
-  //     height: 0,
-  //     paddingTop: '56.25%', // 16:9
-  //   },
-  //   card: {
-  //     position: 'center',
-  //   },
-  //   overlay: {
-  //     fontWeight: '200',
-  //     position: 'absolute',
-  //     top: '45%',
-  //     left: '10%',
-  //     color: 'white',
-  //     background: 'rgba(0, 0, 0, 0.5)',
-  //     padding: '3px',
 
-  //     // backgroundColor: 'white',
-  //   },
-  // };
-  const stylesDetails = {
-    // media: {
-    //   height: 0,
-    //   paddingTop: '.00%', // 16:9
-    // },
-    // overlay: {
-    //   position: 'absolute',
-    //   top: '40%',
-    //   left: '10%',
-    //   color: 'white',
-    //   background: '#437779', // Sets background color of Additional Details
-    //   padding: '3px',
-    //   backgroundColor: '#437779',
-    // },
-  };
   const classes = useStyles();
 
   return props.comp ? (
@@ -104,10 +69,12 @@ export default function CompListItem(props) {
       >
         <Grid container className='grid'>
           <Grid item>
-            <HouseIcon className='house-icon' />
+            <span className='flip'>
+              <HouseIcon />
+            </span>
           </Grid>
           <Grid item xs={10} sm={10} lg={10} xl={10}>
-            <div>
+            <div className>
               {props.comp.address.street_number} {props.comp.address.street}{' '}
               {props.comp.address.street_suffix}, {props.comp.address.city},{' '}
               {props.comp.address.state_code}

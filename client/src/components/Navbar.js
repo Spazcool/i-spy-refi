@@ -12,8 +12,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import SideBar from './SideBar.js';
 
-import logo from '../assets/logo/white_logo_transparent_background.png';
-import smallLogo from '../assets/logo/white_logo_transparent_background_small.png';
+import logo from '../assets/logo/nopersonalassess/white_logo_transparent_background.png';
+import smallLogo from '../assets/logo/nopersonalassess/white_logo_transparent_background.png';
 import { Grid, GridListTileBar } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({

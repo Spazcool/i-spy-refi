@@ -97,7 +97,7 @@ html {
 }
 .logo {
   margin-left: 20px !important;
-  height: 80px;
+  height: 60px;
 }
 
 /* NEW TRICKS WITH CSS */
@@ -136,6 +136,9 @@ html {
   grid-auto-rows: 240px;
 }
 
+.removeBottomBorder {
+  border: 0px;
+}
 .list {
   display: 'flex';
   flex-wrap: 'wrap';

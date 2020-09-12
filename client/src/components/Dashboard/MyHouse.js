@@ -20,6 +20,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
+import AddIcon from '@material-ui/icons/Add';
 import TableRow from '@material-ui/core/TableRow';
 import style from '../../App.css';
 
@@ -99,31 +100,39 @@ export default withRouter(function MyHouse(props) {
             <Table className={classes.table} aria-label='simple table'>
               <TableRow>
                 <TableCell component='th' scope='row'></TableCell>
+                <TableCell
+                  align='center'
+                  className='fontCinzelLgNoShadow'
+                ></TableCell>
                 <TableCell align='center'>
                   ${' '}
                   {props.value > 0
                     ? props.value.toLocaleString()
                     : props.realtorprice.toLocaleString()}
                 </TableCell>
-                <TableCell align='center' className='fontCinzelWhiteNoShadow'>
-                  Similar Homes Calculation
-                </TableCell>
+                <TableCell align='center'>Similar Homes Calculation</TableCell>
               </TableRow>
-              <TableRow>
+              <TableRow style={{ borderBottom: '0' }}>
                 <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'>
+                  <AddIcon />
+                </TableCell>
                 <TableCell align='center'>
                   $ {props.reno.toLocaleString()}
                 </TableCell>
-                <TableCell align='center' coolor='secondary'>
+                <TableCell align='center' color='secondary'>
                   Renovation Additions
                 </TableCell>
               </TableRow>
-              <TableRow>
+
+              {/* <TableRow style={{ backgroundColor: '#437779' }}> */}
+              <TableRow style={{ backgroundColor: '#437779' }}>
                 <TableCell component='th' scope='row'></TableCell>
-                <TableCell align='center' className='fontCinzelLgNoShadow'>
-                  $ {props.finalhousevalue}
+                <TableCell align='center'></TableCell>
+                <TableCell align='center'>
+                  $ {props.finalhousevalue.toLocaleString()}
                 </TableCell>
-                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                <TableCell align='center'>
                   I SPY REFI Final Assessment
                 </TableCell>
               </TableRow>
@@ -131,7 +140,7 @@ export default withRouter(function MyHouse(props) {
           </TableContainer>
         </CardContent>
       </Card>
-      <Accordion >
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
