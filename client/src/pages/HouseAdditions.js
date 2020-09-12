@@ -11,7 +11,9 @@ import AddRenos from '../components/HouseAdditions/AddRenos';
 import FormChart from '../components/Dashboard/FormChart';
 
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   alignContent: {
@@ -89,6 +91,8 @@ export default function HouseAdditions() {
   };
   const [userZpid, setUserZpid] = useState(''); //TODO should probably be taking emptyhouse
   const [userHouse, setUserHouse] = useState(emptyHouse);
+  const [clicked, setClicked] = useState(false);
+
   // ------------ RADIO INPUTS ------------
   const [formData, setFormData] = useState(emptyHouse);
   const [values, setValue] = useState(nationalAverages);
@@ -112,7 +116,7 @@ export default function HouseAdditions() {
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
-    console.log(userHouse);
+    // console.log(userHouse);
     //todo might have soemthing to do with the state varaibel sharing the namespace with this uuserHouse
     //todo this shit is wrong but it works so fuck it
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
@@ -171,6 +175,7 @@ export default function HouseAdditions() {
     };
 
     if (validateHouseInputs(inputHouseCreds)) {
+      setClicked(true);
       await setUserHouse(inputHouseCreds);
       afterSubmit();
       setFormData(emptyHouse);
@@ -282,6 +287,7 @@ export default function HouseAdditions() {
             cityColor={cityColor}
             zipColor={zipColor}
             stateColor={stateColor}
+            clicked={clicked}
           />
         </Grid>
       ) : (

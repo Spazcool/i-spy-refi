@@ -13,7 +13,7 @@ import '../App.css';
 function Login(props) {
   const { isAuth, user } = useContext(AuthContext);
   const [userHouse, setHouse] = useState('');
-  const [spacing] = React.useState(2);
+  const [spacing] = useState(2);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
