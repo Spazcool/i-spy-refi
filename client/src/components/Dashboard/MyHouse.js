@@ -126,7 +126,7 @@ export default withRouter(function MyHouse(props) {
                   <TableCell component='th' scope='row'></TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
                     ${' '}
-                    {props.finalhousevalue }                    
+                    {props.finalhousevalue.toLocaleString() }                    
                   </TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
                     I Spi Refi Final Assessment

@@ -75,7 +75,7 @@ const LoginOptions = (props) => {
             <InputLabel htmlFor='my-input'>Email address</InputLabel>
             <Input
               className={classes.textField}
-              id='my-input'
+              id='my-input-email'
               aria-describedby='my-helper-text'
               name='emailInput'
               type='email'
@@ -92,7 +92,7 @@ const LoginOptions = (props) => {
             <InputLabel htmlFor='my-input'>Password</InputLabel>
             <Input
               className={classes.textField}
-              id='my-input'
+              id='my-input-password'
               aria-describedby='my-helper-text'
               name='passwordInput'
               type='password'
