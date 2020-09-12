@@ -182,7 +182,7 @@ export default withRouter(function MyHouse(props) {
             <FormChart data={props} />
           </Modal>
           <Typography
-            className='paddingleft'
+            align='center'
             color='textSecondary '
             gutterBottom
             align='center'
@@ -195,7 +195,7 @@ export default withRouter(function MyHouse(props) {
                 props.history.push('/additions');
               }}
             >
-              Update Renovation Info
+              Update House
             </Button>
           </Typography>
 
