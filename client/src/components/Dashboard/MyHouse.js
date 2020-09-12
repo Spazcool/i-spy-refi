@@ -22,7 +22,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import style from '../../App.css';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -90,51 +90,46 @@ export default withRouter(function MyHouse(props) {
   return loaded ? (
     <Paper className='card-radius box-shadow'>
       <Card className='card-radius-top'>
-          <CardMedia
-            component='img'
-            image={props.imageData}
-            title='My House'
-          />
-          <CardContent className={classes.block}>
-            <h4 className='fontCinzelLgNoShadow'>
-              {props.street}, {props.city}, {props.state}
-            </h4>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label='simple table'>
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center'>
-                    ${' '}
-                    {props.value > 0
-                      ? props.value.toLocaleString()
-                      : props.realtorprice.toLocaleString()}
-                  </TableCell>
-                  <TableCell align='center' className='fontCinzelWhiteNoShadow'>
-                    Similar Homes Calculation
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center'>
-                    $ {props.reno.toLocaleString()}
-                  </TableCell>
-                  <TableCell align='center' coolor='secondary'>
-                    Renovation Additions
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    ${' '}
-                    {props.finalhousevalue.toLocaleString() }                    
-                  </TableCell>
-                  <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    I Spi Refi Final Assessment
-                  </TableCell>
-                </TableRow>
-              </Table>
-            </TableContainer>
-          </CardContent>
+        <CardMedia component='img' image={props.imageData} title='My House' />
+        <CardContent className={classes.block}>
+          <h4 className='fontCinzelLgNoShadow'>
+            {props.street}, {props.city}, {props.state}
+          </h4>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label='simple table'>
+              <TableRow>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'>
+                  ${' '}
+                  {props.value > 0
+                    ? props.value.toLocaleString()
+                    : props.realtorprice.toLocaleString()}
+                </TableCell>
+                <TableCell align='center' className='fontCinzelWhiteNoShadow'>
+                  Similar Homes Calculation
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'>
+                  $ {props.reno.toLocaleString()}
+                </TableCell>
+                <TableCell align='center' coolor='secondary'>
+                  Renovation Additions
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                  $ {props.finalhousevalue.toLocaleString()}
+                </TableCell>
+                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                  I SPY REFI Final Assessment
+                </TableCell>
+              </TableRow>
+            </Table>
+          </TableContainer>
+        </CardContent>
       </Card>
       <Accordion >
         <AccordionSummary
@@ -144,7 +139,7 @@ export default withRouter(function MyHouse(props) {
         >
           <Typography color='textSecondary' gutterBottom>
             <HomeIcon />
-            View/Update renovations
+            View/Update Renovations
           </Typography>
         </AccordionSummary>
         <AccordionDetails>

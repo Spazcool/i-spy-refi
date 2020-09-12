@@ -188,7 +188,7 @@ export default function HouseAdditions() {
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
-    console.log(autoCompleteResponse)
+    console.log(autoCompleteResponse)// todo error handling for a random 503 killed the app
 
     const {
       mpr_id,
