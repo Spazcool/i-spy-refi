@@ -69,10 +69,13 @@ const FeaturesTiles = ({
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>
-                  <h4 className='mt-0 mb-8'>House Value</h4>
-                  <p className='m-0 text-sm'>
+                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadow'>
+                    House Value
+                  </h4>
+                  <p className='m-0 text-sm '>
                     We'll display a house assessment value based off information
-                    you provided as well as recent sales of similar properties
+                    you provided as well as recent sales of properties in your
+                    area
                   </p>
                 </div>
               </div>
@@ -89,7 +92,9 @@ const FeaturesTiles = ({
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>
-                  <h4 className='mt-0 mb-8'>Similar Homes</h4>
+                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadow'>
+                    Similar Homes
+                  </h4>
                   <p className='m-0 text-sm'>
                     We'll display houses in your area that have been recently
                     sold for comparison
@@ -109,7 +114,7 @@ const FeaturesTiles = ({
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>
-                  <h4 className='mt-0 mb-8'>Dashboard</h4>
+                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadow'>Dashboard</h4>
                   <p className='m-0 text-sm'>
                     Your house value is tracked over time each time you log in
                     based off new sales to inform you of trends
@@ -126,12 +131,12 @@ const FeaturesTiles = ({
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>
-                  <h4 className='mt-0 mb-8'>Tank it the bank!</h4>
+                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadow'>Confidence</h4>
                   <p className='m-0 text-sm'>
-                    You can feel confident with the value of your home that a
-                    bank would assess your house at. This can help you make a
-                    decision on refinancing your home, or possibly looking at
-                    applying for a home equity line of credit!
+                    You can feel confident that your house value is accurate!
+                    This can help you make a decision on refinancing your home,
+                    or possibly looking at applying for a home equity line of
+                    credit!
                   </p>
                 </div>
               </div>
@@ -144,11 +149,12 @@ const FeaturesTiles = ({
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>
-                  <h4 className='mt-0 mb-8'>Refinance Rates</h4>
-                  <h5 className='mt-0 mb-8'>Coming soon</h5>
+                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadow'>
+                    Refinance Rates
+                  </h4>
                   <p className='m-0 text-sm'>
-                    Get the current mortgage rate to help decide if it's a good
-                    time to refinance!
+                    We pull in the current mortgage rates to help decide if it's
+                    a good time to refinance!
                   </p>
                 </div>
               </div>

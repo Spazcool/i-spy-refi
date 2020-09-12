@@ -22,7 +22,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import style from '../../App.css';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -127,8 +127,7 @@ export default withRouter(function MyHouse(props) {
                 <TableRow>
                   <TableCell component='th' scope='row'></TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    ${' '}
-                    {props.finalhousevalue }                    
+                    $ {props.finalhousevalue}
                   </TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
                     I Spi Refi Final Assessment
@@ -147,7 +146,7 @@ export default withRouter(function MyHouse(props) {
         >
           <Typography color='textSecondary' gutterBottom>
             <HomeIcon />
-            View/Update renovations
+            View/Update Renovations
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
