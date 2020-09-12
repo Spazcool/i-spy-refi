@@ -22,7 +22,8 @@ function Home(props) {
     ''
   );
   const [formData, setFormData] = useState([]);
-  const [trendingData, setTrendingData] = useState([]);
+
+  const [TrendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState('');
   const [streetdisplay, setstreetdisplay] = useState('');
@@ -30,9 +31,12 @@ function Home(props) {
   const [statedisplay, setstatedisplay] = useState('');
   const [compsList, setcompsList] = useState([]);
   const [totalHouseValue, settotalHouseValue] = useState('');
+  const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
 
   let finishedsqFt;
+  let zipCode;
   let renVal;
+  // let mortgageRates;
 
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -50,18 +54,23 @@ function Home(props) {
         formData,
         comps,
       };
-      console.log(formData);
+      getMortgageRates(data.zip);
       setHasHouse(true);
       // setHouseData(data);
       setTrendingData(comps);
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
+
+      zipCode = data.zip;
       renVal = data.formData;
-      setFormData(formData);
+      console.log(data.formData);
+      setFormData(data.formData);
       // return true;
+      console.log(data);
       return data;
     }
+
     setHasHouse(false);
     return false;
   };
@@ -88,6 +97,12 @@ function Home(props) {
       // return true;
     }
     return false;
+  };
+
+  const getMortgageRates = async (zip) => {
+    let mortgageRates = await realtor.getMortgageRates();
+    setMorgageRatesDisplay(mortgageRates);
+    // TO DO add ERROR handling
   };
 
   const checkHouseCompsInAPI = async (address) => {
@@ -188,7 +203,7 @@ function Home(props) {
             component='h2'
             className='fontCinzelBlack'
           >
-            <span className='fontCinzelWhite'> House Assessment</span>
+            <span className='fontCinzelLgNoShadow'> House Assessment</span>
           </Typography>
           <MyHouse
             className='card'
@@ -200,6 +215,7 @@ function Home(props) {
             reno={RenovationValue}
             finalhousevalue={finalHouseAssessmentValue}
             formData={formData}
+            financeRates={mortgageRatesDisplay}
           />
         </Grid>
 
@@ -209,7 +225,7 @@ function Home(props) {
             align='center'
             variant='h4'
             component='h2'
-            className='fontCinzelWhite'
+            className='fontCinzelLgNoShadow'
           >
             Similar Homes
           </Typography>

@@ -70,24 +70,28 @@ const nationalAverages = [
 ];
 
 export default function HouseAdditions() {
-  const { user, isAuth } = useContext(AuthContext);
   const classes = useStyles();
-  const [values, setValue] = useState(nationalAverages);
-  const [userZpid, setUserZpid] = useState('');
-  // const [RenovationValue, setRenovationValue] = useState('');
-  // const [finalHouseAssessmentValue, setFinalHouseAssessmentValue] = useState(
-  //   ''
-  // );
-
-  const [userHouse, setUserHouse] = useState({
+  const { user, isAuth } = useContext(AuthContext);
+  // ------------ INPUT VALIDATION ------------
+  const errorMessage = '* all fields are required';
+  const [credsAreInvalid, setCredsAreInvalid] = useState(false);
+  const [streetColor, setStreetColor] = useState(false);
+  const [cityColor, setCityColor] = useState(false);
+  const [zipColor, setZipColor] = useState(false);
+  const [stateColor, setStateColor] = useState(false);
+  // ------------ HOUSE CREATION ------------
+  const emptyHouse = {
     street: '',
     city: '',
     zip: '',
     state: '',
     formData: [],
-    lat: '',
-    lon: '',
-  });
+  };
+  const [userZpid, setUserZpid] = useState(''); //TODO should probably be taking emptyhouse
+  const [userHouse, setUserHouse] = useState(emptyHouse);
+  // ------------ RADIO INPUTS ------------
+  const [formData, setFormData] = useState(emptyHouse);
+  const [values, setValue] = useState(nationalAverages);
   const [radios, setRadios] = useState({
     kitchen: 0,
     roof: 0,
@@ -103,15 +107,15 @@ export default function HouseAdditions() {
       fetchHouse();
       // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid]);
+  }, [userZpid, userHouse]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
-    userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
     console.log(userHouse);
-
-    setUserHouse(userHouse);
+    //todo might have soemthing to do with the state varaibel sharing the namespace with this uuserHouse
+    //todo this shit is wrong but it works so fuck it
+    userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
   };
 
   const handleOnClick = (event) => {
@@ -150,7 +154,6 @@ export default function HouseAdditions() {
   };
 
   const handleInputChange = (event) => {
-    console.log(event.target.value);
     event.preventDefault();
     setUserHouse({
       ...userHouse,
@@ -166,9 +169,14 @@ export default function HouseAdditions() {
       zip: userHouse.zip,
       state: userHouse.state,
     };
-    console.log(inputHouseCreds);
-    await setUserHouse(inputHouseCreds);
-    afterSubmit();
+
+    if (validateHouseInputs(inputHouseCreds)) {
+      await setUserHouse(inputHouseCreds);
+      afterSubmit();
+      setFormData(emptyHouse);
+    } else {
+      setCredsAreInvalid(errorMessage);
+    }
   };
 
   const afterSubmit = async () => {
@@ -178,7 +186,6 @@ export default function HouseAdditions() {
       state: userHouse.state.toLowerCase(),
       zip: userHouse.zip.toLowerCase(),
     };
-    console.log(params);
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
     const {
@@ -191,7 +198,6 @@ export default function HouseAdditions() {
     } = autoCompleteResponse.data.autocomplete[0];
     const alternateCentroid =
       autoCompleteResponse.data.autocomplete[1].centroid;
-    console.log(mpr_id);
 
     setUserZpid(mpr_id);
 
@@ -204,6 +210,7 @@ export default function HouseAdditions() {
       zpid: mpr_id,
       latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
       longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+      formData: [],
     };
 
     const createdHouse = async () => await DB.createHouse(user.user.uid, data);
@@ -216,6 +223,40 @@ export default function HouseAdditions() {
       //todo something broke
       console.log('you broke something:', response.message);
     }
+  };
+
+  const validateHouseInputs = ({ street, city, zip, state }) => {
+    let isValid = true;
+
+    if (!street) {
+      setStreetColor(true);
+      isValid = false;
+    } else {
+      setStreetColor(false);
+    }
+
+    if (!city) {
+      setCityColor(true);
+      isValid = false;
+    } else {
+      setCityColor(false);
+    }
+
+    if (!zip) {
+      setZipColor(true);
+      isValid = false;
+    } else {
+      setZipColor(false);
+    }
+
+    if (!state) {
+      setStateColor(true);
+      isValid = false;
+    } else {
+      setStateColor(false);
+    }
+
+    return isValid;
   };
 
   return !isAuth ? (
@@ -233,6 +274,11 @@ export default function HouseAdditions() {
             userHouse={userHouse}
             handleInputChange={handleInputChange}
             handleSubmit={handleSubmit}
+            credsAreInvalid={credsAreInvalid}
+            streetColor={streetColor}
+            cityColor={cityColor}
+            zipColor={zipColor}
+            stateColor={stateColor}
           />
         </Grid>
       ) : (
@@ -242,7 +288,7 @@ export default function HouseAdditions() {
             handleSubmitCalc={handleSubmitCalc}
             values={values}
           />
-          <FormChart data={userHouse} />
+          <FormChart data={userZpid} />
         </Grid>
       )}
     </Grid>

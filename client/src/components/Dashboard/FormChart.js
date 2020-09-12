@@ -34,12 +34,10 @@ import {
 
 export default function FormChart(props) {
   const [loaded, setLoaded] = useState(false);
-  const [userHouseData, setUserHouseData] = useState([
-    { room: 'loading ...', value: 1 },
-  ]);
+  const [userHouseData, setUserHouseData] = useState([]);
   const checkLoaded = () => {
     const { formData } = props.data;
-    console.log(props);
+    // console.log(props);
     console.log(formData);
     setUserHouseData(formData);
     if (formData.length > 0) {
@@ -47,22 +45,9 @@ export default function FormChart(props) {
     }
   };
 
-  const scheme = createMuiTheme({
-    palette: {
-      one: orange,
-      two: green,
-      three: purple,
-      four: red,
-      five: cyan,
-      six: yellow,
-      seven: blue,
-      eight: amber,
-    },
-  });
-
   useEffect(() => {
     checkLoaded();
-  }, [props, loaded]);
+  }, [props, userHouseData]);
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>

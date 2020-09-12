@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
     marginTop: '1em'
   },
+  textDanger: {
+    color: 'red',
+  }
 }));
 
 const Signup = props => {
@@ -73,28 +76,28 @@ const Signup = props => {
         let isValid = true;
 
         if (!firstName) {
-            setFirstNameColor('text-danger')
+            setFirstNameColor(classes.textDanger)
             isValid = false;
         } else {
             setFirstNameColor('')
         }
 
         if (!lastName) {
-            setLastNameColor('text-danger')
+            setLastNameColor(classes.textDanger)
             isValid = false;
         } else {
             setLastNameColor('')
         }
 
         if (!email) {
-            setEmailColor('text-danger')
+            setEmailColor(classes.textDanger)
             isValid = false;
         } else {
             setEmailColor('')
         }
 
-        if (!password) {
-            setPasswordColor('text-danger')
+        if (!password || password.length < 8) {
+            setPasswordColor(classes.textDanger)
             isValid = false;
         } else {
             setPasswordColor('')
@@ -135,18 +138,18 @@ const Signup = props => {
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="my-input-email">Email address</InputLabel>
+            <InputLabel htmlFor="my-input-email" className={emailColor}>Email address</InputLabel>
             <Input className={classes.textField} id="my-input-email" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder={`${Date.now()%2 ? 'Joe' : 'Jane'}@smith.com`} value={formData.emailInput} onChange={handleInputChange}/>
             <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="my-input-password">Password</InputLabel>
+            <InputLabel htmlFor="my-input-password" className={passwordColor}>Password</InputLabel>
             <Input className={classes.textField} id="my-input-password" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password123" value={formData.passwordInput} onChange={handleInputChange}/>
           </FormControl>
 
           <FormControl>
-            <FormHelperText className="text-danger" id="my-helper-text"> {credsAreInvalid}</FormHelperText>
+            <FormHelperText className="text-danger" id="my-helper-text">{credsAreInvalid}</FormHelperText>
           </FormControl>
 
           <span className={classes.right} >
