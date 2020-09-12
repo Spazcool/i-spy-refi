@@ -105,7 +105,7 @@ export default withRouter(function TemporaryDrawer(props) {
           onKeyDown={toggleDrawer('left', false)}
         >
           <List>
-            <Link href='/' style={{'text-decoration': 'none'}}>
+            <Link href='/' style={{'textDecoration': 'none'}}>
               <ListItem
                 className={classes.link}
                 key='home'

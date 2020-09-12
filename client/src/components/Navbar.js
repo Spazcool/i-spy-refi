@@ -44,11 +44,11 @@ export default withRouter(function Navbar(props) {
     <div className={classes.root}>
       <AppBar position='fixed' className='navbar'>
         <Toolbar style={{ width: '100%' }}>
-          <Grid container justify='space-between' className={classes.thing}>
-            <Grid item>
+          <Grid container className={classes.thing}>
+            <Grid item xs={2} md={1}>
               <SideBar props={props} />
             </Grid>
-            <Grid item>
+            <Grid container item justify="center" xs={10} md={11}>
               {biggerThanMobile ? (
                 <Link href='/'>
                   <img
