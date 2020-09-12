@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase';
+
 import LoginGoogle from '../components/LoginGoogle';
 import Toast from '../components/Toast';
 

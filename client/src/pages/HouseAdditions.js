@@ -188,6 +188,8 @@ export default function HouseAdditions() {
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
+    console.log(autoCompleteResponse)
+
     const {
       mpr_id,
       centroid,

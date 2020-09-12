@@ -2,18 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
 import { realtor } from '../api/realtor';
-import '../App.css';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+
 import CompList from '../components/Dashboard/CompList';
 import MyHouse from '../components/Dashboard/MyHouse';
 import TrendingChart from '../components/Dashboard/TrendingChart';
+import Toast from '../components/Toast';
 
 import '../App.css';
 
-function Home(props) {
+function Home() {
   const { user, isAuth } = useContext(AuthContext);
+  // TOAST
+  const [openIt, setOpenIt] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   // DB
   const [hasHouse, setHasHouse] = useState();
   // const [houseData, setHouseData] = useState({});
@@ -176,16 +181,42 @@ function Home(props) {
     setcompsList(compsarray);
   };
 
+  const makeToast = (msg) => {
+    setToastMessage(msg);
+    setOpenIt(true);
+    setOpenIt(false);
+  }
+
   const fetchAllData = async () => {
     checkHasHouseInDB()
       .then((res) => {
-        checkHasHouseInAPI(res)
-          .then((resp) => {
-            checkHouseCompsInAPI(resp);
-          })
-          .catch((err) => console.log('broke api house', err)); // toast to go here about not having a house
+        if(res !== false){
+          checkHasHouseInAPI(res)
+            .then((resp) => {
+              if(resp === false){
+                makeToast('House ID doesn\'t exist.')
+              }else{
+                checkHouseCompsInAPI(resp)
+                .then((respo) => {
+                  if(respo === false){
+                    makeToast('No similar houses in your area.');
+                  }
+                })
+                .catch((err) => {
+                  makeToast(err.message)
+                });
+              } 
+            })
+            .catch((err) => {
+              makeToast('House ID doesn\'t exist.')
+            });
+        }else{
+          throw new Error('No house associated with user.');
+        }
       })
-      .catch((err) => console.log('broke hosue db', err));
+      .catch((err) => {
+        makeToast(err.message)
+      });
   };
 
   useEffect(() => {
@@ -249,6 +280,10 @@ function Home(props) {
           {/* <TrendingChart data={TrendingData} /> */}
         {/* </Grid> */}
       </Grid>
+      <Toast
+        openIt={openIt}
+        message={toastMessage}
+      />
     </Container>
   );
 }
