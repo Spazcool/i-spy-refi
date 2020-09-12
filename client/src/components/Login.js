@@ -63,18 +63,6 @@ const LoginOptions = (props) => {
           console.error("Error signing in with password and email", error);
           //todo toast
         });
-    };
-    login(inputCreds);
-    setFormData(emptyCreds);
-  };
-
-  const login = (creds) => {
-    auth
-      .signInWithEmailAndPassword(creds.email, creds.password)
-      .catch((error) => {
-        setCredsAreInvalid(errorMessage);
-        console.error('Error signing in with password and email', error);
-      });
   };
 
   return (
