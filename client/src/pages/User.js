@@ -21,6 +21,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import WarningIcon from '@material-ui/icons/Warning';
 import UserIcon from '@material-ui/icons/Person';
 
+import Toast from '../components/Toast';
+
 import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
 
@@ -50,16 +52,19 @@ const useStyles = makeStyles((theme) => ({
 
 function User(props) {
   const classes = useStyles();
-  const emptyUser = { firstName: '', lastName: '' }
+  const emptyUser = { firstName: '', lastName: '' };
   const { isAuth, user, logout } = useContext(AuthContext);
   
   const [spacing] = useState(2);
   const [userfromdb, setUser] = useState('');
   const [house, setHouse] = useState('');
-  const [formData, setFormData] = useState(emptyUser)
-  const [credsAreInvalid, setCredsAreInvalid] = useState('')
-  const [firstNameColor, setFirstNameColor] = useState('')
-  const [lastNameColor, setLastNameColor] = useState('')
+  const [formData, setFormData] = useState(emptyUser);
+  const [credsAreInvalid, setCredsAreInvalid] = useState('');
+  const [firstNameColor, setFirstNameColor] = useState('');
+  const [lastNameColor, setLastNameColor] = useState('');
+  const [openIt, setOpenIt] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastColor, setToastColor] = useState('');
 
   useEffect(() => {
     if(isAuth){
@@ -91,15 +96,16 @@ function User(props) {
 
   const deleteHouse = async() => {
     const houseThing = async () => await DB.deleteHouse(house.hid);
-    const deletedHouse = await houseThing();
-    setHouse(''); //todo theres a bug in the api file here, mentioned on trello
-  //to make house list go away, will need to recall fetchHouses
-  //todo toast
+    const { message } = await houseThing();
+    setHouse('');
+    setToastMessage(message);
+    setOpenIt(true);
+    setOpenIt(false);
   }
 
   const deleteUser = async() => {
     const userthing = async () => await DB.deleteUser(user.user.uid);
-    const deletedUser = await userthing();
+    const {message} = await userthing();
     logout();
   }
 
@@ -110,8 +116,15 @@ function User(props) {
       lastName: formData.lastName,
     };
     const userthing = async () => await DB.updateUser(user.user.uid, data);
-    const updatedUser = await userthing();
-    updatedUser.message.includes('successfully') ? setUser(data) : setUser(emptyUser)
+    const {message} = await userthing();
+    if(message.includes('successfully')){
+      setUser(data);
+    }else{
+      setUser(emptyUser)
+    }  
+    setToastMessage(message);
+    setOpenIt(true);
+    setOpenIt(false);
   }
 
   const handleInputChange = (event) => {
@@ -231,6 +244,10 @@ function User(props) {
             </AccordionDetails>
           </Accordion>
         </Grid>
+        <Toast
+          openIt={openIt}
+          message={toastMessage}
+        />
       </Grid>
   );
 }
