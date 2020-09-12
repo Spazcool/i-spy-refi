@@ -27,6 +27,15 @@ const useStyles = makeStyles((theme) => ({
     'flex-direction': 'column',
     'justify-content': 'center',
   },
+  imageFirst: {
+    height: '150px',
+    'border-radius': '20px 0 0 0'
+  },
+  image:{  height: '150px'},
+  imageLast:{
+    height: '150px',
+    'border-radius': '0 0 0 20px'
+  }
 }));
 
 export default function CompListItem(props) {
