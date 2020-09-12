@@ -155,8 +155,11 @@ function Home(props) {
     let index = FormData.length - 1;
 
     let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
-    let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
-    console.log('ChkReno:', RenoValue);
+    let FinalHouseAssessmentValue =
+      FinalHouseValue > 0
+        ? FinalHouseValue + RenoValue
+        : Realtorprice + RenoValue;
+    console.log('ChkReno:', FinalHouseAssessmentValue);
     setRenovationValue(RenoValue);
     setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
   };
