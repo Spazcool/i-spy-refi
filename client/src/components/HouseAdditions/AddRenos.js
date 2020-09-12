@@ -174,7 +174,7 @@ export default function AddRenos(props) {
             onClick={props.handleSubmitCalc}
             className={classes.button}
           >
-            {props.clicked ? <CircularProgress color='white'/> : 'Submit'}
+            {props.clicked ? <CircularProgress/> : 'Submit'}
           </Button>
         </Grid>
       </Box>

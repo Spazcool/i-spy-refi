@@ -199,8 +199,8 @@ export default function HouseAdditions() {
       zip: userHouse.zip.toLowerCase(),
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
-    const autoCompleteResponse = await autoComplete();
-    console.log(autoCompleteResponse)// todo error handling for a random 503 killed the app
+    const {data} = await autoComplete();
+    console.log(data.status)// todo error handling for a random 503 killed the app
 
     const {
       mpr_id,
@@ -209,12 +209,12 @@ export default function HouseAdditions() {
       state_code,
       city,
       line,
-    } = autoCompleteResponse.data.autocomplete[0];
+    } = data.autocomplete[0];
     // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
 
     setUserZpid(mpr_id);
 
-    const data = {
+    const houseParams = {
       zip: postal_code,
       state: state_code,
       city: city,
@@ -228,16 +228,13 @@ export default function HouseAdditions() {
       formData: [],
     };
 
-    const createdHouse = async () => await DB.createHouse(user.user.uid, data);
-    const response = await createdHouse();
+    const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
+    const {message} = await createdHouse();
 
-    if (response.message === 'success') {
-      console.log('house created');
-      //todo add toast
-    } else {
-      //todo something broke
-      console.log('you broke something:', response.message);
-    }
+    setToastMessage(message);
+    setOpenIt(true);
+    setOpenIt(false);
+    setClicked(false);
   };
 
   const validateHouseInputs = ({ street, city, zip, state }) => {
