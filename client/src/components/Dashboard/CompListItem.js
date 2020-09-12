@@ -164,7 +164,7 @@ export default function CompListItem(props) {
       </AccordionDetails>
     </Accordion>
   ) : (
-    <Accordion>
+    <Accordion style={{overflowY: 'hidden'}}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'

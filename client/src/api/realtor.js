@@ -35,7 +35,7 @@ export const realtor = {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'realtor.p.rapidapi.com',
-        'x-rapidapi-key': '1768c0c17amsh8d6bab5e9fe23ffp1f4c9ajsna6b8dd6f9e86',
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         useQueryString: true,
       },
       params: {

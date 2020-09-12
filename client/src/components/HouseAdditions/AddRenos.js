@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import Box from '@material-ui/core/Box';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
@@ -7,9 +8,10 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { makeStyles } from '@material-ui/core/styles';
 
-import MenuItem from '@material-ui/core/MenuItem';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -103,7 +105,6 @@ export default function AddRenos(props) {
   }, [hasMounted]);
 
   const listRadios = () => {
-    console.log(props);
     return props.values.map((room, i) => {
       return (
         <Grid item xs={12} key={room.id + i} align='center'>
@@ -166,13 +167,14 @@ export default function AddRenos(props) {
           {hasMounted ? listRadios() : ''}
 
           <Button
+            disabled={props.clicked}
             type='submit'
             variant='contained'
             color='primary'
             onClick={props.handleSubmitCalc}
             className={classes.button}
           >
-            Submit
+            {props.clicked ? <CircularProgress color='white'/> : 'Submit'}
           </Button>
         </Grid>
       </Box>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { auth, signUpWithEmail } from "../firebase";
 
 import LoginGoogle from '../components/LoginGoogle';
+import Toast from '../components/Toast';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -40,20 +41,21 @@ const useStyles = makeStyles((theme) => ({
 const Signup = props => {
     const classes = useStyles();
 
-    const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' }
-    const errorMessage = 'invalid credentials'
+    const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' };
+    const errorMessage = 'invalid credentials';
 
-    const [formData, setFormData] = useState(emptyUser)
-    const [credsAreInvalid, setCredsAreInvalid] = useState('')
-    const [firstNameColor, setFirstNameColor] = useState('')
-    const [lastNameColor, setLastNameColor] = useState('')
-    const [emailColor, setEmailColor] = useState('')
-    const [passwordColor, setPasswordColor] = useState('')
+    const [formData, setFormData] = useState(emptyUser);
+    const [firstNameColor, setFirstNameColor] = useState('');
+    const [lastNameColor, setLastNameColor] = useState('');
+    const [emailColor, setEmailColor] = useState('');
+    const [passwordColor, setPasswordColor] = useState('');
+    const [openIt, setOpenIt] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     const handleInputChange = event => {
-        event.preventDefault()
-        const { name, value } = event.target
-        setFormData({ ...formData, [name]: value });
+      event.preventDefault()
+      const { name, value } = event.target
+      setFormData({ ...formData, [name]: value });
     }
 
     const handleFormSubmit = event => {
@@ -68,7 +70,9 @@ const Signup = props => {
             createUser(newUser)
             setFormData(emptyUser)
         } else {
-            setCredsAreInvalid(errorMessage)
+            setToastMessage(errorMessage);
+            setOpenIt(true);
+            setOpenIt(false);
         }
     }
 
@@ -112,10 +116,10 @@ const Signup = props => {
         signUpWithEmail(user, userData);
       }
       catch(error){
-        // todo need a toast here: copy the one in the login page
-        console.log(error)
+        setToastMessage(error.message);
+        setOpenIt(true);
+        setOpenIt(false);
       }
-
     };
 
     return (
@@ -148,10 +152,6 @@ const Signup = props => {
             <Input className={classes.textField} id="my-input-password" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password123" value={formData.passwordInput} onChange={handleInputChange}/>
           </FormControl>
 
-          <FormControl>
-            <FormHelperText className="text-danger" id="my-helper-text">{credsAreInvalid}</FormHelperText>
-          </FormControl>
-
           <span className={classes.right} >
             <Button type="submit" variant="contained" >
               <span className="flip"><GoSignIn /></span>
@@ -169,6 +169,10 @@ const Signup = props => {
             </span>
           </form>
         </Grid>
+        <Toast
+          openIt={openIt}
+          message={toastMessage}
+        />
       </Grid>
     )
 }
