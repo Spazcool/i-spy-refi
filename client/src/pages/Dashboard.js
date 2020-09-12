@@ -220,11 +220,7 @@ function Home(props) {
             />
           </Grid>
 
-          {/* --------------- CHART1 --------------- */}
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <h2 className='fontCinzelWhite chart'>Comps Trending Data Values</h2>
-            {/* <TrendingChart data={TrendingData} /> */}
-          </Grid>
+ 
         </Grid>
 
         {/* --------------- COMPS --------------- */}
@@ -241,12 +237,17 @@ function Home(props) {
         </Grid>
 
         {/* --------------- CHART2 --------------- */}
-        <Grid item xs={12} sm={6} lg={6} xl={6}>
+        {/* <Grid item xs={12} sm={6} lg={6} xl={6}>
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
-          </Typography>
+          </Typography> */}
           {/* <FormChart data={FormData} /> */}
-        </Grid>
+        {/* </Grid> */}
+        {/* --------------- CHART1 --------------- */}
+        {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
+          <h2 className='fontCinzelWhite chart'>Comps Trending Data Values</h2> */}
+          {/* <TrendingChart data={TrendingData} /> */}
+        {/* </Grid> */}
       </Grid>
     </Container>
   );
