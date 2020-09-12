@@ -67,7 +67,7 @@ const FeaturesSplit = ({
                 <h3 className='mt-0 mb-12 '>
                   Login and Enter your home address
                 </h3>
-                <p className='m-0 text-color-primary '>
+                <p className='m-0 text-color-secondary '>
                   You are presented with a form to enter your address. This
                   information is stored based off your login.
                 </p>
@@ -96,7 +96,7 @@ const FeaturesSplit = ({
                 <h3 className='mt-0 mb-12'>
                   Fill out the home evaluation form
                 </h3>
-                <p className='m-0 text-color-primary'>
+                <p className='m-0 text-color-secondary'>
                   We will ask you a series of questions about any major updates
                   to your home
                 </p>
@@ -123,7 +123,7 @@ const FeaturesSplit = ({
                 data-reveal-container='.split-item'
               >
                 <h3 className='mt-0 mb-12'>Dashboard Display</h3>
-                <p className='m-0 text-color-primary'>
+                <p className='m-0 text-color-secondary'>
                   You will be presetned with a dashbaord with the following
                   features:
                   <ul>

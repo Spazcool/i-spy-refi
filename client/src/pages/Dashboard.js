@@ -185,37 +185,37 @@ function Home() {
     setToastMessage(msg);
     setOpenIt(true);
     setOpenIt(false);
-  }
+  };
 
   const fetchAllData = async () => {
     checkHasHouseInDB()
       .then((res) => {
-        if(res !== false){
+        if (res !== false) {
           checkHasHouseInAPI(res)
             .then((resp) => {
-              if(resp === false){
-                makeToast('House ID doesn\'t exist.')
-              }else{
+              if (resp === false) {
+                makeToast("House ID doesn't exist.");
+              } else {
                 checkHouseCompsInAPI(resp)
-                .then((respo) => {
-                  if(respo === false){
-                    makeToast('No similar houses in your area.');
-                  }
-                })
-                .catch((err) => {
-                  makeToast(err.message)
-                });
-              } 
+                  .then((respo) => {
+                    if (respo === false) {
+                      makeToast('No similar houses in your area.');
+                    }
+                  })
+                  .catch((err) => {
+                    makeToast(err.message);
+                  });
+              }
             })
             .catch((err) => {
-              makeToast('House ID doesn\'t exist.')
+              makeToast("House ID doesn't exist.");
             });
-        }else{
+        } else {
           throw new Error('No house associated with user.');
         }
       })
       .catch((err) => {
-        makeToast(err.message)
+        makeToast(err.message);
       });
   };
 
@@ -233,8 +233,20 @@ function Home() {
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <Typography align='center' variant='h4' component='h2' className='fontCinzelBlack'>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            style={{ paddingTop: '20px' }}
+          >
+            <Typography
+              align='center'
+              variant='h4'
+              component='h2'
+              className='fontCinzelBlack'
+            >
               <span className='fontCinzelLgNoShadow'> House Assessment</span>
             </Typography>
             <MyHouse
@@ -250,8 +262,6 @@ function Home() {
               financeRates={mortgageRatesDisplay}
             />
           </Grid>
-
- 
         </Grid>
 
         {/* --------------- COMPS --------------- */}
@@ -261,6 +271,7 @@ function Home() {
             variant='h4'
             component='h2'
             className='fontCinzelLgNoShadow'
+            style={{ paddingTop: '20px' }}
           >
             <span className='fontCinzelLgNoShadow'> Homes In Area</span>
           </Typography>
@@ -272,18 +283,15 @@ function Home() {
           <Typography variant='h4' component='h2'>
             Refi Form Data Values
           </Typography> */}
-          {/* <FormChart data={FormData} /> */}
+        {/* <FormChart data={FormData} /> */}
         {/* </Grid> */}
         {/* --------------- CHART1 --------------- */}
         {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
           <h2 className='fontCinzelWhite chart'>Comps Trending Data Values</h2> */}
-          {/* <TrendingChart data={TrendingData} /> */}
+        {/* <TrendingChart data={TrendingData} /> */}
         {/* </Grid> */}
       </Grid>
-      <Toast
-        openIt={openIt}
-        message={toastMessage}
-      />
+      <Toast openIt={openIt} message={toastMessage} />
     </Container>
   );
 }

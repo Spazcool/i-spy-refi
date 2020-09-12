@@ -20,6 +20,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
+import AddIcon from '@material-ui/icons/Add';
 import TableRow from '@material-ui/core/TableRow';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -100,31 +101,39 @@ export default withRouter(function MyHouse(props) {
             <Table className={classes.table} aria-label='simple table'>
               <TableRow>
                 <TableCell component='th' scope='row'></TableCell>
+                <TableCell
+                  align='center'
+                  className='fontCinzelLgNoShadow'
+                ></TableCell>
                 <TableCell align='center'>
                   ${' '}
                   {props.value > 0
                     ? props.value.toLocaleString()
                     : props.realtorprice.toLocaleString()}
                 </TableCell>
-                <TableCell align='center' className='fontCinzelWhiteNoShadow'>
-                  Similar Homes Calculation
-                </TableCell>
+                <TableCell align='center'>Similar Homes Calculation</TableCell>
               </TableRow>
-              <TableRow>
+              <TableRow style={{ borderBottom: '0' }}>
                 <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'>
+                  <AddIcon />
+                </TableCell>
                 <TableCell align='center'>
                   $ {props.reno.toLocaleString()}
                 </TableCell>
-                <TableCell align='center' coolor='secondary'>
+                <TableCell align='center' color='secondary'>
                   Renovation Additions
                 </TableCell>
               </TableRow>
-              <TableRow>
+
+              {/* <TableRow style={{ backgroundColor: '#437779' }}> */}
+              <TableRow style={{ backgroundColor: '#437779' }}>
                 <TableCell component='th' scope='row'></TableCell>
-                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                <TableCell align='center'></TableCell>
+                <TableCell align='center'>
                   $ {props.finalhousevalue.toLocaleString()}
                 </TableCell>
-                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                <TableCell align='center'>
                   I SPY REFI Final Assessment
                 </TableCell>
               </TableRow>
@@ -132,36 +141,73 @@ export default withRouter(function MyHouse(props) {
           </TableContainer>
         </CardContent>
       </Card>
-      <Accordion >
+      <Accordion className='card-radius-bottom' align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography color='textSecondary' gutterBottom>
-            <HomeIcon />
-            View/Update Renovations
+          <AccountBalanceIcon className='fontCinzelLgNoShadow' />
+          <Typography
+            className='paddingleft'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
+            Home Reno Chart
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <CardContent>
-            <Typography color='textSecondary' gutterBottom></Typography>
-            <Typography variant='h5' component='h2'>
-              reno data
-            </Typography>
-          </CardContent>
-          <CardActions className={classes.root}>
-            <Button
-              size='small'
-              className='button'
-              onClick={(e) => {
-                e.preventDefault();
-                props.history.push('/additions');
-              }}
-            >
-              Update Renovation Info
-            </Button>
-          </CardActions>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label='simple table'>
+              <TableBody>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_30_year_fha} %
+                  </TableCell>
+                  <TableCell align='center' className='fontCinzelBlack'>
+                    30 year FHA
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_30_year_va} %
+                  </TableCell>
+                  <TableCell align='center'>30 year VA</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_30_year} %
+                  </TableCell>
+                  <TableCell align='center'>30 year</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_20_year} %
+                  </TableCell>
+                  <TableCell align='center'>20 year</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_15_year} %
+                  </TableCell>
+                  <TableCell align='center'>15 year</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_10_year} %
+                  </TableCell>
+                  <TableCell align='center'>10 year</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </AccordionDetails>
       </Accordion>
       <Accordion className='card-radius-bottom' align='center'>
@@ -170,8 +216,14 @@ export default withRouter(function MyHouse(props) {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography color='textSecondary' gutterBottom align='center'>
-            <AccountBalanceIcon /> Refinance Rates in area
+          <AccountBalanceIcon className='fontCinzelLgNoShadow' />
+          <Typography
+            className='paddingleft'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
+            Refinance Rates in area
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
