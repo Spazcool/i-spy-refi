@@ -67,10 +67,9 @@ const LoginOptions = (props) => {
   };
 
   return (
-    <Grid container justify='center' spacing={2} className='card-radius-gray'>
+    <Grid container justify='center' spacing={2} className='card-radius-gray '>
       <Grid item xs={12}>
         <form onSubmit={handleFormSubmit}>
-          <h4>Email:</h4>
           <FormControl>
             <InputLabel htmlFor='my-input'>Email address</InputLabel>
             <Input
@@ -99,7 +98,7 @@ const LoginOptions = (props) => {
             />
           </FormControl>
 
-          <span className={classes.right}>
+          <p className='paddingtop'>
             <Button type='submit' variant='contained' color='primary'>
               <span className='flip'>
                 <EmailIcon
@@ -111,14 +110,14 @@ const LoginOptions = (props) => {
               </span>
               <span className={classes.control}>Sign-In</span>
             </Button>
-          </span>
+          </p>
         </form>
       </Grid>
 
       <Grid item xs={12}>
-        <form>
-          <h4 className>Google account:</h4>
-          <span className={classes.right}>
+        <form align='center'>
+          <h4>Google</h4>
+          <span className={classes.center}>
             <LoginGoogle />
           </span>
         </form>

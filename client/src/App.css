@@ -50,8 +50,13 @@ body {
 }
 
 .padding {
+  margin-bottom: 10px;
+  /* margin: 20px; */
+}
+
+.paddingtop {
   /* padding: 50px; */
-  margin-bottom: 30px;
+  margin-top: 30px;
 }
 .fontCinzelLgWhite {
   font-family: 'Cinzel';

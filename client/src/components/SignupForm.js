@@ -132,8 +132,8 @@ const Signup = (props) => {
   return (
     <Grid container justify='center' spacing={2}>
       <Grid item xs={12}>
-        <form onSubmit={handleFormSubmit}>
-          <Typography>Sign up with your Email:</Typography>
+        <form onSubmit={handleFormSubmit} align='center'>
+          <Typography>Sign up with your Email</Typography>
           <FormControl className='padding'>
             <InputLabel htmlFor='my-input-fname' className={firstNameColor}>
               First Name
@@ -200,21 +200,21 @@ const Signup = (props) => {
             />
           </FormControl>
 
-          <span className={classes.right}>
+          <p align='center'>
             <Button type='submit' variant='contained' color='primary'>
               <span className='flip'>
                 <GoSignIn />
               </span>
               <span className={classes.control}>Sign-Up</span>
             </Button>
-          </span>
+          </p>
         </form>
       </Grid>
 
       <Grid item xs={12}>
-        <form>
+        <form align='center'>
           <Typography>Sign in with your Google account:</Typography>
-          <span className={classes.right}>
+          <span align='center'>
             <LoginGoogle />
           </span>
         </form>

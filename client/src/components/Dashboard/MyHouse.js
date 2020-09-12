@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 const styles = {
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    passingtop: '56.25%', // 16:9
   },
   card: {
     position: 'relative',

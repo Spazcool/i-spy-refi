@@ -41,7 +41,7 @@ export default function CompListItem(props) {
   const styles = {
     media: {
       height: 0,
-      paddingTop: '56.25%', // 16:9
+      paddingtop: '56.25%', // 16:9
     },
     card: {
       position: 'relative',
