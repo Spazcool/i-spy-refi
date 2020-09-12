@@ -222,14 +222,11 @@ function Home() {
   useEffect(() => {
     if (isAuth) {
       fetchAllData();
-    } else {
-      //todo error toast
     }
   }, []);
 
   return (
     <Container className='signup'>
-      <div className='row'></div>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
