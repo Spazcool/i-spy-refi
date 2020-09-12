@@ -75,8 +75,9 @@ export default withRouter(function MyHouse(props) {
   const classes = useStyles();
   // console.log(props.financeRates);
   const checkLoaded = () => {
-    const { imageData, street, description, value } = props;
-    if (value >= 0) {
+    const { imageData, street, description, value, finalhousevalue } = props;
+
+    if (finalhousevalue > 0) {
       //presumes value will take the longest to load
       setLoaded(true);
     }

@@ -85,7 +85,7 @@ export default function HouseAdditions() {
     city: '',
     zip: '',
     state: '',
-    formData:[]
+    formData: [],
   };
   const [userZpid, setUserZpid] = useState(''); //TODO should probably be taking emptyhouse
   const [userHouse, setUserHouse] = useState(emptyHouse);
@@ -112,7 +112,7 @@ export default function HouseAdditions() {
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
-    console.log(userHouse)
+    console.log(userHouse);
     //todo might have soemthing to do with the state varaibel sharing the namespace with this uuserHouse
     //todo this shit is wrong but it works so fuck it
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
@@ -173,7 +173,7 @@ export default function HouseAdditions() {
     if (validateHouseInputs(inputHouseCreds)) {
       await setUserHouse(inputHouseCreds);
       afterSubmit();
-      setFormData(emptyHouse)
+      setFormData(emptyHouse);
     } else {
       setCredsAreInvalid(errorMessage);
     }
@@ -188,8 +188,15 @@ export default function HouseAdditions() {
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
-    const { mpr_id, centroid, postal_code, state_code, city, line} = autoCompleteResponse.data.autocomplete[0];
-    const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
+    const {
+      mpr_id,
+      centroid,
+      postal_code,
+      state_code,
+      city,
+      line,
+    } = autoCompleteResponse.data.autocomplete[0];
+    // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
 
     setUserZpid(mpr_id);
 
@@ -200,9 +207,11 @@ export default function HouseAdditions() {
       street: line,
       hid: mpr_id,
       zpid: mpr_id,
-      latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
-      longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
-      formData:[]
+      // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+      // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+      latitude: 50,
+      longitude: 50,
+      formData: [],
     };
 
     const createdHouse = async () => await DB.createHouse(user.user.uid, data);
@@ -221,31 +230,31 @@ export default function HouseAdditions() {
     let isValid = true;
 
     if (!street) {
-      setStreetColor(true)
+      setStreetColor(true);
       isValid = false;
     } else {
-        setStreetColor(false)
+      setStreetColor(false);
     }
 
     if (!city) {
-      setCityColor(true)
+      setCityColor(true);
       isValid = false;
     } else {
-      setCityColor(false)
+      setCityColor(false);
     }
 
     if (!zip) {
-      setZipColor(true)
+      setZipColor(true);
       isValid = false;
     } else {
-      setZipColor(false)
+      setZipColor(false);
     }
 
     if (!state) {
-      setStateColor(true)
+      setStateColor(true);
       isValid = false;
     } else {
-      setStateColor(false)
+      setStateColor(false);
     }
 
     return isValid;

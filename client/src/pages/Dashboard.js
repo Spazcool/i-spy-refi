@@ -231,7 +231,7 @@ function Home(props) {
             component='h2'
             className='fontCinzelLgNoShadow'
           >
-            Similar Homes
+            <span className='fontCinzelLgNoShadow'> Homes In Area</span>
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
