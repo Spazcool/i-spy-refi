@@ -15,9 +15,9 @@ export default function Toast(props) {
     console.log(props)
     const { openIt, message} = props;
     if (openIt) {
-      setOpen(true);
       setMessage(message === undefined ? 'Action performed.' : message);
       checkSeverity(message);
+      setOpen(true);
     }
   };
 
@@ -27,6 +27,7 @@ export default function Toast(props) {
     :
       setSeverity('error')
   }
+
 
   useEffect(() => {
     showBar()

@@ -104,7 +104,7 @@ function User(props) {
 
   const deleteUser = async() => {
     const userthing = async () => await DB.deleteUser(user.user.uid);
-    const {message} = await userthing();
+    await userthing();
     logout();
   }
 
@@ -227,17 +227,17 @@ function User(props) {
             </AccordionSummary>
             <AccordionDetails>
               <CardActions className={classes.root}>
-                {house.hid === undefined ? <></> : 
-                  <Grid item xs={6}>
-                    <Button className='m-1 danger' variant="contained" type="button" onClick={deleteHouse}>
-                      <span className='flip shrink'><HomeIcon /></span>Delete House
-                    </Button>
-                  </Grid>
-                }
                 <Grid item xs={6}>
                   <Button className='m-1' variant="contained" type="button" onClick={deleteUser}>
                     <span className='flip shrink'><UserIcon /></span> Delete User
                   </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  {house.hid === undefined ? <></> : 
+                    <Button className='m-1 danger' variant="contained" type="button" onClick={deleteHouse}>
+                      <span className='flip shrink'><HomeIcon /></span>Delete House
+                    </Button>
+                  }
                 </Grid>
               </CardActions>
             </AccordionDetails>

@@ -1,4 +1,4 @@
-import { firestore as db } from '../firebase.js';
+import { firestore as db, auth } from '../firebase.js';
 import User from '../models/User';
 import House from '../models/House';
 
@@ -457,27 +457,24 @@ export const DB = {
       try {
         await userRef.delete();
         message.push(`User ${userID} deleted successfully.`);
-        return message;
+        // return message;
       } catch (error) {
         message.push(`Error deleting User ${userID}: ${error}`);
-        return message;
+        // return message;
       }
 
-      // TODO DELETES THE AUTH CREDS FOR THE CURRENTLY SIGNED IN USER
-      // NOT SURE IF WE CAN FIND THE CREDS FOR ANY USER & DELETE THEM...BECUASE
-      // SECURITY IS A THING
-      // const authedUser = auth().currentUser;
+      const authedUser = auth.currentUser;
 
-      // authedUser.delete().then(function() {
-      //   message.push(`User ${userID} deleted successfully, from Auth User list.`);
-      // }).catch(function(error) {
-      //   message.push(`Error deleting User ${userID}, from Auth List: ${error}`);
-      // });
+      authedUser.delete().then(function() {
+        message.push(`User ${userID} deleted successfully, from Auth User list.`);
+      }).catch(function(error) {
+        message.push(`Error deleting User ${userID}, from Auth List: ${error}`);
+      });
+      return message;
     }
   },
 
   async deleteHouse(houseID) {
-    // TODO WORKS, BUT NOT SENDING A PROMISE BACK TO THE FRONTEND, SO THE MESSAGES NEVER MAKE IT
     return db()
       .collection('houses')
       .doc(houseID)
