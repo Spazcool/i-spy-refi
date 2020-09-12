@@ -20,10 +20,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    padding: '1em',
-    width: '25%',
+    padding: '0.75em',
+    width: '50%',
     'background-color': '#437779',
   },
+  full:{
+    width:'96%'
+  }
 }));
 
 export default function AddHouse(props) {
@@ -35,6 +38,7 @@ export default function AddHouse(props) {
         <h2 className='fontCinzelLgNoShadow'>Enter Home Address To Begin</h2>
         <FormGroup id='initInput' className={classes.root}>
           <TextField
+            className={classes.full}
             error={props.streetColor}
             required
             label='Street'
@@ -45,6 +49,7 @@ export default function AddHouse(props) {
             onChange={props.handleInputChange}
           />
           <TextField
+            className={classes.full}
             error={props.cityColor}
             required
             label='City'
@@ -55,6 +60,7 @@ export default function AddHouse(props) {
             onChange={props.handleInputChange}
           />
           <TextField
+            className={classes.full}
             error={props.stateColor}
             required
             label='State'
@@ -65,6 +71,7 @@ export default function AddHouse(props) {
             onChange={props.handleInputChange}
           />
           <TextField
+            className={classes.full}
             error={props.zipColor}
             required
             label='Zip'
