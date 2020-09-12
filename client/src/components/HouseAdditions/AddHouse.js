@@ -95,9 +95,3 @@ export default function AddHouse(props) {
     </Box>
   );
 }
-
-// onClick={(event) => {
-//   props.handleSubmit(event);
-//   setClicked(true);
-// }}
-

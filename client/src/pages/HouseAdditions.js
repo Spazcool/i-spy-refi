@@ -1,17 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
-import { HouseContext } from '../providers/HouseProvider';
+// import { HouseContext } from '../providers/HouseProvider';
 import { realtor } from '../api/realtor';
 
 import AddHouse from '../components/HouseAdditions/AddHouse';
 import AddRenos from '../components/HouseAdditions/AddRenos';
 import FormChart from '../components/Dashboard/FormChart';
+import Toast from '../components/Toast';
 
 import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -105,6 +106,9 @@ export default function HouseAdditions() {
     attic: 0,
     deck_patio_porch: 0,
   });
+  // ------------ TOAST ------------
+  const [openIt, setOpenIt] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
     if (userZpid.zpid == undefined) {
@@ -132,6 +136,8 @@ export default function HouseAdditions() {
   const handleSubmitCalc = async (event) => {
     event.preventDefault();
     if (userZpid.zpid !== '') {
+      setClicked(true);
+
       let totalValue = 0;
       for (const room in radios) {
         totalValue += radios[room];
@@ -147,14 +153,15 @@ export default function HouseAdditions() {
         formData,
       };
       const house = async () => await DB.updateHouse(data);
-      const updatedHouse = await house();
-      console.log(updatedHouse);
-      //todo make this a toast, can grabe the message for the toast from this updatedHouse
-      // toast reading updated house successfully
-    } else {
-      console.log('no house to add these too');
-      // todo toast, sorry you aint got a house bro, go do that
-    }
+      const {message} = await house();
+
+      setTimeout(() => {
+        setToastMessage(message);
+        setOpenIt(true);
+        setOpenIt(false);
+        setClicked(false);
+      }, 2000);
+    } 
   };
 
   const handleInputChange = (event) => {
@@ -296,10 +303,15 @@ export default function HouseAdditions() {
             handleOnClick={handleOnClick}
             handleSubmitCalc={handleSubmitCalc}
             values={values}
+            clicked={clicked}
           />
           {/* <FormChart datsa={userHouse} /> */}
         </Grid>
       )}
+      <Toast
+        openIt={openIt}
+        message={toastMessage}
+      />
     </Grid>
   );
 }
