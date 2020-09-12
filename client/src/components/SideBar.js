@@ -20,9 +20,7 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import LightIcon from '@material-ui/icons/WbSunnyOutlined';
 import DarkIcon from '@material-ui/icons/WbSunnyRounded';
-import {FaTools} from 'react-icons/fa';
-
-import '../App.css';
+import { FaTools } from 'react-icons/fa';
 
 const useStyles = makeStyles({
   list: {
@@ -59,19 +57,19 @@ export default withRouter(function TemporaryDrawer(props) {
 
   const selectDisplayName = () => {
     let name;
-    if(user.user.displayName){
-      name =  user.user.displayName
-    }else{
-      name = user.user.email //ideally take from firstname&lastname from db
+    if (user.user.displayName) {
+      name = user.user.displayName;
+    } else {
+      name = user.user.email; //ideally take from firstname&lastname from db
     }
-    setDisplayName(name)
-  }
+    setDisplayName(name);
+  };
 
   useEffect(() => {
-    if(isAuth){
+    if (isAuth) {
       selectDisplayName();
     }
-  },[isAuth])
+  }, [isAuth]);
 
   return (
     <>
@@ -129,9 +127,7 @@ export default withRouter(function TemporaryDrawer(props) {
                     <UserIcon />
                   </span>
                 </ListItemIcon>
-                <ListItemText
-                  primary={displayName}
-                />
+                <ListItemText primary={displayName} />
               </ListItem>
             ) : (
               <></>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
+import FormChart from './FormChart';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -14,13 +15,16 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
+import AddIcon from '@material-ui/icons/Add';
 import TableRow from '@material-ui/core/TableRow';
+import Modal from '@material-ui/core/Modal';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -73,6 +77,15 @@ const styles = {
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const checkLoaded = () => {
     const { imageData, street, description, value, finalhousevalue } = props;
@@ -97,35 +110,41 @@ export default withRouter(function MyHouse(props) {
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label='simple table'>
               <tbody>
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center'>
-                    ${' '}
-                    {props.value > 0
-                      ? props.value.toLocaleString()
-                      : props.realtorprice.toLocaleString()}
-                  </TableCell>
-                  <TableCell align='center' className='fontCinzelWhiteNoShadow'>
-                    Similar Homes Calculation
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell component='th' scope='row'></TableCell>
-                  <TableCell align='center'>
-                    $ {props.reno.toLocaleString()}
-                  </TableCell>
-                  <TableCell align='center' coolor='secondary'>
-                    Renovation Additions
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
+              <TableRow>
                 <TableCell component='th' scope='row'></TableCell>
-                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                <TableCell
+                  align='center'
+                  className='fontCinzelLgNoShadow'
+                ></TableCell>
+                <TableCell align='center'>
+                  ${' '}
+                  {props.value > 0
+                    ? props.value.toLocaleString()
+                    : props.realtorprice.toLocaleString()}
+                </TableCell>
+                <TableCell align='center'>Similar Homes Calculation</TableCell>
+              </TableRow>
+              <TableRow style={{ borderBottom: '0' }}>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'>
+                  <AddIcon />
+                </TableCell>
+                <TableCell align='center'>
+                  $ {props.reno.toLocaleString()}
+                </TableCell>
+                <TableCell align='center' color='secondary'>
+                  Renovation Additions
+                </TableCell>
+              </TableRow>
+
+              {/* <TableRow style={{ backgroundColor: '#437779' }}> */}
+              <TableRow style={{ backgroundColor: '#437779' }}>
+                <TableCell component='th' scope='row'></TableCell>
+                <TableCell align='center'></TableCell>
+                <TableCell align='center'>
                   $ {props.finalhousevalue.toLocaleString()}
                 </TableCell>
-                <TableCell align='center' className='fontCinzelLgNoShadow'>
+                <TableCell align='center'>
                   I SPY REFI Final Assessment
                 </TableCell>
               </TableRow>
@@ -134,25 +153,40 @@ export default withRouter(function MyHouse(props) {
           </TableContainer>
         </CardContent>
       </Card>
-      <Accordion >
+      <Accordion align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography color='textSecondary' gutterBottom>
-            <HomeIcon />
-            View/Update Renovations
+          <AccountBalanceIcon className='fontCinzelLgNoShadow' />
+          <Typography
+            className='paddingleft'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
+            Home Reno Chart
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <CardContent>
-            <Typography color='textSecondary' gutterBottom></Typography>
-            <Typography variant='h5' component='h2'>
-              reno data
-            </Typography>
-          </CardContent>
-          <CardActions className={classes.root}>
+          <Button
+            type='button'
+            size='small'
+            className='button'
+            onClick={handleOpen}
+          >
+            Renovation Data
+          </Button>
+          <Modal open={open} onClose={handleClose}>
+            <FormChart data={props} />
+          </Modal>
+          <Typography
+            align='center'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
             <Button
               size='small'
               className='button'
@@ -161,9 +195,9 @@ export default withRouter(function MyHouse(props) {
                 props.history.push('/additions');
               }}
             >
-              Update Renovation Info
+              Update House Renovations
             </Button>
-          </CardActions>
+          </Typography>
         </AccordionDetails>
       </Accordion>
       <Accordion className='card-radius-bottom' align='center'>
@@ -172,8 +206,14 @@ export default withRouter(function MyHouse(props) {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography color='textSecondary' gutterBottom align='center'>
-            <AccountBalanceIcon /> Refinance Rates in area
+          <AccountBalanceIcon className='fontCinzelLgNoShadow' />
+          <Typography
+            className='paddingleft'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
+            Refinance Rates in area
           </Typography>
         </AccordionSummary>
         <AccordionDetails>

@@ -14,18 +14,17 @@ import {
   HoverState,
   Animation,
 } from '@devexpress/dx-react-chart';
+// import { schemeDark2 } from 'd3-scale-chromatic';
 
 // TODO SPECIFY COLORS THAT MATCH OUR LOOK
 // https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
 
 export default function FormChart(props) {
   const [loaded, setLoaded] = useState(false);
-  const [userHouseData, setUserHouseData] = useState([
-    { room: 'loading ...', value: 1 },
-  ]);
+  const [userHouseData, setUserHouseData] = useState([]);
   const checkLoaded = () => {
     const { formData } = props.data;
-    console.log(props);
+    // console.log(props);
     console.log(formData);
     setUserHouseData(formData);
     if (formData.length > 0) {
@@ -35,7 +34,7 @@ export default function FormChart(props) {
 
   useEffect(() => {
     checkLoaded();
-  }, [props, loaded]);
+  }, [props, userHouseData]);
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>

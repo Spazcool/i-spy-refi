@@ -119,21 +119,21 @@ export default function AddRenos(props) {
                 control={
                   <StyledRadio
                     onClick={props.handleOnClick}
+                    value={room.major.value}
+                  />
+                }
+                label={room.major.type}
+              />
+              <FormControlLabel
+                control={
+                  <StyledRadio
+                    onClick={props.handleOnClick}
                     value={room.minor.value}
                   />
                 }
                 label={room.minor.type}
               />
 
-              <FormControlLabel
-                control={
-                  <StyledRadio
-                    onClick={props.handleOnClick}
-                    value={room.major.value}
-                  />
-                }
-                label={room.major.type}
-              />
               {room.noSelection !== undefined ? (
                 <FormControlLabel
                   control={
