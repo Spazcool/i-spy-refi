@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase';
 import LoginGoogle from '../components/LoginGoogle';
+import Toast from '../components/Toast';
 
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 
 import EmailIcon from '@material-ui/icons/Email';
@@ -36,9 +35,9 @@ const useStyles = makeStyles((theme) => ({
 const LoginOptions = (props) => {
   const classes = useStyles();
   const emptyCreds = { emailInput: '', passwordInput: '' };
-  const errorMessage = 'invalid credentials';
   const [formData, setFormData] = useState(emptyCreds);
-  const [credsAreInvalid, setCredsAreInvalid] = useState('');
+  const [openIt, setOpenIt] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -46,28 +45,27 @@ const LoginOptions = (props) => {
     setFormData({ ...formData, [name]: value });
   };
 
-    const handleFormSubmit = event => {
-        event.preventDefault()
-        const inputCreds = {
-            email: formData.emailInput,
-            password: formData.passwordInput
-        }
-        login(inputCreds)
-        setFormData(emptyCreds)
+  const handleFormSubmit = event => {
+    event.preventDefault()
+    const inputCreds = {
+      email: formData.emailInput,
+      password: formData.passwordInput
     }
+    login(inputCreds)
+    setFormData(emptyCreds)
+  }
 
-    const login = (creds) => {
-      auth.signInWithEmailAndPassword(creds.email, creds.password)
-        .catch(error => {
-          setCredsAreInvalid(errorMessage)
-          console.error("Error signing in with password and email", error);
-          //todo toast
-        });
+  const login = (creds) => {
+    auth.signInWithEmailAndPassword(creds.email, creds.password)
+      .catch(error => {
+        setToastMessage(error.message);
+        setOpenIt(true);
+        setOpenIt(false);
+      });
   };
 
   return (
     <Grid container justify='center' spacing={2} className="card-radius-gray">
-      {/* <div class='login-margin center'> */}
       <Grid item xs={12}>
         <form onSubmit={handleFormSubmit}>
           <h4>Email:</h4>
@@ -83,9 +81,6 @@ const LoginOptions = (props) => {
               value={formData.emailInput}
               onChange={handleInputChange}
             />
-            <FormHelperText id='my-helper-text'>
-              We'll never share your email.
-            </FormHelperText>
           </FormControl>
           
           <FormControl>
@@ -97,16 +92,9 @@ const LoginOptions = (props) => {
               name='passwordInput'
               type='password'
               placeholder='Password'
-              value={formData.emailInput}
+              value={formData.passwordInput}
               onChange={handleInputChange}
             />
-          </FormControl>
-
-          <FormControl>
-            <FormHelperText className='text-danger' id='my-helper-text'>
-              {' '}
-              {credsAreInvalid}
-            </FormHelperText>
           </FormControl>
 
           <span className={classes.right}>
@@ -133,7 +121,10 @@ const LoginOptions = (props) => {
           </span>
         </form>
       </Grid>
-      {/* </div> */}
+      <Toast
+        openIt={openIt}
+        message={toastMessage}
+      />
     </Grid>
   );
 };

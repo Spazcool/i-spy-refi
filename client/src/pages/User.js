@@ -64,7 +64,6 @@ function User(props) {
   const [lastNameColor, setLastNameColor] = useState('');
   const [openIt, setOpenIt] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [toastColor, setToastColor] = useState('');
 
   useEffect(() => {
     if(isAuth){
