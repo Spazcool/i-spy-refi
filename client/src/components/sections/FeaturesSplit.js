@@ -80,7 +80,7 @@ const FeaturesSplit = ({
                 data-reveal-container='.split-item'
               >
                 <Image
-                  src={require('./../../assets/FeaturePhotos/placeHolder.png')}
+                  src={require('./../../assets/FeaturePhotos/address.jpeg')}
                   alt='Features split 01'
                   width={528}
                   height={396}
@@ -94,7 +94,7 @@ const FeaturesSplit = ({
                 data-reveal-container='.split-item'
               >
                 <h3 className='mt-0 mb-12'>
-                  Fill out the home evaluation form
+                  Fill out the home renovations form
                 </h3>
                 <p className='m-0 text-color-secondary'>
                   We will ask you a series of questions about any major updates
@@ -109,7 +109,7 @@ const FeaturesSplit = ({
                 data-reveal-container='.split-item'
               >
                 <Image
-                  src={require('./../../assets/FeaturePhotos/placeHolder.png')}
+                  src={require('./../../assets/FeaturePhotos/form.jpeg')}
                   alt='Features split 02'
                   width={528}
                   height={396}
@@ -161,7 +161,7 @@ const FeaturesSplit = ({
                 data-reveal-container='.split-item'
               >
                 <Image
-                  src={require('./../../assets/FeaturePhotos/comps.png')}
+                  src={require('./../../assets/FeaturePhotos/comps.jpeg')}
                   alt='Features split 03'
                   width={528}
                   height={396}

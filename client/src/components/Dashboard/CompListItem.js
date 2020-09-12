@@ -29,26 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompListItem(props) {
-  // const styles = {
-  //   media: {
-  //     height: 0,
-  //     paddingTop: '56.25%', // 16:9
-  //   },
-  //   card: {
-  //     position: 'relative',
-  //   },
-  //   overlay: {
-  //     position: 'absolute',
-  //     top: '10%',
-  //     left: '10%',
-  //     color: 'white',
-  //     background: 'rgba(0, 0, 0, 0.5)',
-  //     padding: '3px',
-
-  //     // backgroundColor: 'white',
-  //   },
-  // };
-  
   const classes = useStyles();
 
   return props.comp ? (
@@ -108,23 +88,23 @@ export default function CompListItem(props) {
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-          <CardMedia
-            // className={classes.lazyImage} // TODO not needed?
-            className='media box-shadow card-radius'
-            component='img'
-            image={
-              props.comp.photos[0].href.includes('googleapis')
-                ? props.comp.photos[0].href
-                : noHouseImage
-            }
-            title='My House'
-          />
-        </Grid>
+            <CardMedia
+              // className={classes.lazyImage} // TODO not needed?
+              className='media box-shadow card-radius'
+              component='img'
+              image={
+                props.comp.photos[0].href.includes('googleapis')
+                  ? props.comp.photos[0].href
+                  : noHouseImage
+              }
+              title='My House'
+            />
+          </Grid>
         </Grid>
       </AccordionDetails>
     </Accordion>
   ) : (
-    <Accordion style={{overflowY: 'hidden'}}>
+    <Accordion style={{ overflowY: 'hidden' }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'

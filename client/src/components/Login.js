@@ -46,19 +46,20 @@ const LoginOptions = (props) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFormSubmit = event => {
-    event.preventDefault()
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
     const inputCreds = {
       email: formData.emailInput,
-      password: formData.passwordInput
-    }
-    login(inputCreds)
-    setFormData(emptyCreds)
-  }
+      password: formData.passwordInput,
+    };
+    login(inputCreds);
+    setFormData(emptyCreds);
+  };
 
   const login = (creds) => {
-    auth.signInWithEmailAndPassword(creds.email, creds.password)
-      .catch(error => {
+    auth
+      .signInWithEmailAndPassword(creds.email, creds.password)
+      .catch((error) => {
         setToastMessage(error.message);
         setOpenIt(true);
         setOpenIt(false);
@@ -66,10 +67,9 @@ const LoginOptions = (props) => {
   };
 
   return (
-    <Grid container justify='center' spacing={2} className="card-radius-gray">
+    <Grid container justify='center' spacing={2} className='card-radius-gray '>
       <Grid item xs={12}>
         <form onSubmit={handleFormSubmit}>
-          <h4>Email:</h4>
           <FormControl>
             <InputLabel htmlFor='my-input'>Email address</InputLabel>
             <Input
@@ -83,7 +83,7 @@ const LoginOptions = (props) => {
               onChange={handleInputChange}
             />
           </FormControl>
-          
+
           <FormControl>
             <InputLabel htmlFor='my-input'>Password</InputLabel>
             <Input
@@ -98,8 +98,8 @@ const LoginOptions = (props) => {
             />
           </FormControl>
 
-          <span className={classes.right}>
-            <Button type='submit' variant='contained'>
+          <p className='paddingtop'>
+            <Button type='submit' variant='contained' color='primary'>
               <span className='flip'>
                 <EmailIcon
                   style={{
@@ -110,22 +110,19 @@ const LoginOptions = (props) => {
               </span>
               <span className={classes.control}>Sign-In</span>
             </Button>
-          </span>
+          </p>
         </form>
       </Grid>
 
       <Grid item xs={12}>
-        <form>
-          <h4>Google account:</h4>
-          <span className={classes.right}>
+        <form align='center'>
+          <h4>Google</h4>
+          <span className={classes.center}>
             <LoginGoogle />
           </span>
         </form>
       </Grid>
-      <Toast
-        openIt={openIt}
-        message={toastMessage}
-      />
+      <Toast openIt={openIt} message={toastMessage} />
     </Grid>
   );
 };
