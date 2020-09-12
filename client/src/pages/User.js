@@ -3,26 +3,49 @@ import { Redirect } from 'react-router-dom'
 import { DB } from "../api/firestore.js";
 import { AuthContext } from "../providers/AuthProvider";
 
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import Form from 'react-bootstrap/Form';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
+import HomeIcon from '@material-ui/icons/Home';
+import UpdateIcon from '@material-ui/icons/Update';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import WarningIcon from '@material-ui/icons/Warning';
+import UserIcon from '@material-ui/icons/Person';
+
+import { makeStyles } from '@material-ui/core/styles';
 import '../App.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  border: {
-    border: '2px red dotted',
   },
   paper: {
     // height: 140,
@@ -38,40 +61,33 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  form:{
+    width: '100%',
+    border: '2px dotted red'
+  },
+  right: {
+    float: 'right',
+    marginTop: '1em'
+  },
 }));
 
 function User(props) {
   const classes = useStyles();
-  const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' }
-  const { isAuth, user } = useContext(AuthContext);
+  const emptyUser = { firstName: '', lastName: '' }
+  const { isAuth, user, logout } = useContext(AuthContext);
   
   const [spacing] = useState(2);
   const [userfromdb, setUser] = useState('');
-  const [users, setUsers] = useState([]);
   const [house, setHouse] = useState('');
-  const [houses, setHouses] = useState([]);
-  const [fakeHouse, setFakeHouse] = useState('');
-  const [fakeUser, setFakeUser] = useState('');
   const [formData, setFormData] = useState(emptyUser)
   const [credsAreInvalid, setCredsAreInvalid] = useState('')
   const [firstNameColor, setFirstNameColor] = useState('')
   const [lastNameColor, setLastNameColor] = useState('')
-  const [emailColor, setEmailColor] = useState('')
-  const [passwordColor, setPasswordColor] = useState('')
-  const [toBeDeleted, setToBeDeleted] = useState('');
-  const [toBeDeletedUser, setUserToBeDeleted] = useState('');
-  const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [houseData, setHouseData] = useState('');
-  const [userData, setUserData] = useState('');
 
   useEffect(() => {
     if(isAuth){
       fetchUser();
-      //example code below
-      fetchUsers();
       fetchHouse();
-      fetchHouses();
     }
   }, [isAuth]);
 
@@ -89,178 +105,64 @@ function User(props) {
     };
     setUser(data);
   }
-  const fetchUsers = async() => {
-    const users = async () => await DB.getUsers();
-    const totalUsers = await users();
 
-    setUsers(totalUsers);
+  const fetchHouse = async() => {
+    const houseThing = async () => await DB.getHouseByOwner(user.user.uid);
+    const [userHouse] = await houseThing();
+    userHouse === undefined ? setHouse('') : setHouse(userHouse);
+    console.log(userHouse)
   }
-  const fetchHouse = async(hid) => {
-    let house;
-    if(hid){
-      house = async () => await DB.getHouseByID(hid);
-      const userHouse = await house();
-      setFakeHouse(userHouse);
-    } else {
-      house = async () => await DB.getHouseByOwner(user.user.uid);
-      const [userHouse] = await house();
-      userHouse === undefined ? setHouse('') : setHouse(userHouse);
-    }
-  }
-  const fetchHouses = async() => {
-    const houses = async () => await DB.getHouses();
-    const allHouses = await houses();
 
-    setHouses(allHouses);
-  };
-
-  // -------------------- CREATE THE THINGS --------------------
-  const createFakeHouse = async() => {
-    const data = {
-      hid: 12345678906, //todo will require a uuid library here
-      zpid: 56358239,
-      latitude: 89,
-      longitude: 23,
-      zip: '02451',
-      state: 'MA',
-      city: 'Waltham',
-      street: '128 Seminole Avenue',
-      comps: [
-        { date: '10-30-20', value: 87654 },
-        { date: '90-30-20', value: 87354 },
-      ],
-      formData: {
-        bathoom: 567,
-        kitchen: 456,
-        bedroom: 5678,
-      },
-      lastUpdated: '10-30-20',
-    };
-
-    const house = async () => await DB.createHouse(user.user.uid, data);
-    const returnedHouse = await house();
-    setFakeHouse(returnedHouse)
-  }
-  const createFakeUser = async() => {
-    const data = {
-      uid: 'RWBgwgo3mCSac6d9yM15HuTUjLR2',
-      email: 'spazcool@hotmail.com',
-      zpid: 45678,
-      displayName: 'duggles',
-      firstName: 'dug',
-      lastName: 'gles',
-      admin: false,
-      lastUpdated: '10-30-20',
-    };
-
-    const fakedUser = async () => await DB.createUser(data, data);
-    const returnedUser = await fakedUser();
-    console.log(returnedUser);
-
-    setFakeUser(returnedUser);
-  };
-
-  // -------------------- DELETE THE THINGS --------------------
-  const deleteFakeHouse = async() => {
-    const house = async () => await DB.deleteHouse(toBeDeleted);
-    const deletedHouse = await house();
+  const deleteHouse = async() => {
+    console.log(house)
+    const houseThing = async () => await DB.deleteHouse(house.hid);
+    const deletedHouse = await houseThing();
     console.log(deletedHouse);
-    setFakeHouse(''); //todo theres a bug in the api file here, mentioned on trello
+    setHouse(''); //todo theres a bug in the api file here, mentioned on trello
   //to make house list go away, will need to recall fetchHouses
   }
-  const deleteFakeUser = async() => {
-    console.log(toBeDeletedUser)
-    const userthing = async () => await DB.deleteUser(toBeDeletedUser);
+
+  const deleteUser = async() => {
+    const userthing = async () => await DB.deleteUser(user.user.uid);
     const deletedUser = await userthing();
-    console.log(deletedUser)
-    setFakeUser(''); //todo theres a bug in the api file here, mentioned on trello
-  //to make house list go away, will need to recall fetchHouses
-  }
-  const handleDeleteSelection = (event) => {
-    setToBeDeleted(event.target.value);
-  }
-  const handleDeleteUserSelection =  (event) => {
-    setUserToBeDeleted(event.target.value);
+    logout();
   }
 
-  // -------------------- UPDATE THE THINGS --------------------
-  const updateFakeHouse = async() => {
-    //hard coded to updating the state attribute for the house selected in the delete dropdown
+  const updateUser = async(event) => {
+    event.preventDefault();
     const data = {
-      hid: toBeDeleted, 
-      zpid: 56358239, 
-      state: houseData, 
-      // latitude: null, 
-      // longitude, 
-      // zip, 
-      // city, 
-      // street, 
-      // comps, 
-      // formData, 
-      // lastUpdated
-    }
-
-    const house = async () => await DB.updateHouse(data);
-    const updatedHouse = await house();
-    setFakeHouse(updatedHouse); 
-  }
-  const updateFakeUser = async() => {
-     //hard coded to updating the state attribute for the firstName selected in the delete dropdown
-     const data = {
-      firstName: userData,
-      // uid: ,
-      // displayName,
-      // email,
-      // lastName,
-      // zpid,
-      // admin,
-      // lastUpdated,
-      // hid: toBeDeleted, 
-      // zpid: 56358239, 
-      // state: houseData, 
-    }
-    const userthing = async () => await DB.updateUser(toBeDeletedUser, data);
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+    };
+    const userthing = async () => await DB.updateUser(user.user.uid, data);
     const updatedUser = await userthing();
-    setFakeUser(updatedUser); 
+    updatedUser.message.includes('successfully') ? setUser(data) : setUser(emptyUser)
   }
-  // -------------------- UPDATE USER VALUES (THE REAL ONE) --------------------
+
   const handleInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
-  const handleFormSubmit = (event) => {
-    // data needs to look something like this
-    // const {email, displayName, firstName, lastName, zpid, admin} = updateUserData;
-    // DB.updateUser(user, updateUserData)
-    //then return a okay, updated successfully toast
-    // event.preventDefault()
-    // let newUser = {
-    //     firstName: formData.firstNameInput,
-    //     lastName: formData.lastNameInput,
-    //     email: formData.emailInput,
-    //     password: formData.passwordInput
-    // }
-    // if (validateUserInput(newUser)) {
-    //     createUser(newUser)
-    //     setFormData(emptyUser)
-    // } else {
-    //     setCredsAreInvalid(errorMessage)
-    // }
-  }
-  const list = (obj) => {
+
+  const listUserAttributes = (obj) => {
     let arr = [];
     for (const property in obj) {
-      arr.push(
-        <Form.Group controlId={`input${property}`} key={property}>
-          <Form.Label className={`${property}Color`}>{property}</Form.Label>
-          <Form.Control name={`${property}Input`} type="text" placeholder={obj[property]} value={formData[`${property}Input`]} onChange={handleInputChange} />    
-        </Form.Group>
-      );
+      if(property !== 'uid' && property !== 'email'){
+        arr.push(
+          <Grid item xs={12} md={12} key={property}>
+            <FormControl style={{width: '100%'}}>
+              <InputLabel htmlFor={`my-input-${property}`} className={`${property}Color`}>{property}</InputLabel>
+              <Input  className={classes.textField} id={`my-input-${property}`} aria-describedby="my-helper-text" name={property} type="text" placeholder={obj[property]} value={formData[property]} onChange={handleInputChange}/>
+            </FormControl>
+          </Grid>
+        );
+      }
     }
     return arr;
   }
-  const validateUserInput = ({ firstName, lastName, email, password }) => {
+
+  const validateUserInput = ({ firstName, lastName }) => {
     let isValid = true;
 
     if (!firstName) {
@@ -277,182 +179,84 @@ function User(props) {
       setLastNameColor('');
     }
 
-    if (!email) {
-      setEmailColor('text-danger');
-      isValid = false;
-    } else {
-      setEmailColor('');
-    }
-
-    if (!password) {
-      setPasswordColor('text-danger');
-      isValid = false;
-    } else {
-      setPasswordColor('');
-    }
-
     return isValid;
   }
-  const handleHouseChange = (event) => {
-    event.preventDefault()
-    const { name, value } = event.target
-    setHouseData(value);
-  }
-  const handleUserChange = (event) => {
-    event.preventDefault()
-    const { name, value } = event.target
-    setUserData(value);
-  }
-
-  // -------------------- SHOW ALL THE THINGS --------------------
-  const listHouses = () => {
-    return (houses.map((house,i) => <MenuItem key={'house'+i} value={house.hid}>{house.hid}</MenuItem>));
-  }
-  
-  // -------------------- DROPDOWNS --------------------
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose2 = () => {
-    setOpen2(false);
-  };
-  const handleOpen2 = () => {
-    setOpen2(true);
-  };
 
   return (
     !isAuth ? 
       <Redirect to='/' />
       :
-      <Container className="">
-          <h1>User Page</h1>
-        <Grid container justify="center" spacing={spacing}>
-          <Grid item xs={12} md={6}>
-            <Form onSubmit={handleFormSubmit}>
+      <Grid container justify="center" spacing={spacing} style={{margin: '2em 0 2em 0'}}>
+        <Grid item xs={12} style={{textAlign: 'center'}}>
+          <h3>{userfromdb !== '' ? `${userfromdb.firstName} ${userfromdb.lastName}` : 'User Page'}</h3>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Paper style={{padding: '1em 1em 5em 1em'}}>
+            <form onSubmit={updateUser}>
               {userfromdb ? 
-                list(userfromdb)
+                listUserAttributes(userfromdb)
               :
               <></>  
               }
-              <Button className='m-1' variant="contained" type="submit">
-                Update
-              </Button>
-            </Form>
-          </Grid>
-
-          <Grid item xs={12}><h1>Testing Bullshit</h1></Grid>
-          {/* SHOW VALUES FROM INITIAL FETCHES */}
-          <Grid item xs={3} className={classes.border}>
-            <h3>user</h3>
-            <span>{userfromdb.email}</span>
-          </Grid>
-          <Grid item xs={3} className={classes.border}>
-            <h3>users</h3>
-            <ul>
-              {users.map((user, i) => (
-                <li key={'user' + i}>{user.email}</li>
-              ))}
-            </ul>
-          </Grid>
-          <Grid item xs={3} className={classes.border}>
-            <h3>house HID</h3>
-            <span>{house.hid === undefined ? '' : house.hid}</span>
-          </Grid>
-          <Grid item xs={3} className={classes.border}>
-            <h3>houses HID</h3>
-            <ul>{houses.map((house,i) => <li key={'house'+i}>{house.hid}</li>)}</ul>
-          </Grid>
-
-          {/* CREATE USER/HOUSE FROM HARDCODED DATA */}
-          <Grid item xs={6} className={classes.border}>
-              <Button className='m-1' variant="contained" type="button" onClick={createFakeHouse}>
-                Create Fake House
-              </Button>
-            <div>{fakeHouse.message ? fakeHouse.message : ''}</div>
-          </Grid>
-          <Grid item xs={6} className={classes.border}>
-              <Button className='m-1' variant="contained" type="button" onClick={createFakeUser}>
-                Create Fake User
-              </Button>
-              <div>{fakeUser.message ? fakeUser.message : ''}</div>
-          </Grid>
-          
-          {/* DELETE USER/HOUSE FROM FETCHED DATA */}
-          <Grid item xs={6} className={classes.border}>
-            <h3>Delete a House</h3>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Houses</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={toBeDeleted}
-                onChange={handleDeleteSelection}
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-              >
-                {listHouses()}               
-              </Select>
-            </FormControl>
-            <Button className='m-1' variant="contained" type="button" onClick={deleteFakeHouse}>
-              Delete Fake House
-            </Button>
-            <div>{fakeHouse.message ? fakeHouse.message : ''}</div>
-          </Grid>
-          <Grid item xs={6} className={classes.border}>
-          <h3>Delete a User</h3>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Users</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={toBeDeletedUser}
-                onChange={handleDeleteUserSelection}
-                open={open2}
-                onClose={handleClose2}
-                onOpen={handleOpen2}
-              >
-                {users.map((user) => <MenuItem key={user.uid} value={user.uid}>{user.uid}</MenuItem>)}               
-              </Select>
-            </FormControl>
-              <Button className='m-1' variant="contained" type="button" onClick={deleteFakeUser}>
-                Delete Fake User
-              </Button>
-              <div>{fakeUser.message ? fakeUser.message : ''}</div>
-          </Grid>
-
-          {/* UPDATE USER/HOUSE FROM HARDCODED DATA */}
-          <Grid item xs={6} className={classes.border}>
-            <Form.Group controlId={`inputFakeHouse`}>
-              <Form.Label className={`fakeHouseColor`}>Fake House</Form.Label>
-              <Form.Control name={`fakeHouseInput`} type="text" placeholder='fake house' value={houseData} onChange={handleHouseChange} />    
-            </Form.Group>
-            <Button className='m-1' variant="contained" type="button" onClick={updateFakeHouse}>
-              Update Fake House
-            </Button>
-            <div>{fakeHouse.message ? fakeHouse.message : ''}</div>
-          </Grid>
-          <Grid item xs={6} className={classes.border}>
-            <Form.Group controlId={`inputFakeUser`}>
-              <Form.Label className={`fakeUserColor`}>Fake User</Form.Label>
-              <Form.Control name={`fakeUserInput`} type="text" placeholder='fake user' value={userData} onChange={handleUserChange} />    
-            </Form.Group>
-            <Button className='m-1' variant="contained" type="button" onClick={updateFakeUser}>
-              Update Fake User
-            </Button>
-            <div>{fakeUser.message ? fakeUser.message : ''}</div>
-          </Grid>
-          <Grid item xs={6} className={classes.border}>
-              <Button className='m-1' variant="contained" type="button" onClick={()=> fetchHouse('1234567890')}>
-                Get Fake House by HID
-              </Button>
-              <div>{fakeHouse.hid ? fakeHouse.hid : ''}</div>
-          </Grid>
+              <span className={classes.right} >
+                <Button className='m-1' variant="contained" type="submit" >
+                  <span className='flip shrink'><UpdateIcon/></span>Update
+                </Button>
+              </span>
+            </form>
+          </Paper>
         </Grid>
-      </Container>
+
+        <Grid item xs={12} style={{textAlign: 'center'}}><h3>{house.hid === undefined ? '' : 'House Details'}</h3></Grid>
+        <Grid item xs={12} md={6} > 
+          {house.hid === undefined ? '' :
+            <Paper style={{padding: '1em'}}>
+              <ul>
+                <li>House ID: {house.hid}</li>
+                <li>House street: {house.street}</li>
+                <li>House city: {house.city}</li>
+                <li>House state: {house.state}</li>
+                <li>House zip: {house.zip}</li>
+                {/* <li>House location: {house.location}</li> */}
+                {/* <li>House comps: {house.comps}</li> */}
+                {/* <li>House renovations: {house.formData}</li> */}
+              </ul>
+            </Paper>
+          }
+        </Grid>
+
+        <Grid item xs={12} style={{textAlign: 'center'}}><h2>Danger Zone</h2></Grid>
+        <Grid item xs={12} md={6}>
+          <Accordion style={{width: '100%', backgroundColor: '#d32f2f'}}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel1a-content'
+              id='panel1a-header'
+            >
+              <span className='flip shrink'><WarningIcon/></span>
+              <Typography color='textSecondary' gutterBottom style={{marginLeft: '1em'}}>
+                Delete User / House
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <CardActions className={classes.root}>
+                {house.hid === undefined ? <></> : 
+                  <Grid item xs={6}>
+                    <Button className='m-1 danger' variant="contained" type="button" onClick={deleteHouse}>
+                      <span className='flip shrink'><HomeIcon /></span>Delete House
+                    </Button>
+                  </Grid>
+                }
+                <Grid item xs={6}>
+                  <Button className='m-1' variant="contained" type="button" onClick={deleteUser}>
+                    <span className='flip shrink'><UserIcon /></span> Delete User
+                  </Button>
+                </Grid>
+              </CardActions>
+            </AccordionDetails>
+          </Accordion>
+        </Grid>
+      </Grid>
   );
 }
 

@@ -66,6 +66,9 @@ html {
   transform: rotateY(180deg);
 }
 
+.shrink{
+  height: 50%;
+}
 .media {
   height: 150px;
 }

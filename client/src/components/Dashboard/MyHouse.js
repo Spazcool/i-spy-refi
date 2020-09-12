@@ -134,7 +134,7 @@ export default withRouter(function MyHouse(props) {
           </CardContent>
         </CardActionArea>
       </Card>
-      <Accordion className='card-radius-bottom'>
+      <Accordion >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
@@ -166,7 +166,7 @@ export default withRouter(function MyHouse(props) {
           </CardActions>
         </AccordionDetails>
       </Accordion>
-      <Accordion className='card-radius-bottom' align='centet'>
+      <Accordion className='card-radius-bottom' align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
