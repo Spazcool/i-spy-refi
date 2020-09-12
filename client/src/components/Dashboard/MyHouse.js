@@ -89,10 +89,8 @@ export default withRouter(function MyHouse(props) {
 
   return loaded ? (
     <Paper className='card-radius box-shadow'>
-      <Card className='card-radius'>
-        <CardActionArea>
+      <Card className='card-radius-top'>
           <CardMedia
-            className={classes.lazyImage}
             component='img'
             image={props.imageData}
             title='My House'
@@ -137,7 +135,6 @@ export default withRouter(function MyHouse(props) {
               </Table>
             </TableContainer>
           </CardContent>
-        </CardActionArea>
       </Card>
       <Accordion className='card-radius-bottom'>
         <AccordionSummary
