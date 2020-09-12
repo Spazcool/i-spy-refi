@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth, signUpWithEmail } from "../firebase";
+import { auth, signUpWithEmail } from '../firebase';
 
 import LoginGoogle from '../components/LoginGoogle';
 import Toast from '../components/Toast';
@@ -12,7 +12,7 @@ import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 
-import {GoSignIn} from 'react-icons/go';
+import { GoSignIn } from 'react-icons/go';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -31,150 +31,197 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right',
-    marginTop: '1em'
+    marginTop: '1em',
   },
   textDanger: {
     color: 'red',
-  }
+  },
 }));
 
-const Signup = props => {
-    const classes = useStyles();
+const Signup = (props) => {
+  const classes = useStyles();
 
-    const emptyUser = { firstNameInput: '', lastNameInput: '', emailInput: '', passwordInput: '' };
-    const errorMessage = 'invalid credentials';
+  const emptyUser = {
+    firstNameInput: '',
+    lastNameInput: '',
+    emailInput: '',
+    passwordInput: '',
+  };
+  const errorMessage = 'invalid credentials';
 
-    const [formData, setFormData] = useState(emptyUser);
-    const [firstNameColor, setFirstNameColor] = useState('');
-    const [lastNameColor, setLastNameColor] = useState('');
-    const [emailColor, setEmailColor] = useState('');
-    const [passwordColor, setPasswordColor] = useState('');
-    const [openIt, setOpenIt] = useState(false);
-    const [toastMessage, setToastMessage] = useState('');
+  const [formData, setFormData] = useState(emptyUser);
+  const [firstNameColor, setFirstNameColor] = useState('');
+  const [lastNameColor, setLastNameColor] = useState('');
+  const [emailColor, setEmailColor] = useState('');
+  const [passwordColor, setPasswordColor] = useState('');
+  const [openIt, setOpenIt] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-    const handleInputChange = event => {
-      event.preventDefault()
-      const { name, value } = event.target
-      setFormData({ ...formData, [name]: value });
-    }
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const handleFormSubmit = event => {
-        event.preventDefault()
-        let newUser = {
-            firstName: formData.firstNameInput,
-            lastName: formData.lastNameInput,
-            email: formData.emailInput,
-            password: formData.passwordInput
-        }
-        if (validateUserInput(newUser)) {
-            createUser(newUser)
-            setFormData(emptyUser)
-        } else {
-            setToastMessage(errorMessage);
-            setOpenIt(true);
-            setOpenIt(false);
-        }
-    }
-
-    const validateUserInput = ({ firstName, lastName, email, password }) => {
-        let isValid = true;
-
-        if (!firstName) {
-            setFirstNameColor(classes.textDanger)
-            isValid = false;
-        } else {
-            setFirstNameColor('')
-        }
-
-        if (!lastName) {
-            setLastNameColor(classes.textDanger)
-            isValid = false;
-        } else {
-            setLastNameColor('')
-        }
-
-        if (!email) {
-            setEmailColor(classes.textDanger)
-            isValid = false;
-        } else {
-            setEmailColor('')
-        }
-
-        if (!password || password.length < 8) {
-            setPasswordColor(classes.textDanger)
-            isValid = false;
-        } else {
-            setPasswordColor('')
-        }
-
-        return isValid;
-    }
-
-    const createUser = async (userData) => {
-      try{
-        const {user} = await auth.createUserWithEmailAndPassword(userData.email, userData.password);
-        signUpWithEmail(user, userData);
-      }
-      catch(error){
-        setToastMessage(error.message);
-        setOpenIt(true);
-        setOpenIt(false);
-      }
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    let newUser = {
+      firstName: formData.firstNameInput,
+      lastName: formData.lastNameInput,
+      email: formData.emailInput,
+      password: formData.passwordInput,
     };
+    if (validateUserInput(newUser)) {
+      createUser(newUser);
+      setFormData(emptyUser);
+    } else {
+      setToastMessage(errorMessage);
+      setOpenIt(true);
+      setOpenIt(false);
+    }
+  };
 
-    return (
-      <Grid
-      container
-      justify='center'
-      spacing={2}
-      >
-      <Grid item xs={12}>        
+  const validateUserInput = ({ firstName, lastName, email, password }) => {
+    let isValid = true;
+
+    if (!firstName) {
+      setFirstNameColor(classes.textDanger);
+      isValid = false;
+    } else {
+      setFirstNameColor('');
+    }
+
+    if (!lastName) {
+      setLastNameColor(classes.textDanger);
+      isValid = false;
+    } else {
+      setLastNameColor('');
+    }
+
+    if (!email) {
+      setEmailColor(classes.textDanger);
+      isValid = false;
+    } else {
+      setEmailColor('');
+    }
+
+    if (!password || password.length < 8) {
+      setPasswordColor(classes.textDanger);
+      isValid = false;
+    } else {
+      setPasswordColor('');
+    }
+
+    return isValid;
+  };
+
+  const createUser = async (userData) => {
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        userData.email,
+        userData.password
+      );
+      signUpWithEmail(user, userData);
+    } catch (error) {
+      setToastMessage(error.message);
+      setOpenIt(true);
+      setOpenIt(false);
+    }
+  };
+
+  return (
+    <Grid container justify='center' spacing={2}>
+      <Grid item xs={12}>
         <form onSubmit={handleFormSubmit}>
           <Typography>Sign up with your Email:</Typography>
-          <FormControl>
-            <InputLabel htmlFor="my-input-fname" className={firstNameColor}>First Name</InputLabel>
-            <Input className={classes.textField} id="my-input-fname" aria-describedby="my-helper-text" name="firstNameInput" type="text" placeholder={Date.now()%2 ? 'Joe' : 'Jane'} value={formData.firstNameInput} onChange={handleInputChange}/>
+          <FormControl className='padding'>
+            <InputLabel htmlFor='my-input-fname' className={firstNameColor}>
+              First Name
+            </InputLabel>
+            <Input
+              className={classes.textField}
+              className='padding'
+              id='my-input-fname'
+              aria-describedby='my-helper-text'
+              name='firstNameInput'
+              type='text'
+              placeholder={Date.now() % 2 ? 'Joe' : 'Jane'}
+              value={formData.firstNameInput}
+              onChange={handleInputChange}
+            />
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="my-input-lname" className={lastNameColor}>Last Name</InputLabel>
-            <Input className={classes.textField} id="my-input-lname" aria-describedby="my-helper-text" name="lastNameInput" type="text" placeholder="Smith" value={formData.lastNameInput} onChange={handleInputChange}/>
+            <InputLabel htmlFor='my-input-lname' className={lastNameColor}>
+              Last Name
+            </InputLabel>
+            <Input
+              className={classes.textField}
+              id='my-input-lname'
+              aria-describedby='my-helper-text'
+              name='lastNameInput'
+              type='text'
+              placeholder='Smith'
+              value={formData.lastNameInput}
+              onChange={handleInputChange}
+            />
+          </FormControl>
+
+          <FormControl className='padding'>
+            <InputLabel htmlFor='my-input-email'>Email address</InputLabel>
+            <Input
+              className={classes.textField}
+              id='my-input-email'
+              aria-describedby='my-helper-text'
+              name='emailInput'
+              type='email'
+              placeholder={`${Date.now() % 2 ? 'Joe' : 'Jane'}@smith.com`}
+              value={formData.emailInput}
+              onChange={handleInputChange}
+            />
+            <FormHelperText id='my-helper-text'>
+              We'll never share your email.
+            </FormHelperText>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="my-input-email" className={emailColor}>Email address</InputLabel>
-            <Input className={classes.textField} id="my-input-email" aria-describedby="my-helper-text" name="emailInput" type="email" placeholder={`${Date.now()%2 ? 'Joe' : 'Jane'}@smith.com`} value={formData.emailInput} onChange={handleInputChange}/>
-            <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
+            <InputLabel htmlFor='my-input-password' className={passwordColor}>
+              Password
+            </InputLabel>
+            <Input
+              className={classes.textField}
+              id='my-input-password'
+              aria-describedby='my-helper-text'
+              name='passwordInput'
+              type='password'
+              placeholder='Password123'
+              value={formData.passwordInput}
+              onChange={handleInputChange}
+            />
           </FormControl>
 
-          <FormControl>
-            <InputLabel htmlFor="my-input-password" className={passwordColor}>Password</InputLabel>
-            <Input className={classes.textField} id="my-input-password" aria-describedby="my-helper-text" name="passwordInput" type="password" placeholder="Password123" value={formData.passwordInput} onChange={handleInputChange}/>
-          </FormControl>
-
-          <span className={classes.right} >
-            <Button type="submit" variant="contained" >
-              <span className="flip"><GoSignIn /></span>
+          <span className={classes.right}>
+            <Button type='submit' variant='contained' color='primary'>
+              <span className='flip'>
+                <GoSignIn />
+              </span>
               <span className={classes.control}>Sign-Up</span>
             </Button>
           </span>
         </form>
       </Grid>
 
-        <Grid item xs={12}>        
-          <form>
-            <Typography>Sign in with your Google account:</Typography>
-            <span className={classes.right}>
-              <LoginGoogle/>
-            </span>
-          </form>
-        </Grid>
-        <Toast
-          openIt={openIt}
-          message={toastMessage}
-        />
+      <Grid item xs={12}>
+        <form>
+          <Typography>Sign in with your Google account:</Typography>
+          <span className={classes.right}>
+            <LoginGoogle />
+          </span>
+        </form>
       </Grid>
-    )
-}
+      <Toast openIt={openIt} message={toastMessage} />
+    </Grid>
+  );
+};
 
 export default Signup;

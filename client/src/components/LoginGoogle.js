@@ -1,8 +1,8 @@
 import React from 'react';
-import { signInWithGoogle } from "../firebase";
+import { signInWithGoogle } from '../firebase';
 
-import {FaGoogle} from 'react-icons/fa'
-import Button from '@material-ui/core/Button'
+import { FaGoogle } from 'react-icons/fa';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,12 +20,18 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginGoogle = () => {
   const classes = useStyles();
-  return(
-    <Button onClick={() => signInWithGoogle()} variant="contained">
-      <span className="flip"><FaGoogle /></span>
+  return (
+    <Button
+      onClick={() => signInWithGoogle()}
+      variant='contained'
+      color='primary'
+    >
+      <span className='flip'>
+        <FaGoogle />
+      </span>
       <span className={classes.control}>Sign-In</span>
     </Button>
-  )
+  );
 };
 
 export default LoginGoogle;
