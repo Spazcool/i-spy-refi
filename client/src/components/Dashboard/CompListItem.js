@@ -67,14 +67,14 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Grid container className='grid'>
+        <Grid container className='grid' color='secondary'>
           <Grid item>
             <span className='flip'>
-              <HouseIcon />
+              <HouseIcon className='fontCinzelLgNoShadow' />
             </span>
           </Grid>
           <Grid item xs={10} sm={10} lg={10} xl={10}>
-            <div className>
+            <div>
               {props.comp.address.street_number} {props.comp.address.street}{' '}
               {props.comp.address.street_suffix}, {props.comp.address.city},{' '}
               {props.comp.address.state_code}

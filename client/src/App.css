@@ -175,6 +175,9 @@ html {
   display: block !important;
 }
 
+.paddingleft {
+  padding-left: 15px;
+}
 .box-shadow {
   box-shadow: 3px 3px 3px #437779 !important;
 }

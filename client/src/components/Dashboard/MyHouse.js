@@ -146,8 +146,8 @@ export default withRouter(function MyHouse(props) {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography color='textSecondary' gutterBottom>
-            <HomeIcon />
+          <HomeIcon className='fontCinzelLgNoShadow' />
+          <Typography className='paddingleft' gutterBottom>
             View/Update Renovations
           </Typography>
         </AccordionSummary>
@@ -178,8 +178,14 @@ export default withRouter(function MyHouse(props) {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography color='textSecondary' gutterBottom align='center'>
-            <AccountBalanceIcon /> Refinance Rates in area
+          <AccountBalanceIcon className='fontCinzelLgNoShadow' />
+          <Typography
+            className='paddingleft'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
+            Refinance Rates in area
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
