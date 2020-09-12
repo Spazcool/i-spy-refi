@@ -280,10 +280,9 @@ export default function HouseAdditions() {
       justify='center'
       spacing={2}
       className={classes.alignContent}
-      style={{ marginTop: '10%' }}
     >
       {userZpid.zpid === undefined ? (
-        <Grid item xs={12} s={10} m={8} l={6} xl={4}>
+        <Grid item xs={12} s={10} m={8} l={6} xl={4} style={{ marginTop: '5%' }}>
           <AddHouse
             userHouse={userHouse}
             handleInputChange={handleInputChange}
@@ -297,7 +296,7 @@ export default function HouseAdditions() {
           />
         </Grid>
       ) : (
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ marginTop: '20%' }}>
           <AddRenos
             handleOnClick={handleOnClick}
             handleSubmitCalc={handleSubmitCalc}
