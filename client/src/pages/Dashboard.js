@@ -85,7 +85,6 @@ function Home(props) {
 
       Realtorprice = addressResponse.data.properties[0].price;
       setrealtorPrice(Realtorprice);
-      console.log('RP:', Realtorprice);
 
       let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
@@ -134,33 +133,32 @@ function Home(props) {
       }
     });
 
-    if (houseprice_array.length > 0) {
-      const housearraymedian = houseprice_array.sort((a, b) => a - b);
-      const mid = Math.floor(housearraymedian.length / 2);
-      const housemedian =
-        housearraymedian.length % 2 !== 0
-          ? housearraymedian[mid]
-          : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
+    // if (houseprice_array.length > 0) {
+    const housearraymedian = houseprice_array.sort((a, b) => a - b);
+    const mid = Math.floor(housearraymedian.length / 2);
+    const housemedian =
+      housearraymedian.length % 2 !== 0
+        ? housearraymedian[mid]
+        : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
 
-      const FinalHouseValue = finishedsqFt * housemedian;
+    const FinalHouseValue = finishedsqFt * housemedian;
 
-      settotalHouseValue(FinalHouseValue);
-      findHouseRenovation(renVal, FinalHouseValue);
-    } else {
-      settotalHouseValue(0);
-      findHouseRenovation([], 0);
-    }
+    settotalHouseValue(FinalHouseValue);
+    findHouseRenovation(renVal, FinalHouseValue);
+    // } else {
+    //   settotalHouseValue(0);
+    //   findHouseRenovation([], 0);
+    // }
   };
 
   const findHouseRenovation = (FormData, FinalHouseValue) => {
     let index = FormData.length - 1;
-    if (index > 0) {
-      let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
-      let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
 
-      setRenovationValue(RenoValue);
-      setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
-    }
+    let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
+    let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
+    console.log('ChkReno:', RenoValue);
+    setRenovationValue(RenoValue);
+    setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
   };
 
   const setCompsListFromAPI = (properties) => {
