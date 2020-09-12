@@ -74,7 +74,7 @@ html {
   transform: rotateY(180deg);
 }
 
-.shrink{
+.shrink {
   height: 50%;
 }
 .media {
@@ -97,7 +97,7 @@ html {
 }
 .logo {
   margin-left: 20px !important;
-  height: 80px;
+  height: 60px;
 }
 
 /* NEW TRICKS WITH CSS */
@@ -136,6 +136,9 @@ html {
   grid-auto-rows: 240px;
 }
 
+.removeBottomBorder {
+  border: 0px;
+}
 .list {
   display: 'flex';
   flex-wrap: 'wrap';
@@ -161,10 +164,10 @@ html {
 .card-radius-bottom {
   border-radius: 0 0 30px 30px !important;
 }
-.card-radius-top-left{
+.card-radius-top-left {
   border-radius: 30px 0 0 0 !important;
 }
-.card-radius-bottom-left{
+.card-radius-bottom-left {
   border-radius: 0 0 0 30px !important;
 }
 
@@ -172,6 +175,9 @@ html {
   display: block !important;
 }
 
+.paddingleft {
+  padding-left: 15px;
+}
 .box-shadow {
   box-shadow: 3px 3px 3px #437779 !important;
 }

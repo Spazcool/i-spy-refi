@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
-import Image from 'material-ui-image';
 import noHouseImage from '../../assets/logo/nologoimage/logo_transparent_background.png';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -58,41 +57,7 @@ export default function CompListItem(props) {
       // backgroundColor: 'white',
     },
   };
-  // const stylesPrice = {
-  //   media: {
-  //     height: 0,
-  //     paddingTop: '56.25%', // 16:9
-  //   },
-  //   card: {
-  //     position: 'center',
-  //   },
-  //   overlay: {
-  //     fontWeight: '200',
-  //     position: 'absolute',
-  //     top: '45%',
-  //     left: '10%',
-  //     color: 'white',
-  //     background: 'rgba(0, 0, 0, 0.5)',
-  //     padding: '3px',
 
-  //     // backgroundColor: 'white',
-  //   },
-  // };
-  const stylesDetails = {
-    // media: {
-    //   height: 0,
-    //   paddingTop: '.00%', // 16:9
-    // },
-    // overlay: {
-    //   position: 'absolute',
-    //   top: '40%',
-    //   left: '10%',
-    //   color: 'white',
-    //   background: '#437779', // Sets background color of Additional Details
-    //   padding: '3px',
-    //   backgroundColor: '#437779',
-    // },
-  };
   const classes = useStyles();
 
   return props.comp ? (
@@ -102,9 +67,11 @@ export default function CompListItem(props) {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Grid container className='grid'>
+        <Grid container className='grid' color='secondary'>
           <Grid item>
-            <HouseIcon className='house-icon' />
+            <span className='flip'>
+              <HouseIcon className='fontCinzelLgNoShadow' />
+            </span>
           </Grid>
           <Grid item xs={10} sm={10} lg={10} xl={10}>
             <div>
@@ -142,7 +109,7 @@ export default function CompListItem(props) {
             Beds: <b>{props.comp.beds}</b>
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            Property Type: <b>{props.comp.prop_type}</b>
+            Property Type: <b>{props.comp.prop_type.replace(/_/g, ' ')}</b>
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
             Year Built: <b>{props.comp.year_built}</b>

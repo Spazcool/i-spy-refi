@@ -239,7 +239,14 @@ function Home() {
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            style={{ paddingTop: '20px' }}
+          >
             <Typography
               align='center'
               variant='h4'
@@ -271,6 +278,7 @@ function Home() {
             variant='h4'
             component='h2'
             className='fontCinzelLgNoShadow'
+            style={{ paddingTop: '20px' }}
           >
             <span className='fontCinzelLgNoShadow'> Homes In Area</span>
           </Typography>
