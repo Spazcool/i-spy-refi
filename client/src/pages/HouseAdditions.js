@@ -221,11 +221,11 @@ export default function HouseAdditions() {
       street: line,
       hid: mpr_id,
       zpid: mpr_id,
-      // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
-      // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+      formData: [],
       latitude: 50,
       longitude: 50,
-      formData: [],
+      // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+      // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
     };
 
     const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);

@@ -29,9 +29,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HomeIcon from '@material-ui/icons/Home';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// import '../../assets/scss/style.scss';
 import '../../../src/App.css';
-import style from '../../App.css';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -98,28 +96,31 @@ export default withRouter(function MyHouse(props) {
           </h4>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label='simple table'>
-              <TableRow>
-                <TableCell component='th' scope='row'></TableCell>
-                <TableCell align='center'>
-                  ${' '}
-                  {props.value > 0
-                    ? props.value.toLocaleString()
-                    : props.realtorprice.toLocaleString()}
-                </TableCell>
-                <TableCell align='center' className='fontCinzelWhiteNoShadow'>
-                  Similar Homes Calculation
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component='th' scope='row'></TableCell>
-                <TableCell align='center'>
-                  $ {props.reno.toLocaleString()}
-                </TableCell>
-                <TableCell align='center' coolor='secondary'>
-                  Renovation Additions
-                </TableCell>
-              </TableRow>
-              <TableRow>
+              <tbody>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    ${' '}
+                    {props.value > 0
+                      ? props.value.toLocaleString()
+                      : props.realtorprice.toLocaleString()}
+                  </TableCell>
+                  <TableCell align='center' className='fontCinzelWhiteNoShadow'>
+                    Similar Homes Calculation
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    $ {props.reno.toLocaleString()}
+                  </TableCell>
+                  <TableCell align='center' coolor='secondary'>
+                    Renovation Additions
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
                 <TableCell component='th' scope='row'></TableCell>
                 <TableCell align='center' className='fontCinzelLgNoShadow'>
                   $ {props.finalhousevalue.toLocaleString()}
@@ -128,6 +129,7 @@ export default withRouter(function MyHouse(props) {
                   I SPY REFI Final Assessment
                 </TableCell>
               </TableRow>
+              </tbody>
             </Table>
           </TableContainer>
         </CardContent>
