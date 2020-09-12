@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
-
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -42,7 +42,7 @@ export default withRouter(function Navbar(props) {
   const biggerThanMobile = useMediaQuery('(min-width:600px)');
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root}>        
       //todo position='static' for the previous style
       <AppBar position='fixed' className='navbar'>
         <Toolbar style={{width: '100%'}}>
@@ -54,9 +54,15 @@ export default withRouter(function Navbar(props) {
             <Grid item ><SideBar props={props} /></Grid>
             <Grid item >
               { biggerThanMobile ? 
-                  <img src={logo} alt='logo' className='logo' id='logo' type='title'/>
+               <Link href='/'>
+                 <img src={logo} alt='logo' className='logo' id='logo' type='title'/>
+               </Link>
+                  
                 :
+                <Link href='/'>
                   <img src={smallLogo} alt='logo' className='logo' id='logo' type='title'/>
+                </Link>
+                  
               }
             </Grid>
             <Grid item >
