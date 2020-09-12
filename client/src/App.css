@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Cinzel';
-  src: url(../../client/src/assets/fonts/Cinzel/Cinzel-VariableFont_wght.ttf);
+  src: url(../../client/src/assets/fonts/Cinzel/Cinzel-SemiBold.ttf);
 }
 
 h4 {
@@ -23,7 +23,7 @@ body {
   margin: 0;
   color: #437779;
   /* font-size: 4vw; */
-  text-shadow: 1px 1px 2px white;
+  text-shadow: 1px 1px 1px white;
   text-align: center;
 }
 
@@ -35,7 +35,22 @@ body {
   text-shadow: 1px 1px 2px black;
   text-align: center;
 }
+.fontCinzelLgNoShadow {
+  font-family: 'Cinzel';
+  margin: 0;
+  color: #6fc8c9;
+  text-shadow: 1px 1px 2px black;
+  text-align: center;
+}
 
+html {
+  font-family: 'Cinzel';
+  margin: 0;
+  color: #437779;
+  /* font-size: 4vw; */
+  text-shadow: 1px 1px 2px black;
+  /* text-align: center; */
+}
 .signup {
   padding-top: 50px;
 }

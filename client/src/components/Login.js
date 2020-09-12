@@ -46,11 +46,23 @@ const LoginOptions = (props) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const inputCreds = {
-      email: formData.emailInput,
-      password: formData.passwordInput,
+    const handleFormSubmit = event => {
+        event.preventDefault()
+        const inputCreds = {
+            email: formData.emailInput,
+            password: formData.passwordInput
+        }
+        login(inputCreds)
+        setFormData(emptyCreds)
+    }
+
+    const login = (creds) => {
+      auth.signInWithEmailAndPassword(creds.email, creds.password)
+        .catch(error => {
+          setCredsAreInvalid(errorMessage)
+          console.error("Error signing in with password and email", error);
+          //todo toast
+        });
     };
     login(inputCreds);
     setFormData(emptyCreds);

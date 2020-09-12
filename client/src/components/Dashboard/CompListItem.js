@@ -9,6 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
+import Image from 'material-ui-image';
+import noHouseImage from '../../assets/logo/nologoimage/logo_transparent_background.png';
+
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -141,7 +144,11 @@ export default function CompListItem(props) {
             // className={classes.lazyImage} // TODO not needed?
             className='media box-shadow card-radius'
             component='img'
-            image='https://honka.com/wp-json/image/resize?w=860&h=570&src=uploads%2Fupload_7a7f9699ea710e1b677391928fcc5795.jpg'
+            image={
+              props.comp.photos[0].href.includes('googleapis')
+                ? props.comp.photos[0].href
+                : noHouseImage
+            }
             title='My House'
           />
         </Grid>

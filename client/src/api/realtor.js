@@ -23,6 +23,7 @@ export const realtor = {
       .catch((error) => {
         console.log(error);
       });
+    console.log('actual address resp:', getaddressResponse);
     return getaddressResponse;
   },
 
@@ -68,7 +69,7 @@ export const realtor = {
       },
     })
       .then((response) => {
-        getZipAddress = response;
+        getZipAddress = response.data.rates;
       })
       .catch((error) => {
         console.log(error);
@@ -102,6 +103,7 @@ export const realtor = {
       .catch((error) => {
         console.log(error);
       });
+    console.log('houseresp:', houseResponse);
     return houseResponse;
   },
 };
