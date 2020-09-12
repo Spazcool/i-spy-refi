@@ -9,7 +9,7 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Link from '@material-ui/core/Link';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -18,6 +18,8 @@ import UserIcon from '@material-ui/icons/Person';
 import ChartIcon from '@material-ui/icons/BarChart';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
 import LightIcon from '@material-ui/icons/WbSunnyOutlined';
 import DarkIcon from '@material-ui/icons/WbSunnyRounded';
 import { FaTools } from 'react-icons/fa';
@@ -96,22 +98,19 @@ export default withRouter(function TemporaryDrawer(props) {
           onKeyDown={toggleDrawer('left', false)}
         >
           <List>
-            <ListItem
-              className={classes.link}
-              key='home'
-              onClick={(e) => {
-                e.preventDefault();
-                props.history.push('/');
-              }}
-              button
-            >
-              <ListItemIcon>
-                <span className='flip'>
-                  <HomeIcon />
-                </span>
-              </ListItemIcon>
-              <ListItemText primary='Home' />
-            </ListItem>
+            <Link href='/' style={{'text-decoration': 'none'}}>
+              <ListItem
+                className={classes.link}
+                key='home'
+              >
+                <ListItemIcon>
+                  <span className='flip'>
+                    <HomeIcon />
+                  </span>
+                </ListItemIcon>
+                <ListItemText primary='Home' />
+              </ListItem>
+            </Link>
             {isAuth ? (
               <ListItem
                 button
