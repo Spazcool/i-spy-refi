@@ -109,7 +109,7 @@ export default function CompListItem(props) {
       </AccordionSummary>
       <AccordionDetails>
         <Grid item xs={6}>
-          <Typography className='fontCinzelBlack '>
+          <Typography className='fontCinzelLgNoShadow'>
             Additonal Details
           </Typography>
           <Typography
