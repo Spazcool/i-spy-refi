@@ -141,36 +141,73 @@ export default withRouter(function MyHouse(props) {
           </TableContainer>
         </CardContent>
       </Card>
-      <Accordion>
+      <Accordion className='card-radius-bottom' align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <HomeIcon className='fontCinzelLgNoShadow' />
-          <Typography className='paddingleft' gutterBottom>
-            View/Update Renovations
+          <AccountBalanceIcon className='fontCinzelLgNoShadow' />
+          <Typography
+            className='paddingleft'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
+            Home Reno Chart
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <CardContent>
-            <Typography color='textSecondary' gutterBottom></Typography>
-            <Typography variant='h5' component='h2'>
-              reno data
-            </Typography>
-          </CardContent>
-          <CardActions className={classes.root}>
-            <Button
-              size='small'
-              className='button'
-              onClick={(e) => {
-                e.preventDefault();
-                props.history.push('/additions');
-              }}
-            >
-              Update Renovation Info
-            </Button>
-          </CardActions>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label='simple table'>
+              <TableBody>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_30_year_fha} %
+                  </TableCell>
+                  <TableCell align='center' className='fontCinzelBlack'>
+                    30 year FHA
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_30_year_va} %
+                  </TableCell>
+                  <TableCell align='center'>30 year VA</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_30_year} %
+                  </TableCell>
+                  <TableCell align='center'>30 year</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_20_year} %
+                  </TableCell>
+                  <TableCell align='center'>20 year</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_15_year} %
+                  </TableCell>
+                  <TableCell align='center'>15 year</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    {props.financeRates.average_rate_10_year} %
+                  </TableCell>
+                  <TableCell align='center'>10 year</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </AccordionDetails>
       </Accordion>
       <Accordion className='card-radius-bottom' align='center'>
