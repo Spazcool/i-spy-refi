@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
+import FormChart from './FormChart';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -14,6 +15,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -144,12 +146,9 @@ export default withRouter(function MyHouse(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <CardContent>
-            <Typography color='textSecondary' gutterBottom></Typography>
-            <Typography variant='h5' component='h2'>
-              reno data
-            </Typography>
-          </CardContent>
+          <Grid item xs={6}>
+            <FormChart data={props} />
+          </Grid>
           <CardActions className={classes.root}>
             <Button
               size='small'

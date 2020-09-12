@@ -284,7 +284,7 @@ export default function HouseAdditions() {
       className={classes.alignContent}
     >
       {userZpid.zpid === undefined ? (
-        <Grid item xs={12}>
+        <Grid item xs={12} s={10} m={8} l={6} xl={4}>
           <AddHouse
             userHouse={userHouse}
             handleInputChange={handleInputChange}

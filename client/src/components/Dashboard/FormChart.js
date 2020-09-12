@@ -16,19 +16,6 @@ import {
 } from '@devexpress/dx-react-chart';
 // import { schemeDark2 } from 'd3-scale-chromatic';
 
-import { Palette } from '@devexpress/dx-react-chart';
-import { createMuiTheme } from '@material-ui/core';
-import {
-  orange,
-  green,
-  purple,
-  red,
-  cyan,
-  yellow,
-  blue,
-  amber,
-} from '@material-ui/core/colors';
-
 // TODO SPECIFY COLORS THAT MATCH OUR LOOK
 // https://devexpress.github.io/devextreme-reactive/react/chart/docs/guides/palette/
 
