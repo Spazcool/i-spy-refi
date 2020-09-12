@@ -75,8 +75,9 @@ export default withRouter(function MyHouse(props) {
   const classes = useStyles();
   // console.log(props.financeRates);
   const checkLoaded = () => {
-    const { imageData, street, description, value } = props;
-    if (value >= 0) {
+    const { imageData, street, description, value, finalhousevalue } = props;
+
+    if (finalhousevalue > 0) {
       //presumes value will take the longest to load
       setLoaded(true);
     }
@@ -89,9 +90,7 @@ export default withRouter(function MyHouse(props) {
   return loaded ? (
     <Paper className='card-radius box-shadow'>
       <Card className='card-radius-top'>
-        <CardActionArea>
           <CardMedia
-            className={classes.lazyImage}
             component='img'
             image={props.imageData}
             title='My House'
@@ -105,7 +104,10 @@ export default withRouter(function MyHouse(props) {
                 <TableRow>
                   <TableCell component='th' scope='row'></TableCell>
                   <TableCell align='center'>
-                    $ {props.value.toLocaleString()}
+                    ${' '}
+                    {props.value > 0
+                      ? props.value.toLocaleString()
+                      : props.realtorprice.toLocaleString()}
                   </TableCell>
                   <TableCell align='center' className='fontCinzelWhiteNoShadow'>
                     Similar Homes Calculation
@@ -123,7 +125,8 @@ export default withRouter(function MyHouse(props) {
                 <TableRow>
                   <TableCell component='th' scope='row'></TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    $ {props.finalhousevalue.toLocaleString()}
+                    ${' '}
+                    {props.finalhousevalue }                    
                   </TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
                     I Spi Refi Final Assessment
@@ -132,7 +135,6 @@ export default withRouter(function MyHouse(props) {
               </Table>
             </TableContainer>
           </CardContent>
-        </CardActionArea>
       </Card>
       <Accordion >
         <AccordionSummary

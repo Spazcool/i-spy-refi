@@ -8,31 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
-
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
 import HomeIcon from '@material-ui/icons/Home';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -46,10 +27,6 @@ import '../App.css';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    // height: 140,
-    // width: 100,
   },
   control: {
     padding: theme.spacing(2),
@@ -110,16 +87,14 @@ function User(props) {
     const houseThing = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await houseThing();
     userHouse === undefined ? setHouse('') : setHouse(userHouse);
-    console.log(userHouse)
   }
 
   const deleteHouse = async() => {
-    console.log(house)
     const houseThing = async () => await DB.deleteHouse(house.hid);
     const deletedHouse = await houseThing();
-    console.log(deletedHouse);
     setHouse(''); //todo theres a bug in the api file here, mentioned on trello
   //to make house list go away, will need to recall fetchHouses
+  //todo toast
   }
 
   const deleteUser = async() => {

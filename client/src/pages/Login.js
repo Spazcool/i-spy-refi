@@ -36,7 +36,7 @@ function Login(props) {
   } else {
     return (
       <Container className='signup'>
-        <h1>Login Page</h1>
+        <h2 className="center">Login with</h2>
         <Grid container justify='center' spacing={spacing}>
           <Grid item xs={12} md={6}>
             <LoginOptions {...props} />
