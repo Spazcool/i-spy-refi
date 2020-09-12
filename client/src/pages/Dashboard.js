@@ -30,10 +30,12 @@ function Home(props) {
   const [compsList, setcompsList] = useState([]);
   const [totalHouseValue, settotalHouseValue] = useState('');
   const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
+  const [realtorPrice, setrealtorPrice] = useState('');
 
   let finishedsqFt;
   let zipCode;
   let renVal;
+  let Realtorprice;
   // let mortgageRates;
 
   const checkHasHouseInDB = async () => {
@@ -79,6 +81,10 @@ function Home(props) {
       // console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
+      // Storing Realtor House Price
+
+      Realtorprice = addressResponse.data.properties[0].price;
+      setrealtorPrice(Realtorprice);
 
       let housebuildingsizeValid = addressResponse.data.properties[0];
       if (
@@ -127,29 +133,33 @@ function Home(props) {
       }
     });
 
-    if (houseprice_array.length > 0) {
-      const housearraymedian = houseprice_array.sort((a, b) => a - b);
-      const mid = Math.floor(housearraymedian.length / 2);
-      const housemedian =
-        housearraymedian.length % 2 !== 0
-          ? housearraymedian[mid]
-          : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
+    // if (houseprice_array.length > 0) {
+    const housearraymedian = houseprice_array.sort((a, b) => a - b);
+    const mid = Math.floor(housearraymedian.length / 2);
+    const housemedian =
+      housearraymedian.length % 2 !== 0
+        ? housearraymedian[mid]
+        : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
 
-      const FinalHouseValue = finishedsqFt * housemedian;
+    const FinalHouseValue = finishedsqFt * housemedian;
 
-      settotalHouseValue(FinalHouseValue);
-      findHouseRenovation(renVal, FinalHouseValue);
-    } else {
-      settotalHouseValue(0);
-      findHouseRenovation([], 0);
-    }
+    settotalHouseValue(FinalHouseValue);
+    findHouseRenovation(renVal, FinalHouseValue);
+    // } else {
+    //   settotalHouseValue(0);
+    //   findHouseRenovation([], 0);
+    // }
   };
 
   const findHouseRenovation = (FormData, FinalHouseValue) => {
     let index = FormData.length - 1;
-    let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
-    let FinalHouseAssessmentValue = FinalHouseValue + RenoValue;
 
+    let RenoValue = index > 0 ? FormData[index].RenovationValue : 0;
+    let FinalHouseAssessmentValue =
+      FinalHouseValue > 0
+        ? FinalHouseValue + RenoValue
+        : Realtorprice + RenoValue;
+    console.log('ChkReno:', FinalHouseAssessmentValue);
     setRenovationValue(RenoValue);
     setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
   };
@@ -208,6 +218,7 @@ function Home(props) {
             value={totalHouseValue}
             reno={RenovationValue}
             finalhousevalue={finalHouseAssessmentValue}
+            realtorprice={realtorPrice}
             financeRates={mortgageRatesDisplay}
           />
         </Grid>

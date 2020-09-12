@@ -106,7 +106,10 @@ export default withRouter(function MyHouse(props) {
                 <TableRow>
                   <TableCell component='th' scope='row'></TableCell>
                   <TableCell align='center'>
-                    $ {props.value.toLocaleString()}
+                    ${' '}
+                    {props.value > 0
+                      ? props.value.toLocaleString()
+                      : props.realtorprice.toLocaleString()}
                   </TableCell>
                   <TableCell align='center' className='fontCinzelWhiteNoShadow'>
                     Similar Homes Calculation
@@ -124,7 +127,8 @@ export default withRouter(function MyHouse(props) {
                 <TableRow>
                   <TableCell component='th' scope='row'></TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
-                    $ {props.finalhousevalue.toLocaleString()}
+                    ${' '}
+                    {props.finalhousevalue }                    
                   </TableCell>
                   <TableCell align='center' className='fontCinzelLgNoShadow'>
                     I Spi Refi Final Assessment
