@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
+import FormChart from './FormChart';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -14,6 +15,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,6 +24,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import AddIcon from '@material-ui/icons/Add';
 import TableRow from '@material-ui/core/TableRow';
+import Modal from '@material-ui/core/Modal';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -76,6 +79,15 @@ const styles = {
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const checkLoaded = () => {
     const { imageData, street, description, value, finalhousevalue } = props;
@@ -158,6 +170,35 @@ export default withRouter(function MyHouse(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
+          <button type='button' onClick={handleOpen}>
+            Renovation Data
+          </button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='simple-modal-title'
+            aria-describedby='simple-modal-description'
+          >
+            <FormChart data={props} />
+          </Modal>
+          <Typography
+            className='paddingleft'
+            color='textSecondary '
+            gutterBottom
+            align='center'
+          >
+            <Button
+              size='small'
+              className='button'
+              onClick={(e) => {
+                e.preventDefault();
+                props.history.push('/additions');
+              }}
+            >
+              Update Renovation Info
+            </Button>
+          </Typography>
+
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label='simple table'>
               <TableBody>

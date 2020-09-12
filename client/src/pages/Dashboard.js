@@ -26,6 +26,8 @@ function Home() {
   const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState(
     ''
   );
+  const [formData, setFormData] = useState([]);
+
   const [TrendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState('');
@@ -69,9 +71,13 @@ function Home() {
 
       zipCode = data.zip;
       renVal = data.formData;
+      console.log(data.formData);
+      setFormData(data.formData);
       // return true;
+      console.log(data);
       return data;
     }
+
     setHasHouse(false);
     return false;
   };
@@ -259,6 +265,7 @@ function Home() {
               reno={RenovationValue}
               finalhousevalue={finalHouseAssessmentValue}
               realtorprice={realtorPrice}
+              formData={formData}
               financeRates={mortgageRatesDisplay}
             />
           </Grid>

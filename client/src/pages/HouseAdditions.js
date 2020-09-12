@@ -84,7 +84,6 @@ export default function HouseAdditions() {
   // ------------ HOUSE CREATION ------------
   const emptyHouse = {
     street: '',
-    address: '',
     city: '',
     zip: '',
     state: '',
@@ -111,11 +110,12 @@ export default function HouseAdditions() {
   const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
-    if (userZpid.zpid == undefined) {
+    if (userZpid.zpid === undefined) {
       fetchHouse();
+
       // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid]);
+  }, [userZpid, radios]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -153,7 +153,7 @@ export default function HouseAdditions() {
         formData,
       };
       const house = async () => await DB.updateHouse(data);
-      const {message} = await house();
+      const { message } = await house();
 
       setTimeout(() => {
         setToastMessage(message);
@@ -161,7 +161,8 @@ export default function HouseAdditions() {
         setOpenIt(false);
         setClicked(false);
       }, 2000);
-    } 
+    }
+    window.location.reload();
   };
 
   const handleInputChange = (event) => {
@@ -200,7 +201,7 @@ export default function HouseAdditions() {
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const autoCompleteResponse = await autoComplete();
-    console.log(autoCompleteResponse)// todo error handling for a random 503 killed the app
+    console.log(autoCompleteResponse); // todo error handling for a random 503 killed the app
 
     const {
       mpr_id,
@@ -282,9 +283,10 @@ export default function HouseAdditions() {
       justify='center'
       spacing={2}
       className={classes.alignContent}
+      style={{ marginTop: '10%' }}
     >
       {userZpid.zpid === undefined ? (
-        <Grid item xs={12}>
+        <Grid item xs={12} s={10} m={8} l={6} xl={4}>
           <AddHouse
             userHouse={userHouse}
             handleInputChange={handleInputChange}
@@ -305,13 +307,10 @@ export default function HouseAdditions() {
             values={values}
             clicked={clicked}
           />
-          {/* <FormChart datsa={userHouse} /> */}
+          <FormChart data={userZpid} />
         </Grid>
       )}
-      <Toast
-        openIt={openIt}
-        message={toastMessage}
-      />
+      <Toast openIt={openIt} message={toastMessage} />
     </Grid>
   );
 }
