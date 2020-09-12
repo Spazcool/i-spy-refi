@@ -18,7 +18,9 @@ function Home(props) {
   const [hasHouse, setHasHouse] = useState();
   // const [houseData, setHouseData] = useState({});
   const [RenovationValue, setRenovationValue] = useState('');
-  const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState('');
+  const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState(
+    ''
+  );
   const [TrendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState('');
@@ -27,9 +29,12 @@ function Home(props) {
   const [statedisplay, setstatedisplay] = useState('');
   const [compsList, setcompsList] = useState([]);
   const [totalHouseValue, settotalHouseValue] = useState('');
+  const [mortgageRatesDisplay, setMorgageRatesDisplay] = useState([]);
 
   let finishedsqFt;
+  let zipCode;
   let renVal;
+  // let mortgageRates;
 
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -47,18 +52,20 @@ function Home(props) {
         formData,
         comps,
       };
-
+      getMortgageRates(data.zip);
       setHasHouse(true);
       // setHouseData(data);
       setTrendingData(comps);
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
+
+      zipCode = data.zip;
       renVal = data.formData;
       // return true;
       return data;
     }
-    setHasHouse(false)
+    setHasHouse(false);
     return false;
   };
 
@@ -84,6 +91,12 @@ function Home(props) {
       // return true;
     }
     return false;
+  };
+
+  const getMortgageRates = async (zip) => {
+    let mortgageRates = await realtor.getMortgageRates();
+    setMorgageRatesDisplay(mortgageRates);
+    // TO DO add ERROR handling
   };
 
   const checkHouseCompsInAPI = async (address) => {
@@ -114,20 +127,20 @@ function Home(props) {
       }
     });
 
-    if(houseprice_array.length > 0){
+    if (houseprice_array.length > 0) {
       const housearraymedian = houseprice_array.sort((a, b) => a - b);
       const mid = Math.floor(housearraymedian.length / 2);
       const housemedian =
         housearraymedian.length % 2 !== 0
           ? housearraymedian[mid]
           : (housearraymedian[mid - 1] + housearraymedian[mid]) / 2;
-  
+
       const FinalHouseValue = finishedsqFt * housemedian;
-  
+
       settotalHouseValue(FinalHouseValue);
       findHouseRenovation(renVal, FinalHouseValue);
-    }else{
-      settotalHouseValue(0)
+    } else {
+      settotalHouseValue(0);
       findHouseRenovation([], 0);
     }
   };
@@ -145,7 +158,7 @@ function Home(props) {
     let compsarray = [];
 
     for (let i = 0; i < 10; i++) {
-      if(properties[i] !== undefined){
+      if (properties[i] !== undefined) {
         compsarray.push(properties[i]);
       }
     }
@@ -184,7 +197,7 @@ function Home(props) {
             component='h2'
             className='fontCinzelBlack'
           >
-            <span className='fontCinzelWhite'> House Assessment</span>
+            <span className='fontCinzelLgNoShadow'> House Assessment</span>
           </Typography>
           <MyHouse
             className='card'
@@ -195,6 +208,7 @@ function Home(props) {
             value={totalHouseValue}
             reno={RenovationValue}
             finalhousevalue={finalHouseAssessmentValue}
+            financeRates={mortgageRatesDisplay}
           />
         </Grid>
 
@@ -204,7 +218,7 @@ function Home(props) {
             align='center'
             variant='h4'
             component='h2'
-            className='fontCinzelWhite'
+            className='fontCinzelLgNoShadow'
           >
             Similar Homes
           </Typography>

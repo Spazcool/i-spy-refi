@@ -16,6 +16,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
 import Image from 'material-ui-image';
+import noHouseImage from '../../assets/logo/nologoimage/logo_transparent_background.png';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -122,7 +123,11 @@ export default function CompListItem(props) {
                   classes.image
             }
             component='img'
-            image={props.comp.photos[0].href.includes('googleapis') ? props.comp.photos[0].href : 'http://placekitten.com/200/300'}
+            image={
+              props.comp.photos[0].href.includes('googleapis')
+                ? props.comp.photos[0].href
+                : noHouseImage
+            }
             title='My House'
           />
           <span style={styles.overlay}>
