@@ -160,9 +160,9 @@ export default function HouseAdditions() {
         setOpenIt(true);
         setOpenIt(false);
         setClicked(false);
+        window.location.reload();
       }, 2000);
     }
-    window.location.reload();
   };
 
   const handleInputChange = (event) => {
