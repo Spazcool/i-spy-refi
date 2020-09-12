@@ -170,19 +170,19 @@ export default withRouter(function MyHouse(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <button type='button' onClick={handleOpen}>
-            Renovation Data
-          </button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby='simple-modal-title'
-            aria-describedby='simple-modal-description'
+          <Button
+            type='button'
+            size='small'
+            className='button'
+            onClick={handleOpen}
           >
+            Renovation Data
+          </Button>
+          <Modal open={open} onClose={handleClose}>
             <FormChart data={props} />
           </Modal>
           <Typography
-            className='paddingleft'
+            align='center'
             color='textSecondary '
             gutterBottom
             align='center'
@@ -195,7 +195,7 @@ export default withRouter(function MyHouse(props) {
                 props.history.push('/additions');
               }}
             >
-              Update Renovation Info
+              Update House Renovations
             </Button>
           </Typography>
         </AccordionDetails>
