@@ -242,7 +242,7 @@ function Home() {
             sm={12}
             lg={12}
             xl={12}
-            style={{ paddingTop: '20px' }}
+            style={{ paddingtop: '20px' }}
           >
             <Typography
               align='center'
@@ -275,7 +275,7 @@ function Home() {
             variant='h4'
             component='h2'
             className='fontCinzelLgNoShadow'
-            style={{ paddingTop: '20px' }}
+            style={{ paddingtop: '20px' }}
           >
             <span className='fontCinzelLgNoShadow'> Homes In Area</span>
           </Typography>
