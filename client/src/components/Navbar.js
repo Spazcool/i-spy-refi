@@ -1,4 +1,3 @@
-// TODO Delete
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
@@ -43,7 +42,6 @@ export default withRouter(function Navbar(props) {
 
   return (
     <div className={classes.root}>
-      {/* // todo position='static' for the previous style */}
       <AppBar position='fixed' className='navbar'>
         <Toolbar style={{ width: '100%' }}>
           <Grid container justify='space-between' className={classes.thing}>
@@ -72,35 +70,6 @@ export default withRouter(function Navbar(props) {
                   />
                 </Link>
               )}
-            </Grid>
-            <Grid item>
-              <Typography variant='h6' className={classes.login}>
-                {isAuth ? (
-                  <></>
-                ) : (
-                  <>
-                    <Button
-                      className='m-1'
-                      onClick={(e) => {
-                        e.preventDefault();
-                        props.history.push('/login');
-                      }}
-                    >
-                      Login
-                    </Button>
-
-                    <Button
-                      className='m-1'
-                      onClick={(e) => {
-                        e.preventDefault();
-                        props.history.push('/signup');
-                      }}
-                    >
-                      Signup
-                    </Button>
-                  </>
-                )}
-              </Typography>
             </Grid>
           </Grid>
         </Toolbar>
