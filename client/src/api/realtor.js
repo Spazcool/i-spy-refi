@@ -43,11 +43,10 @@ export const realtor = {
       },
     })
       .then((response) => {
-        console.log(response);
         autoComplete = response;
       })
       .catch((error) => {
-        console.log(error);
+        autoComplete = error;
       });
     return autoComplete;
   },

@@ -89,7 +89,7 @@ export default function AddHouse(props) {
           onClick={props.handleSubmit}
           className={classes.button}
         >
-          {props.clicked ? <CircularProgress color='white'/> : 'Submit'}
+          {props.clicked ? <CircularProgress/> : 'Submit'}
         </Button>
       </Box>
     </Box>
