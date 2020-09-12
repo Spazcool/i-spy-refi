@@ -7,7 +7,9 @@ import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 
-import { makeStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddHouse(props) {
   const classes = useStyles();
+
   return (
     <Box display='flex'>
       <Box m='auto'>
@@ -79,13 +82,14 @@ export default function AddHouse(props) {
         </FormGroup>
 
         <Button
+          disabled={props.clicked}
           type='submit'
           variant='contained'
           color='primary'
           onClick={props.handleSubmit}
           className={classes.button}
         >
-          Submit
+          {props.clicked ? <CircularProgress color='white'/> : 'Submit'}
         </Button>
       </Box>
     </Box>

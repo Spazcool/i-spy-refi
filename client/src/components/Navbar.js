@@ -13,7 +13,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import SideBar from './SideBar.js';
 
 import logo from '../assets/logo/white_logo_transparent_background.png';
-import smallLogo from '../assets/logo/white_logo_transparent_background_small.png'; 
+import smallLogo from '../assets/logo/white_logo_transparent_background_small.png';
 import { Grid, GridListTileBar } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
   thing: {
     width: '100%',
     display: 'flex',
-    'flex-wrap': 'wrap'
-  }
+    'flex-wrap': 'wrap',
+  },
 }));
 
 export default withRouter(function Navbar(props) {
@@ -42,30 +42,38 @@ export default withRouter(function Navbar(props) {
   const biggerThanMobile = useMediaQuery('(min-width:600px)');
 
   return (
-    <div className={classes.root}>        
-      //todo position='static' for the previous style
+    <div className={classes.root}>
+      {/* // todo position='static' for the previous style */}
       <AppBar position='fixed' className='navbar'>
-        <Toolbar style={{width: '100%'}}>
-          <Grid
-            container 
-            justify="space-between"
-            className={classes.thing}
-          >
-            <Grid item ><SideBar props={props} /></Grid>
-            <Grid item >
-              { biggerThanMobile ? 
-               <Link href='/'>
-                 <img src={logo} alt='logo' className='logo' id='logo' type='title'/>
-               </Link>
-                  
-                :
-                <Link href='/'>
-                  <img src={smallLogo} alt='logo' className='logo' id='logo' type='title'/>
-                </Link>
-                  
-              }
+        <Toolbar style={{ width: '100%' }}>
+          <Grid container justify='space-between' className={classes.thing}>
+            <Grid item>
+              <SideBar props={props} />
             </Grid>
-            <Grid item >
+            <Grid item>
+              {biggerThanMobile ? (
+                <Link href='/'>
+                  <img
+                    src={logo}
+                    alt='logo'
+                    className='logo'
+                    id='logo'
+                    type='title'
+                  />
+                </Link>
+              ) : (
+                <Link href='/'>
+                  <img
+                    src={smallLogo}
+                    alt='logo'
+                    className='logo'
+                    id='logo'
+                    type='title'
+                  />
+                </Link>
+              )}
+            </Grid>
+            <Grid item>
               <Typography variant='h6' className={classes.login}>
                 {isAuth ? (
                   <></>
@@ -94,7 +102,7 @@ export default withRouter(function Navbar(props) {
                 )}
               </Typography>
             </Grid>
-          </Grid>    
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,37 +1,37 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import '../../../src/App.css';
-import FormChart from './FormChart';
 
-// import '../../assets/scss/style.scss';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Grid from '@material-ui/core/Grid';
-import style from '../../App.css';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HomeIcon from '@material-ui/icons/Home';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+// import '../../assets/scss/style.scss';
+import '../../../src/App.css';
+import style from '../../App.css';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -69,38 +69,19 @@ const styles = {
     color: 'white',
     background: 'rgba(0, 0, 0, 0.5)',
     padding: '3px',
-
-    // backgroundColor: 'white',
   },
 };
 
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
   const classes = useStyles();
-  const biggerThanMobile = useMediaQuery('(min-width:600px)');
-  // console.log(props.financeRates);
-  const checkLoaded = async () => {
-    const {
-      imageData,
-      street,
-      description,
-      value,
-      finalhousevalue,
-      formData,
-    } = await props;
+
+  const checkLoaded = () => {
+    const { imageData, street, description, value, finalhousevalue } = props;
 
     if (finalhousevalue > 0) {
-      //presumes value will take the longest to load
       setLoaded(true);
-      // console.log(formData);
-      // setUserFormData(formData);
     }
-    // const { formData } = props.data;
-    // console.log(formData);
-    // if (formData.length > 0) {
-    //   setLoaded(true);
-    //   setUserFormData(formData);
-    // }
   };
 
   useEffect(() => {
@@ -141,10 +122,10 @@ export default withRouter(function MyHouse(props) {
               <TableRow>
                 <TableCell component='th' scope='row'></TableCell>
                 <TableCell align='center' className='fontCinzelLgNoShadow'>
-                  $ {props.finalhousevalue}
+                  $ {props.finalhousevalue.toLocaleString()}
                 </TableCell>
                 <TableCell align='center' className='fontCinzelLgNoShadow'>
-                  I Spi Refi Final Assessment
+                  I SPY REFI Final Assessment
                 </TableCell>
               </TableRow>
             </Table>
@@ -159,27 +140,18 @@ export default withRouter(function MyHouse(props) {
         >
           <Typography color='textSecondary' gutterBottom>
             <HomeIcon />
-            View/Update renovations
+            View/Update Renovations
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <CardContent>
-            {/* <Typography color='textSecondary' gutterBottom></Typography>
+            <Typography color='textSecondary' gutterBottom></Typography>
             <Typography variant='h5' component='h2'>
               reno data
-            </Typography> */}
-
-            <FormChart data={props} />
+            </Typography>
           </CardContent>
           <CardActions className={classes.root}>
             <Button
-              style={{
-                position: 'absolute',
-                right: '0',
-                bottom: '0',
-                marginTop: '20px',
-                marginRight: '70px',
-              }}
               size='small'
               className='button'
               onClick={(e) => {

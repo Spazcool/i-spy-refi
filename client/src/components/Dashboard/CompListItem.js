@@ -29,13 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
   imageFirst: {
     height: '150px',
-    'border-radius': '20px 0 0 0'
+    'border-radius': '20px 0 0 0',
   },
-  image:{  height: '150px'},
-  imageLast:{
+  image: { height: '150px' },
+  imageLast: {
     height: '150px',
-    'border-radius': '0 0 0 20px'
-  }
+    'border-radius': '0 0 0 20px',
+  },
 }));
 
 export default function CompListItem(props) {
@@ -118,7 +118,7 @@ export default function CompListItem(props) {
       </AccordionSummary>
       <AccordionDetails>
         <Grid item xs={6}>
-          <Typography className='fontCinzelBlack '>
+          <Typography className='fontCinzelLgNoShadow'>
             Additonal Details
           </Typography>
           <Typography
@@ -164,7 +164,7 @@ export default function CompListItem(props) {
       </AccordionDetails>
     </Accordion>
   ) : (
-    <Accordion>
+    <Accordion style={{ overflowY: 'hidden' }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 import { CustomThemeContext } from '../providers/ThemeProvider';
@@ -41,7 +41,8 @@ export default withRouter(function TemporaryDrawer(props) {
   // const { theme, toggleTheme } = useContext(CustomThemeContext);
   const { isAuth, logout, user } = useContext(AuthContext);
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [displayName, setDisplayName] = useState('');
+  const [state, setState] = useState({
     left: false,
   });
 
@@ -55,6 +56,22 @@ export default withRouter(function TemporaryDrawer(props) {
 
     setState({ ...state, [anchor]: open });
   };
+
+  const selectDisplayName = () => {
+    let name;
+    if(user.user.displayName){
+      name =  user.user.displayName
+    }else{
+      name = user.user.email //ideally take from firstname&lastname from db
+    }
+    setDisplayName(name)
+  }
+
+  useEffect(() => {
+    if(isAuth){
+      selectDisplayName();
+    }
+  },[isAuth])
 
   return (
     <>
@@ -113,11 +130,7 @@ export default withRouter(function TemporaryDrawer(props) {
                   </span>
                 </ListItemIcon>
                 <ListItemText
-                  primary={
-                    user.user.displayName
-                      ? user.user.displayName
-                      : user.user.email
-                  }
+                  primary={displayName}
                 />
               </ListItem>
             ) : (
