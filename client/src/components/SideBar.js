@@ -9,20 +9,20 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Link from '@material-ui/core/Link';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HomeIcon from '@material-ui/icons/Home';
 import UserIcon from '@material-ui/icons/Person';
 import ChartIcon from '@material-ui/icons/BarChart';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
+import SignUpIcon from '@material-ui/icons/ControlPoint';
 import LightIcon from '@material-ui/icons/WbSunnyOutlined';
 import DarkIcon from '@material-ui/icons/WbSunnyRounded';
 import { FaTools } from 'react-icons/fa';
-
-import '../App.css';
 
 const useStyles = makeStyles({
   list: {
@@ -35,6 +35,13 @@ const useStyles = makeStyles({
     textDecoration: 'none',
     color: 'inherit',
   },
+  rotated: {
+    '-webkit-transform':'rotate(180deg)',
+    '-moz-transform': 'rotate(180deg)',
+    '-ms-transform': 'rotate(180deg)',
+    '-o-transform': 'rotate(180deg)',
+    'transform': 'rotate(180deg)',
+  }
 });
 
 export default withRouter(function TemporaryDrawer(props) {
@@ -98,22 +105,19 @@ export default withRouter(function TemporaryDrawer(props) {
           onKeyDown={toggleDrawer('left', false)}
         >
           <List>
-            <ListItem
-              className={classes.link}
-              key='home'
-              onClick={(e) => {
-                e.preventDefault();
-                props.history.push('/');
-              }}
-              button
-            >
-              <ListItemIcon>
-                <span className='flip'>
-                  <HomeIcon />
-                </span>
-              </ListItemIcon>
-              <ListItemText primary='Home' />
-            </ListItem>
+            <Link href='/' style={{'textDecoration': 'none'}}>
+              <ListItem
+                className={classes.link}
+                key='home'
+              >
+                <ListItemIcon>
+                  <span className='flip'>
+                    <HomeIcon />
+                  </span>
+                </ListItemIcon>
+                <ListItemText primary='Home' />
+              </ListItem>
+            </Link>
             {isAuth ? (
               <ListItem
                 button
@@ -138,44 +142,94 @@ export default withRouter(function TemporaryDrawer(props) {
           <Divider />
           <List>
             {isAuth ? (
-              <ListItem
-                className={classes.link}
-                key='dashboard'
-                onClick={(e) => {
-                  e.preventDefault();
-                  props.history.push('/dashboard');
-                }}
-                button
-              >
-                <ListItemIcon>
-                  <span className='flip'>
-                    <ChartIcon />
-                  </span>
-                </ListItemIcon>
-                <ListItemText primary='Dashboard' />
-              </ListItem>
+              <>
+                <ListItem
+                  className={classes.link}
+                  key='dashboard'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    props.history.push('/dashboard');
+                  }}
+                  button
+                >
+                  <ListItemIcon>
+                    <span className='flip'>
+                      <ChartIcon />
+                    </span>
+                  </ListItemIcon>
+                  <ListItemText primary='Dashboard' />
+                </ListItem>
+              
+                <ListItem
+                  className={classes.link}
+                  key='House Additions'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    props.history.push('/additions');
+                  }}
+                  button
+                >
+                  <ListItemIcon>
+                    <span className='flip'>
+                      <FaTools />
+                    </span>
+                  </ListItemIcon>
+                  <ListItemText primary='House Additions' />
+                </ListItem>
+
+                <ListItem
+                  className={classes.link}
+                  key='logout'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logout();
+                  }}
+                  button
+                >
+                  <ListItemIcon>
+                    <span className='flip'>
+                      <LogoutIcon className={classes.rotated}/>
+                    </span>
+                  </ListItemIcon>
+                  <ListItemText primary='Logout' />
+                </ListItem>
+              </>
             ) : (
-              <></>
-            )}
-            {isAuth ? (
-              <ListItem
-                className={classes.link}
-                key='House Additions'
-                onClick={(e) => {
-                  e.preventDefault();
-                  props.history.push('/additions');
-                }}
-                button
-              >
-                <ListItemIcon>
-                  <span className='flip'>
-                    <FaTools />
-                  </span>
-                </ListItemIcon>
-                <ListItemText primary='House Additions' />
-              </ListItem>
-            ) : (
-              <></>
+              <>
+                <ListItem
+                  className={classes.link}
+                  key='Login'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    props.history.push('/login');
+                  }}
+                  button
+                >
+                  <ListItemIcon>
+                    <span className='flip'>
+                      <LogoutIcon />
+                    </span>
+                  </ListItemIcon>
+                  <ListItemText primary='Login' />
+                </ListItem>
+
+                <ListItem
+                  className={classes.link}
+                  key='Sign Up'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    props.history.push('/signup');
+                  }}
+                  button
+                >
+                  <ListItemIcon>
+                    <span className='flip'>
+                      <SignUpIcon />
+                    </span>
+                  </ListItemIcon>
+                  <ListItemText primary='Sign Up' />
+                </ListItem>
+              </>
             )}
 
             {/* <ListItem
@@ -195,7 +249,7 @@ export default withRouter(function TemporaryDrawer(props) {
               <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
             </ListItem> */}
 
-            {isAuth ? (
+            {/* {isAuth ? (
               <ListItem
                 className={classes.link}
                 key='logout'
@@ -214,7 +268,7 @@ export default withRouter(function TemporaryDrawer(props) {
               </ListItem>
             ) : (
               <></>
-            )}
+            )} */}
           </List>
         </div>
       </Drawer>

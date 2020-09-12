@@ -4,25 +4,19 @@
 }
 
 h4 {
-  /* font-family: 'Cinzel'; */
   margin: 0;
   color: #437779;
-  /* font-size: 4vw; */
-  /* text-shadow: 1px 1px 2px orange; */
 }
 
 body {
   font-family: 'Cinzel';
   margin: 0;
-  /* font-size: 4vw; */
-  /* text-shadow: 1px 1px 2px orange; */
 }
 
 .fontCinzelWhite {
   font-family: 'Cinzel';
   margin: 0;
   color: #437779;
-  /* font-size: 4vw; */
   text-shadow: 1px 1px 1px white;
   text-align: center;
 }
@@ -31,10 +25,10 @@ body {
   font-family: 'Cinzel';
   margin: 0;
   color: #437779;
-  /* font-size: 4vw; */
   text-shadow: 1px 1px 2px black;
   text-align: center;
 }
+
 .fontCinzelLgNoShadow {
   font-family: 'Cinzel';
   margin: 0;
@@ -70,10 +64,9 @@ html {
   font-family: 'Cinzel';
   margin: 0;
   color: #437779;
-  /* font-size: 4vw; */
   text-shadow: 1px 1px 2px black;
-  /* text-align: center; */
 }
+
 .signup {
   padding-top: 50px;
 }
@@ -92,6 +85,7 @@ html {
 .shrink {
   height: 50%;
 }
+
 .media {
   height: 200px;
 }
@@ -105,17 +99,10 @@ html {
 
 .brand {
   flex-grow: 1;
-  /* font-family: 'Comfortaa', cursive !important; */
   margin-left: 20px !important;
   font-size: 25px !important;
   font-weight: 700 !important;
 }
-.logo {
-  margin-left: 20px !important;
-  height: 60px;
-}
-
-/* NEW TRICKS WITH CSS */
 
 .card {
   display: flex;
@@ -138,11 +125,6 @@ html {
   background-repeat: no-repeat;
 }
 
-/* .card:hover {
-  box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
-  transform: translateY(-3px) scale(1.1);
-} */
-
 .grid {
   display: grid;
   gap: 1rem;
@@ -154,6 +136,7 @@ html {
 .removeBottomBorder {
   border: 0px;
 }
+
 .list {
   display: 'flex';
   flex-wrap: 'wrap';
@@ -163,11 +146,6 @@ html {
 .card-radius {
   border-radius: 30px !important;
 }
-
-/* .card-radius-gray {
-  border-radius: 20px !important;
-  border: 1px solid gray;
-} */
 
 .login-margin {
   margin: 20px !important;
@@ -193,6 +171,7 @@ html {
 .paddingleft {
   padding-left: 15px;
 }
+
 .box-shadow {
   box-shadow: 3px 3px 3px #437779 !important;
 }
@@ -201,7 +180,6 @@ html {
   height: 50px;
   width: 50px;
   background-image: url('https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg');
-  /* width:33%; */
 }
 
 .img-list {
@@ -212,11 +190,6 @@ html {
   display: block;
   width: 500;
   height: 450;
-}
-
-.section-inner {
-  /* padding-top: 0px !important; */
-  /* padding-bottom: 80px; // TO DO delete */
 }
 
 .chart {
@@ -235,10 +208,16 @@ html {
   display: 'flex';
   flex-direction: column;
   align-items: 'flex-start';
-  /* font-size: 19px !important; */
 }
-/* @media only screen and (min-width: 600px) {
-  #logo{
-    ../assets/logo/white_logo_transparent_background.png
+
+.logo {
+  margin-right: 1em !important;
+  height: 60px;
+}
+
+@media only screen and (min-width: 600px) {
+  .logo{
+    margin-right: 9em !important;
+    height: 60px;
   }
-} */
+}

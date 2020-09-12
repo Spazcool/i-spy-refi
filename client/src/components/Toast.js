@@ -12,7 +12,6 @@ export default function Toast(props) {
   const [severity, setSeverity] = useState('success');
 
   const showBar = () => {
-    console.log(props)
     const { openIt, message} = props;
     if (openIt) {
       setMessage(message === undefined ? 'Action performed.' : message);

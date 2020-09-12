@@ -33,9 +33,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HomeIcon from '@material-ui/icons/Home';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// import '../../assets/scss/style.scss';
 import '../../../src/App.css';
-import style from '../../App.css';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -111,6 +109,7 @@ export default withRouter(function MyHouse(props) {
           </h4>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label='simple table'>
+              <tbody>
               <TableRow>
                 <TableCell component='th' scope='row'></TableCell>
                 <TableCell
@@ -149,11 +148,12 @@ export default withRouter(function MyHouse(props) {
                   I SPY REFI Final Assessment
                 </TableCell>
               </TableRow>
+              </tbody>
             </Table>
           </TableContainer>
         </CardContent>
       </Card>
-      <Accordion className='card-radius-bottom' align='center'>
+      <Accordion align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
