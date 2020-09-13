@@ -25,6 +25,7 @@ const LoginGoogle = () => {
       onClick={() => signInWithGoogle()}
       variant='contained'
       color='primary'
+      style={{'margin': '1em 0 0 0'}}
     >
       <span className='flip'>
         <FaGoogle />

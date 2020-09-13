@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import LoginGoogle from '../components/LoginGoogle';
 import Toast from '../components/Toast';
 
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -70,6 +71,7 @@ const LoginOptions = (props) => {
     <Grid container justify='center' spacing={2} className='card-radius-gray '>
       <Grid item xs={12}>
         <form onSubmit={handleFormSubmit}>
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
           <FormControl>
             <InputLabel htmlFor='my-input'>Email address</InputLabel>
             <Input
@@ -83,7 +85,9 @@ const LoginOptions = (props) => {
               onChange={handleInputChange}
             />
           </FormControl>
+          </Grid>
 
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
           <FormControl>
             <InputLabel htmlFor='my-input'>Password</InputLabel>
             <Input
@@ -97,23 +101,25 @@ const LoginOptions = (props) => {
               onChange={handleInputChange}
             />
           </FormControl>
-
-          <p className='paddingtop'>
-            <Button type='submit' variant='contained' color='primary'>
-              <span className='flip'>
-                <EmailIcon
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                />
-              </span>
-              <span className={classes.control}>Sign-In</span>
-            </Button>
-          </p>
+          </Grid>
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
+            <p className='paddingtop'>
+              <Button type='submit' variant='contained' color='primary'>
+                <span className='flip'>
+                  <EmailIcon
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  />
+                </span>
+                <span className={classes.control}>Sign-In</span>
+              </Button>
+            </p>
+          </Grid>
         </form>
       </Grid>
-
+      <Grid item xs={12}><Divider/></Grid>
       <Grid item xs={12}>
         <form align='center'>
           <h4>Google</h4>

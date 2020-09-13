@@ -4,6 +4,7 @@ import { auth, signUpWithEmail } from '../firebase';
 import LoginGoogle from '../components/LoginGoogle';
 import Toast from '../components/Toast';
 
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
@@ -133,85 +134,87 @@ const Signup = (props) => {
     <Grid container justify='center' spacing={2}>
       <Grid item xs={12}>
         <form onSubmit={handleFormSubmit} align='center'>
-          <Typography>Sign up with your Email</Typography>
-          <FormControl className='padding'>
-            <InputLabel htmlFor='my-input-fname' className={firstNameColor}>
-              First Name
-            </InputLabel>
-            <Input
-              className={classes.textField}
-              className='padding'
-              id='my-input-fname'
-              aria-describedby='my-helper-text'
-              name='firstNameInput'
-              type='text'
-              placeholder={Date.now() % 2 ? 'Joe' : 'Jane'}
-              value={formData.firstNameInput}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-
-          <FormControl>
-            <InputLabel htmlFor='my-input-lname' className={lastNameColor}>
-              Last Name
-            </InputLabel>
-            <Input
-              className={classes.textField}
-              id='my-input-lname'
-              aria-describedby='my-helper-text'
-              name='lastNameInput'
-              type='text'
-              placeholder='Smith'
-              value={formData.lastNameInput}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-
-          <FormControl className='padding'>
-            <InputLabel htmlFor='my-input-email'>Email address</InputLabel>
-            <Input
-              className={classes.textField}
-              id='my-input-email'
-              aria-describedby='my-helper-text'
-              name='emailInput'
-              type='email'
-              placeholder={`${Date.now() % 2 ? 'Joe' : 'Jane'}@smith.com`}
-              value={formData.emailInput}
-              onChange={handleInputChange}
-            />
-            <FormHelperText id='my-helper-text'>
-              We'll never share your email.
-            </FormHelperText>
-          </FormControl>
-
-          <FormControl>
-            <InputLabel htmlFor='my-input-password' className={passwordColor}>
-              Password
-            </InputLabel>
-            <Input
-              className={classes.textField}
-              id='my-input-password'
-              aria-describedby='my-helper-text'
-              name='passwordInput'
-              type='password'
-              placeholder='Password123'
-              value={formData.passwordInput}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-
-          <p align='center'>
-            <Button type='submit' variant='contained' color='primary'>
-              <span className='flip'>
-                <GoSignIn />
-              </span>
-              <span className={classes.control}>Sign-Up</span>
-            </Button>
-          </p>
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
+            <Typography>Sign up with your Email</Typography>
+            <FormControl className='padding'>
+              <InputLabel htmlFor='my-input-fname' className={firstNameColor}>
+                First Name
+              </InputLabel>
+              <Input
+                className={classes.textField}
+                id='my-input-fname'
+                aria-describedby='my-helper-text'
+                name='firstNameInput'
+                type='text'
+                placeholder={Date.now() % 2 ? 'Joe' : 'Jane'}
+                value={formData.firstNameInput}
+                onChange={handleInputChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
+            <FormControl>
+              <InputLabel htmlFor='my-input-lname' className={lastNameColor}>
+                Last Name
+              </InputLabel>
+              <Input
+                className={classes.textField}
+                id='my-input-lname'
+                aria-describedby='my-helper-text'
+                name='lastNameInput'
+                type='text'
+                placeholder='Smith'
+                value={formData.lastNameInput}
+                onChange={handleInputChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
+            <FormControl className='padding'>
+              <InputLabel htmlFor='my-input-email'>Email address</InputLabel>
+              <Input
+                className={classes.textField}
+                id='my-input-email'
+                aria-describedby='my-helper-text'
+                name='emailInput'
+                type='email'
+                placeholder={`${Date.now() % 2 ? 'Joe' : 'Jane'}@smith.com`}
+                value={formData.emailInput}
+                onChange={handleInputChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
+            <FormControl>
+              <InputLabel htmlFor='my-input-password' className={passwordColor}>
+                Password
+              </InputLabel>
+              <Input
+                className={classes.textField}
+                id='my-input-password'
+                aria-describedby='my-helper-text'
+                name='passwordInput'
+                type='password'
+                placeholder='Password123'
+                value={formData.passwordInput}
+                onChange={handleInputChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
+            <p align='center'>
+              <Button type='submit' variant='contained' color='primary'>
+                <span className='flip'>
+                  <GoSignIn />
+                </span>
+                <span className={classes.control}>Sign-Up</span>
+              </Button>
+            </p>
+          </Grid>
         </form>
       </Grid>
-
-      <Grid item xs={12}>
+      <Grid item xs={12}><Divider/></Grid>
+      <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
         <form align='center'>
           <Typography>Sign in with your Google account:</Typography>
           <span align='center'>

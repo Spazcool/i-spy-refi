@@ -35,7 +35,7 @@ function Login(props) {
     return <Redirect to='/additions' />;
   } else {
     return (
-      <Container className='signup' align='center' paddingTop>
+      <Container className='signup' align='center'>
         <h1 className='center fontCinzelLgNoShadow'>Login with</h1>
         <Grid
           container

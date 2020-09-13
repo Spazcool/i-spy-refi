@@ -126,6 +126,7 @@ const FeaturesSplit = ({
                 <p className='m-0 text-color-secondary'>
                   You will be presetned with a dashbaord with the following
                   features:
+                  </p>
                   <ul>
                     <li>
                       Home value - we use an algorith you calculate your house
@@ -151,7 +152,7 @@ const FeaturesSplit = ({
                       refinance
                     </li>
                   </ul>
-                </p>
+               
               </div>
               <div
                 className={classNames(
