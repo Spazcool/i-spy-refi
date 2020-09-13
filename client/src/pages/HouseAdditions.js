@@ -113,7 +113,7 @@ export default withRouter(function HouseAdditions(props) {
     if (userZpid.zpid === undefined) {
       fetchHouse();
     }
-  }, [userZpid.formData]);
+  }, [userZpid]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -148,8 +148,8 @@ export default withRouter(function HouseAdditions(props) {
         formData,
       };
       const house = async () => await DB.updateHouse(data);
-      const { message } = await house();
-      // console.log(userZpid.formData);
+      await house();
+      
       setTimeout(() => {
         setClicked(false);
         props.history.push('/dashboard');
@@ -228,7 +228,6 @@ export default withRouter(function HouseAdditions(props) {
     setOpenIt(true);
     setOpenIt(false);
     setClicked(false);
-    
   };
 
   const validateHouseInputs = ({ street, city, zip, state }) => {
