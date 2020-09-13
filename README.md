@@ -1,6 +1,9 @@
 # I Spy Refi
 
 [![GitHub repo size](https://img.shields.io/github/repo-size/Spazcool/i-spy-refi)](https://shields.io/)
+[![GitHub repo forks](https://img.shields.io/github/forks/Spazcool/i-spy-refi?label=Fork)](https://shields.io/)
+[![GitHub repo stars](https://img.shields.io/github/stars/Spazcool/i-spy-refi?style=social)](https://shields.io/)
+[![GitHub repo contributors](https://img.shields.io/github/contributors/Spazcool/i-spy-refi)](https://shields.io/)
 
 ## Table of Contents:
 * [Description](#Description)
@@ -17,8 +20,8 @@
 A personal Home assessment app that allows you to fill out a quick form of your address and any home improvements made to your home. We then use our algorithm and pull comps of similar houses in your area and combine our numbers along with any  renovations made to your home. I Spy Refi helps you get a better understanding of your home's actual worth similar to a bank assessment which helps you feel confident when applying for a refinance or home equity line of credit.
 
 <p align="center">
-   <img width="70%" height="300vh" src="./documentation/readme-images/desktop.gif">
-   <img width="20%" height="300vh" src="./documentation/readme-images/mobile.gif">
+   <img width="70%" height="300vh" src="https://gyazo.com/f8e2ade3dc86de04ce68e1cb5756cbee.gif">
+   <img width="20%" height="300vh" src="https://gyazo.com/781d691d18179bf6c32bd5b600b7491c.gif">
 </p>
 
 ## Installation & Getting Started Remotely
@@ -51,12 +54,8 @@ Project is created with:
 ## Usage
 
 ### Sign In / Sign Up
-<p align="center">
-   <img width="70%" height="300vh" src="./documentation/readme-images/sign-in.gif"/>
-</p>
-
-* You can either sign using your Google account or the standard email route.
-* I using email, the following is required:
+You can either sign using your Google account or the standard email route.
+* If using email, the following is required:
     * First Name
     * Last Name
     * Email
@@ -65,7 +64,7 @@ Project is created with:
 
 ### Add Your House
 <p align="center">
-   <img width="70%" height="300vh" src="./documentation/readme-images/add-house.gif"/>
+   <img width="70%" height="300vh" src="https://gyazo.com/a5e0ee47dd10937de0234dccf304f890.gif"/>
 </p>
 
 * Requires:
@@ -76,7 +75,7 @@ Project is created with:
 
 ### Add Renovations
 <p align="center">
-   <img width="70%" height="300vh" src="./documentation/readme-images/add-renos.gif"/>
+   <img width="70%" height="300vh" src="https://gyazo.com/a5e0ee47dd10937de0234dccf304f890.gif"/>
 </p>
 When seaking a refinance option the quickest way to boost your returns is to add renovations to your house. Each house is different and an exhaustive itemized list of all possible renovations options can quickly become overwhelming. In lieu of that we list the top 7 most valuable renovations with a simple toggle option of Minor/Major or Yes/No. Some nuance is lost but the following options should fit most circumstances:
 
@@ -90,15 +89,16 @@ When seaking a refinance option the quickest way to boost your returns is to add
 
 ### View Dashboard
 <p align="center">
-   <img width="70%" height="300vh" src="./documentation/readme-images/dashboard.gif"/>
+   <img width="70%" height="300vh" src="https://gyazo.com/d608a98054d856cb1a61ee1c78677d70.gif"/>
 </p>
 The heart of the application. Here you can view details related to house, its worth as calculated by Realtor.com as well as its worth taking into consideration the renovations added as well as comparable homes in your area.
 
-Additional features: 
-    * House values
-    * Current Mortgage rates
-    * 10 nearby comparable properties
-    * Renovations value chart
+Additional features:
+
+* House values
+* Current Mortgage rates
+* 10 nearby comparable properties
+* Renovations value chart
 
 ### Modify User / House
 This is simple utility page where a user can perform some basic administrative tasks, such as the following:
@@ -139,11 +139,11 @@ This is simple utility page where a user can perform some basic administrative t
     <img src="https://avatars2.githubusercontent.com/u/61098845?s=64&v=4" title="Luba Pecheneva" width="10%"/>
   </a>
 </p>
-<!-- https://avatars2.githubusercontent.com/u/17243640?s=64&v=4 -->
-<!-- https://avatars1.githubusercontent.com/u/6236987?s=64&v=4 -->
 
 ## Special Thanks/Credits
 * Yusuff Faruq's [Firebase/React Authentication](https://blog.logrocket.com/user-authentication-firebase-react-apps/) blog post
 
 ## Depolyed
 * [I Spy Refi](https://ispyrefi.com/)
+
+[![built-with-swag](https://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/)
