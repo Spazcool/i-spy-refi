@@ -88,42 +88,45 @@ export default withRouter(function MyHouse(props) {
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label='simple table'>
               <tbody>
-              <TableRow>
-                <TableCell component='th' scope='row'></TableCell>
-                <TableCell
-                  align='center'
-                  className='fontCinzelLgNoShadow'
-                ></TableCell>
-                <TableCell align='center'>
-                  ${' '}
-                  {props.value > 0
-                    ? props.value.toLocaleString()
-                    : props.realtorprice.toLocaleString()}
-                </TableCell>
-                <TableCell align='center'>Similar Homes Calculation</TableCell>
-              </TableRow>
-              <TableRow style={{ borderBottom: '0' }}>
-                <TableCell component='th' scope='row'></TableCell>
-                <TableCell align='center'>
-                  <AddIcon />
-                </TableCell>
-                <TableCell align='center'>
-                  $ {props.reno.toLocaleString()}
-                </TableCell>
-                <TableCell align='center' color='secondary'>
-                  Renovation Additions
-                </TableCell>
-              </TableRow>
-              <TableRow style={{ backgroundColor: '#437779' }}>
-                <TableCell component='th' scope='row'></TableCell>
-                <TableCell align='center'></TableCell>
-                <TableCell align='center'>
-                  $ {props.finalhousevalue.toLocaleString()}
-                </TableCell>
-                <TableCell align='center'>
-                  I SPY REFI Final Assessment
-                </TableCell>
-              </TableRow>
+                <TableRow>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell
+                    align='center'
+                    className='fontCinzelLgNoShadow'
+                  ></TableCell>
+                  <TableCell align='center'>
+                    ${' '}
+                    {props.value > 0
+                      ? props.value.toLocaleString()
+                      : props.realtorprice.toLocaleString()}
+                  </TableCell>
+                  <TableCell align='center'>
+                    Similar Homes Calculation
+                  </TableCell>
+                </TableRow>
+                <TableRow style={{ borderBottom: '0' }}>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'>
+                    <AddIcon />
+                  </TableCell>
+                  <TableCell align='center'>
+                    $ {props.reno.toLocaleString()}
+                  </TableCell>
+                  <TableCell align='center' color='secondary'>
+                    Renovation Additions
+                  </TableCell>
+                </TableRow>
+
+                <TableRow style={{ backgroundColor: '#437779' }}>
+                  <TableCell component='th' scope='row'></TableCell>
+                  <TableCell align='center'></TableCell>
+                  <TableCell align='center'>
+                    $ {props.finalhousevalue.toLocaleString()}
+                  </TableCell>
+                  <TableCell align='center'>
+                    I SPY REFI Final Assessment
+                  </TableCell>
+                </TableRow>
               </tbody>
             </Table>
           </TableContainer>
@@ -173,7 +176,7 @@ export default withRouter(function MyHouse(props) {
                 props.history.push('/additions');
               }}
             >
-              Update House Renovations
+              Add Renovations
             </Button>
           </Typography>
         </AccordionDetails>
