@@ -213,16 +213,15 @@ function Home() {
             xs={12}
             sm={12}
             lg={12}
-            xl={12}
-            style={{ paddingtop: '20px' }}
+            xl={12} 
           >
             <Typography
               align='center'
               variant='h4'
-              component='h2'
+              component='h1'
               className='fontCinzelBlack'
             >
-              <h1 className='fontCinzelLgNoShadowMargin'>House Assessment</h1>
+              <span className='fontCinzelLgNoShadowMargin'>House Assessment</span>
             </Typography>
             <MyHouse
               className='card'
@@ -245,10 +244,10 @@ function Home() {
           <Typography
             align='center'
             variant='h4'
-            component='h2'
-            style={{ paddingtop: '20px' }}
+            component='h1'
+            className='fontCinzelBlack'
           >
-            <p className='fontCinzelLgNoShadowMargin'> Homes In Area</p>
+            <span className='fontCinzelLgNoShadowMargin'> Homes In Area</span>
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
