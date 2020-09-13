@@ -6,7 +6,7 @@ import MoneyIcon from '@material-ui/icons/AttachMoney';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 
 const propTypes = {
   ...SectionTilesProps.types,
@@ -64,7 +64,7 @@ const FeaturesTiles = ({
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>
-                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadowMargbot'>
+                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadowMargin'>
                     House Value
                   </h4>
                   <p className='m-0 text-sm '>
@@ -140,7 +140,7 @@ const FeaturesTiles = ({
               <div className='tiles-item-inner'>
                 <div className='features-tiles-item-header'>
                   <div className='features-tiles-item-image mb-16'>
-                    <SentimentVeryDissatisfiedIcon fontSize='large' />
+                    <TrendingDownIcon fontSize='large' />
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>

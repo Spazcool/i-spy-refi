@@ -92,7 +92,7 @@ const Hero = ({
             data-reveal-delay='800'
           >
             <a
-              data-video='https://www.youtube.com/embed/KHdyXbE_kik?rel=0;&autoplay=1&start=46'
+              data-video='https://youtu.be/cJRQUHNtZBs'
               href='#0'
               aria-controls='video-modal'
               onClick={openModal}
@@ -110,7 +110,7 @@ const Hero = ({
             id='video-modal'
             show={videoModalActive}
             handleClose={closeModal}
-            video='https://www.youtube.com/embed/KHdyXbE_kik?rel=0;&autoplay=1&start=46'
+            video='https://www.youtube.com/embed/cJRQUHNtZBs'
             videoTag='iframe'
           />
         </div>
