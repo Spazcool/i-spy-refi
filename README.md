@@ -78,7 +78,7 @@ Project is created with:
 <p align="center">
    <img width="70%" height="300vh" src="./documentation/readme-images/add-renos.gif"/>
 </p>
-When seaking a refinance option the quickest way to boost your returns is to add renovations to your house. Each house is different and an exhaustive itemized list of all possible renovations options can quickly become overwhelming. In lieu of that we list the top 7 most valuable renovations with a simple toggle option of *Minor/Major* or *Yes/No*. Some nuance is lost but the following options should fit most circumstances:
+When seaking a refinance option the quickest way to boost your returns is to add renovations to your house. Each house is different and an exhaustive itemized list of all possible renovations options can quickly become overwhelming. In lieu of that we list the top 7 most valuable renovations with a simple toggle option of Minor/Major or Yes/No. Some nuance is lost but the following options should fit most circumstances:
 
 * Kitchen: includes cabinets, fridge, etc...
 * Roof: new shingles?
