@@ -199,6 +199,7 @@ function Home() {
         if (res !== false) {
           checkHasHouseInAPI(res)
             .then((resp) => {
+              console.log(resp)
               if (resp === false) {
                 makeToast("House ID doesn't exist.");
               } else {
@@ -217,6 +218,7 @@ function Home() {
               makeToast("House ID doesn't exist.");
             });
         } else {
+          console.log(res)
           throw new Error('No house associated with user.');
         }
       })

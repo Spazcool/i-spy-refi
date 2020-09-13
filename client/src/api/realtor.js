@@ -28,6 +28,7 @@ export const realtor = {
   },
 
   async autoCompleteApi(params) {
+    console.log('autocomplete being called')
     let autoComplete;
     await axios({
       method: 'GET',
