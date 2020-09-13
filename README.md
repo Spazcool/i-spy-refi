@@ -1,138 +1,149 @@
-<!-- https://firebase.google.com/docs/hosting/full-config -->
+# I Spy Refi
 
-# GETTING STARTED w/ FIREBASE, the quick & dirty way
+[![GitHub repo size](https://img.shields.io/github/repo-size/Spazcool/i-spy-refi)](https://shields.io/)
 
-## Clone the Repo/Branch
+## Table of Contents:
+* [Description](#Description)
+* [Getting Started Remotely](#Installation-&-Getting-Started-Remotely)
+* [Getting Started Locally](#Installation-&-Getting-Started-Locally)
+* [Technologies Used](#Technologies-Used)
+* [Usage](#Usage)
+* [Future Features](#Future-Features)
+* [Contributors](#Contributors)
+* [Special Thanks](#Special-Thanks)
+* [Deployed](#Deployed)
 
-1. Clone repo
+## Description
+A personal Home assessment app that allows you to fill out a quick form of your address and any home improvements made to your home. We then use our algorithm and pull comps of similar houses in your area and combine our numbers along with any  renovations made to your home. I Spy Refi helps you get a better understanding of your home's actual worth similar to a bank assessment which helps you feel confident when applying for a refinance or home equity line of credit.
 
-```
-git clone ...
-```
+<p align="center">
+   <img width="70%" height="300vh" src="./documentation/readme-images/desktop.gif">
+   <img width="20%" height="300vh" src="./documentation/readme-images/mobile.gif">
+</p>
 
-2. Checkout non-master branch
+## Installation & Getting Started Remotely
+* [hosted site](https://ispyrefi.com/)
+* [repo](https://github.com/Spazcool/i-spy-refi)
 
-```
-git checkout --track origin/firebase
-```
+## Installation & Getting Started Locally
+This app utilizes the Firebase BaaS and as a result the local set up requires some extra configurations that include details particular to this application. The following guide is just that, a guide; creating a separate Firebase application to plug into this mostly fronend code will include hurdles not documented here. Good luck.
 
----
+* [Getting Started Doc](./documentation/getting_started.md)
 
-## Initial Firebase Setup
+## Technologies Used
+Project is created with:
+* React
+    * Hooks
+    * Context
+* Firebase
+    * FireStore
+    * Cloud Functions
+    * OAuth
+* Node.js
+* SASS
+* Material UI
+* RapidAPI
+    * Realtor.com API
+* HTML5
+* CSS3
+* ES6
 
-1. Install firebase:
+## Usage
 
-```
-npm install -g firebase-tools
-```
+### Sign In / Sign Up
+<p align="center">
+   <img width="70%" height="300vh" src="./documentation/readme-images/sign-in.gif"/>
+</p>
 
-2. Log in to firebase:
+* You can either sign using your Google account or the standard email route.
+* I using email, the following is required:
+    * First Name
+    * Last Name
+    * Email
+    * Password
+        * note: passwords are encrypted & stored in Google's propriety servers, we can't leak them because we don't have access to them ourselves. Or put another way, they're as safe as Google can make them.
 
-```
-firebase login
-```
+### Add Your House
+<p align="center">
+   <img width="70%" height="300vh" src="./documentation/readme-images/add-house.gif"/>
+</p>
 
-3. Configure & install app (POSSIBLY OPTIONAL AS YOU SHOULD ALREADY HAVE THE .firebaserc & firebase.json files):
+* Requires:
+    * Street
+    * City
+    * State
+    * Zip
 
-- `firebase init`
-- App type options:
-  - Hosting
-- Existing project:
-  - ispy...
-- Specify starting location:
-  - client/build
-- Some other opiton:
-  - Yes
-- Overwrite index.html?
-  - No, but not a biggy if you do
+### Add Renovations
+<p align="center">
+   <img width="70%" height="300vh" src="./documentation/readme-images/add-renos.gif"/>
+</p>
+When seaking a refinance option the quickest way to boost your returns is to add renovations to your house. Each house is different and an exhaustive itemized list of all possible renovations options can quickly become overwhelming. In lieu of that we list the top 7 most valuable renovations with a simple toggle option of Minor/Major or Yes/No. Some nuance is lost but the following options should fit most circumstances:
 
----
+* Kitchen: includes cabinets, fridge, etc...
+* Roof: new shingles?
+* Bathroom: includes toilet, tub, tiles, etc...
+* Attic: bedroom conversion?
+* Landscaping: includes trees, mulch, walkway, etc...
+* Entry door replacement?
+* Deck, patio or porch installation?
 
-## Create local cofing files:
+### View Dashboard
+<p align="center">
+   <img width="70%" height="300vh" src="./documentation/readme-images/dashboard.gif"/>
+</p>
+The heart of the application. Here you can view details related to house, its worth as calculated by Realtor.com as well as its worth taking into consideration the renovations added as well as comparable homes in your area.
 
-1. create config file for server/functions
+Additional features: 
+    * House values
+    * Current Mortgage rates
+    * 10 nearby comparable properties
+    * Renovations value chart
 
-```
-cd ~/PC/User/You/otherstuff/i-spy-refi/functions
-```
+### Modify User / House
+This is simple utility page where a user can perform some basic administrative tasks, such as the following:
 
-- Navigate to [firebase console](https://console.firebase.google.com/project/ispyrefi/settings/serviceaccounts/adminsdk)
-- click 'Generate new private key'
-- drag downloaded file to root directory
-- rename file to `key.json`
+* Update Name
+* List Property
+* Delete Property
+* Delete Account
 
-2. create config file for client:
+## Future Features
+* User defined renovation types & values in lieu of national averages
+* Map integration for comparison houses
+* Comparison radius slider, filter comparison houses by distance from your home
+* Dark/Light mode toggle
+* Multiple houses per user
+* Update password & email
+* Trending rates chart, house value is saved on each login and pushed to a chart to visualize trends
 
-```
-cd ~/PC/User/You/otherstuff/i-spy-refi/client/src
-```
+## Contributors
+<p align="center">
+  <a href="https://github.com/steffijerome0809">
+    <img src="https://avatars1.githubusercontent.com/u/59617364?s=64&v=4" title="Steffi Jerome" width="10%"/>
+  </a>
 
-- Add a file by the name of `firebase-config.json` in src directory
-- Navigate to: [firebase console](https://console.firebase.google.com/project/ispyrefi/settings/general/)
-- under 'Your Apps'
-  - Click 'Config'
-  - Copy config obj
-- Paste config obj into `firebase-config.json`
-  - should look like the following:
-  ```
-  {
-    "apiKey": "REALLY-LONG-STRING-OF-TEXT",
-    "authDomain": "ispyrefi.firebaseapp.com",
-    "databaseURL": "https://ispyrefi.firebaseio.com",
-    "projectId": "ispyrefi",
-    "storageBucket": "ispyrefi.appspot.com",
-    "messagingSenderId": "REALLY-LONG-STRING-OF-TEXT",
-    "appId": "REALLY-LONG-STRING-OF-TEXT",
-    "measurementId": "REALLY-LONG-STRING-OF-TEXT"
-  }
-  ```
-- Save
+  <a href="https://github.com/bowdwin">
+    <img src="https://avatars1.githubusercontent.com/u/6236987?v=4" title="bowdwin" width="10%"/>
+  </a>
 
----
+  <a href="https://github.com/Spazcool">
+    <img src="https://avatars2.githubusercontent.com/u/17243640?v=4" title="Spazcool" width="10%"/>
+  </a> 
 
-## Get it all running:
+  <a href="https://github.com/fleshborne">
+    <img src="https://avatars1.githubusercontent.com/u/62081154?s=64&v=4" title="Blake Thompson" width="10%"/>
+  </a>
 
-1.  install dependencies for server/functions
+  <a href="https://github.com/lp5786766">
+    <img src="https://avatars2.githubusercontent.com/u/61098845?s=64&v=4" title="Luba Pecheneva" width="10%"/>
+  </a>
+</p>
+<!-- https://avatars2.githubusercontent.com/u/17243640?s=64&v=4 -->
+<!-- https://avatars1.githubusercontent.com/u/6236987?s=64&v=4 -->
 
-```
-cd ~/PC/User/You/otherstuff/i-spy-refi/functions
-```
+## Special Thanks/Credits
+* Yusuff Faruq's [Firebase/React Authentication](https://blog.logrocket.com/user-authentication-firebase-react-apps/) blog post
 
-```
-npm install
-```
-
-2.  install dependencies for client
-
-```
-cd ~/PC/User/You/otherstuff/i-spy-refi/client
-```
-
-```
-npm install
-```
-
-3.  create a build directory for React/Client:
-
-```
-cd ~/PC/User/You/otherstuff/i-spy-refi/client
-```
-
-```
-npm run build
-```
-
-4.  run all the things
-
-```
-cd ~/PC/User/You/otherstuff/i-spy-refi/
-```
-
-```
-firebase serve
-```
-
-- if you get an error about ports...
-  ```
-  firebase serve --port=5001
-  ```
+## Depolyed
+* [I Spy Refi](https://ispyrefi.com/)
