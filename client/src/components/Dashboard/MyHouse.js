@@ -9,6 +9,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -49,6 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
   block: {
     display: 'block',
+  },
+  button: {
+    border: 'groove',
+    backgroundColor: '#437779',
+    fontFamily: 'Cinzel',
+    color: 'white',
   },
 }));
 
@@ -132,6 +139,7 @@ export default withRouter(function MyHouse(props) {
           </TableContainer>
         </CardContent>
       </Card>
+
       <Accordion align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -148,29 +156,32 @@ export default withRouter(function MyHouse(props) {
             Home Reno Chart
           </Typography>
         </AccordionSummary>
+
         <AccordionDetails>
-          <Button
-            type='button'
-            size='small'
-            className='button'
-            onClick={handleOpen}
-          >
-            Renovation Data
-          </Button>
+          <Grid item xs={12}>
+            <Button
+              type='button'
+              size='small'
+              variant='contained'
+              className={classes.button}
+              onClick={handleOpen}
+            >
+              Renovation Data
+            </Button>
+          </Grid>
           <Modal open={open} onClose={handleClose}>
             <Paper className='card-radius box-shadow'>
               <FormChart data={props} />
             </Paper>
           </Modal>
-          <Typography
-            align='center'
-            color='textSecondary'
-            gutterBottom
-            align='center'
-          >
+        </AccordionDetails>
+        <AccordionDetails>
+          <Grid item xs={12}>
             <Button
+              type='button'
               size='small'
-              className='button'
+              variant='contained'
+              className={classes.button}
               onClick={(e) => {
                 e.preventDefault();
                 props.history.push('/additions');
@@ -178,9 +189,10 @@ export default withRouter(function MyHouse(props) {
             >
               Add Renovations
             </Button>
-          </Typography>
+          </Grid>
         </AccordionDetails>
       </Accordion>
+
       <Accordion className='card-radius-bottom' align='center'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -274,7 +286,7 @@ export default withRouter(function MyHouse(props) {
         </AccordionSummary>
         <AccordionDetails>
           <CardActions className={classes.root}>
-            <Button size='small' className='button'>
+            <Button size='small' className={classes.button}>
               Update home renovation
             </Button>
           </CardActions>
