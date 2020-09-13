@@ -124,30 +124,30 @@ const FeaturesSplit = ({
               >
                 <h3 className='mt-0 mb-12'>Dashboard Display</h3>
                 <p className='m-0 text-color-secondary'>
-                  You will be presetned with a dashbaord with the following
+                  You will be presented with a dashbaord with the following
                   features:
                   <ul>
                     <li>
-                      Home value - we use an algorith you calculate your house
+                      Home value - we use an algorithm and calculate your house
                       value based of recent sales/comps in your area combined
                       with your home improvments specified in the form. This can
-                      help you get a good estimate of what a bank would value
-                      your home at if you are thinking about refinancing or
-                      aquiring a home equity line of credit
+                      help you get a realistic estimate of what a bank would
+                      value your home at incase you are thinking about
+                      refinancing or aquiring a home equity line of credit.
                     </li>
                     <li>
                       Chart - chart will display the value of your house
                       trending over time. Each time you login, the most recent
                       sales will be be pulled and your value will be
-                      recalculated then displayed on a chart
+                      recalculated then displayed on a chart. (coming soon)
                     </li>
                     <li>
-                      Recent Sales - Check out the recent sales of similar homes
-                      in your area
+                      Similar Properties In Area - Check out the recent sales of
+                      similar homes in your area
                     </li>
                     <li>
-                      Mortgage Rates - we'll display the average current
-                      mortgage rates to help you decide if it's a good time to
+                      Mortgage Rates - we'll display the current mortgage rates
+                      in you area to help you decide if it's a good time to
                       refinance
                     </li>
                   </ul>
