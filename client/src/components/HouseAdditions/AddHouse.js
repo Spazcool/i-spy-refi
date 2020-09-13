@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     padding: '0.75em',
     width: '50%',
-    'background-color': '#437779',
+    border: 'groove',
+    backgroundColor: '#437779',
   },
 }));
 
@@ -88,7 +89,7 @@ export default function AddHouse(props) {
           onClick={props.handleSubmit}
           className={classes.button}
         >
-          {props.clicked ? <CircularProgress/> : 'Submit'}
+          {props.clicked ? <CircularProgress /> : 'Submit'}
         </Button>
       </Box>
     </Box>
