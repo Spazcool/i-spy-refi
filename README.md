@@ -4,7 +4,6 @@
 [![GitHub repo forks](https://img.shields.io/github/forks/Spazcool/i-spy-refi?label=Fork)](https://shields.io/)
 [![GitHub repo stars](https://img.shields.io/github/stars/Spazcool/i-spy-refi?style=social)](https://shields.io/)
 [![GitHub repo contributors](https://img.shields.io/github/contributors/Spazcool/i-spy-refi)](https://shields.io/)
-[![built-with-swag](https://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/)
 
 ## Table of Contents:
 * [Description](#Description)
@@ -96,10 +95,10 @@ The heart of the application. Here you can view details related to house, its wo
 
 Additional features:
 
-    * House values
-    * Current Mortgage rates
-    * 10 nearby comparable properties
-    * Renovations value chart
+* House values
+* Current Mortgage rates
+* 10 nearby comparable properties
+* Renovations value chart
 
 ### Modify User / House
 This is simple utility page where a user can perform some basic administrative tasks, such as the following:
@@ -146,3 +145,4 @@ This is simple utility page where a user can perform some basic administrative t
 
 ## Depolyed
 * [I Spy Refi](https://ispyrefi.com/)
+[![built-with-swag](https://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/)
