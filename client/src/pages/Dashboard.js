@@ -250,7 +250,7 @@ function Home() {
               component='h2'
               className='fontCinzelBlack'
             >
-              <span className='fontCinzelLgNoShadow'> House Assessment</span>
+              <h1 className='fontCinzelLgNoShadowMargin'>House Assessment</h1>
             </Typography>
             <MyHouse
               className='card'
@@ -274,10 +274,9 @@ function Home() {
             align='center'
             variant='h4'
             component='h2'
-            className='fontCinzelLgNoShadow'
             style={{ paddingtop: '20px' }}
           >
-            <span className='fontCinzelLgNoShadow'> Homes In Area</span>
+            <p className='fontCinzelLgNoShadowMargin'> Homes In Area</p>
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
