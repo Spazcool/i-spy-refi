@@ -22,7 +22,7 @@
 A personal Home assessment app that allows you to fill out a quick form of your address and any home improvements made to your home. We then use our algorithm and pull comps of similar houses in your area and combine our numbers along with any renovations made to your home. I Spy Refi helps you get a better understanding of your home's actual worth similar to a bank assessment which helps you feel confident when applying for a refinance or home equity line of credit.
 
 <p align="center">
-   <img width="70%" height="300vh" src="https://gyazo.com/5b81c348dfd3f19f41b462990777b1e0.gif"/>
+   <img width="70%" height="300vh" src='client\src\assets\images\dashboardDesktopGif.gif'/>
    <img width="20%" height="300vh" src="https://gyazo.com/330963de777aca5dc22fbe7e56545816.gif"/>
 </p>
 
@@ -163,3 +163,5 @@ This is simple utility page where a user can perform some basic administrative t
 - [I Spy Refi](https://ispyrefi.com/)
 
 [![built-with-swag](https://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/)
+
+[desktopherogif]: client\src\assets\images\dashboardDesktopGif.gif
