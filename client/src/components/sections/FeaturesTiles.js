@@ -69,7 +69,7 @@ const FeaturesTiles = ({
                   </div>
                 </div>
                 <div className='features-tiles-item-content'>
-                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadow'>
+                  <h4 className='mt-0 mb-8 fontCinzelLgNoShadowMargbot'>
                     House Value
                   </h4>
                   <p className='m-0 text-sm '>
