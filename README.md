@@ -3,8 +3,8 @@
 [![GitHub repo size](https://img.shields.io/github/repo-size/Spazcool/i-spy-refi)](https://shields.io/)
 [![GitHub repo forks](https://img.shields.io/github/forks/Spazcool/i-spy-refi?label=Fork)](https://shields.io/)
 [![GitHub repo stars](https://img.shields.io/github/stars/Spazcool/i-spy-refi?style=social)](https://shields.io/)
-[![GitHub repo contributors](https://img.shields.io/github/all-contributors/Spazcool/i-spy-refi/master*)](https://shields.io/)
-[built-with-swag](https://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/)
+[![GitHub repo contributors](https://img.shields.io/github/contributors/Spazcool/i-spy-refi)](https://shields.io/)
+[![built-with-swag](https://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/)
 
 ## Table of Contents:
 * [Description](#Description)
@@ -94,7 +94,8 @@ When seaking a refinance option the quickest way to boost your returns is to add
 </p>
 The heart of the application. Here you can view details related to house, its worth as calculated by Realtor.com as well as its worth taking into consideration the renovations added as well as comparable homes in your area.
 
-Additional features: 
+Additional features:
+
     * House values
     * Current Mortgage rates
     * 10 nearby comparable properties
