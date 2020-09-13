@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import FormChart from './FormChart';
 
@@ -15,13 +15,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import AddIcon from '@material-ui/icons/Add';
 import TableRow from '@material-ui/core/TableRow';
 import Modal from '@material-ui/core/Modal';
@@ -30,7 +28,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import HomeIcon from '@material-ui/icons/Home';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import '../../../src/App.css';
@@ -49,30 +46,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
-    boxShadow: '10px 5px 5px 5px #437779',
   },
   block: {
     display: 'block',
   },
 }));
-
-const styles = {
-  media: {
-    height: 0,
-    passingtop: '56.25%', // 16:9
-  },
-  card: {
-    position: 'relative',
-  },
-  overlay: {
-    position: 'absolute',
-    top: '40%',
-    left: '10%',
-    color: 'white',
-    background: 'rgba(0, 0, 0, 0.5)',
-    padding: '3px',
-  },
-};
 
 export default withRouter(function MyHouse(props) {
   const [loaded, setLoaded] = useState(false);
@@ -136,8 +114,6 @@ export default withRouter(function MyHouse(props) {
                   Renovation Additions
                 </TableCell>
               </TableRow>
-
-              {/* <TableRow style={{ backgroundColor: '#437779' }}> */}
               <TableRow style={{ backgroundColor: '#437779' }}>
                 <TableCell component='th' scope='row'></TableCell>
                 <TableCell align='center'></TableCell>
@@ -162,7 +138,7 @@ export default withRouter(function MyHouse(props) {
           <AccountBalanceIcon className='fontCinzelLgNoShadow' />
           <Typography
             className='paddingleft'
-            color='textSecondary '
+            color='textSecondary'
             gutterBottom
             align='center'
           >
@@ -179,11 +155,13 @@ export default withRouter(function MyHouse(props) {
             Renovation Data
           </Button>
           <Modal open={open} onClose={handleClose}>
-            <FormChart data={props} />
+            <Paper className='card-radius box-shadow'>
+              <FormChart data={props} />
+            </Paper>
           </Modal>
           <Typography
             align='center'
-            color='textSecondary '
+            color='textSecondary'
             gutterBottom
             align='center'
           >
@@ -209,7 +187,7 @@ export default withRouter(function MyHouse(props) {
           <AccountBalanceIcon className='fontCinzelLgNoShadow' />
           <Typography
             className='paddingleft'
-            color='textSecondary '
+            color='textSecondary'
             gutterBottom
             align='center'
           >

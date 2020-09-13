@@ -3,9 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { blue } from '@material-ui/core/colors';
-//TODO Kill
 
-// todo play around with these values
 export const light = {
   palette: {
     type: 'light',

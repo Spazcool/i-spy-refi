@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 
 import { GoSignIn } from 'react-icons/go';
@@ -171,7 +170,7 @@ const Signup = (props) => {
           </Grid>
           <Grid item xs={12} style={{'padding': '1em 0 0 0'}}>
             <FormControl className='padding'>
-              <InputLabel htmlFor='my-input-email'>Email address</InputLabel>
+              <InputLabel htmlFor='my-input-email' className={emailColor}>Email address</InputLabel>
               <Input
                 className={classes.textField}
                 id='my-input-email'

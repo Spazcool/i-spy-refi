@@ -9,10 +9,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    // height: 140,
-    // width: 100,
-  },
   control: {
     'padding-left': theme.spacing(1),
   },

@@ -48,7 +48,6 @@ const ScrollReveal = React.forwardRef((props, ref) => {
       }
       revealElements();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [revealEl]);
 
   const handleListeners = () => {
@@ -69,7 +68,6 @@ const ScrollReveal = React.forwardRef((props, ref) => {
   useEffect(() => {
     handleListeners();
     revealElements();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewportHeight]);  
 
   return (

@@ -23,12 +23,10 @@ export const realtor = {
       .catch((error) => {
         console.log(error);
       });
-    console.log('actual address resp:', getaddressResponse);
     return getaddressResponse;
   },
 
   async autoCompleteApi(params) {
-    console.log('autocomplete being called')
     let autoComplete;
     await axios({
       method: 'GET',
@@ -103,7 +101,6 @@ export const realtor = {
       .catch((error) => {
         console.log(error);
       });
-    console.log('houseresp:', houseResponse);
     return houseResponse;
   },
 };

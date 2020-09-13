@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 
 import CompList from '../components/Dashboard/CompList';
 import MyHouse from '../components/Dashboard/MyHouse';
-import TrendingChart from '../components/Dashboard/TrendingChart';
 import Toast from '../components/Toast';
 
 import '../App.css';
@@ -20,15 +19,11 @@ function Home() {
   const [openIt, setOpenIt] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   // DB
-  const [hasHouse, setHasHouse] = useState();
-  // const [houseData, setHouseData] = useState({});
   const [RenovationValue, setRenovationValue] = useState('');
   const [finalHouseAssessmentValue, setfinalHouseAssessmentValue] = useState(
     ''
   );
   const [formData, setFormData] = useState([]);
-
-  const [TrendingData, setTrendingData] = useState([]);
   // API
   const [imageData, setImage] = useState('');
   const [streetdisplay, setstreetdisplay] = useState('');
@@ -40,10 +35,8 @@ function Home() {
   const [realtorPrice, setrealtorPrice] = useState('');
 
   let finishedsqFt;
-  let zipCode;
   let renVal;
   let Realtorprice;
-  // let mortgageRates;
 
   const checkHasHouseInDB = async () => {
     const houseinfoDB = async () => await DB.getHouseByOwner(user.user.uid);
@@ -62,38 +55,25 @@ function Home() {
         comps,
       };
       getMortgageRates(data.zip);
-      setHasHouse(true);
-      // setHouseData(data);
-      setTrendingData(comps);
       setstreetdisplay(data.street);
       setstatedisplay(data.state);
       setcitydisplay(data.city);
 
-      zipCode = data.zip;
       renVal = data.formData;
-      console.log(data.formData);
       setFormData(data.formData);
-      // return true;
-      console.log(data);
       return data;
     }
-
-    setHasHouse(false);
     return false;
   };
 
   const checkHasHouseInAPI = async (house) => {
-    // console.log('house', house);
     const getAddress = async () => await realtor.getAddressDetails(house.zpid);
     const addressResponse = await getAddress();
-    // console.log(addressResponse);
 
     if (addressResponse !== undefined) {
-      // console.log(addressResponse);
       const getimageurl = addressResponse.data.properties[0].photos[0].href;
       setImage(getimageurl);
       // Storing Realtor House Price
-
       Realtorprice = addressResponse.data.properties[0].price;
       setrealtorPrice(Realtorprice);
 
@@ -105,7 +85,6 @@ function Home() {
         finishedsqFt = housebuildingsizeValid.building_size.size;
       }
       return addressResponse;
-      // return true;
     }
     return false;
   };
@@ -113,7 +92,6 @@ function Home() {
   const getMortgageRates = async (zip) => {
     let mortgageRates = await realtor.getMortgageRates();
     setMorgageRatesDisplay(mortgageRates);
-    // TO DO add ERROR handling
   };
 
   const checkHouseCompsInAPI = async (address) => {
@@ -144,7 +122,6 @@ function Home() {
       }
     });
 
-    // if (houseprice_array.length > 0) {
     const housearraymedian = houseprice_array.sort((a, b) => a - b);
     const mid = Math.floor(housearraymedian.length / 2);
     const housemedian =
@@ -156,10 +133,6 @@ function Home() {
 
     settotalHouseValue(FinalHouseValue);
     findHouseRenovation(renVal, FinalHouseValue);
-    // } else {
-    //   settotalHouseValue(0);
-    //   findHouseRenovation([], 0);
-    // }
   };
 
   const findHouseRenovation = (FormData, FinalHouseValue) => {
@@ -170,7 +143,6 @@ function Home() {
       FinalHouseValue > 0
         ? FinalHouseValue + RenoValue
         : Realtorprice + RenoValue;
-    console.log('ChkReno:', FinalHouseAssessmentValue);
     setRenovationValue(RenoValue);
     setfinalHouseAssessmentValue(FinalHouseAssessmentValue);
   };
@@ -199,7 +171,6 @@ function Home() {
         if (res !== false) {
           checkHasHouseInAPI(res)
             .then((resp) => {
-              console.log(resp)
               if (resp === false) {
                 makeToast("House ID doesn't exist.");
               } else {
@@ -218,7 +189,6 @@ function Home() {
               makeToast("House ID doesn't exist.");
             });
         } else {
-          console.log(res)
           throw new Error('No house associated with user.');
         }
       })
@@ -231,10 +201,10 @@ function Home() {
     if (isAuth) {
       fetchAllData();
     }
-  }, []);
+  }, [isAuth]);
 
   return (
-    <Container className='signup'>
+    <Container className='signup' style={{marginTop: '2em'}}>
       <Grid container spacing={3} className='grid'>
         {/* --------------- USERS HOUSE --------------- */}
         <Grid item xs={12} sm={5} lg={5} xl={5}>
@@ -283,19 +253,6 @@ function Home() {
           </Typography>
           <CompList compslist={compsList} />
         </Grid>
-
-        {/* --------------- CHART2 --------------- */}
-        {/* <Grid item xs={12} sm={6} lg={6} xl={6}>
-          <Typography variant='h4' component='h2'>
-            Refi Form Data Values
-          </Typography> */}
-        {/* <FormChart data={FormData} /> */}
-        {/* </Grid> */}
-        {/* --------------- CHART1 --------------- */}
-        {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
-          <h2 className='fontCinzelWhite chart'>Comps Trending Data Values</h2> */}
-        {/* <TrendingChart data={TrendingData} /> */}
-        {/* </Grid> */}
       </Grid>
       <Toast openIt={openIt} message={toastMessage} />
     </Container>

@@ -48,8 +48,6 @@ export default function CompList(props) {
     checkLoaded();
   });
 
-  // console.log('compslist:', props.compslist);
-
   return loaded ? (
     <Paper elevation={4} className='card-radius box-shadow'>
       <div className={classes.list}>

@@ -8,19 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
-import Image from 'material-ui-image';
 import noHouseImage from '../../assets/logo/nologoimage/logo_transparent_background.png';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   width: '100%',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   display: 'flex',
-  // },
   'v-align': {
     display: 'flex',
     'flex-direction': 'column',
@@ -89,7 +82,6 @@ export default function CompListItem(props) {
           </Grid>
           <Grid item xs={12} md={6}>
             <CardMedia
-              // className={classes.lazyImage} // TODO not needed?
               className='media box-shadow card-radius'
               component='img'
               image={

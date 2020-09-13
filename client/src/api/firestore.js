@@ -15,8 +15,7 @@ export const DB = {
 
     if (!snapshot.exists) {
       let data;
-      if (!additionalData) {
-        // if google signin
+      if (!additionalData) {// if google signin
         data = new User(
           user.uid,
           user.displayName,
@@ -59,7 +58,6 @@ export const DB = {
 
   async createHouse(userID, houseData) {
     let message = { message: 'house already exists' };
-    // get.getHouseByOwner
     const houseRef = db().doc(`houses/${houseData.hid}`);
     const snapshot = await houseRef.get();
 
@@ -456,10 +454,8 @@ export const DB = {
       try {
         await userRef.delete();
         message.push(`User ${userID} deleted successfully.`);
-        // return message;
       } catch (error) {
         message.push(`Error deleting User ${userID}: ${error}`);
-        // return message;
       }
 
       const authedUser = auth.currentUser;

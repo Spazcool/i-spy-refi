@@ -10,7 +10,6 @@ import {
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
 import { CustomThemeProvider } from './providers/ThemeProvider'; //TODO DELETE
 
-// import { useLocation } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ScrollReveal from './utils/ScrollReveal';
 // Layouts
@@ -23,8 +22,7 @@ import Login from './pages/Login';
 import User from './pages/User';
 import HouseAdditions from './pages/HouseAdditions';
 
-// import Splash from './pages/Splash';  // TODO DELETE
-import Navbar from './components/Navbar'; // TODO DELETE
+import Navbar from './components/Navbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 const App = () => {
@@ -72,14 +70,12 @@ const App = () => {
                   render={(props) => <Signup {...props} />}
                   layout={LayoutDefault}
                 />
-                {/* <PrivateRoute exact path='/houses' component={Houses} /> */}
                 <PrivateRoute
                   exact
                   path='/additions'
                   component={HouseAdditions}
                   layout={LayoutDefault}
                 />
-                {/* <Route exact path='/signup' render={(props) => <Signup {...props} />} /> */}
                 <PrivateRoute
                   exact
                   path='/dashboard'

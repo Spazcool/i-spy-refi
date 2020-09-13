@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
-// import { HouseContext } from '../providers/HouseProvider';
 import { realtor } from '../api/realtor';
 
 import AddHouse from '../components/HouseAdditions/AddHouse';
@@ -13,7 +12,6 @@ import Toast from '../components/Toast';
 
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -112,20 +110,14 @@ export default function HouseAdditions() {
   const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
-    console.log('effecting')
     if (userZpid.zpid === undefined) {
       fetchHouse();
-
-      // findHouseRenovation(userHouse.formData);
     }
   }, [userZpid, radios]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
-    // console.log(userHouse);
-    //todo might have soemthing to do with the state varaibel sharing the namespace with this uuserHouse
-    //todo this shit is wrong but it works so fuck it
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
   };
 
@@ -196,54 +188,47 @@ export default function HouseAdditions() {
   };
 
   const afterSubmit = async () => {
-    
     const params = {
       street: userHouse.street.toLowerCase(),
       city: userHouse.city.toLowerCase(),
       state: userHouse.state.toLowerCase(),
       zip: userHouse.zip.toLowerCase(),
     };
-    console.log('aftersubmit is being called', params)
     const autoComplete = async () => await realtor.autoCompleteApi(params);
-    const data = await autoComplete();
+    const {data} = await autoComplete();
     let message;
-    console.log(data)
 
-    if(data.message.includes('failed')){
-      message = data.message;
-    }else{
-      const {
-        mpr_id,
-        centroid,
-        postal_code,
-        state_code,
-        city,
-        line,
-      } = data.autocomplete[0];
-      // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
-  
-      setUserZpid(mpr_id);
-  
-      const houseParams = {
-        zip: postal_code,
-        state: state_code,
-        city: city,
-        street: line,
-        hid: mpr_id,
-        zpid: mpr_id,
-        formData: [],
-        latitude: 50,
-        longitude: 50,
-        // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
-        // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
-      };
-  
-      const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
-      const houseMessage = await createdHouse();
-      message = houseMessage
-    }
+    const {
+      mpr_id,
+      centroid,
+      postal_code,
+      state_code,
+      city,
+      line,
+    } = data.autocomplete[0];
+    // API returns inconsistent data structures, will need a way to deal with the following:
+    // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
+    // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+    // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
     
-    setToastMessage(message);
+    setUserZpid(mpr_id);
+
+    const houseParams = {
+      zip: postal_code,
+      state: state_code,
+      city: city,
+      street: line,
+      hid: mpr_id,
+      zpid: mpr_id,
+      formData: [],
+      latitude: 50,
+      longitude: 50,
+    };
+
+    const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
+    const houseMessage = await createdHouse();
+    message = houseMessage
+    setToastMessage(message.message);
     setOpenIt(true);
     setOpenIt(false);
     setClicked(false);
