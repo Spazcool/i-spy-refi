@@ -171,3 +171,17 @@ app.get('/api/GetSearchResults', (req, res) => {
 
 // Expose Express API as a single Cloud Function:
 exports.thing = functions.https.onRequest(app);
+
+
+
+[DesktopHeroGif](https://gyazo.com/f8e2ade3dc86de04ce68e1cb5756cbee.gif)
+[DesktopUserPage](https://gyazo.com/63e8f890b9ab1de691323ae5e239f6af.png)
+[DesktopDashboardPage](https://gyazo.com/d608a98054d856cb1a61ee1c78677d70.gif)
+[DesktopHouseAdditionsPage](https://gyazo.com/a5e0ee47dd10937de0234dccf304f890.gif)
+
+[MobileHeroPage](https://gyazo.com/781d691d18179bf6c32bd5b600b7491c.gif)
+[MobileUserPage](https://gyazo.com/f9e26c64257ac4941c20fa225b6fd2b0.png)
+[MobileDashBoard](https://gyazo.com/79d7516422b483f466abe6d13c141e68.gif)
+[MobileHouseAdditionsPage](https://gyazo.com/d32287df465550b609312597335212f4.gif)
+
+[built-with-swag](https://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/)";
