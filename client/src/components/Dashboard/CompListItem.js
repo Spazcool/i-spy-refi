@@ -74,7 +74,7 @@ export default function CompListItem(props) {
               Beds: <b>{props.comp.beds}</b>
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
-              Property Type: <b>{props.comp.prop_type}</b>
+              Property Type: <b>{props.comp.prop_type.replace(/_/g, " ")}</b>
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
               Year Built: <b>{props.comp.year_built}</b>
