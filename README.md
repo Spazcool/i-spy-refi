@@ -22,8 +22,8 @@
 A personal Home assessment app that allows you to fill out a quick form of your address and any home improvements made to your home. We then use our algorithm and pull comps of similar houses in your area and combine our numbers along with any renovations made to your home. I Spy Refi helps you get a better understanding of your home's actual worth similar to a bank assessment which helps you feel confident when applying for a refinance or home equity line of credit.
 
 <p align="center">
-   <img width="70%" height="300vh" src="https://gyazo.com/f8e2ade3dc86de04ce68e1cb5756cbee.gif"/>
-   <img width="20%" height="300vh" src="https://gyazo.com/781d691d18179bf6c32bd5b600b7491c.gif"/>
+   <img width="70%" height="300vh" src="https://gyazo.com/5b81c348dfd3f19f41b462990777b1e0.gif"/>
+   <img width="20%" height="300vh" src="https://gyazo.com/330963de777aca5dc22fbe7e56545816.gif"/>
 </p>
 
 ## Installation & Getting Started Remotely
@@ -100,7 +100,7 @@ When seaking a refinance option the quickest way to boost your returns is to add
 ### View Dashboard
 
 <p align="center">
-   <img width="70%" height="300vh" src="https://gyazo.com/d608a98054d856cb1a61ee1c78677d70.gif"/>
+   <img width="70%" height="300vh" src="https://gyazo.com/87b04a3ab125bf3b707388d5a8b7fcdb.gif"/>
 </p>
 The heart of the application. Here you can view details related to house, its worth as calculated by Realtor.com as well as its worth taking into consideration the renovations added as well as comparable homes in your area.
 
