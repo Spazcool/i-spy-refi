@@ -71,6 +71,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     padding: '1em',
     width: '25%',
+    border: 'groove',
+    backgroundColor: '#437779',
   },
   alignContent: {
     display: 'flex',
@@ -163,7 +165,6 @@ export default function AddRenos(props) {
           spacing={2}
           className={classes.alignContent}
         >
-          
           <h2 className='fontCinzelLgNoShadow'>Renovations</h2>
           {hasMounted ? listRadios() : ''}
 
@@ -175,7 +176,7 @@ export default function AddRenos(props) {
             onClick={props.handleSubmitCalc}
             className={classes.button}
           >
-            {props.clicked ? <CircularProgress/> : 'Submit'}
+            {props.clicked ? <CircularProgress /> : 'Submit'}
           </Button>
         </Grid>
       </Box>
