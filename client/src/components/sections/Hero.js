@@ -52,7 +52,7 @@ const Hero = ({
   );
 
   return (
-    <section {...props} className={outerClasses}>
+    <section {...props} className={outerClasses} style={{ paddingTop: '10%' }}>
       <div className='container-sm'>
         <div className={innerClasses}>
           <div className='hero-content'>
