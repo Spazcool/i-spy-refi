@@ -79,11 +79,11 @@ const Testimonial = ({
                   <p className='text-sm mb-0'>
                     — I SPY REFI saved me so much time. I was able to enter all
                     my major updates to my home and have them give me a house
-                    assement value. I feel confident that I would be able to
+                    assessment value. I feel confident that I would be able to
                     apply for a home equity loan based off my returned value.
-                    UPDATE- I applied and was able to aquire one! The banks
-                    assesment was within a couple grand of I SPY REFI's
-                    estamate! Thank you I SPI REFI!!
+                    UPDATE- I applied and was able to acquire one! The banks
+                    assessment was within a couple grand of I SPY REFI's
+                    estimate! Thank you I SPY REFI!!
                   </p>
                 </div>
                 <div className='testimonial-item-footer text-xs mt-32 mb-0 has-top-divider'>
@@ -102,7 +102,7 @@ const Testimonial = ({
                 <div className='testimonial-item-content'>
                   <p className='text-sm mb-0'>
                     - I recently decided to sell my home and didn't want an
-                    agent. I used I SPY REFI's estamate as a value to sell my
+                    agent. I used I SPY REFI's estimate as a value to sell my
                     home. I got an offer in a week based off the value they gave
                     me and sold my home!
                   </p>
