@@ -15,7 +15,6 @@ export default function CompDetails() {
       <Card className='card-radius'>
         <CardMedia
           className='media'
-          //   image="/static/images/cards/contemplative-reptile.jpg"
           image='https://honka.com/wp-json/image/resize?w=900&h=600&src=reference%2Fmelody%2Fhonka-mo-113.jpg'
           title='Contemplative Reptile'
         />

@@ -23,7 +23,6 @@ export const realtor = {
       .catch((error) => {
         console.log(error);
       });
-    console.log('actual address resp:', getaddressResponse);
     return getaddressResponse;
   },
 
@@ -102,7 +101,6 @@ export const realtor = {
       .catch((error) => {
         console.log(error);
       });
-    console.log('houseresp:', houseResponse);
     return houseResponse;
   },
 };

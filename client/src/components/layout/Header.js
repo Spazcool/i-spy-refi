@@ -154,24 +154,3 @@ Header.propTypes = propTypes;
 Header.defaultProps = defaultProps;
 
 export default Header;
-// <Button
-//     className='m-1'
-//     onClick={(e) => {
-//       // handleOpen()
-//       e.preventDefault();
-//       props.history.push('/login');
-//     }}
-//   >
-//     {/* <SignInUpModal open={open} setOpen={setOpen}/> */}
-//     Login
-//   </Button>
-
-//   <Button
-//     className='m-1'
-//     onClick={(e) => {
-//       e.preventDefault();
-//       props.history.push('/signup');
-//     }}
-//   >
-//     Signup
-//   </Button>

@@ -20,9 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInUpModal(props) {
   const classes = useStyles();
-  console.log(props.open)
     const handleClose = () => {
-      console.log('close')
       props.setOpen(false);
     };
   return (
@@ -47,9 +45,3 @@ export default function SignInUpModal(props) {
     </Modal>
   );
 }
-
-
-{/* <div>
-<button type="button" onClick={handleOpen}>
-  react-transition-group
-</button> */}

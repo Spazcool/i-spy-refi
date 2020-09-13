@@ -163,6 +163,7 @@ export default function AddRenos(props) {
           spacing={2}
           className={classes.alignContent}
         >
+          
           <h2 className='fontCinzelLgNoShadow'>Renovations</h2>
           {hasMounted ? listRadios() : ''}
 

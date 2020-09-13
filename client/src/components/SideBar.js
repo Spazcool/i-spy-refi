@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
-import { CustomThemeContext } from '../providers/ThemeProvider';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,8 +19,6 @@ import ChartIcon from '@material-ui/icons/BarChart';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import SignUpIcon from '@material-ui/icons/ControlPoint';
-import LightIcon from '@material-ui/icons/WbSunnyOutlined';
-import DarkIcon from '@material-ui/icons/WbSunnyRounded';
 import { FaTools } from 'react-icons/fa';
 
 const useStyles = makeStyles({
@@ -45,7 +42,6 @@ const useStyles = makeStyles({
 });
 
 export default withRouter(function TemporaryDrawer(props) {
-  // const { theme, toggleTheme } = useContext(CustomThemeContext);
   const { isAuth, logout, user } = useContext(AuthContext);
   const classes = useStyles();
   const [displayName, setDisplayName] = useState('');
@@ -231,44 +227,6 @@ export default withRouter(function TemporaryDrawer(props) {
                 </ListItem>
               </>
             )}
-
-            {/* <ListItem
-              className={classes.link}
-              key='theme'
-              onClick={(e) => {
-                e.preventDefault();
-                toggleTheme();
-              }}
-              button
-            >
-              <ListItemIcon>
-                <span className='flip'>
-                  {theme ? <LightIcon /> : <DarkIcon />}
-                </span>
-              </ListItemIcon>
-              <ListItemText>{theme ? 'Light' : 'Dark'}</ListItemText>
-            </ListItem> */}
-
-            {/* {isAuth ? (
-              <ListItem
-                className={classes.link}
-                key='logout'
-                onClick={(e) => {
-                  e.preventDefault();
-                  logout();
-                }}
-                button
-              >
-                <ListItemIcon>
-                  <span className='flip'>
-                    <LogoutIcon />
-                  </span>
-                </ListItemIcon>
-                <ListItemText primary='Logout' />
-              </ListItem>
-            ) : (
-              <></>
-            )} */}
           </List>
         </div>
       </Drawer>

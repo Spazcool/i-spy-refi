@@ -2,9 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { SectionTilesProps } from '../../utils/SectionProps';
 import SectionHeader from './partials/SectionHeader';
-import Image from '../elements/Image';
-// import { Icon } from '@material-ui/core';
-import HouseIcon from '@material-ui/icons/House';
 import MoneyIcon from '@material-ui/icons/AttachMoney';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
@@ -51,8 +48,6 @@ const FeaturesTiles = ({
 
   const sectionHeader = {
     title: 'Features',
-    // paragraph:
-    //   'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum — semper quis lectus nulla at volutpat diam ut venenatis.',
   };
 
   return (

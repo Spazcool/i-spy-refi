@@ -15,13 +15,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '50vw',
       justifyContent: 'center',
     },
   },
   button: {
-    padding: '1em',
-    width: '25%',
+    padding: '0.75em',
+    width: '50%',
     'background-color': '#437779',
   },
 }));

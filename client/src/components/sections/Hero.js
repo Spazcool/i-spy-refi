@@ -5,7 +5,6 @@ import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 import Image from '../elements/Image';
 import Modal from '../elements/Modal';
-import font from '../../App.css';
 
 const propTypes = {
   ...SectionProps.types,
@@ -64,10 +63,7 @@ const Hero = ({
               {' '}
               <span className='text-color-primary'>
                 <Image
-                  // className='has-shadow'
-                  // src={require('./../../assets/logo/logo_white_background.jpg')}
                   src={require('./../../assets/logo/ispy.png')}
-                  // src={require('./../../assets/logo/white_logo_color_background.jpg')}
                   alt='logo'
                   width={896}
                   height={504}

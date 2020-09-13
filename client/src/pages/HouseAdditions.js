@@ -3,7 +3,6 @@ import { Redirect, withRouter } from 'react-router-dom';
 
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
-// import { HouseContext } from '../providers/HouseProvider';
 import { realtor } from '../api/realtor';
 
 import AddHouse from '../components/HouseAdditions/AddHouse';
@@ -12,7 +11,7 @@ import FormChart from '../components/Dashboard/FormChart';
 import Toast from '../components/Toast';
 
 import Grid from '@material-ui/core/Grid';
-// import CircularProgress from '@material-ui/core/CircularProgress';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -73,6 +72,7 @@ const nationalAverages = [
 
 export default withRouter(function HouseAdditions(props) {
   const classes = useStyles();
+  const biggerThanMobile = useMediaQuery('(min-width:600px)');
   const { user, isAuth } = useContext(AuthContext);
   // ------------ INPUT VALIDATION ------------
   const errorMessage = '* all fields are required';
@@ -89,7 +89,7 @@ export default withRouter(function HouseAdditions(props) {
     state: '',
     formData: [],
   };
-  const [userZpid, setUserZpid] = useState(''); //TODO should probably be taking emptyhouse
+  const [userZpid, setUserZpid] = useState('');
   const [userHouse, setUserHouse] = useState(emptyHouse);
   const [clicked, setClicked] = useState(false);
 
@@ -112,17 +112,12 @@ export default withRouter(function HouseAdditions(props) {
   useEffect(() => {
     if (userZpid.zpid === undefined) {
       fetchHouse();
-
-      // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid.formData]);
+  }, [userZpid]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
     const [userHouse] = await house();
-    // console.log(userHouse);
-    //todo might have soemthing to do with the state varaibel sharing the namespace with this uuserHouse
-    //todo this shit is wrong but it works so fuck it
     userHouse === undefined ? setUserZpid('') : setUserZpid(userHouse);
   };
 
@@ -153,8 +148,8 @@ export default withRouter(function HouseAdditions(props) {
         formData,
       };
       const house = async () => await DB.updateHouse(data);
-      const { message } = await house();
-      // console.log(userZpid.formData);
+      await house();
+      
       setTimeout(() => {
         setClicked(false);
         props.history.push('/dashboard');
@@ -181,8 +176,8 @@ export default withRouter(function HouseAdditions(props) {
 
     if (validateHouseInputs(inputHouseCreds)) {
       setClicked(true);
-      await setUserHouse(inputHouseCreds);
-      afterSubmit();
+      setUserHouse(inputHouseCreds);
+      await afterSubmit();
       setFormData(emptyHouse);
     } else {
       setCredsAreInvalid(errorMessage);
@@ -198,7 +193,6 @@ export default withRouter(function HouseAdditions(props) {
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const { data } = await autoComplete();
-    console.log(data.status); // todo error handling for a random 503 killed the app
 
     const {
       mpr_id,
@@ -208,8 +202,11 @@ export default withRouter(function HouseAdditions(props) {
       city,
       line,
     } = data.autocomplete[0];
+    // API returns inconsistent data structures, will need a way to deal with the following:
     // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
-
+    // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+    // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+    
     setUserZpid(mpr_id);
 
     const houseParams = {
@@ -222,12 +219,9 @@ export default withRouter(function HouseAdditions(props) {
       formData: [],
       latitude: 50,
       longitude: 50,
-      // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
-      // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
     };
 
-    const createdHouse = async () =>
-      await DB.createHouse(user.user.uid, houseParams);
+    const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
     const { message } = await createdHouse();
 
     setToastMessage(message);
@@ -278,10 +272,9 @@ export default withRouter(function HouseAdditions(props) {
       justify='center'
       spacing={2}
       className={classes.alignContent}
-      style={{ marginTop: '10%' }}
     >
       {userZpid.zpid === undefined ? (
-        <Grid item xs={12} s={10} m={8} l={6} xl={4}>
+        <Grid item xs={12} s={10} m={8} l={6} xl={4} style={{ marginTop: '5%' }}>
           <AddHouse
             userHouse={userHouse}
             handleInputChange={handleInputChange}
@@ -295,14 +288,18 @@ export default withRouter(function HouseAdditions(props) {
           />
         </Grid>
       ) : (
-        <Grid item xs={12}>
-          <AddRenos
-            handleOnClick={handleOnClick}
-            handleSubmitCalc={handleSubmitCalc}
-            values={values}
-            clicked={clicked}
-          />
-          <FormChart data={userZpid} />
+        <Grid container item xs={12} style={{ marginTop: (biggerThanMobile ? '10%' : '20%') }}>
+          <Grid item xs={12} md={6} style={{marginBottom: '20%'}}>
+            <AddRenos
+              handleOnClick={handleOnClick}
+              handleSubmitCalc={handleSubmitCalc}
+              values={values}
+              clicked={clicked}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} style={{ marginBottom: '2em' }}>
+           <FormChart data={userZpid} />
+          </Grid>
         </Grid>
       )}
       <Toast openIt={openIt} message={toastMessage} />
