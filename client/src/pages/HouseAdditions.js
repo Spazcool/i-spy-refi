@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import { DB } from '../api/firestore';
 import { AuthContext } from '../providers/AuthProvider';
@@ -67,11 +67,11 @@ const nationalAverages = [
     id: 'deck_patio_porch',
     minor: { value: '0', type: 'No' },
     major: { value: '10000', type: 'Yes' },
-    description: 'Deck, paito or porch installation?',
+    description: 'Deck, patio or porch installation?',
   },
 ];
 
-export default function HouseAdditions() {
+export default withRouter(function HouseAdditions(props) {
   const classes = useStyles();
   const { user, isAuth } = useContext(AuthContext);
   // ------------ INPUT VALIDATION ------------
@@ -115,7 +115,7 @@ export default function HouseAdditions() {
 
       // findHouseRenovation(userHouse.formData);
     }
-  }, [userZpid, radios]);
+  }, [userZpid.formData]);
 
   const fetchHouse = async () => {
     const house = async () => await DB.getHouseByOwner(user.user.uid);
@@ -154,13 +154,10 @@ export default function HouseAdditions() {
       };
       const house = async () => await DB.updateHouse(data);
       const { message } = await house();
-
+      // console.log(userZpid.formData);
       setTimeout(() => {
-        setToastMessage(message);
-        setOpenIt(true);
-        setOpenIt(false);
         setClicked(false);
-        window.location.reload();
+        props.history.push('/dashboard');
       }, 2000);
     }
   };
@@ -200,8 +197,8 @@ export default function HouseAdditions() {
       zip: userHouse.zip.toLowerCase(),
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
-    const {data} = await autoComplete();
-    console.log(data.status)// todo error handling for a random 503 killed the app
+    const { data } = await autoComplete();
+    console.log(data.status); // todo error handling for a random 503 killed the app
 
     const {
       mpr_id,
@@ -229,8 +226,9 @@ export default function HouseAdditions() {
       // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
     };
 
-    const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
-    const {message} = await createdHouse();
+    const createdHouse = async () =>
+      await DB.createHouse(user.user.uid, houseParams);
+    const { message } = await createdHouse();
 
     setToastMessage(message);
     setOpenIt(true);
@@ -310,4 +308,4 @@ export default function HouseAdditions() {
       <Toast openIt={openIt} message={toastMessage} />
     </Grid>
   );
-}
+});
