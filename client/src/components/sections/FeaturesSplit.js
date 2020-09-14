@@ -131,10 +131,17 @@ const FeaturesSplit = ({
                   <li>
                     Home value - we use an algorithm and calculate your house
                     value based of recent sales/comps in your area combined with
+<<<<<<< HEAD
                     your home improvments specified in the form. This can help
                     you get a realistic estimate of what a bank would value your
                     home at incase you are thinking about refinancing or
                     aquiring a home equity line of credit.
+=======
+                    your home improvements specified in the form. This can help
+                    you get a realistic estimate of what a bank would value your
+                    home at incase you are thinking about refinancing or
+                    acquiring a home equity line of credit.
+>>>>>>> 300ffb95927a06ecda0792b4fc585c584b061b47
                   </li>
                   <li>
                     Chart - chart will display the value of your house trending

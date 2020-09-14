@@ -52,7 +52,7 @@ const Hero = ({
   );
 
   return (
-    <section {...props} className={outerClasses} style={{ paddingTop: '10%' }}>
+    <section {...props} className={outerClasses} style={{ paddingTop: '20px' }}>
       <div className='container-sm'>
         <div className={innerClasses}>
           <div className='hero-content'>
@@ -75,7 +75,7 @@ const Hero = ({
                 className='m-0 mb-32 reveal-from-bottom'
                 data-reveal-delay='400'
               >
-                A place to get a personal assesment on your home's worth!
+                A place to get a personal assessment on your home's worth!
               </p>
               <div className='reveal-from-bottom' data-reveal-delay='600'>
                 <ButtonGroup>
