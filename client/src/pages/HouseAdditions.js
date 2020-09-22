@@ -230,10 +230,11 @@ export default withRouter(function HouseAdditions(props) {
       };
 
       const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
-      message = { message } = await createdHouse();
+      const response = await createdHouse();
+      message = response.message;
     }
 
-    setToastMessage(message.message);
+    setToastMessage(message);
     setOpenIt(true);
     setOpenIt(false);
     setClicked(false);
