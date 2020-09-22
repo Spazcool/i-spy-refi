@@ -203,7 +203,7 @@ export default withRouter(function HouseAdditions(props) {
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const { data } = await autoComplete();
  
-    if(!data.autocomplete[0].hasOwnProperty('mpr_id') || !data.hasOwnProperty('autocomplete') || data.autocomplete.length < 1){
+    if(data.autocomplete.length < 1 || !data.autocomplete[0].hasOwnProperty('mpr_id') || !data.hasOwnProperty('autocomplete')){
       message = "Error: couldn't find house."
     }else{
       const {
