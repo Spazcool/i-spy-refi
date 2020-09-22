@@ -21,10 +21,14 @@ export default function Toast(props) {
   };
 
   const checkSeverity = (msg) => {
-    msg.includes('successfully') ?
+    if (msg !== undefined) {
+      msg.includes('successfully') ?
       setSeverity('success')
-    :
+      :
       setSeverity('error')
+    }else{
+      setSeverity('error')
+    }
   }
 
 

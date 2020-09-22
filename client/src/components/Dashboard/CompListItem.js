@@ -43,7 +43,7 @@ export default function CompListItem(props) {
               {props.comp.address.street_suffix}, {props.comp.address.city},{' '}
               {props.comp.address.state_code}
             </div>
-            <div>$ {props.comp.price.toLocaleString()}</div>
+            <div>$ {props.comp.price ? props.comp.price.toLocaleString() : 'unavailable'}</div>
           </Grid>
         </Grid>
       </AccordionSummary>
@@ -60,7 +60,7 @@ export default function CompListItem(props) {
               className='fontCinzel'
             >
               House Size:{' '}
-              <b> {props.comp.building_size.size.toLocaleString()} sqft </b>
+              <b> {props.comp.building_size.size ? `${props.comp.building_size.size.toLocaleString()} sqft`: 'unavailable'}</b>
             </Typography>
             <Typography
               variant='body2'
@@ -74,7 +74,7 @@ export default function CompListItem(props) {
               Beds: <b>{props.comp.beds}</b>
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
-              Property Type: <b>{props.comp.prop_type.replace(/_/g, " ")}</b>
+              Property Type: <b>{props.comp.prop_type ? props.comp.prop_type.replace(/_/g, " ") : 'unavailable'}</b>
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
               Year Built: <b>{props.comp.year_built}</b>
