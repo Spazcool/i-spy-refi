@@ -185,6 +185,15 @@ export default withRouter(function HouseAdditions(props) {
   };
 
   const afterSubmit = async () => {
+    // API returns inconsistent data structures,
+    // house object might not include properties we are looking for
+    // also the API just kinda sucks, 'new hampshire' doesnt work but 'nh' does
+    // will need a way to deal with the following:
+    // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
+    // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
+    // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
+    
+    let message;
     const params = {
       street: userHouse.street.toLowerCase(),
       city: userHouse.city.toLowerCase(),
@@ -193,38 +202,38 @@ export default withRouter(function HouseAdditions(props) {
     };
     const autoComplete = async () => await realtor.autoCompleteApi(params);
     const { data } = await autoComplete();
+ 
+    if(!data.autocomplete[0].hasOwnProperty('mpr_id') || !data.hasOwnProperty('autocomplete') || data.autocomplete.length < 1){
+      message = "Error: couldn't find house."
+    }else{
+      const {
+        mpr_id,
+        centroid,
+        postal_code,
+        state_code,
+        city,
+        line,
+      } = data.autocomplete[0];
 
-    const {
-      mpr_id,
-      centroid,
-      postal_code,
-      state_code,
-      city,
-      line,
-    } = data.autocomplete[0];
-    // API returns inconsistent data structures, will need a way to deal with the following:
-    // const alternateCentroid = autoCompleteResponse.data.autocomplete[1].centroid;
-    // latitude: centroid === undefined ? alternateCentroid.lat : centroid.lat,
-    // longitude: centroid === undefined ? alternateCentroid.lon : centroid.lon,
-    
-    setUserZpid(mpr_id);
+      setUserZpid(mpr_id);
 
-    const houseParams = {
-      zip: postal_code,
-      state: state_code,
-      city: city,
-      street: line,
-      hid: mpr_id,
-      zpid: mpr_id,
-      formData: [],
-      latitude: 50,
-      longitude: 50,
-    };
+      const houseParams = {
+        zip: postal_code,
+        state: state_code,
+        city: city,
+        street: line,
+        hid: mpr_id,
+        zpid: mpr_id,
+        formData: [],
+        latitude: 50,
+        longitude: 50,
+      };
 
-    const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
-    const { message } = await createdHouse();
+      const createdHouse = async () => await DB.createHouse(user.user.uid, houseParams);
+      message = { message } = await createdHouse();
+    }
 
-    setToastMessage(message);
+    setToastMessage(message.message);
     setOpenIt(true);
     setOpenIt(false);
     setClicked(false);
